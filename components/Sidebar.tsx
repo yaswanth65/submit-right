@@ -12,7 +12,7 @@ export function Sidebar() {
     { name: "Students", href: "/admin/students", icon: Users },
     { name: "Editors", href: "/admin/editors", icon: UserCog },
     { name: "Documents", href: "/admin/documents", icon: FileText },
-    { name: "Assignments", href: "#", icon: ClipboardList },
+    { name: "Assignments", href: "/admin/assignments", icon: ClipboardList },
     { name: "Payments", href: "/admin/payments", icon: CreditCard },
     { name: "CMS", href: "#", icon: MonitorCog },
     { name: "Blogs", href: "#", icon: Type },

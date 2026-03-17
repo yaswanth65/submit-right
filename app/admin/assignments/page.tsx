@@ -63,14 +63,14 @@ export default function AssignmentsScreen() {
           <table className="w-full text-left border-collapse min-w-[1000px]">
             <thead>
               <tr className="bg-[#F9FAFB] border-b border-[#EAECF0]">
-                <th className="py-3 px-6 text-[12px] font-medium text-[#525866] whitespace-nowrap">Document Name</th>
-                <th className="py-3 px-6 text-[12px] font-medium text-[#525866] whitespace-nowrap">Student Name</th>
-                <th className="py-3 px-6 text-[12px] font-medium text-[#525866] whitespace-nowrap">Service Type</th>
-                <th className="py-3 px-6 text-[12px] font-medium text-[#525866] whitespace-nowrap">Word Count</th>
-                <th className="py-3 px-6 text-[12px] font-medium text-[#525866] whitespace-nowrap">Deadline</th>
-                <th className="py-3 px-6 text-[12px] font-medium text-[#525866] whitespace-nowrap">Assigned Editor</th>
-                <th className="py-3 px-6 text-[12px] font-medium text-[#525866] whitespace-nowrap">Ass. Status</th>
-                <th className="py-3 px-6 text-[12px] font-medium text-[#525866] text-center whitespace-nowrap">Action</th>
+                <th className="py-3 px-6 text-[12px] font-medium  whitespace-nowrap">Document Name</th>
+                <th className="py-3 px-6 text-[12px] font-medium whitespace-nowrap">Student Name</th>
+                <th className="py-3 px-6 text-[12px] font-medium  whitespace-nowrap">Service Type</th>
+                <th className="py-3 px-6 text-[12px] font-medium whitespace-nowrap">Word Count</th>
+                <th className="py-3 px-6 text-[12px] font-medium whitespace-nowrap">Deadline</th>
+                <th className="py-3 px-6 text-[12px] font-medium  whitespace-nowrap">Assigned Editor</th>
+                <th className="py-3 px-6 text-[12px] font-medium  whitespace-nowrap">Ass. Status</th>
+                <th className="py-3 px-6 text-[12px] font-medium  text-center whitespace-nowrap">Action</th>
               </tr>
             </thead>
             <tbody>

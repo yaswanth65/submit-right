@@ -58,6 +58,50 @@ export function Topbar() {
     );
   }
 
+  if (pathname === "/admin/documents") {
+    breadcrumb = (
+      <>
+        <span className="text-[#525866]">Home</span>
+        <span className="text-[#A0AAB5]">&gt;</span>
+        <span className="text-[#171717] font-semibold">Documents</span>
+      </>
+    );
+  }
+
+  if (pathname.startsWith("/admin/documents/") && pathname !== "/admin/documents") {
+    breadcrumb = (
+      <>
+        <span className="text-[#525866]">Home</span>
+        <span className="text-[#A0AAB5]">&gt;</span>
+        <span className="text-[#525866]">Documents</span>
+        <span className="text-[#A0AAB5]">&gt;</span>
+        <span className="text-[#171717] font-semibold">Document Details</span>
+      </>
+    );
+  }
+
+  if (pathname === "/admin/payments") {
+    breadcrumb = (
+      <>
+        <span className="text-[#525866]">Home</span>
+        <span className="text-[#A0AAB5]">&gt;</span>
+        <span className="text-[#171717] font-semibold">Payments</span>
+      </>
+    );
+  }
+
+  if (pathname.startsWith("/admin/payments/") && pathname !== "/admin/payments") {
+    breadcrumb = (
+      <>
+        <span className="text-[#525866]">Home</span>
+        <span className="text-[#A0AAB5]">&gt;</span>
+        <span className="text-[#525866]">Payments</span>
+        <span className="text-[#A0AAB5]">&gt;</span>
+        <span className="text-[#171717] font-semibold">INV-2026-001</span>
+      </>
+    );
+  }
+
   return (
     <header className="h-[76px] bg-[#FFFFFF] border-b border-[#EAECF0] flex items-center justify-between px-8 sticky top-0 z-10 font-dm-sans">
       <div className="flex items-center space-x-2 text-[12px]">

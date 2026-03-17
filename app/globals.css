@@ -30,7 +30,7 @@ body {
   border-radius: 4px;
 }
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: #D1D5DB;
+  background: #EAECF0;
 }
 
 

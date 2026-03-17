@@ -50,8 +50,8 @@ export default function AdminDashboard() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 pt-2">
         {/* Revenue Snapshot Card */}
         <div className="lg:col-span-2 bg-[#FFFFFF] rounded-[12px] border border-[#EAECF0] p-6 shadow-sm flex flex-col min-h-[440px]">
-          <div className="text-[16px] font-bold text-[#171717] mb-[8px]">Revenue Snapshot</div>
-          <div className="mx-auto w-[98%] h-[2px] bg-[#D1D5DB] my-4 rounded" />
+          <div className="text-[16px] font-bold text-[#171717] ">Revenue Snapshot</div>
+<div className="mx-auto w-[98%] h-px mt-4 mb-4  bg-[#EAECF0]" />
           <div className="flex items-center space-x-10 mb-6">
             <div>
               <div className="text-[13px] text-[#525866] font-semibold mb-1">This Month</div>
@@ -75,8 +75,8 @@ export default function AdminDashboard() {
         
         {/* Pending Actions Card */}
         <div className="lg:col-span-1 bg-[#FFFFFF] rounded-[12px] border border-[#EAECF0] p-6 flex flex-col min-h-[440px] shadow-sm">
-          <div className="text-[16px] font-bold text-[#171717] mb-[8px]">Pending Actions</div>
-          <div className="mx-auto w-[98%] h-[2px] bg-[#D1D5DB] my-4 rounded" />
+          <div className="text-[16px] font-bold text-[#171717] ">Pending Actions</div>
+<div className="mx-auto w-[98%] h-px mt-4 mb-4  bg-[#EAECF0]" />
           <div className="flex-1 space-y-3.5 overflow-y-auto pr-1 custom-scrollbar">
             {[
               { id: 1, action: "Assignment Acceptance Pending", context: "Research Paper - John Smith" },
@@ -99,8 +99,8 @@ export default function AdminDashboard() {
 
       {/* Workload Distribution Table */}
       <div className="bg-[#FFFFFF] rounded-[12px] border border-[#EAECF0] p-6 shadow-sm mt-2">
-        <div className="text-[16px] text-[#171717] font-bold mb-2">Workload Distribution</div>
-        <div className="mx-auto w-[98%] h-[2px] bg-[#D1D5DB] my-4 rounded" />
+        <div className="text-[16px] text-[#171717] font-bold ">Workload Distribution</div>
+<div className="mx-auto w-[98%] h-px mt-4 mb-4  bg-[#EAECF0]" />
         <div className="overflow-x-auto border border-[#EAECF0] rounded-[10px]">
           <table className="w-full text-left border-collapse whitespace-nowrap">
             <thead>

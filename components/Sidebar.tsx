@@ -25,11 +25,9 @@ export function Sidebar() {
     <aside className="w-[260px] bg-[#F5F7FA] h-screen flex flex-col border-r border-[#EAECF0] fixed left-0 top-0 text-[#525866] font-dm-sans z-20">
       <div className="h-[76px] px-6 flex items-center justify-between border-b border-[#EAECF0]">
         <div className="flex items-center gap-2">
-          {/* Logo Placeholder */}
-          <span className="font-bold text-[22px] text-[#171717] tracking-tight italic flex items-center">
-            Submit<span className="text-[#00A0E3] font-light">right</span>
-            <span className="text-[#00A0E3] ml-1 text-lg leading-none">»</span>
-          </span>
+          <Link href="/" className="flex items-center">
+            <img src="/logo.svg" alt="Submitright logo" className="h-[32px] w-auto" />
+          </Link>
         </div>
         <button className="text-[#A0AAB5] hover:text-[#525866] transition-colors bg-white border border-[#EAECF0] rounded p-1.5 shadow-[0_1px_2px_rgba(0,0,0,0.02)]">
           <ArrowLeftFromLine className="w-[14px] h-[14px]" />

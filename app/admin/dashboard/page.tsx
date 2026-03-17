@@ -1,6 +1,16 @@
+import React from "react";
 import { RevenueChart } from "@/components/RevenueChart";
 
 export default function AdminDashboard() {
+  const stats = [
+    { title: "Active Documents", value: "124", highlight: "5%", isPos: true, suffix: "vs Last Month" },
+    { title: "Pending Assignments", value: "42", highlight: "Stable", isPos: null, suffix: "" },
+    { title: "Revision Requests", value: "15", highlight: "+0.2%", isPos: true, suffix: "vs Last Month" },
+    { title: "Overdue Tasks", value: "08", highlight: "Critical", isPos: false, suffix: "" },
+    { title: "Active Editors", value: "36", highlight: "+3%", isPos: true, suffix: "vs Last Month" },
+    { title: "Revenue This Month", value: "$67,250", highlight: "+8%", isPos: true, suffix: "vs Last Month" },
+  ];
+
   return (
     <div className="space-y-6 animate-in fade-in duration-500 max-w-[1140px] font-dm-sans">
       <div className="flex items-center justify-between mt-2 mb-8">
@@ -10,35 +20,38 @@ export default function AdminDashboard() {
         </div>
       </div>
 
-      {/* Top Stats Row */}
-      <div className="bg-[#FFFFFF] border border-[#EAECF0] rounded-[12px] flex flex-wrap lg:flex-nowrap items-stretch shadow-sm">
-        {[
-          { title: "Active Documents", value: "124", highlight: "5%", isPos: true, suffix: " vs Last Month" },
-          { title: "Pending Assignments", value: "42", highlight: "Stable", isPos: null, suffix: "" },
-          { title: "Revision Requests", value: "15", highlight: "+0.2%", isPos: true, suffix: " vs Last Month" },
-          { title: "Overdue Tasks", value: "08", highlight: "Critical", isPos: false, suffix: "" },
-          { title: "Active Editors", value: "36", highlight: "+3%", isPos: true, suffix: " vs Last Month" },
-          { title: "Revenue This Month", value: "$67,250", highlight: "+8%", isPos: true, suffix: " vs Last Month" },
-        ].map((stat, idx) => (
-          <div key={idx} className={`w-1/2 lg:w-auto flex-1 flex flex-col justify-center p-6 ${idx !== 0 ? 'border-l border-[#EAECF0]' : ''}`}>
-            <div className="text-[13px] font-medium text-[#525866] mb-1.5">{stat.title}</div>
-            <div className={`text-[24px] font-bold leading-none mb-2 ${stat.title === 'Overdue Tasks' ? 'text-[#FB3748]' : 'text-[#171717]'}`}>
-              {stat.value}
-            </div>
-            <div className="flex items-center space-x-1 whitespace-nowrap leading-none mt-auto">
-              <span className={`text-[12px] font-bold ${stat.isPos === true ? 'text-[#1CB061]' : stat.isPos === false ? 'text-[#FB3748]' : 'text-[#525866]'}`}>
-                {stat.highlight}
-              </span>
-              <span className="text-[12px] font-medium text-[#A0AAB5]">{stat.suffix}</span>
-            </div>
-          </div>
-        ))}
+      {/* Top Stats Row - unified component with floating vertical dividers */}
+      <div className="bg-[#FFFFFF] border border-[#EAECF0] rounded-[12px] flex flex-wrap items-stretch shadow-sm">
+        <div className="flex w-full flex-wrap lg:flex-nowrap items-stretch">
+          {stats.map((stat, idx) => (
+            <React.Fragment key={idx}>
+              {idx !== 0 && (
+                <div className="flex items-center">
+                  <div className="h-[60%] w-[1px] bg-[#EAECF0] mx-2 self-center rounded" />
+                </div>
+              )}
+              <div className={`flex-1 min-w-[160px] flex flex-col justify-center p-6`}>
+                <div className="text-[13px] font-medium text-[#525866] mb-1.5">{stat.title}</div>
+                <div className={`text-[24px] font-bold leading-none mb-2 ${stat.title === 'Overdue Tasks' ? 'text-[#FB3748]' : 'text-[#171717]'}`}>
+                  {stat.value}
+                </div>
+                <div className="flex items-center space-x-1 whitespace-nowrap leading-none mt-auto">
+                  <span className={`text-[12px] font-bold ${stat.isPos === true ? 'text-[#1CB061]' : stat.isPos === false ? 'text-[#FB3748]' : 'text-[#525866]'}`}>
+                    {stat.highlight}
+                  </span>
+                  <span className="text-[12px] font-medium text-[#A0AAB5]">{stat.suffix}</span>
+                </div>
+              </div>
+            </React.Fragment>
+          ))}
+        </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 pt-2">
         {/* Revenue Snapshot Card */}
         <div className="lg:col-span-2 bg-[#FFFFFF] rounded-[12px] border border-[#EAECF0] p-6 shadow-sm flex flex-col min-h-[440px]">
-          <div className="text-[16px] font-bold text-[#171717] mb-[24px]">Revenue Snapshot</div>
+          <div className="text-[16px] font-bold text-[#171717] mb-[8px]">Revenue Snapshot</div>
+          <div className="mx-auto w-[98%] h-[2px] bg-[#D1D5DB] my-4 rounded" />
           <div className="flex items-center space-x-10 mb-6">
             <div>
               <div className="text-[13px] text-[#525866] font-semibold mb-1">This Month</div>
@@ -62,7 +75,8 @@ export default function AdminDashboard() {
         
         {/* Pending Actions Card */}
         <div className="lg:col-span-1 bg-[#FFFFFF] rounded-[12px] border border-[#EAECF0] p-6 flex flex-col min-h-[440px] shadow-sm">
-          <div className="text-[16px] font-bold text-[#171717] mb-[20px]">Pending Actions</div>
+          <div className="text-[16px] font-bold text-[#171717] mb-[8px]">Pending Actions</div>
+          <div className="mx-auto w-[98%] h-[2px] bg-[#D1D5DB] my-4 rounded" />
           <div className="flex-1 space-y-3.5 overflow-y-auto pr-1 custom-scrollbar">
             {[
               { id: 1, action: "Assignment Acceptance Pending", context: "Research Paper - John Smith" },
@@ -85,7 +99,8 @@ export default function AdminDashboard() {
 
       {/* Workload Distribution Table */}
       <div className="bg-[#FFFFFF] rounded-[12px] border border-[#EAECF0] p-6 shadow-sm mt-2">
-        <div className="text-[16px] text-[#171717] font-bold mb-5">Workload Distribution</div>
+        <div className="text-[16px] text-[#171717] font-bold mb-2">Workload Distribution</div>
+        <div className="mx-auto w-[98%] h-[2px] bg-[#D1D5DB] my-4 rounded" />
         <div className="overflow-x-auto border border-[#EAECF0] rounded-[10px]">
           <table className="w-full text-left border-collapse whitespace-nowrap">
             <thead>

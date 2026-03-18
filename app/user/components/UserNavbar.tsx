@@ -208,10 +208,12 @@ export function Navbar() {
       </div>
 
       <div className="flex items-center space-x-4">
-        <button className="bg-[#00A0E3] hover:bg-[#008bc5] text-white px-4 py-2.5 rounded-[8px] flex items-center space-x-2 text-[14px] font-medium transition-colors shadow-sm">
+        <Link
+        href={"/user/submit-document"}
+         className="bg-[#00A0E3] hover:bg-[#008bc5] text-white px-4 py-2.5 rounded-[8px] flex items-center space-x-2 text-[14px] font-medium transition-colors shadow-sm">
           <Plus className="w-[18px] h-[18px]" strokeWidth={2.5} />
           <span>Submit Document</span>
-        </button>
+        </Link>
 
         {/* Notifications Dropdown Container */}
         <div className="relative" ref={dropdownRef}>

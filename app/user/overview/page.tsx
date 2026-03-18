@@ -153,8 +153,8 @@ export default function OverviewPage() {
   };
 
   return (
-    <div className="w-full font-dm-sans  mx-auto px-6 lg:px-8 py-4 ">
-      
+    <div className="w-full font-dm-sans px-6 lg:px-8 py-4">
+
       {/* --- HEADER --- */}
       <div className="mb-4 border-b border-gray-200 ">
         <h1 className="text-[24px] font-bold text-[#171717] mb-1.5 tracking-tight">

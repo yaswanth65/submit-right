@@ -662,8 +662,8 @@ export default function DashboardComponent() {
   };
 
   return (
-    <div className="w-full font-dm-sans  mx-auto px-6 lg:px-8 py-8">
-      
+    <div className="w-full font-dm-sans px-6 lg:px-8 py-8">
+
       <div className="inline-flex items-center gap-3 border border-[#EAECF0] rounded-full p-1 pr-4 bg-white shadow-[0_1px_2px_rgba(0,0,0,0.02)] w-max">
         <span className="bg-[#171717] text-white text-[12px] font-bold px-3 py-1 rounded-full">
           New

@@ -15,7 +15,7 @@ export default function DocumentDetailsPage() {
   const [deadlineOpen, setDeadlineOpen] = useState(false);
 
   return (
-    <div className="space-y-5 animate-in fade-in duration-500 max-w-[1140px] font-dm-sans pb-10">
+    <div className="space-y-5 animate-in fade-in duration-500 w-full font-dm-sans pb-10">
       <div className="flex items-center justify-between mt-2">
         <div className="flex items-center space-x-4">
           <Link href="/admin/documents" className="text-[#A0AAB5] hover:text-[#525866] transition-colors p-1.5 -ml-1.5 rounded-lg hover:bg-[#F9FAFB]"><ArrowLeft strokeWidth={2.5} className="w-[18px] h-[18px]" /></Link>

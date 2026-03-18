@@ -21,7 +21,7 @@ function statusPill(status: string) {
 
 export default function StudentsPage() {
   return (
-    <div className="space-y-6 animate-in fade-in duration-500 max-w-[1140px] font-dm-sans">
+    <div className="space-y-6 animate-in fade-in duration-500 w-full font-dm-sans">
       <div className="mt-2">
         <div className="text-[20px] font-bold text-[#171717] leading-tight">Students</div>
         <p className="text-[14px] text-[#525866] mt-1">Manage registered students and account activity.</p>

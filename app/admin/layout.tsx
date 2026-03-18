@@ -12,7 +12,7 @@ export default function AdminLayout({
       <Sidebar />
       <div className="flex-1 ml-[260px] flex flex-col min-h-screen ">
         <Topbar />
-        <main className="p-8 pb-12 flex-1 w-full max-w-[1440px] mx-auto bg-[#FFFFFF]">
+        <main className="p-8 pb-12 flex-1 w-full  bg-[#FFFFFF]">
           {children}
         </main>
       </div>

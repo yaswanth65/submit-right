@@ -2,7 +2,7 @@ import React from "react";
 
 export default function SettingsScreen() {
   return (
-    <div className="space-y-6 max-w-[1140px] font-dm-sans animate-in fade-in slide-in-from-bottom-2 duration-700">
+    <div className="space-y-6 w-full font-dm-sans animate-in fade-in slide-in-from-bottom-2 duration-700">
       <div className="flex items-center justify-between mt-2 mb-8">
         <div>
           <div className="text-[20px] font-bold text-[#171717] mb-[2px]">System Settings</div>

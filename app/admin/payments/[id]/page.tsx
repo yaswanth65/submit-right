@@ -18,7 +18,7 @@ export default function PaymentDetailScreen() {
   ];
 
   return (
-    <div className="space-y-6 max-w-[1140px] font-dm-sans animate-in fade-in duration-500 pb-10">
+    <div className="space-y-6 w-full font-dm-sans animate-in fade-in duration-500 pb-10">
       
       {/* Header Region */}
       <div className="flex items-center justify-between mt-2 mb-8">

@@ -14,7 +14,7 @@ const rows = [
 
 export default function DocumentsPage() {
   return (
-    <div className="space-y-6 animate-in fade-in duration-500 max-w-[1140px] font-dm-sans">
+    <div className="space-y-6 animate-in fade-in duration-500 w-full font-dm-sans">
       <div className="mt-2">
         <div className="text-[30px] font-bold text-[#171717] leading-tight">Documents</div>
         <p className="text-[14px] text-[#525866] mt-1">Manage and monitor all platform documents.</p>

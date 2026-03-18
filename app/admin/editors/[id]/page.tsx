@@ -13,7 +13,7 @@ export default function EditorProfile() {
   const [isAdjustModalOpen, setIsAdjustModalOpen] = useState(false);
 
   return (
-    <div className="space-y-6 animate-in fade-in duration-500 max-w-[1140px] font-dm-sans">
+    <div className="space-y-6 animate-in fade-in duration-500 w-full font-dm-sans">
       <div className="flex items-center justify-between mt-2 mb-8">
         <div className="flex items-center space-x-4">
           <Link href="/admin/editors" className="text-[#A0AAB5] hover:text-[#525866] transition-colors p-1.5 -ml-1.5 rounded-lg hover:bg-[#F9FAFB]">

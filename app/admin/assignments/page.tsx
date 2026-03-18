@@ -33,7 +33,7 @@ export default function AssignmentsScreen() {
   };
 
   return (
-    <div className="space-y-6 max-w-[1140px] font-dm-sans animate-in fade-in duration-500 pb-10">
+    <div className="space-y-6 w-full font-dm-sans animate-in fade-in duration-500 pb-10">
       <div className="flex items-center justify-between mt-2 mb-8">
         <div>
           <div className="text-[20px] font-bold text-[#171717] mb-[2px]">Assignments</div>

@@ -12,7 +12,7 @@ export default function AdminDashboard() {
   ];
 
   return (
-    <div className="space-y-6 animate-in fade-in duration-500 max-w-[1140px] font-dm-sans">
+    <div className="space-y-6 animate-in fade-in duration-500 w-full font-dm-sans">
       <div className="flex items-center justify-between mt-2 mb-8">
         <div>
           <div className="text-[20px] font-bold text-[#171717] mb-[2px]">Dashboard</div>

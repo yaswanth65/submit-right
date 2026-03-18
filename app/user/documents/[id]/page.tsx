@@ -71,7 +71,7 @@ export default function DocumentDetailsSlugPage() {
   // 2. Simulate taking the slug from the URL
   // "ai-research-paper" -> Payment State
   // "thesis-chapter-3" -> Review State
-  const currentSlug = "thesis-chapter-3"; 
+  const currentSlug = "ai-research-paper"; 
   
   // Find the specific document
   const document = documents.find(doc => doc.id === currentSlug) || documents[0];

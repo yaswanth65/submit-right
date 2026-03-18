@@ -244,7 +244,7 @@ import { Info, ArrowRight, ArrowLeft, ChevronDown, Check, Upload, File as FileIc
 
 export default function SubmitDocumentPage() {
   // State to manage current step
-  const [currentStep, setCurrentStep] = useState(2);
+  const [currentStep, setCurrentStep] = useState(1);
   const [selectedService, setSelectedService] = useState("editing");
   const [isTermsAgreed, setIsTermsAgreed] = useState(true);
   // State and ref for file upload

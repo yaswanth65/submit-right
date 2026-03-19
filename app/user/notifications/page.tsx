@@ -67,23 +67,31 @@ export default function NotificationsPage() {
     <div className="w-full flex flex-col h-[calc(100vh-76px)]  font-dm-sans bg-white">
       
       {/* --- HEADER --- */}
-      <div className="flex flex-col border-y p-4 border-[#EAECF0] sm:flex-row sm:items-start justify-between gap-4 mb-6 shrink-0">
-        <div>
+      <div className="flex flex-col border-b border-[#EAECF0] sm:flex-row sm:items-start justify-between gap-4 mb-4 shrink-0">
+        {/* <div>
           <h1 className="text-[28px] font-bold text-[#171717] mb-1.5 tracking-tight">
             Notifications
           </h1>
-          <p className="text-[#8A94A6] text-[15px]">
+          <p className="text-[#78788D] text-[15px]">
             Manage your document activity and platform updates.
           </p>
-        </div>
-        <button className="flex items-center gap-2 text-[#00A0E3] hover:text-[#008bc5] transition-colors font-medium text-[15px] hover:underline mt-1 sm:mt-0">
+        </div> */}
+        <div className="shrink-0 border-b py-4 border-gray-100 px-4">
+        <h1 className="text-[22px] font-medium text-[#1C1C1D] mb-1.5 tracking-tight">
+        Notifications
+        </h1>
+        <p className="text-[#78788D] text-[14px]">
+        Manage your document activity and platform updates.
+        </p>
+      </div>
+        <button className="flex items-center gap-2 py-8 px-4 text-[#00A0E3] hover:text-[#008bc5] transition-colors font-medium text-[15px] hover:underline mt-1 sm:mt-0">
           <CheckCheck className="w-[18px] h-[18px]" strokeWidth={2.5} />
           Mark all as read
         </button>
       </div>
 
       {/* --- TABS --- */}
-      <div className="flex flex-wrap items-center px-4 gap-3 mb-8 shrink-0 border-b border-[#EAECF0] pb-6">
+      <div className="flex flex-wrap items-center px-4 gap-3 mb-8 shrink-0 border-b border-[#EAECF0] pb-4">
         {tabs.map((tab) => (
           <button
             key={tab}
@@ -91,7 +99,7 @@ export default function NotificationsPage() {
             className={`px-5 py-2.5 rounded-[8px] text-[14px] font-bold transition-colors ${
               activeTab === tab
                 ? "bg-[#00A0E3] text-white"
-                : "bg-[#F5F7FA] text-[#8A94A6] hover:bg-[#EAEFF4] hover:text-[#171717]"
+                : "bg-[#F5F7FA] text-[#78788D] hover:bg-[#EAEFF4] hover:text-[#171717]"
             }`}
           >
             {tab}
@@ -104,7 +112,7 @@ export default function NotificationsPage() {
       {notifications.map((notif) => (
     <div 
         key={notif.id} 
-        className={`flex items-center gap-5 p-6 rounded-[16px] border transition-shadow hover:shadow-[0_2px_12px_rgba(0,0,0,0.03)] ${
+        className={`flex items-center gap-5 p-5 rounded-[16px] border transition-shadow hover:shadow-[0_2px_12px_rgba(0,0,0,0.03)] ${
         notif.unread ? "border-[#00A0E3] bg-[#EFF9FF]" : "border-[#EAECF0] bg-white"
         }`}
     >
@@ -118,10 +126,10 @@ export default function NotificationsPage() {
         
         {/* Text */}
         <div className="flex flex-col flex-1 pr-4">
-            <h3 className="text-[16px] font-bold text-[#171717] mb-1">
+            <h3 className="text-[14px] font-medium text-[#171717] mb-1">
             {notif.title}
             </h3>
-            <p className="text-[#8A94A6] text-[14px] leading-relaxed">
+            <p className="text-[#78788D] text-[14px] leading-relaxed">
             {notif.desc}
             </p>
         </div>

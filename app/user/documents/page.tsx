@@ -111,11 +111,11 @@ export default function MyDocumentsPage() {
     <div className="w-full font-dm-sans  mx-auto flex flex-col min-h-[calc(100vh-76px)]">
       
       {/* --- PAGE HEADER --- */}
-      <div className="mb-4 shrink-0 border-b pb-4 border-gray-100 px-4">
-        <h1 className="text-[28px] font-bold text-[#171717] mb-1.5 tracking-tight">
+      <div className="my-4 shrink-0 border-b pb-4 border-gray-100 px-4">
+        <h1 className="text-[22px] font-medium text-[#1C1C1D] mb-1.5 tracking-tight">
           My Documents
         </h1>
-        <p className="text-[#8A94A6] text-[15px]">
+        <p className="text-[#78788D] text-[14px]">
           Track, review, and manage your submissions
         </p>
       </div>
@@ -160,75 +160,72 @@ export default function MyDocumentsPage() {
 
       {/* --- DOCUMENTS TABLE --- */}
       <div className="flex-1 flex px-4 mx-2 flex-col">
-        <div className="border border-[#EAECF0] rounded-[12px] bg-white overflow-hidden shadow-sm">
-          <div className="overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
-            <table className="w-full text-left border-collapse min-w-[900px]">
-              <thead>
-                <tr className="bg-[#F4F8FA] border-b border-[#EAECF0]">
-                  <th className="px-6 py-4 text-[14px] font-bold text-[#171717] w-[30%]">Document Name</th>
-                  <th className="px-6 py-4 text-[14px] font-bold text-[#171717]">Service Type</th>
-                  <th className="px-6 py-4 text-[14px] font-bold text-[#171717]">Last Updated</th>
-                  <th className="px-6 py-4 text-[14px] font-bold text-[#171717]">Status</th>
-                  <th className="px-6 py-4 text-[14px] font-bold text-[#171717]">Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {documents.map((doc, idx) => (
-                  <tr 
-                    key={idx} 
-                    className={`hover:bg-[#F9FAFB] transition-colors ${
-                      idx !== documents.length - 1 ? 'border-b border-[#EAECF0]' : ''
-                    }`}
-                  >
-                    <td className="px-6 py-5">
-                      <Link href={`/user/documents/${doc.id}`} className="flex items-center gap-3 group">
-                        <FileText className="w-[18px] h-[18px] text-[#A0AAB5] group-hover:text-[#00A0E3] transition-colors" strokeWidth={2} />
-                        <span className="text-[14px] font-medium text-[#525866] group-hover:text-[#171717] group-hover:underline truncate transition-colors">
-                          {doc.name}
-                        </span>
-                      </Link>
-                    </td>
-                    <td className="px-6 py-5 text-[14px] text-[#525866]">
-                      {doc.service}
-                    </td>
-                    <td className="px-6 py-5 text-[14px] text-[#525866] whitespace-nowrap">
-                      {doc.date}
-                    </td>
-                    <td className="px-6 py-5">
-                      {getStatusBadge(doc.status)}
-                    </td>
-                    <td className="px-6 py-5">
-                      {getActionLink(doc.action, doc.id)}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
+  <div className="rounded-[12px] bg-white overflow-hidden">
+    <div className="overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+      <table className="w-full text-left min-w-[900px]">
+        <thead>
+          <tr className="bg-[#F4F8FA] border-b border-[#EAECF0]">
+            <th className="px-6 py-4 text-[14px] font-medium text-[#171717] w-[30%]">Document Name</th>
+            <th className="px-6 py-4 text-[14px] font-medium text-[#171717]">Service Type</th>
+            <th className="px-6 py-4 text-[14px] font-medium text-[#171717]">Last Updated</th>
+            <th className="px-6 py-4 text-[14px] font-medium text-[#171717]">Status</th>
+            <th className="px-6 py-4 text-[14px] font-medium text-[#171717]">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {documents.map((doc, idx) => (
+            <tr 
+              key={idx} 
+              className={`hover:bg-[#F9FAFB] transition-colors border-b border-[#EAECF0]`}
+            >
+              <td className="px-6 py-5">
+                <Link href={`/user/documents/${doc.id}`} className="flex items-center gap-3 group">
+                  <FileText className="w-[18px] h-[18px] text-[#A0AAB5] group-hover:text-[#00A0E3] transition-colors" strokeWidth={2} />
+                  <span className="text-[14px] font-medium text-[#525866] group-hover:text-[#171717] group-hover:underline truncate transition-colors">
+                    {doc.name}
+                  </span>
+                </Link>
+              </td>
+              <td className="px-6 py-5 text-[14px] text-[#525866]">
+                {doc.service}
+              </td>
+              <td className="px-6 py-5 text-[14px] text-[#525866] whitespace-nowrap">
+                {doc.date}
+              </td>
+              <td className="px-6 py-5">
+                {getStatusBadge(doc.status)}
+              </td>
+              <td className="px-6 py-5">
+                {getActionLink(doc.action, doc.id)}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </div>
 
-        {/* --- PAGINATION --- */}
-        <div className="mt-6 flex flex-col sm:flex-row items-center justify-between gap-4 pb-8">
-          <p className="text-[#8A94A6] text-[14px]">
-            Showing <span className="font-bold text-[#171717]">6</span> of <span className="font-bold text-[#171717]">12</span> documents
-          </p>
-          <div className="flex items-center gap-2">
-            <button className="w-9 h-9 flex items-center justify-center rounded-[8px] border border-[#EAECF0] text-[#A0AAB5] hover:bg-[#F9FAFB] transition-colors disabled:opacity-50">
-              <ChevronLeft className="w-4 h-4" strokeWidth={2} />
-            </button>
-            <button className="w-9 h-9 flex items-center justify-center rounded-[8px] bg-[#00A0E3] text-white text-[14px] font-bold shadow-sm">
-              1
-            </button>
-            <button className="w-9 h-9 flex items-center justify-center rounded-[8px] border border-[#EAECF0] text-[#525866] text-[14px] font-medium hover:bg-[#F9FAFB] transition-colors">
-              2
-            </button>
-            <button className="w-9 h-9 flex items-center justify-center rounded-[8px] border border-[#EAECF0] text-[#525866] hover:bg-[#F9FAFB] transition-colors">
-              <ChevronRight className="w-4 h-4" strokeWidth={2} />
-            </button>
-          </div>
-        </div>
-
-      </div>
+  {/* --- PAGINATION --- */}
+  <div className="mt-6 flex flex-col sm:flex-row items-center justify-between gap-4 pb-8">
+    <p className="text-[#8A94A6] text-[14px]">
+      Showing <span className="font-bold text-[#171717]">6</span> of <span className="font-bold text-[#171717]">12</span> documents
+    </p>
+    <div className="flex items-center gap-2">
+      <button className="w-9 h-9 flex items-center justify-center rounded-[8px] border border-[#EAECF0] text-[#A0AAB5] hover:bg-[#F9FAFB] transition-colors disabled:opacity-50">
+        <ChevronLeft className="w-4 h-4" strokeWidth={2} />
+      </button>
+      <button className="w-9 h-9 flex items-center justify-center rounded-[8px] bg-[#00A0E3] text-white text-[14px] font-bold">
+        1
+      </button>
+      <button className="w-9 h-9 flex items-center justify-center rounded-[8px] border border-[#EAECF0] text-[#525866] text-[14px] font-medium hover:bg-[#F9FAFB] transition-colors">
+        2
+      </button>
+      <button className="w-9 h-9 flex items-center justify-center rounded-[8px] border border-[#EAECF0] text-[#525866] hover:bg-[#F9FAFB] transition-colors">
+        <ChevronRight className="w-4 h-4" strokeWidth={2} />
+      </button>
+    </div>
+  </div>
+</div>
     </div>
   );
 }

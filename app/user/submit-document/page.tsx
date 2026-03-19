@@ -326,12 +326,21 @@ export default function SubmitDocumentPage() {
     <div className="w-full font-dm-sans bg-white min-h-[calc(100vh-76px)] flex flex-col">
       
       {/* --- PAGE HEADER --- */}
-      <div className="px-6 lg:px-8 py-5 border-b border-[#EAECF0] shrink-0">
+      {/* <div className="px-6 lg:px-8 py-5 border-b border-[#EAECF0] shrink-0">
         <h1 className="text-[24px] lg:text-[26px] font-bold text-[#171717] mb-1 tracking-tight">
           Submit New Document
         </h1>
         <p className="text-[#8A94A6] text-[14px]">
           Easily upload your document in just a few steps.
+        </p>
+      </div> */}
+
+      <div className="shrink-0 border-b py-4 border-gray-100 px-4">
+        <h1 className="text-[22px] font-medium text-[#1C1C1D] mb-1.5 tracking-tight">
+        Submit New Document
+        </h1>
+        <p className="text-[#78788D] text-[14px]">
+        Easily upload your document in just a few steps.
         </p>
       </div>
 
@@ -572,7 +581,7 @@ export default function SubmitDocumentPage() {
                             isSelected ? "text-[#00A0E3]" : "text-[#525866]"
                           }`} strokeWidth={2} />
                         </div>
-                        <h3 className="text-[16px] font-bold text-[#171717]">
+                        <h3 className="text-[16px] font-medium text-[#171717]">
                           {service.title}
                         </h3>
                       </div>
@@ -634,7 +643,7 @@ export default function SubmitDocumentPage() {
                   {/* Using FileText as a matching icon representation */}
                   <FileText className="w-5 h-5 fill-[#E1F4FD]" strokeWidth={2} />
                 </div>
-                <h2 className="text-[16px] font-bold text-[#171717]">Document Summary</h2>
+                <h2 className="text-[16px] font-medium text-[#171717]">Document Summary</h2>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-12">
@@ -642,15 +651,15 @@ export default function SubmitDocumentPage() {
                 <div className="flex flex-col gap-6">
                   <div className="flex flex-col gap-1">
                     <span className="text-[13px] text-[#8A94A6]">Document Title</span>
-                    <span className="text-[14px] font-bold text-[#171717]">AI Research Paper</span>
+                    <span className="text-[14px] font-medium text-[#171717]">AI Research Paper</span>
                   </div>
                   <div className="flex flex-col gap-1">
                     <span className="text-[13px] text-[#8A94A6]">Document Type</span>
-                    <span className="text-[14px] font-bold text-[#171717]">Journal Article</span>
+                    <span className="text-[14px] font-medium text-[#171717]">Journal Article</span>
                   </div>
                   <div className="flex flex-col gap-1">
                     <span className="text-[13px] text-[#8A94A6]">Short Description</span>
-                    <p className="text-[14px] font-bold text-[#171717] leading-relaxed pr-4">
+                    <p className="text-[14px] font-medium text-[#171717] leading-relaxed pr-4">
                       Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                     </p>
                   </div>
@@ -660,11 +669,11 @@ export default function SubmitDocumentPage() {
                 <div className="flex flex-col gap-6">
                   <div className="flex flex-col gap-1">
                     <span className="text-[13px] text-[#8A94A6]">Academic Field / Subject</span>
-                    <span className="text-[14px] font-bold text-[#171717]">Computer Science</span>
+                    <span className="text-[14px] font-medium text-[#171717]">Computer Science</span>
                   </div>
                   <div className="flex flex-col gap-1">
                     <span className="text-[13px] text-[#8A94A6]">Service Selected</span>
-                    <span className="text-[14px] font-bold text-[#171717]">Editing</span>
+                    <span className="text-[14px] font-medium text-[#171717]">Editing</span>
                   </div>
                   <div className="flex flex-col gap-1">
                     {/* Note: The design mockup shows "Service Selected" again here, but it logically represents the Uploaded Document */}
@@ -693,24 +702,24 @@ export default function SubmitDocumentPage() {
                 <div className="text-[#00A0E3]">
                   <Users className="w-5 h-5 fill-[#E1F4FD]" strokeWidth={2} />
                 </div>
-                <h2 className="text-[16px] font-bold text-[#171717]">Word Count & Pricing Breakdown</h2>
+                <h2 className="text-[16px] font-medium text-[#171717]">Word Count & Pricing Breakdown</h2>
               </div>
 
               <div className="border bg-[#EFF7FB] border-[#0396d6] rounded-[12px] p-4 flex flex-col gap-4">
                 <div className="flex justify-between items-center">
                   <span className="text-[#8A94A6] text-[14px]">Our academic experts verify your submission and select the best editor.</span>
-                  <span className="text-[#171717] text-[14px] font-bold">4,250 Words</span>
+                  <span className="text-[#171717] text-[14px] font-medium">4,250 Words</span>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-[#8A94A6] text-[14px]">Rate per word</span>
-                  <span className="text-[#171717] text-[14px] font-bold">₹0.10</span>
+                  <span className="text-[#171717] text-[14px] font-medium">₹0.10</span>
                 </div>
 
                 <div className="w-full h-[1px] bg-[#00A0E3]/30 my-2"></div>
 
                 <div className="flex justify-between items-center">
-                  <span className="text-[#171717] text-[18px] font-bold">Estimated Total</span>
-                  <span className="text-[#00A0E3] text-[20px] font-bold">₹425.00</span>
+                  <span className="text-[#171717] text-[18px] font-medium">Estimated Total</span>
+                  <span className="text-[#00A0E3] text-[20px] font-medium ">₹425.00</span>
                 </div>
                 <span className="text-[#8A94A6] text-[12px] italic mt-[-8px]">
                   * Final price will be confirmed after review, if necessary. Changes in word count or specialized requirements may affect the final quote.
@@ -768,7 +777,7 @@ export default function SubmitDocumentPage() {
               </div>
 
               {/* Success Text */}
-              <h2 className="text-[20px] lg:text-[24px] font-bold text-[#171717] mb-2 tracking-tight">
+              <h2 className="text-[20px] lg:text-[24px] font-semibold text-[#171717] mb-2 tracking-tight">
                 Your document has been submitted successfully.
               </h2>
               <p className="text-[#8A94A6] text-[15px] mb-8 leading-relaxed">
@@ -777,7 +786,7 @@ export default function SubmitDocumentPage() {
 
               {/* What Happens Next Card */}
               <div className="w-full border border-[#EAECF0] bg-[#FAFAFB] rounded-[16px] p-6 lg:p-8 text-left shadow-sm">
-                <h3 className="text-[16px] font-bold text-[#171717] mb-5">
+                <h3 className="text-[16px] font-semibold text-[#171717] mb-5">
                   What Happens Next
                 </h3>
                 <ul className="space-y-4">

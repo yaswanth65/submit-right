@@ -662,7 +662,7 @@ export default function DashboardComponent() {
   };
 
   return (
-    <div className="w-full font-dm-sans  mx-auto px-6 lg:px-8 py-8">
+    <div className="w-full  ] font-dm-sans  mx-auto px-6 lg:px-8 py-8">
       
       <div className="inline-flex items-center gap-3 border border-[#EAECF0] rounded-full p-1 pr-4 bg-white shadow-[0_1px_2px_rgba(0,0,0,0.02)] w-max">
         <span className="bg-[#171717] text-white text-[12px] font-bold px-3 py-1 rounded-full">
@@ -677,7 +677,7 @@ export default function DashboardComponent() {
         <p className="text-[#A0AAB5] text-[14px] font-medium mb-1">
           My Workspace
         </p>
-        <h1 className="text-[32px] font-bold text-[#171717] tracking-tight">
+        <h1 className="text-[32px] font-medium text-[#171717] tracking-tight">
           Good Evening, John Doe
         </h1>
       </div>
@@ -685,8 +685,8 @@ export default function DashboardComponent() {
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 mb-12">
         {dashboardData.services.map((service) => (
           <div key={service.id} className="flex flex-col items-center gap-4">
-            <div className="w-full aspect-[4/5] bg-[#F5F7FA] rounded-[16px]"></div>
-            <p className="text-center text-[14px] font-bold text-[#171717] whitespace-pre-line leading-tight">
+            <div className="w-full aspect-square bg-[#F5F7FA] rounded-[16px]"></div>
+            <p className="text-center text-[14px] font-semibold text-[#171717] whitespace-pre-line leading-tight">
               {service.title}
             </p>
           </div>
@@ -694,7 +694,7 @@ export default function DashboardComponent() {
       </div>
 
       <div className="mb-16">
-        <h2 className="text-[24px] font-bold text-[#171717] mb-6">
+        <h2 className="text-[24px] font-semibold text-[#171717] mb-6">
           Publication Support Packages
         </h2>
         
@@ -705,7 +705,7 @@ export default function DashboardComponent() {
               className="bg-[#F5F7FA] rounded-[24px] p-8 flex flex-col justify-end min-h-[280px]"
             >
               <div>
-                <h3 className="text-[16px] font-bold text-[#171717] mb-4">
+                <h3 className="text-[16px] font-semibold text-[#171717] mb-4">
                   {pkg.title}
                 </h3>
                 <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6">
@@ -730,12 +730,28 @@ export default function DashboardComponent() {
         </div>
       </div>
 
-      <div className="mb-16 relative">
-        <h2 className="text-[20px] font-bold text-[#171717] mb-8">
+      <div className="mb-16 relative w-full overflow-hidden">
+        <h2 className="text-[20px] font-semibold text-[#171717] mb-8">
           Trusted by 1600+ journals, universities and societies
         </h2>
 
-        <div className="relative flex items-center justify-between overflow-hidden">
+        {/* Internal Style for Marquee Animation */}
+        <style>{`
+          @keyframes slide {
+            0% { transform: translateX(0%); }
+            100% { transform: translateX(-100%); }
+          }
+          .animate-slide {
+            animation: slide 25s linear infinite;
+          }
+          /* Optional: Pause the animation when the user hovers over the logos */
+          .group:hover .animate-slide {
+            animation-play-state: paused;
+          }
+        `}</style>
+
+        {/* Strict overflow-hidden and w-full wrapper */}
+        <div className="relative flex overflow-hidden w-full group">
           
           {/* LEFT FADE */}
           <div className="pointer-events-none absolute left-0 top-0 h-full w-16 bg-gradient-to-r from-white to-transparent z-10" />
@@ -743,22 +759,35 @@ export default function DashboardComponent() {
           {/* RIGHT FADE */}
           <div className="pointer-events-none absolute right-0 top-0 h-full w-16 bg-gradient-to-l from-white to-transparent z-10" />
 
-          {/* LOGOS */}
-          <div className="flex items-center justify-between w-full overflow-x-auto gap-8 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+          {/* First Set of Logos */}
+          <div className="flex shrink-0 min-w-full items-center justify-around gap-12 px-6 animate-slide">
             {dashboardData.trustedLogos.map((logo) => (
               <img 
-                key={logo.id} 
+                key={`logo-1-${logo.id}`} 
                 src={logo.src} 
                 alt={logo.alt} 
                 className="h-[24px] w-auto object-contain shrink-0"
               />
             ))}
           </div>
+
+          {/* Second Set of Logos (Duplicated for seamless infinite loop) */}
+          <div className="flex shrink-0 min-w-full items-center justify-around gap-12 px-6 animate-slide" aria-hidden="true">
+            {dashboardData.trustedLogos.map((logo) => (
+              <img 
+                key={`logo-2-${logo.id}`} 
+                src={logo.src} 
+                alt={logo.alt} 
+                className="h-[24px] w-auto object-contain shrink-0"
+              />
+            ))}
+          </div>
+
         </div>
       </div>
 
       <div className="mb-12">
-        <h2 className="text-[24px] font-bold text-[#171717] mb-6">
+        <h2 className="text-[24px] font-semibold text-[#171717] mb-6">
           Lorem ipsum dolor sit amet
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -767,7 +796,7 @@ export default function DashboardComponent() {
               key={card.id} 
               className="bg-white border border-[#EAECF0] rounded-[16px] p-6 shadow-[0_2px_4px_rgba(0,0,0,0.02)] flex flex-col"
             >
-              <h3 className="text-[18px] font-bold text-[#171717] mb-2">
+              <h3 className="text-[18px] font-semibold text-[#171717] mb-2">
                 {card.title}
               </h3>
               <p className="text-[#8A94A6] text-[14px] leading-relaxed mb-8">
@@ -778,7 +807,7 @@ export default function DashboardComponent() {
                 <div className="flex flex-col">
                   <span className="text-[13px] text-[#A0AAB5] mb-1">Starts from</span>
                   <div>
-                    <span className="text-[22px] font-bold text-[#171717]">{card.price}</span>
+                    <span className="text-[22px] font-semibold text-[#171717]">{card.price}</span>
                     <span className="text-[13px] text-[#A0AAB5] ml-1">{card.unit}</span>
                   </div>
                 </div>
@@ -798,7 +827,7 @@ export default function DashboardComponent() {
                 ))}
               </div>
 
-              <a href="#" className="text-[#00A0E3] text-[14px] font-bold hover:underline inline-block mt-auto w-max">
+              <a href="#" className="text-[#00A0E3] text-[14px] font-semibold hover:underline inline-block mt-auto w-max">
                 {card.linkText}
               </a>
             </div>
@@ -807,7 +836,7 @@ export default function DashboardComponent() {
       </div>
       
       <div className="mb-12">
-        <h2 className="text-[20px] font-bold text-[#171717] mb-6">
+        <h2 className="text-[20px] font-semibold text-[#171717] mb-6">
           Lorem ipsum dolor sit amet
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -816,7 +845,7 @@ export default function DashboardComponent() {
               <div className={`h-[160px] w-full ${card.bgColor}`}></div>
               <div className="p-5 flex-1 flex flex-col">
                 <div className="flex items-center justify-between mb-2">
-                  <h3 className="text-[15px] font-bold text-[#171717]">{card.title}</h3>
+                  <h3 className="text-[15px] font-semibold text-[#171717]">{card.title}</h3>
                   <img src={card.logo} alt="Logoipsum" className="h-[20px] object-contain" />
                 </div>
                 <p className="text-[#8A94A6] text-[13px] leading-relaxed mb-6 flex-1">
@@ -833,11 +862,11 @@ export default function DashboardComponent() {
 
       {/* --- YOUR ORDERS SECTION --- */}
       <div className="mb-12">
-        <h2 className="text-[20px] font-bold text-[#171717] mb-6">
+        <h2 className="text-[20px] font-semibold text-[#171717] mb-6">
           Your Orders
         </h2>
         <div className="bg-[#F0F7FB] border border-[#E4EEF5] rounded-[16px] p-8">
-          <h3 className="text-[16px] font-bold text-[#171717] mb-1">
+          <h3 className="text-[16px] font-semibold text-[#171717] mb-1">
             We are looking forward to helping you get published
           </h3>
           <p className="text-[#8A94A6] text-[14px] mb-6">
@@ -851,7 +880,7 @@ export default function DashboardComponent() {
             {additionalData.stats.map((stat) => (
               <div key={stat.id} className="flex items-center gap-2.5">
                 <stat.icon className="w-[18px] h-[18px] text-[#00A0E3]" strokeWidth={2} />
-                <span className="text-[14px] font-bold text-[#171717]">{stat.text}</span>
+                <span className="text-[14px] font-semibold text-[#171717]">{stat.text}</span>
               </div>
             ))}
           </div>
@@ -860,14 +889,14 @@ export default function DashboardComponent() {
 
       {/* --- WHY CHOOSE SUBMIT RIGHT SECTION --- */}
       <div className="mb-12">
-        <h2 className="text-[20px] font-bold text-[#171717] mb-6">
+        <h2 className="text-[20px] font-semibold text-[#171717] mb-6">
           Why Choose Submit Right
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 border border-[#EAECF0] rounded-[16px] bg-white lg:divide-x divide-y lg:divide-y-0 divide-[#EAECF0] overflow-hidden">
           {additionalData.reasons.map((reason) => (
             <div key={reason.id} className="p-8 flex flex-col">
               <div className="w-[72px] h-[72px] rounded-full bg-[#F5F7FA] mb-6 flex-shrink-0"></div>
-              <h3 className="text-[16px] font-bold text-[#171717] mb-2">
+              <h3 className="text-[16px] font-semibold text-[#171717] mb-2">
                 {reason.title}
               </h3>
               <p className="text-[#8A94A6] text-[14px] leading-relaxed">
@@ -879,7 +908,7 @@ export default function DashboardComponent() {
       </div>
       
       <div className="mb-12">
-        <h2 className="text-[20px] font-bold text-[#171717] mb-6">
+        <h2 className="text-[20px] font-semibold text-[#171717] mb-6">
           Frequently Asked Questions
         </h2>
         
@@ -922,7 +951,7 @@ export default function DashboardComponent() {
       {/* --- CONTACT SUPPORT SECTION --- */}
       <div className="mb-8">
         <div className="bg-[#F0F8FC] border border-[#E0F0F9] rounded-[16px] p-8">
-          <h3 className="text-[18px] font-bold text-[#171717] mb-2">
+          <h3 className="text-[18px] font-semibold text-[#171717] mb-2">
             Have more questions for us?
           </h3>
           <p className="text-[#8A94A6] text-[15px] mb-8">
@@ -934,7 +963,7 @@ export default function DashboardComponent() {
               <div className="bg-[#00A0E3] p-2.5 rounded-[8px] text-white">
                 <Phone className="w-[18px] h-[18px]" strokeWidth={2} />
               </div>
-              <span className="text-[14px] font-bold text-[#171717]">
+              <span className="text-[14px] font-semibold text-[#171717]">
                 Call us at +1 (669) 272-1214
               </span>
             </div>
@@ -943,7 +972,7 @@ export default function DashboardComponent() {
               <div className="bg-[#00A0E3] p-2.5 rounded-[8px] text-white">
                 <Mail className="w-[18px] h-[18px]" strokeWidth={2} />
               </div>
-              <span className="text-[14px] font-bold text-[#171717]">
+              <span className="text-[14px] font-semibold text-[#171717]">
                 Email us at request@editage.com
               </span>
             </div>

@@ -126,12 +126,21 @@ export default function PaymentsAndFilesPage() {
     <div className="w-full font-dm-sans  mx-auto flex flex-col min-h-[calc(100vh-76px)]">
       
       {/* --- HEADER --- */}
-      <div className=" px-4 py-2 shrink-0">
+      {/* <div className=" px-4 py-2 shrink-0">
         <h1 className="text-[24px] font-bold text-[#171717] mb-1.5 tracking-tight">
           Payments & Files
         </h1>
-        <p className="text-[#8A94A6] text-[14px]">
+        <p className="text-[#78788D] text-[14px]">
           Complete payment to access your final documents.
+        </p>
+      </div> */}
+
+      <div className="shrink-0 border-b py-4 border-gray-100 px-4">
+        <h1 className="text-[22px] font-medium text-[#1C1C1D] mb-1.5 tracking-tight">
+        Payments & Files
+        </h1>
+        <p className="text-[#78788D] text-[14px]">
+        Complete payment to access your final documents.
         </p>
       </div>
 
@@ -145,10 +154,10 @@ export default function PaymentsAndFilesPage() {
               Pending
             </span>
             <div className="flex flex-col mt-1">
-              <span className="text-[32px] font-medium text-[#171717] leading-none mb-1.5">
+              <span className="text-[22px] font-semibold text-[#171717] leading-none mb-1.5">
                 ₹425.00
               </span>
-              <span className="text-[#8A94A6] text-[13px] font-medium">
+              <span className="text-[#78788D] text-[14px] font-medium">
                 Total Amount Due
               </span>
             </div>
@@ -173,7 +182,7 @@ export default function PaymentsAndFilesPage() {
                     </div>
                   </div>
                   <h2 className="text-[24px] font-bold text-[#171717] mb-2">Processing Payment</h2>
-                  <p className="text-[#8A94A6] text-[16px] mb-10 leading-relaxed max-w-[90%]">
+                  <p className="text-[#78788D] text-[16px] mb-10 leading-relaxed max-w-[90%]">
                     Your payment is being processed. Please do not refresh or close this window.
                   </p>
                   
@@ -181,12 +190,12 @@ export default function PaymentsAndFilesPage() {
                   <div className="w-full mb-4 h-2 bg-[#EAECF0] rounded-full overflow-hidden">
                     <div className="h-full bg-[#00A0E3] w-[45%] rounded-full animate-[pulse_1s_ease-in-out_infinite]"></div>
                   </div>
-                  <p className="text-[#8A94A6] text-[13px] font-medium tracking-wider mb-10 uppercase">
+                  <p className="text-[#78788D] text-[13px] font-medium tracking-wider mb-10 uppercase">
                     Securing Transaction
                   </p>
                   
                   <div className="w-full h-[1px] bg-[#EAECF0] mb-6"></div>
-                  <p className="text-[#8A94A6] text-[15px]">Transaction Reference: TRX-2026-0001</p>
+                  <p className="text-[#78788D] text-[15px]">Transaction Reference: TRX-2026-0001</p>
                 </div>
               )}
 
@@ -201,21 +210,21 @@ export default function PaymentsAndFilesPage() {
                     </div>
                   </div>
                   <h2 className="text-[24px] font-bold text-[#171717] mb-2">Payment Successful</h2>
-                  <p className="text-[#8A94A6] text-[16px] mb-8 leading-relaxed max-w-[95%]">
+                  <p className="text-[#78788D] text-[16px] mb-8 leading-relaxed max-w-[95%]">
                     Your payment has been completed successfully and your documents are ready for download.
                   </p>
 
                   <div className="w-full border border-[#EAECF0] rounded-[16px] p-5 flex flex-col gap-4 mb-8">
                     <div className="flex justify-between items-center">
-                      <span className="text-[#8A94A6] text-[15px]">Amount Paid</span>
+                      <span className="text-[#78788D] text-[15px]">Amount Paid</span>
                       <span className="text-[#171717] text-[18px] font-bold">₹425.00</span>
                     </div>
                     <div className="flex justify-between items-center">
-                      <span className="text-[#8A94A6] text-[15px]">Transaction ID</span>
+                      <span className="text-[#78788D] text-[15px]">Transaction ID</span>
                       <span className="text-[#171717] text-[15px] font-medium">SR-5920-X1</span>
                     </div>
                     <div className="flex justify-between items-center">
-                      <span className="text-[#8A94A6] text-[15px]">Date</span>
+                      <span className="text-[#78788D] text-[15px]">Date</span>
                       <span className="text-[#171717] text-[15px] font-medium">Jan 22, 2026</span>
                     </div>
                   </div>
@@ -248,10 +257,10 @@ export default function PaymentsAndFilesPage() {
                     </div>
                   </div>
                   <h2 className="text-[24px] font-bold text-[#171717] mb-2">Payment Failed</h2>
-                  <p className="text-[#8A94A6] text-[16px] mb-1">
+                  <p className="text-[#78788D] text-[16px] mb-1">
                     Your payment could not be processed.
                   </p>
-                  <p className="text-[#8A94A6] text-[16px] mb-8">
+                  <p className="text-[#78788D] text-[16px] mb-8">
                     Transaction ID: #SR-98231-PF
                   </p>
 
@@ -287,13 +296,13 @@ export default function PaymentsAndFilesPage() {
         <div className="px-6 py-4 border-t border-[#EAECF0] bg-[#FAFAFB] flex flex-col sm:flex-row items-start sm:items-center gap-6">
           <div className="flex items-center gap-2 text-[14px]">
             <FileText className="w-[18px] h-[18px] text-[#00A0E3]" strokeWidth={2} />
-            <span className="text-[#8A94A6]">Total Word Count:</span>
+            <span className="text-[#78788D]">Total Word Count:</span>
             <span className="text-[#171717] font-bold">4,250</span>
           </div>
           <div className="hidden sm:block w-[1px] h-[20px] bg-[#D1D5DB]"></div>
           <div className="flex items-center gap-2 text-[14px]">
             <Coins className="w-[18px] h-[18px] text-[#00A0E3]" strokeWidth={2} />
-            <span className="text-[#8A94A6]">Rate Per Word:</span>
+            <span className="text-[#78788D]">Rate Per Word:</span>
             <span className="text-[#171717] font-bold">₹0.10</span>
           </div>
         </div>
@@ -318,7 +327,7 @@ export default function PaymentsAndFilesPage() {
               className={`flex-1 sm:flex-none px-5 py-2 text-[13px] font-bold rounded-[6px] transition-all duration-200 ${
                 activeTab === tab
                   ? "bg-[#00A0E3] text-white shadow-sm"
-                  : "text-[#8A94A6] hover:text-[#171717] hover:bg-[#EAEFF4]"
+                  : "text-[#78788D] hover:text-[#171717] hover:bg-[#EAEFF4]"
               }`}
             >
               {tab}
@@ -330,17 +339,17 @@ export default function PaymentsAndFilesPage() {
       {/* --- TABLES SECTION --- */}
       <div className="flex-1 flex mx-2 px-4 flex-col">
         {activeTab === "Documents & File Access" && (
-          <div className="border border-[#EAECF0] rounded-[12px] bg-white overflow-hidden shadow-sm">
+          <div className=" rounded-[12px] bg-white overflow-hidden  ">
             <div className="overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
               <table className="w-full text-left border-collapse min-w-[900px]">
                 <thead>
                   <tr className="bg-[#F4F8FA] border-b border-[#EAECF0]">
-                    <th className="px-6 py-4 text-[13px] font-bold text-[#171717] w-[25%]">Document Name</th>
-                    <th className="px-6 py-4 text-[13px] font-bold text-[#171717]">Service Type</th>
-                    <th className="px-6 py-4 text-[13px] font-bold text-[#171717]">Status</th>
-                    <th className="px-6 py-4 text-[13px] font-bold text-[#171717]">Payment Status</th>
-                    <th className="px-6 py-4 text-[13px] font-bold text-[#171717] w-[25%]">Files</th>
-                    <th className="px-6 py-4 text-[13px] font-bold text-[#171717]">Action</th>
+                    <th className="px-6 py-4 text-[14px] font-medium text-[#171717] w-[25%]">Document Name</th>
+                    <th className="px-6 py-4 text-[14px] font-medium text-[#171717]">Service Type</th>
+                    <th className="px-6 py-4 text-[14px] font-medium text-[#171717]">Status</th>
+                    <th className="px-6 py-4 text-[14px] font-medium text-[#171717]">Payment Status</th>
+                    <th className="px-6 py-4 text-[14px] font-medium text-[#171717] w-[25%]">Files</th>
+                    <th className="px-6 py-4 text-[14px] font-medium text-[#171717]">Action</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -371,7 +380,7 @@ export default function PaymentsAndFilesPage() {
                           {doc.fileLocked ? (
                             <>
                               {doc.files === "Locked until payment" && <Lock className="w-[16px] h-[16px] text-[#A0AAB5]" strokeWidth={2} />}
-                              <span className="text-[13px] text-[#8A94A6] italic">{doc.files}</span>
+                              <span className="text-[13px] text-[#78788D] italic">{doc.files}</span>
                             </>
                           ) : (
                             <>
@@ -401,7 +410,7 @@ export default function PaymentsAndFilesPage() {
         )}
 
         {activeTab === "Invoices & Receipts" && (
-          <div className="border border-[#EAECF0] rounded-[12px] bg-white overflow-hidden shadow-sm">
+          <div className=" rounded-[12px] bg-white overflow-hidden  ">
             <div className="overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
               <table className="w-full text-left border-collapse min-w-[700px]">
                 <thead>
@@ -448,7 +457,7 @@ export default function PaymentsAndFilesPage() {
 
         {/* --- PAGINATION --- */}
         <div className="mt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-[#8A94A6] text-[13px]">
+          <p className="text-[#78788D] text-[13px]">
             Showing <span className="font-bold text-[#171717]">3</span> of <span className="font-bold text-[#171717]">12</span> documents
           </p>
           <div className="flex items-center gap-2">

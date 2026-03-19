@@ -131,13 +131,13 @@ export default function ServicesPackComponent() {
 
         {/* --- RIGHT COLUMN: Pricing Box --- */}
         <div className="lg:col-span-1">
-          <div className="relative bg-[#F8EED1] border border-[#EBE1C5] rounded-[16px] overflow-hidden shadow-[0_2px_4px_rgba(0,0,0,0.02)]">
-            <div className="absolute top-0 right-0 bg-[#D4A347] text-white text-[12px] font-bold px-3 py-1.5 rounded-bl-[12px] rounded-tr-[16px]">
+          <div className="relative bg-[#F4E9CD] border border-[#EBE1C5] rounded-[16px] overflow-hidden shadow-[0_2px_4px_rgba(0,0,0,0.02)]">
+            <div className="absolute top-0 right-0 bg-[#CEA02D] text-white text-[12px] font-bold px-3 py-1.5 rounded-bl-[12px] rounded-tr-[16px]">
               {pageData.pricingBox.badge}
             </div>
 
-            <div className="p-8">
-              <h2 className="text-[20px] font-bold text-[#C59432] mb-2 mt-2">
+            <div className="p-2">
+              <h2 className="text-[20px] font-bold text-[#CEA02D] mb-1 mt-1">
                 {pageData.pricingBox.title}
               </h2>
               <p className="text-[#8A94A6] text-[14px] mb-8 whitespace-pre-line leading-relaxed">

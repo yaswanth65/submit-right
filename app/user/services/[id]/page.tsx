@@ -128,19 +128,19 @@ export default function ServiceDetailPage() {
             </div>
 
             {/* Title & Description */}
-            <h1 className="text-[28px] font-bold text-[#171717] mb-3 tracking-tight">
+            <h1 className="text-[22px] font-medium text-[#1C1C1D] mb-3 tracking-tight">
               Lorem ipsum dolor
             </h1>
-            <p className="text-[#8A94A6] text-[15px] leading-relaxed max-w-[95%] mb-6">
+            <p className="text-[#78788D] text-[14px] leading-relaxed max-w-[95%] mb-4">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam
             </p>
 
             {/* Tags */}
-            <div className="flex flex-wrap gap-3 mb-10">
-              <span className="border border-[#EAECF0] text-[#525866] text-[14px] px-4 py-1.5 rounded-full bg-white">
+            <div className="flex flex-wrap gap-3 mb-6">
+              <span className="border border-[#EAECF0] text-[#78788D] text-[14px] px-4 py-1.5 rounded-full bg-white">
                 Service Domain
               </span>
-              <span className="border border-[#EAECF0] text-[#525866] text-[14px] px-4 py-1.5 rounded-full bg-white">
+              <span className="border border-[#EAECF0] text-[#78788D] text-[14px] px-4 py-1.5 rounded-full bg-white">
                 Lorem ipsum dolor
               </span>
             </div>
@@ -153,7 +153,7 @@ export default function ServiceDetailPage() {
               </div>
               
               <div className="flex-1 p-6 border-b lg:border-b-0 lg:border-r border-[#EAECF0] flex items-center">
-                <p className="text-[#8A94A6] text-[14px] leading-relaxed">
+                <p className="text-[#78788D] text-[14px] leading-relaxed">
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.
                 </p>
               </div>
@@ -175,7 +175,7 @@ export default function ServiceDetailPage() {
               <div className="px-8 py-6 flex flex-col items-center justify-center shrink-0">
                 <Users className="w-6 h-6 text-[#00A0E3] mb-2" />
                 <span className="text-[20px] font-bold text-[#171717] mb-0.5">15,969</span>
-                <span className="text-[#8A94A6] text-[13px]">learners</span>
+                <span className="text-[#78788D] text-[13px]">learners</span>
               </div>
             </div>
 
@@ -184,7 +184,7 @@ export default function ServiceDetailPage() {
               <h3 className="text-[16px] font-bold text-[#171717] mb-4 px-6">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit
               </h3>
-              
+              <div className="h-[1px] bg-[#EAECF0] " ></div>
               <div className="grid grid-cols-1 md:grid-cols-2">
                 {[1, 2, 3, 4, 5, 6].map((item, index) => (
                   <div 
@@ -195,7 +195,7 @@ export default function ServiceDetailPage() {
                     `}
                   >
                     <Check className="w-[18px] h-[18px] text-[#171717] shrink-0 mt-0.5" strokeWidth={2.5} />
-                    <span className="text-[#8A94A6] text-[14px] leading-relaxed">
+                    <span className="text-[#78788D] text-[14px] leading-relaxed">
                       Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
                     </span>
                   </div>
@@ -209,16 +209,16 @@ export default function ServiceDetailPage() {
                 Explore Related Services
               </h3>
               <div className="flex flex-wrap gap-2.5">
-                <span className="border border-[#EAECF0] text-[#525866] text-[13px] px-4 py-1.5 rounded-full bg-[#F9FAFB] font-medium">
+                <span className="border border-[#EAECF0] text-[#78788D] text-[13px] px-4 py-1.5 rounded-full bg-[#F9FAFB] font-medium">
                   Service Domain
                 </span>
-                <span className="border border-[#EAECF0] text-[#525866] text-[13px] px-4 py-1.5 rounded-full bg-[#F9FAFB] font-medium">
+                <span className="border border-[#EAECF0] text-[#78788D] text-[13px] px-4 py-1.5 rounded-full bg-[#F9FAFB] font-medium">
                   Lorem ipsum dolor
                 </span>
-                <span className="border border-[#EAECF0] text-[#525866] text-[13px] px-4 py-1.5 rounded-full bg-[#F9FAFB] font-medium">
+                <span className="border border-[#EAECF0] text-[#78788D] text-[13px] px-4 py-1.5 rounded-full bg-[#F9FAFB] font-medium">
                   Lorem ipsum dolor
                 </span>
-                <span className="border border-[#EAECF0] text-[#525866] text-[13px] px-4 py-1.5 rounded-full bg-[#F9FAFB] font-medium">
+                <span className="border border-[#EAECF0] text-[#78788D] text-[13px] px-4 py-1.5 rounded-full bg-[#F9FAFB] font-medium">
                   Lorem ipsum dolor
                 </span>
               </div>
@@ -232,7 +232,7 @@ export default function ServiceDetailPage() {
               {[1, 2, 3, 4, 5, 6].map((item) => (
                 <div key={item} className="flex items-center gap-2.5">
                   <Check className="w-[16px] h-[16px] text-[#A0AAB5] shrink-0" strokeWidth={2.5} />
-                  <span className="text-[#8A94A6] text-[14px]">Lorem ipsum dolor</span>
+                  <span className="text-[#78788D] text-[14px]">Lorem ipsum dolor</span>
                 </div>
               ))}
             </div>
@@ -255,7 +255,7 @@ export default function ServiceDetailPage() {
                 </button>
                 {openSections.mathematics && (
                   <div className="px-6 py-5 pl-[46px] border-t border-[#EAECF0]">
-                    <ul className="list-disc text-[#8A94A6] text-[14px] leading-relaxed space-y-4 marker:text-[#D1D5DB] ml-4">
+                    <ul className="list-disc text-[#78788D] text-[14px] leading-relaxed space-y-4 marker:text-[#D1D5DB] ml-4">
                       <li className="pl-1">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.</li>
                       <li className="pl-1">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.</li>
                     </ul>
@@ -284,7 +284,7 @@ export default function ServiceDetailPage() {
                   </button>
                   {openSections[section.id as keyof typeof openSections] && (
                     <div className="px-6 py-5 pl-[46px] border-t border-[#EAECF0] bg-white">
-                      <p className="text-[#8A94A6] text-[14px]">Content for {section.label} goes here.</p>
+                      <p className="text-[#78788D] text-[14px]">Content for {section.label} goes here.</p>
                     </div>
                   )}
                 </div>
@@ -296,7 +296,7 @@ export default function ServiceDetailPage() {
           {/* SECTION: Service Examples */}
           <div>
             <h2 className="text-[18px] font-bold text-[#171717] mb-5">Service Examples</h2>
-            <ul className="list-disc text-[#8A94A6] text-[14px] leading-relaxed space-y-4 marker:text-[#A0AAB5] ml-4">
+            <ul className="list-disc text-[#78788D] text-[14px] leading-relaxed space-y-4 marker:text-[#A0AAB5] ml-4">
               <li className="pl-1">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</li>
               <li className="pl-1">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</li>
             </ul>
@@ -335,10 +335,10 @@ export default function ServiceDetailPage() {
                   </div>
 
                   <div className="sm:border-l border-[#EAECF0] sm:pl-6 sm:ml-2 flex flex-col items-start sm:items-end w-full sm:w-auto mt-2 sm:mt-0 pt-4 sm:pt-0 border-t sm:border-t-0">
-                    <span className="text-[12px] text-[#8A94A6] mb-0.5">From</span>
+                    <span className="text-[12px] text-[#78788D] mb-0.5">From</span>
                     <div className="flex items-baseline gap-1">
                       <span className="text-[18px] font-bold text-[#171717]">{service.price}</span>
-                      <span className="text-[13px] text-[#8A94A6]">/word</span>
+                      <span className="text-[13px] text-[#78788D]">/word</span>
                     </div>
                   </div>
                 </div>
@@ -361,7 +361,7 @@ export default function ServiceDetailPage() {
                     <h3 className={`text-[18px] font-bold ${pkg.titleColor} mb-2 mt-1`}>
                       Lorem ipsum dolor
                     </h3>
-                    <p className="text-[#8A94A6] text-[13px] mb-6 leading-relaxed">
+                    <p className="text-[#78788D] text-[13px] mb-6 leading-relaxed">
                       Lorem ipsum dolor sit amet, consectetur<br/>adipiscing.
                     </p>
 
@@ -379,11 +379,11 @@ export default function ServiceDetailPage() {
                     <div className="mt-auto">
                       <div className={`border-t ${pkg.divider} pt-5 mb-5`}>
                         <div className="flex justify-between items-center mb-1">
-                          <span className="text-[#8A94A6] text-[13px] font-medium">Get 6 services worth</span>
+                          <span className="text-[#78788D] text-[13px] font-medium">Get 6 services worth</span>
                           <span className="text-[#171717] text-[14px] font-bold line-through">$1240</span>
                         </div>
                         <div className="flex justify-between items-center">
-                          <span className="text-[#8A94A6] text-[13px] font-medium">For only:</span>
+                          <span className="text-[#78788D] text-[13px] font-medium">For only:</span>
                           <span className={`${pkg.titleColor} text-[24px] font-bold tracking-tight`}>$912</span>
                         </div>
                       </div>
@@ -422,12 +422,12 @@ export default function ServiceDetailPage() {
                           <Star className="w-3.5 h-3.5 fill-[#FF8B00] text-[#FF8B00]" />
                           <StarHalf className="w-3.5 h-3.5 fill-[#FF8B00] text-[#FF8B00]" />
                         </div>
-                        <span className="text-[#8A94A6] text-[12px]">2 days ago</span>
+                        <span className="text-[#78788D] text-[12px]">2 days ago</span>
                       </div>
                     </div>
                   </div>
                   
-                  <p className="text-[#8A94A6] text-[14px] leading-relaxed mb-4">
+                  <p className="text-[#78788D] text-[14px] leading-relaxed mb-4">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
                   </p>
                   
@@ -463,7 +463,7 @@ export default function ServiceDetailPage() {
                     <h3 className="text-[15px] font-bold text-[#171717] mb-1.5 leading-tight">
                       Lorem ipsum dolor sit amet consectetur
                     </h3>
-                    <p className="text-[#8A94A6] text-[13px] leading-relaxed mb-4 line-clamp-2">
+                    <p className="text-[#78788D] text-[13px] leading-relaxed mb-4 line-clamp-2">
                       Lorem ipsum dolor sit amet, consectetur adipiscing elit, se...
                     </p>
 
@@ -482,7 +482,7 @@ export default function ServiceDetailPage() {
 
                     <div className="flex items-baseline gap-1">
                       <span className="text-[18px] font-bold text-[#171717]">$0.065</span>
-                      <span className="text-[13px] text-[#8A94A6]">/word</span>
+                      <span className="text-[13px] text-[#78788D]">/word</span>
                     </div>
                   </div>
                 </div>
@@ -509,7 +509,7 @@ export default function ServiceDetailPage() {
                         <span className="text-[15px] font-bold text-[#171717] w-6 shrink-0">
                           {faq.id}
                         </span>
-                        <span className="text-[15px] text-[#8A94A6]">
+                        <span className="text-[15px] text-[#78788D]">
                           {faq.question}
                         </span>
                       </div>
@@ -550,10 +550,10 @@ export default function ServiceDetailPage() {
               {/* Pricing Header */}
               <div className="flex justify-between items-start mb-6">
                 <div className="flex flex-col">
-                  <span className="text-[#8A94A6] text-[13px] mb-1">From</span>
+                  <span className="text-[#78788D] text-[13px] mb-1">From</span>
                   <div className="flex items-baseline gap-1.5">
                     <span className="text-[28px] font-bold text-[#171717]">$0.065</span>
-                    <span className="text-[#8A94A6] text-[15px]">/word</span>
+                    <span className="text-[#78788D] text-[15px]">/word</span>
                   </div>
                 </div>
                 <span className="bg-[#E6F8EC] text-[#00A859] text-[12px] font-bold px-3 py-1.5 rounded-full mt-1">
@@ -575,12 +575,12 @@ export default function ServiceDetailPage() {
 
               {/* Estimate Calculator */}
               <div className="flex flex-col">
-                <span className="text-[#8A94A6] text-[13px] mb-1">
+                <span className="text-[#78788D] text-[13px] mb-1">
                   Estimated price based on word count
                 </span>
                 <div className="flex items-baseline gap-1.5 mb-6">
                   <span className="text-[18px] font-bold text-[#171717]">From $0.065</span>
-                  <span className="text-[#8A94A6] text-[14px]">/word</span>
+                  <span className="text-[#78788D] text-[14px]">/word</span>
                 </div>
 
                 {/* Word Count Input */}
@@ -588,7 +588,7 @@ export default function ServiceDetailPage() {
                   <input 
                     type="text" 
                     placeholder="Enter no.of words" 
-                    className="w-full border border-[#EAECF0] rounded-[8px] px-4 py-3 text-[14px] text-[#171717] placeholder:text-[#8A94A6] focus:outline-none focus:border-[#00A0E3] transition-colors"
+                    className="w-full border border-[#EAECF0] rounded-[8px] px-4 py-3 text-[14px] text-[#171717] placeholder:text-[#78788D] focus:outline-none focus:border-[#00A0E3] transition-colors"
                   />
                   <div className="absolute right-4 top-1/2 -translate-y-1/2 flex flex-col gap-1">
                     <ChevronUp className="w-3.5 h-3.5 text-[#525866] cursor-pointer hover:text-[#171717]" strokeWidth={3} />
@@ -602,7 +602,7 @@ export default function ServiceDetailPage() {
                     Document Type
                   </label>
                   <div className="relative">
-                    <select className="w-full border border-[#EAECF0] rounded-[8px] px-4 py-3 text-[14px] text-[#8A94A6] appearance-none focus:outline-none focus:border-[#00A0E3] bg-white transition-colors cursor-pointer">
+                    <select className="w-full border border-[#EAECF0] rounded-[8px] px-4 py-3 text-[14px] text-[#78788D] appearance-none focus:outline-none focus:border-[#00A0E3] bg-white transition-colors cursor-pointer">
                       <option>Select document type</option>
                       <option>Research Paper</option>
                       <option>Thesis</option>

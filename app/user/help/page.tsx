@@ -75,17 +75,24 @@ export default function HelpSupportPage() {
     <div className="w-full font-dm-sans  mx-auto ">
       
       {/* --- PAGE HEADER --- */}
-      <div className="mb-6 border-y border-[#EAECF0] px-4 pb-3">
+      {/* <div className="mb-6 border-y border-[#EAECF0] px-4 pb-3">
         <h1 className="text-[28px] font-bold text-[#171717] mb-1.5 tracking-tight">
           Help & Support
         </h1>
-        <p className="text-[#8A94A6] text-[15px]">
+        <p className="text-[#78788D] text-[15px]">
           Manage your document activity and platform updates.
         </p>
+      </div> */}
+      <div className="shrink-0 border-b py-4 border-gray-100 px-4">
+        <h1 className="text-[22px] font-medium text-[#1C1C1D] mb-1.5 tracking-tight">
+        Help & Support
+        </h1>
+        <p className="text-[#78788D] text-[14px]">
+        Manage your document activity and platform updates.
+        </p>
       </div>
-
       {/* --- HELP CARDS --- */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 px-4 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 px-4 my-6">
         {helpCards.map((card) => (
           <div 
             key={card.id} 
@@ -99,7 +106,7 @@ export default function HelpSupportPage() {
               <h3 className="text-[16px] font-bold text-[#171717] mb-2">
                 {card.title}
               </h3>
-              <p className="text-[#8A94A6] text-[14px] leading-relaxed mb-6 flex-1">
+              <p className="text-[#78788D] text-[14px] leading-relaxed mb-6 flex-1">
                 {card.desc}
               </p>
               
@@ -114,15 +121,15 @@ export default function HelpSupportPage() {
       {/* --- RECENT SUPPORT TICKETS --- */}
       <div className=" px-6 " >
         <div className="mb-6">
-          <h2 className="text-[20px] font-bold text-[#171717] mb-1">
+          <h2 className="text-[18px] font-semibold text-[#171717] mb-1">
             Recent Support Tickets
           </h2>
-          <p className="text-[#8A94A6] text-[14px]">
+          <p className="text-[#78788D] text-[14px]">
             amet, consectetur adipiscing elit, sed do eiusmod tempor.
           </p>
         </div>
 
-        <div className="border border-[#EAECF0] rounded-[12px] bg-white overflow-hidden shadow-sm">
+        <div className=" rounded-[12px] bg-white overflow-hidden  mb-8 ">
           <div className="overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
             <table className="w-full text-left border-collapse min-w-[800px]">
               <thead>

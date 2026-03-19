@@ -153,45 +153,53 @@ export default function OverviewPage() {
   };
 
   return (
-    <div className="w-full font-dm-sans  mx-auto px-6 lg:px-8 py-4 ">
+    <div className="w-full font-dm-sans  mx-auto  ">
       
       {/* --- HEADER --- */}
-      <div className="mb-4 border-b border-gray-200 ">
+      {/* <div className="mb-4 border-b border-gray-200 ">
         <h1 className="text-[24px] font-bold text-[#171717] mb-1.5 tracking-tight">
           Overview
         </h1>
         <p className="text-[#8A94A6] text-[15px]">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit.
         </p>
+      </div> */}
+      <div className="shrink-0 border-b py-4 border-gray-100 px-4">
+        <h1 className="text-[22px] font-medium text-[#1C1C1D] mb-1.5 tracking-tight">
+        Overview
+        </h1>
+        <p className="text-[#78788D] text-[14px]">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        </p>
       </div>
 
-      <div className="flex flex-col lg:flex-row gap-8 items-start">
+      <div className="flex flex-col lg:flex-row gap-6 items-start">
         
         {/* --- LEFT COLUMN --- */}
-        <div className="w-full lg:flex-1 flex flex-col gap-6">
+        <div className="w-full lg:flex-1 p-4 flex flex-col gap-6">
           
           {/* Payment Alert Box */}
-          <div className="bg-[#FFFDF5] border border-[#FDE68A] rounded-[16px] overflow-hidden">
-            <div className="p-6 pb-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="bg-[rgb(249,244,230)] border border-[#CEA02D] rounded-[16px] overflow-hidden">
+            <div className="p-4 pb-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div className="flex items-start gap-4">
                 <div className="w-[42px] h-[42px] rounded-lg bg-[#FEF3C7] flex items-center justify-center shrink-0">
-                  <AlertTriangle className="w-[20px] h-[20px] text-[#D97706]" strokeWidth={2.5} />
+                  <AlertTriangle className="w-[20px] h-[20px] text-[#CEA02D]" strokeWidth={2.5} />
                 </div>
                 <div className="mt-0.5">
-                  <h3 className="text-[16px] font-bold text-[#B45309] mb-1">
+                  <h3 className="text-[18px] font-bold text-[#CEA02D] mb-1">
                     Payment required to continue
                   </h3>
-                  <p className="text-[#8A94A6] text-[14px]">
+                  <p className="text-[#78788D] text-[14px]">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                   </p>
                 </div>
               </div>
-              <button className="flex items-center gap-2 text-[#D97706] font-bold text-[14px] hover:underline shrink-0 sm:mt-0 mt-2">
+              <button className="flex items-center underline gap-2 text-[#D97706] font-bold text-[14px] hover:underline shrink-0 sm:mt-0 mt-2">
                 Pay Now <ArrowRight className="w-4 h-4" />
               </button>
             </div>
             <div className="border-t border-[#FDE68A]/50 px-6 py-4 bg-[#FFFCF0]/50 flex gap-2">
-              <span className="text-[#8A94A6] text-[14px]">Document:</span>
+              <span className="text-[#78788D] text-[14px]">Document:</span>
               <span className="text-[#171717] font-medium text-[14px]">AI Research Paper</span>
             </div>
           </div>
@@ -236,7 +244,7 @@ export default function OverviewPage() {
               <button className="text-[#00A0E3] text-[13px] font-bold hover:underline">View All</button>
             </div>
             
-            <div className="border border-[#EAECF0] bg-white rounded-[16px] overflow-hidden shadow-sm">
+            <div className="bg-white rounded-[16px] overflow-hidden">
               <div className="overflow-x-auto">
                 <table className="w-full text-left border-collapse min-w-[700px]">
                   <thead>
@@ -274,7 +282,7 @@ export default function OverviewPage() {
         </div>
 
         {/* --- RIGHT COLUMN --- */}
-        <div className="w-full lg:w-[320px] xl:w-[380px] shrink-0 flex flex-col gap-8 lg:border-l lg:border-[#EAECF0] lg:pl-8">
+        <div className="w-full lg:w-[320px] xl:w-[380px] shrink-0 flex flex-col gap-8 lg:border-l p-4 lg:border-[#EAECF0] ">
           
           {/* What Happens Next Section */}
           <div className="pt-2">

@@ -1,5 +1,5 @@
 "use client";
-
+import { useParams } from "next/navigation"; // <-- IMPORT THIS
 import React, { useState } from "react";
 import { 
   FileText, 
@@ -16,6 +16,10 @@ import {
 } from "lucide-react";
 
 export default function DocumentDetailsSlugPage() {
+  const params = useParams();
+  
+  // Extract the slug (Note: Change 'id' to 'slug' if your folder is named [slug] instead of [id])
+  const currentSlug = params.id as string;
   // 1. Data provided by user
   const documents = [
     { 
@@ -67,17 +71,9 @@ export default function DocumentDetailsSlugPage() {
       action: "-" 
     },
   ];
-
-  // 2. Simulate taking the slug from the URL
-  // "ai-research-paper" -> Payment State
-  // "thesis-chapter-3" -> Review State
-  const currentSlug = "ai-research-paper"; 
-  
-  // Find the specific document
   const document = documents.find(doc => doc.id === currentSlug) || documents[0];
 
-  // 3. Determine Initial Layout State based strictly on Document Data
-  // State can be: "payment", "review", or "in-revision" (after submitting the review modal)
+  // 4. Determine Initial Layout State based strictly on Document Data
   const [pageState, setPageState] = useState<"payment" | "review" | "in-revision">(
     document.status === "Payment Needed" ? "payment" : "review"
   );
@@ -97,7 +93,7 @@ export default function DocumentDetailsSlugPage() {
     <div className="w-full font-dm-sans bg-[#F9FAFB] min-h-[calc(100vh-76px)]  flex flex-col">
       
       {/* --- PAGE HEADER --- */}
-      <div className=" mx-auto w-full bg-white border-b border-gray-100 px-4 mx-2 py-2  ">
+      {/* <div className=" mx-auto w-full bg-white border-b border-gray-100 px-4 mx-2 py-2  ">
  
 
         <h1 className="text-[24px] lg:text-[28px] font-bold text-[#171717] mb-1.5 tracking-tight">
@@ -105,6 +101,14 @@ export default function DocumentDetailsSlugPage() {
         </h1>
         <p className="text-[#8A94A6] text-[14px]">
           {document.name} — <span className="text-[#A0AAB5]">{document.service}</span>
+        </p>
+      </div> */}
+      <div className=" bg-[#FFFFFF] shrink-0 border-b py-4 border-gray-100 px-4">
+        <h1 className="text-[22px] font-medium text-[#1C1C1D] mb-1.5 tracking-tight">
+        Document Details
+        </h1>
+        <p className="text-[#78788D] text-[14px]">
+        {document.name} — <span className="text-[#A0AAB5]">{document.service}</span>
         </p>
       </div>
 
@@ -167,7 +171,7 @@ export default function DocumentDetailsSlugPage() {
               </div>
               <div className="flex flex-col items-start gap-1">
                 <h2 className="text-[18px] font-bold text-[#171717] leading-tight">Completed - Awaiting Payment</h2>
-                <p className="text-[#8A94A6] text-[14px] leading-tight">
+                <p className="text-[#8A94A6] text-[16px] leading-tight">
                   Your document is ready. Complete payment to download final files.
                 </p>
               </div>
@@ -181,9 +185,11 @@ export default function DocumentDetailsSlugPage() {
         {/* === SECTION 2: ALERT STRIP (Hidden in 'in-revision' state) === */}
         {pageState !== "in-revision" && (
           <div className={`px-6 py-3 border-b border-gray-100 flex items-center gap-2 text-[13px] ${
-            pageState === "review" ? "bg-[#FDF5FA] text-[#A855F7]" : "bg-[#FFF9F5] text-[#F97316]"
+            pageState === "review" ? "  text-[#1C1C1D]" : " text-[#1C1C1D]"
           }`}>
-            <Info className="w-4 h-4 shrink-0" strokeWidth={2.5} />
+           <span className={`${
+            pageState === "review" ? "  text-[#A855F7]" : " text-[#F97316]"
+          }`}  > <Info className="w-4 h-4 shrink-0" strokeWidth={2.5} /></span>
             <span className="font-medium">
               <span className="font-bold">Action required:</span> {pageState === "review" ? "Please review the revised document and approve or request changes." : "Complete payment to access your final document."}
             </span>

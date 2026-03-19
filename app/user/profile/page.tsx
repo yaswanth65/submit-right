@@ -11,10 +11,10 @@ export default function ProfileSettingsPage() {
       
       {/* --- HEADER --- */}
       <div className="mb-6">
-        <h1 className="text-[28px] font-bold text-[#171717] mb-1.5 tracking-tight">
+        <h1 className="text-[22px] font-medium text-[#171717] mb-1.5 tracking-tight">
           Profile & Settings
         </h1>
-        <p className="text-[#8A94A6] text-[15px]">
+        <p className="text-[#78788D] text-[12px]">
           Manage your profile and workspace information
         </p>
       </div>
@@ -25,14 +25,14 @@ export default function ProfileSettingsPage() {
         {/* Row: Avatar */}
         <div className="py-6 flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[#EAECF0]">
           <div>
-            <h3 className="text-[15px] font-bold text-[#171717] mb-1">Your Avatar</h3>
-            <p className="text-[#8A94A6] text-[14px]">Recommended: Square image, at least 400x400px.</p>
+            <h3 className="text-[15px] font-medium text-[#171717] mb-1">Your Avatar</h3>
+            <p className="text-[#78788D] text-[14px]">Recommended: Square image, at least 400x400px.</p>
           </div>
           <div className="flex items-center gap-3">
-            <button className="px-4 py-2 border border-[#EAECF0] rounded-[8px] text-[13px] font-bold text-[#171717] hover:bg-[#F9FAFB] transition-colors">
+            <button className="px-4 py-2 border border-[#EAECF0] rounded-[8px] text-[13px] font-medium text-[#171717] hover:bg-[#F9FAFB] transition-colors">
               Change Photo
             </button>
-            <button className="px-4 py-2 border border-[#EAECF0] rounded-[8px] text-[13px] font-bold text-[#171717] hover:bg-[#F9FAFB] transition-colors">
+            <button className="px-4 py-2 border border-[#EAECF0] rounded-[8px] text-[13px] font-medium text-[#171717] hover:bg-[#F9FAFB] transition-colors">
               Change Photo
             </button>
           </div>
@@ -41,10 +41,10 @@ export default function ProfileSettingsPage() {
         {/* Row: Full Name */}
         <div className="py-6 flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[#EAECF0]">
           <div>
-            <h3 className="text-[15px] font-bold text-[#171717] mb-1">Full Name</h3>
-            <p className="text-[#8A94A6] text-[14px]">Pradhyumn Dhondi</p>
+            <h3 className="text-[15px] font-medium text-[#171717] mb-1">Full Name</h3>
+            <p className="text-[#78788D] text-[14px]">Pradhyumn Dhondi</p>
           </div>
-          <button className="px-4 py-2 border border-[#EAECF0] rounded-[8px] text-[13px] font-bold text-[#171717] hover:bg-[#F9FAFB] transition-colors">
+          <button className="px-4 py-2 border border-[#EAECF0] rounded-[8px] text-[13px] font-medium text-[#171717] hover:bg-[#F9FAFB] transition-colors">
             Update Full Name
           </button>
         </div>
@@ -52,14 +52,14 @@ export default function ProfileSettingsPage() {
         {/* Row: Email Address */}
         <div className="py-6 flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[#EAECF0]">
           <div>
-            <h3 className="text-[15px] font-bold text-[#171717] mb-1">E-Mail Address</h3>
-            <p className="text-[#8A94A6] text-[14px]">pradhyumdhondi@gmail.com</p>
+            <h3 className="text-[15px] font-medium text-[#171717] mb-1">E-Mail Address</h3>
+            <p className="text-[#78788D] text-[14px]">pradhyumdhondi@gmail.com</p>
           </div>
           <div className="flex items-center gap-3">
-            <button className="px-4 py-2 border border-[#EAECF0] rounded-[8px] text-[13px] font-bold text-[#171717] hover:bg-[#F9FAFB] transition-colors">
+            <button className="px-4 py-2 border border-[#EAECF0] rounded-[8px] text-[13px] font-medium text-[#171717] hover:bg-[#F9FAFB] transition-colors">
               Change Password
             </button>
-            <button className="px-4 py-2 border border-[#EAECF0] rounded-[8px] text-[13px] font-bold text-[#171717] hover:bg-[#F9FAFB] transition-colors">
+            <button className="px-4 py-2 border border-[#EAECF0] rounded-[8px] text-[13px] font-medium text-[#171717] hover:bg-[#F9FAFB] transition-colors">
               Change E-Mail
             </button>
           </div>
@@ -68,10 +68,10 @@ export default function ProfileSettingsPage() {
         {/* Row: Mobile Number */}
         <div className="py-6 flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[#EAECF0]">
           <div>
-            <h3 className="text-[15px] font-bold text-[#171717] mb-1">Mobile Number (Optional)</h3>
-            <p className="text-[#8A94A6] text-[14px]">+91 123456789</p>
+            <h3 className="text-[15px] font-medium text-[#171717] mb-1">Mobile Number (Optional)</h3>
+            <p className="text-[#78788D] text-[14px]">+91 123456789</p>
           </div>
-          <button className="px-4 py-2 border border-[#EAECF0] rounded-[8px] text-[13px] font-bold text-[#171717] hover:bg-[#F9FAFB] transition-colors">
+          <button className="px-4 py-2 border border-[#EAECF0] rounded-[8px] text-[13px] font-medium text-[#171717] hover:bg-[#F9FAFB] transition-colors">
             Add Mobile Number
           </button>
         </div>
@@ -79,10 +79,10 @@ export default function ProfileSettingsPage() {
         {/* Row: Country, State */}
         <div className="py-6 flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[#EAECF0]">
           <div>
-            <h3 className="text-[15px] font-bold text-[#171717] mb-1">Country, State (Optional)</h3>
-            <p className="text-[#8A94A6] text-[14px]">India, Telangana</p>
+            <h3 className="text-[15px] font-medium text-[#171717] mb-1">Country, State (Optional)</h3>
+            <p className="text-[#78788D] text-[14px]">India, Telangana</p>
           </div>
-          <button className="px-4 py-2 border border-[#EAECF0] rounded-[8px] text-[13px] font-bold text-[#171717] hover:bg-[#F9FAFB] transition-colors">
+          <button className="px-4 py-2 border border-[#EAECF0] rounded-[8px] text-[13px] font-medium text-[#171717] hover:bg-[#F9FAFB] transition-colors">
             Update Country, State
           </button>
         </div>
@@ -90,10 +90,10 @@ export default function ProfileSettingsPage() {
         {/* Row: 2FA */}
         <div className="py-6 flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[#EAECF0]">
           <div>
-            <h3 className="text-[15px] font-bold text-[#171717] mb-1">Two-Factor Authentication</h3>
-            <p className="text-[#8A94A6] text-[14px]">Disabled</p>
+            <h3 className="text-[15px] font-medium text-[#171717] mb-1">Two-Factor Authentication</h3>
+            <p className="text-[#78788D] text-[14px]">Disabled</p>
           </div>
-          <button className="px-4 py-2 border border-[#EAECF0] rounded-[8px] text-[13px] font-bold text-[#171717] hover:bg-[#F9FAFB] transition-colors">
+          <button className="px-4 py-2 border border-[#EAECF0] rounded-[8px] text-[13px] font-medium text-[#171717] hover:bg-[#F9FAFB] transition-colors">
             Add Two-Factor Authentication
           </button>
         </div>
@@ -101,10 +101,10 @@ export default function ProfileSettingsPage() {
         {/* Row: Current Password */}
         <div className="py-6 flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[#EAECF0]">
           <div>
-            <h3 className="text-[15px] font-bold text-[#171717] mb-1">Current Password</h3>
-            <p className="text-[#8A94A6] text-[14px] tracking-widest">****************</p>
+            <h3 className="text-[15px] font-medium text-[#171717] mb-1">Current Password</h3>
+            <p className="text-[#78788D] text-[14px] tracking-widest">****************</p>
           </div>
-          <button className="px-4 py-2 border border-[#EAECF0] rounded-[8px] text-[13px] font-bold text-[#171717] hover:bg-[#F9FAFB] transition-colors">
+          <button className="px-4 py-2 border border-[#EAECF0] rounded-[8px] text-[13px] font-medium text-[#171717] hover:bg-[#F9FAFB] transition-colors">
             Reset Password
           </button>
         </div>
@@ -112,10 +112,10 @@ export default function ProfileSettingsPage() {
         {/* Row: Sign Out */}
         <div className="py-6 flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[#EAECF0]">
           <div>
-            <h3 className="text-[15px] font-bold text-[#171717] mb-1">Sign Out</h3>
-            <p className="text-[#8A94A6] text-[14px]">Sign out of this device and session. You will need to sign in again on this device.</p>
+            <h3 className="text-[15px] font-medium text-[#171717] mb-1">Sign Out</h3>
+            <p className="text-[#78788D] text-[14px]">Sign out of this device and session. You will need to sign in again on this device.</p>
           </div>
-          <button className="px-4 py-2 border border-[#EAECF0] rounded-[8px] text-[13px] font-bold text-[#171717] hover:bg-[#F9FAFB] transition-colors">
+          <button className="px-4 py-2 border border-[#EAECF0] rounded-[8px] text-[13px] font-medium text-[#171717] hover:bg-[#F9FAFB] transition-colors">
             Sign Out
           </button>
         </div>
@@ -124,7 +124,7 @@ export default function ProfileSettingsPage() {
         <div className="py-6 flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[#EAECF0]">
           <div>
             <h3 className="text-[15px] font-bold text-[#EF4444] mb-1">Deactivate Account</h3>
-            <p className="text-[#8A94A6] text-[14px] max-w-[600px]">
+            <p className="text-[#78788D] text-[14px] max-w-[600px]">
               Permanently delete your account across all devices. You will no longer be able to create an Submit Right account with this gmail.
             </p>
           </div>
@@ -144,10 +144,10 @@ export default function ProfileSettingsPage() {
           <div className="bg-white w-full max-w-[520px] rounded-[16px] shadow-[0_8px_30px_rgba(0,0,0,0.12)] flex flex-col animate-in fade-in zoom-in-95 duration-200">
             
             {/* Modal Header */}
-            <div className="px-6 pt-6 pb-4 flex items-start justify-between">
+            <div className="px-4 pt-6 pb-4 flex items-start justify-between">
               <div>
-                <h2 className="text-[20px] font-bold text-[#171717] mb-1">Delete Account</h2>
-                <p className="text-[#8A94A6] text-[14px]">Please review the consequences of this action carefully.</p>
+                <h2 className="text-[18px] font-medium text-[#171717] mb-1">Delete Account</h2>
+                <p className="text-[#78788D] text-[14px]">Please review the consequences of this action carefully.</p>
               </div>
               <button 
                 onClick={() => setIsDeleteModalOpen(false)}
@@ -156,8 +156,8 @@ export default function ProfileSettingsPage() {
                 <X className="w-5 h-5" strokeWidth={2} />
               </button>
             </div>
-
-            <div className="px-6 pb-6 flex flex-col gap-5">
+              <div className="h-px bg-gray-100 mb-4" ></div>
+            <div className="px-4 pb-6 flex flex-col gap-5">
               
               {/* Warning Alert */}
               <div className="bg-[#FEF2F2] border border-[#FECACA] rounded-[8px] p-4 flex gap-3">
@@ -169,7 +169,7 @@ export default function ProfileSettingsPage() {
 
               {/* Information Box */}
               <div className="bg-[#F8FAFC] rounded-[12px] p-5">
-                <h3 className="text-[15px] font-bold text-[#171717] mb-3">Password Requirements</h3>
+                <h3 className="text-[18px] font-semibold text-[#171717] mb-3">Password Requirements</h3>
                 <ul className="space-y-2.5 text-[#525866] text-[14px] list-disc pl-5 marker:text-[#A0AAB5]">
                   <li className="pl-1">All uploaded academic documents, research papers, and drafts.</li>
                   <li className="pl-1">Payment and billing history, including active subscription data.</li>

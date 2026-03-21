@@ -13,7 +13,7 @@ export default function EditorProfile() {
   const [isAdjustModalOpen, setIsAdjustModalOpen] = useState(false);
 
   return (
-    <div className="space-y-6 animate-in fade-in duration-500 max-w-[1140px] font-dm-sans">
+    <div className="space-y-6 animate-in fade-in duration-500 w-full font-dm-sans">
       <div className="flex items-center justify-between mt-2 mb-8">
         <div className="flex items-center space-x-4">
           <Link href="/admin/editors" className="text-[#A0AAB5] hover:text-[#525866] transition-colors p-1.5 -ml-1.5 rounded-lg hover:bg-[#F9FAFB]">
@@ -53,7 +53,8 @@ export default function EditorProfile() {
       </div>
 
       <div className="bg-[#FFFFFF] border border-[#EAECF0] rounded-[12px] p-6 shadow-sm">
-        <div className="text-[16px] font-bold text-[#171717] mb-[20px]">Profile Overview</div>
+        <div className="text-[16px] font-bold text-[#171717] ">Profile Overview</div>
+<div className="mx-auto w-[98%] h-px mt-4 mb-4  bg-[#EAECF0]" />
         <div className="grid grid-cols-4 gap-6">
           <div>
             <div className="text-[12px] text-[#A0AAB5] font-medium mb-1">Editor Name</div>
@@ -106,7 +107,8 @@ export default function EditorProfile() {
           </div>
 
           <div className="bg-[#FFFFFF] rounded-[12px] border border-[#EAECF0] p-6 shadow-sm">
-            <div className="text-[16px] font-bold text-[#171717] mb-5">Current Workload</div>
+            <div className="text-[16px] font-bold text-[#171717] ">Current Workload</div>
+<div className="mx-auto w-[98%] h-px mt-4 mb-4  bg-[#EAECF0]" />
             <div className="overflow-x-auto border border-[#EAECF0] rounded-[10px]">
               <table className="w-full text-left border-collapse whitespace-nowrap">
                 <thead>
@@ -149,7 +151,8 @@ export default function EditorProfile() {
         </div>
 
         <div className="bg-[#FFFFFF] rounded-[12px] border border-[#EAECF0] p-6 shadow-sm">
-          <div className="text-[16px] font-bold text-[#171717] mb-[20px]">Audit Trail</div>
+          <div className="text-[16px] font-bold text-[#171717] ">Audit Trail</div>
+<div className="mx-auto w-[98%] h-px mt-4 mb-4  bg-[#EAECF0]" />
           <div className="flex-1 overflow-y-auto pr-1 custom-scrollbar relative pl-2">
             <div className="absolute left-[13px] top-4 bottom-8 w-[2px] bg-[#EAEFF4] z-0"></div>
             {[
@@ -175,7 +178,8 @@ export default function EditorProfile() {
       </div>
 
       <div className="bg-[#FFFFFF] rounded-[12px] border border-[#EAECF0] p-6 shadow-sm mt-2">
-        <div className="text-[16px] text-[#171717] font-bold mb-5">Assignment History</div>
+        <div className="text-[16px] text-[#171717] font-bold ">Assignment History</div>
+<div className="mx-auto w-[98%] h-px mt-4 mb-4  bg-[#EAECF0]" />
         <div className="overflow-x-auto border border-[#EAECF0] rounded-[10px]">
           <table className="w-full text-left border-collapse whitespace-nowrap">
             <thead>
@@ -220,7 +224,8 @@ export default function EditorProfile() {
       </div>
 
       <div className="bg-[#FFFFFF] rounded-[12px] border border-[#EAECF0] p-6 shadow-sm mt-2">
-        <div className="text-[16px] text-[#171717] font-bold mb-5">Payout History</div>
+        <div className="text-[16px] text-[#171717] font-bold ">Payout History</div>
+<div className="mx-auto w-[98%] h-px mt-4 mb-4  bg-[#EAECF0]" />
         <div className="overflow-x-auto border border-[#EAECF0] rounded-[10px]">
           <table className="w-full text-left border-collapse whitespace-nowrap">
             <thead>

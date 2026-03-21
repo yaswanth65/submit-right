@@ -76,7 +76,7 @@ export function SuspendEditorModal({ isOpen, onClose }: SuspendEditorModalProps)
           </div>
 
           <label className="flex items-center space-x-3 cursor-pointer group mt-2 pt-2">
-            <div className="w-[18px] h-[18px] rounded-[4px] border border-[#D1D5DB] group-hover:border-[#FB3748] flex-shrink-0 bg-white transition-colors"></div>
+            <div className="w-[18px] h-[18px] rounded-[4px] border border-[#EAECF0] group-hover:border-[#FB3748] flex-shrink-0 bg-white transition-colors"></div>
             <span className="text-[13px] text-[#525866] font-medium">I understand this action will disable the editor account.</span>
           </label>
         </div>

@@ -60,7 +60,7 @@ export function AdjustAvailabilityModal({ isOpen, onClose }: AdjustAvailabilityM
                       isSelected ? "border-[#00A0E3] bg-[#F0F9FF]" : "border-[#EAECF0] bg-[#FFFFFF] hover:bg-[#F9FAFB]"
                     }`}
                   >
-                    <span className={`w-[18px] h-[18px] rounded-full border-2 inline-flex items-center justify-center ${isSelected ? "border-[#00A0E3]" : "border-[#D1D5DB]"}`}>
+                    <span className={`w-[18px] h-[18px] rounded-full border-2 inline-flex items-center justify-center ${isSelected ? "border-[#00A0E3]" : "border-[#EAECF0]"}`}>
                       {isSelected ? <span className="w-[8px] h-[8px] rounded-full bg-[#00A0E3]"></span> : null}
                     </span>
                     <span className="text-[13px] text-[#525866] font-medium">{label}</span>

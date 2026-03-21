@@ -11,14 +11,14 @@ export function Sidebar() {
     { name: "Dashboard", href: "/admin/dashboard", icon: LayoutDashboard },
     { name: "Students", href: "/admin/students", icon: Users },
     { name: "Editors", href: "/admin/editors", icon: UserCog },
-    { name: "Documents", href: "#", icon: FileText },
-    { name: "Assignments", href: "#", icon: ClipboardList },
-    { name: "Payments", href: "#", icon: CreditCard },
+    { name: "Documents", href: "/admin/documents", icon: FileText },
+    { name: "Assignments", href: "/admin/assignments", icon: ClipboardList },
+    { name: "Payments", href: "/admin/payments", icon: CreditCard },
     { name: "CMS", href: "#", icon: MonitorCog },
     { name: "Blogs", href: "#", icon: Type },
     { name: "Form Submissions", href: "#", icon: MessageSquare },
-    { name: "Reports", href: "#", icon: BarChart2 },
-    { name: "Settings", href: "#", icon: Settings },
+    { name: "Reports", href: "/admin/reports", icon: BarChart2 },
+    { name: "Settings", href: "/admin/settings", icon: Settings },
   ];
 
   return (

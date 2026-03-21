@@ -56,7 +56,7 @@ export function RestrictEditorModal({ isOpen, onClose }: RestrictEditorModalProp
                 "Temporarily disable messaging with students",
               ].map((label, idx) => (
                 <label key={idx} className="flex items-center space-x-3 cursor-pointer group">
-                  <div className="w-[18px] h-[18px] rounded-[4px] border border-[#D1D5DB] group-hover:border-[#00A0E3] flex-shrink-0 bg-white transition-colors"></div>
+                  <div className="w-[18px] h-[18px] rounded-[4px] border border-[#EAECF0] group-hover:border-[#00A0E3] flex-shrink-0 bg-white transition-colors"></div>
                   <span className="text-[13px] text-[#525866] font-medium">{label}</span>
                 </label>
               ))}

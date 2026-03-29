@@ -146,7 +146,7 @@ export default function AssignedPage() {
     );
   }
 
-  // Details View
+  // Details 
   return (
     <div className="w-full animate-in fade-in duration-300">
       

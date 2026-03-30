@@ -27,7 +27,7 @@ export function AboutHero() {
         </h1>
 
         {/* Description */}
-        <div className="text-[16px] lg:text-[18px] text-[#65656D] leading-relaxed flex flex-col gap-4 max-w-[800px]">
+        <div className="text-[14px] lg:text-[16px] text-[#65656D] leading-[140%] text-center flex flex-col gap-4 max-w-[800px]">
           <p>
             We believe that the dissemination of knowledge should be unhindered by language barriers or structural inconsistencies. Our mission is to refine the presentation of your research while preserving the absolute integrity of your original voice.
           </p>

@@ -12,6 +12,7 @@ import  Testimonials  from "@/components/landing/Testimonials";
 import { FAQ } from "@/components/landing/FAQ";
 import { Newsletter } from "@/components/landing/Newsletter";
 import { Footer } from "@/components/landing/Footer";
+import { AboutMidBanner } from "@/components/about/AboutMidBanner";
 
 export default function Home() {
   return (
@@ -21,6 +22,7 @@ export default function Home() {
       <TrustedLogos />
       <DomainsServices />
       <WhyChoose />
+      <AboutMidBanner />
       <QuoteCalculator />
       <WhatWeSolve />
       <Packages />

@@ -1,0 +1,585 @@
+{
+  "info": {
+    "name": "Submit Right API",
+    "_postman_id": "2d262f9d-4d89-4a48-8688-6d2c24d8f9c9",
+    "description": "Postman collection for the Submit Right Next.js backend in this repo.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:3000" },
+    { "key": "authToken", "value": "" },
+    { "key": "clientEmail", "value": "client@example.com" },
+    { "key": "clientPassword", "value": "Password@123" },
+    { "key": "editorEmail", "value": "editor@example.com" },
+    { "key": "editorPassword", "value": "Password@123" },
+    { "key": "adminEmail", "value": "admin@example.com" },
+    { "key": "adminPassword", "value": "Password@123" },
+    { "key": "documentId", "value": "" },
+    { "key": "serviceId", "value": "" },
+    { "key": "clientId", "value": "" },
+    { "key": "editorId", "value": "" },
+    { "key": "paymentId", "value": "" },
+    { "key": "ticketId", "value": "" },
+    { "key": "notificationId", "value": "" },
+    { "key": "receiverId", "value": "" },
+    { "key": "resetToken", "value": "" },
+    { "key": "uploadFile", "value": "" },
+    { "key": "editorUploadFile", "value": "" },
+    { "key": "razorpaySignature", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Sign Up Client",
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["const json = pm.response.json();", "if (json.token) pm.collectionVariables.set('authToken', json.token);", "if (json.user?.id) pm.collectionVariables.set('clientId', json.user.id);"] } }],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"fullName\": \"Client User\",\n  \"email\": \"{{clientEmail}}\",\n  \"password\": \"{{clientPassword}}\",\n  \"confirmPassword\": \"{{clientPassword}}\"\n}" },
+            "url": { "raw": "{{baseUrl}}/api/auth/signup", "host": ["{{baseUrl}}"], "path": ["api", "auth", "signup"] }
+          }
+        },
+        {
+          "name": "Sign In Client",
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["const json = pm.response.json();", "if (json.token) pm.collectionVariables.set('authToken', json.token);", "if (json.user?.id) pm.collectionVariables.set('clientId', json.user.id);"] } }],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"email\": \"{{clientEmail}}\",\n  \"password\": \"{{clientPassword}}\"\n}" },
+            "url": { "raw": "{{baseUrl}}/api/auth/signin", "host": ["{{baseUrl}}"], "path": ["api", "auth", "signin"] }
+          }
+        },
+        {
+          "name": "Sign In Editor",
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["const json = pm.response.json();", "if (json.token) pm.collectionVariables.set('authToken', json.token);", "if (json.user?.id) pm.collectionVariables.set('editorId', json.user.id);"] } }],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"email\": \"{{editorEmail}}\",\n  \"password\": \"{{editorPassword}}\"\n}" },
+            "url": { "raw": "{{baseUrl}}/api/auth/signin", "host": ["{{baseUrl}}"], "path": ["api", "auth", "signin"] }
+          }
+        },
+        {
+          "name": "Sign In Admin",
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["const json = pm.response.json();", "if (json.token) pm.collectionVariables.set('authToken', json.token);"] } }],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"email\": \"{{adminEmail}}\",\n  \"password\": \"{{adminPassword}}\"\n}" },
+            "url": { "raw": "{{baseUrl}}/api/auth/signin", "host": ["{{baseUrl}}"], "path": ["api", "auth", "signin"] }
+          }
+        },
+        {
+          "name": "Forgot Password",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"email\": \"{{clientEmail}}\"\n}" },
+            "url": { "raw": "{{baseUrl}}/api/auth/forgot-password", "host": ["{{baseUrl}}"], "path": ["api", "auth", "forgot-password"] }
+          }
+        },
+        {
+          "name": "Reset Password",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"token\": \"{{resetToken}}\",\n  \"newPassword\": \"Password@1234\",\n  \"confirmPassword\": \"Password@1234\"\n}" },
+            "url": { "raw": "{{baseUrl}}/api/auth/reset-password", "host": ["{{baseUrl}}"], "path": ["api", "auth", "reset-password"] }
+          }
+        },
+        {
+          "name": "Sign Out",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }],
+            "url": { "raw": "{{baseUrl}}/api/auth/signout", "host": ["{{baseUrl}}"], "path": ["api", "auth", "signout"] }
+          }
+        },
+        {
+          "name": "Deactivate Account",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }],
+            "url": { "raw": "{{baseUrl}}/api/auth/deactivate", "host": ["{{baseUrl}}"], "path": ["api", "auth", "deactivate"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Profile",
+      "item": [
+        {
+          "name": "Get Profile",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }],
+            "url": { "raw": "{{baseUrl}}/api/profile", "host": ["{{baseUrl}}"], "path": ["api", "profile"] }
+          }
+        },
+        {
+          "name": "Update Profile",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }, { "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"fullName\": \"Updated Name\",\n  \"email\": \"updated@example.com\",\n  \"mobileNumber\": \"+91 9999999999\",\n  \"country\": \"India\",\n  \"state\": \"Maharashtra\",\n  \"yearsOfExperience\": 5,\n  \"primaryLanguage\": \"English\",\n  \"primaryExpertise\": \"Academic Editing\",\n  \"languagePairs\": [\"English-Hindi\"]\n}" },
+            "url": { "raw": "{{baseUrl}}/api/profile", "host": ["{{baseUrl}}"], "path": ["api", "profile"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Client",
+      "item": [
+        {
+          "name": "Home",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }],
+            "url": { "raw": "{{baseUrl}}/api/client/home", "host": ["{{baseUrl}}"], "path": ["api", "client", "home"] }
+          }
+        },
+        {
+          "name": "Overview",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }],
+            "url": { "raw": "{{baseUrl}}/api/client/overview", "host": ["{{baseUrl}}"], "path": ["api", "client", "overview"] }
+          }
+        },
+        {
+          "name": "My Documents",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }],
+            "url": { "raw": "{{baseUrl}}/api/client/documents?search=&status=&sort=latest", "host": ["{{baseUrl}}"], "path": ["api", "client", "documents"], "query": [{ "key": "search", "value": "" }, { "key": "status", "value": "" }, { "key": "sort", "value": "latest" }] }
+          }
+        },
+        {
+          "name": "Create Draft Document - Step 1",
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["const json = pm.response.json();", "if (json.id) pm.collectionVariables.set('documentId', json.id);"] } }],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }, { "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"documentTitle\": \"Sample Research Paper\",\n  \"academicField\": \"Computer Science\",\n  \"documentType\": \"Research Paper\",\n  \"shortDescription\": \"Need editing and formatting support.\"\n}" },
+            "url": { "raw": "{{baseUrl}}/api/client/documents", "host": ["{{baseUrl}}"], "path": ["api", "client", "documents"] }
+          }
+        },
+        {
+          "name": "Upload Document - Step 2",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }],
+            "body": { "mode": "formdata", "formdata": [{ "key": "documentId", "value": "{{documentId}}", "type": "text" }, { "key": "file", "type": "file", "src": "{{uploadFile}}" }] },
+            "url": { "raw": "{{baseUrl}}/api/client/documents/upload", "host": ["{{baseUrl}}"], "path": ["api", "client", "documents", "upload"] }
+          }
+        },
+        {
+          "name": "Select Service - Step 3",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }, { "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"documentId\": \"{{documentId}}\",\n  \"serviceId\": \"{{serviceId}}\"\n}" },
+            "url": { "raw": "{{baseUrl}}/api/client/documents/service", "host": ["{{baseUrl}}"], "path": ["api", "client", "documents", "service"] }
+          }
+        },
+        {
+          "name": "Submit Document - Step 4",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }, { "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"documentId\": \"{{documentId}}\"\n}" },
+            "url": { "raw": "{{baseUrl}}/api/client/documents/submit", "host": ["{{baseUrl}}"], "path": ["api", "client", "documents", "submit"] }
+          }
+        },
+        {
+          "name": "Messages List",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }],
+            "url": { "raw": "{{baseUrl}}/api/client/messages", "host": ["{{baseUrl}}"], "path": ["api", "client", "messages"] }
+          }
+        },
+        {
+          "name": "Send Message",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }, { "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"documentId\": \"{{documentId}}\",\n  \"receiverId\": \"{{receiverId}}\",\n  \"message\": \"Hello editor, please focus on grammar and journal formatting.\"\n}" },
+            "url": { "raw": "{{baseUrl}}/api/client/messages", "host": ["{{baseUrl}}"], "path": ["api", "client", "messages"] }
+          }
+        },
+        {
+          "name": "Payments Overview",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }],
+            "url": { "raw": "{{baseUrl}}/api/client/payments", "host": ["{{baseUrl}}"], "path": ["api", "client", "payments"] }
+          }
+        },
+        {
+          "name": "Create Razorpay Order",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }, { "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"documentId\": \"{{documentId}}\"\n}" },
+            "url": { "raw": "{{baseUrl}}/api/client/payments/create-order", "host": ["{{baseUrl}}"], "path": ["api", "client", "payments", "create-order"] }
+          }
+        },
+        {
+          "name": "Notifications",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }],
+            "url": { "raw": "{{baseUrl}}/api/client/notifications?type=&unread=false", "host": ["{{baseUrl}}"], "path": ["api", "client", "notifications"], "query": [{ "key": "type", "value": "" }, { "key": "unread", "value": "false" }] }
+          }
+        },
+        {
+          "name": "Mark Notifications Read",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }, { "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"notificationIds\": [\"{{notificationId}}\"]\n}" },
+            "url": { "raw": "{{baseUrl}}/api/client/notifications/read", "host": ["{{baseUrl}}"], "path": ["api", "client", "notifications", "read"] }
+          }
+        },
+        {
+          "name": "Tickets List",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }],
+            "url": { "raw": "{{baseUrl}}/api/client/tickets", "host": ["{{baseUrl}}"], "path": ["api", "client", "tickets"] }
+          }
+        },
+        {
+          "name": "Create Ticket",
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["const json = pm.response.json();", "if (json.id) pm.collectionVariables.set('ticketId', json.id);"] } }],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }, { "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"subject\": \"Need urgent support\",\n  \"category\": \"Document\",\n  \"message\": \"Please check the assignment progress on my submitted file.\"\n}" },
+            "url": { "raw": "{{baseUrl}}/api/client/tickets", "host": ["{{baseUrl}}"], "path": ["api", "client", "tickets"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Editor",
+      "item": [
+        {
+          "name": "Dashboard",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }],
+            "url": { "raw": "{{baseUrl}}/api/editor/dashboard", "host": ["{{baseUrl}}"], "path": ["api", "editor", "dashboard"] }
+          }
+        },
+        {
+          "name": "Documents",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }],
+            "url": { "raw": "{{baseUrl}}/api/editor/documents", "host": ["{{baseUrl}}"], "path": ["api", "editor", "documents"] }
+          }
+        },
+        {
+          "name": "Document Detail",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }],
+            "url": { "raw": "{{baseUrl}}/api/editor/documents/{{documentId}}", "host": ["{{baseUrl}}"], "path": ["api", "editor", "documents", "{{documentId}}"] }
+          }
+        },
+        {
+          "name": "Request Deadline Extension",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }, { "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"documentId\": \"{{documentId}}\",\n  \"proposedNewDeadline\": \"2026-04-05T12:00:00.000Z\",\n  \"reason\": \"Need additional time for detailed academic review.\"\n}" },
+            "url": { "raw": "{{baseUrl}}/api/editor/documents/request-extension", "host": ["{{baseUrl}}"], "path": ["api", "editor", "documents", "request-extension"] }
+          }
+        },
+        {
+          "name": "Submit Edited Document",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }],
+            "body": { "mode": "formdata", "formdata": [{ "key": "documentId", "value": "{{documentId}}", "type": "text" }, { "key": "file", "type": "file", "src": "{{editorUploadFile}}" }] },
+            "url": { "raw": "{{baseUrl}}/api/editor/documents/submit", "host": ["{{baseUrl}}"], "path": ["api", "editor", "documents", "submit"] }
+          }
+        },
+        {
+          "name": "Completed Documents",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }],
+            "url": { "raw": "{{baseUrl}}/api/editor/completed", "host": ["{{baseUrl}}"], "path": ["api", "editor", "completed"] }
+          }
+        },
+        {
+          "name": "Notifications",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }],
+            "url": { "raw": "{{baseUrl}}/api/editor/notifications?type=", "host": ["{{baseUrl}}"], "path": ["api", "editor", "notifications"], "query": [{ "key": "type", "value": "" }] }
+          }
+        },
+        {
+          "name": "Messages List",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }],
+            "url": { "raw": "{{baseUrl}}/api/editor/messages?documentId=", "host": ["{{baseUrl}}"], "path": ["api", "editor", "messages"], "query": [{ "key": "documentId", "value": "" }] }
+          }
+        },
+        {
+          "name": "Send Message",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }, { "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"documentId\": \"{{documentId}}\",\n  \"receiverId\": \"{{receiverId}}\",\n  \"message\": \"I have started editing your document.\"\n}" },
+            "url": { "raw": "{{baseUrl}}/api/editor/messages", "host": ["{{baseUrl}}"], "path": ["api", "editor", "messages"] }
+          }
+        },
+        {
+          "name": "Get Availability",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }],
+            "url": { "raw": "{{baseUrl}}/api/editor/availability", "host": ["{{baseUrl}}"], "path": ["api", "editor", "availability"] }
+          }
+        },
+        {
+          "name": "Update Availability",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }, { "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"availabilityStatus\": \"available\",\n  \"maximumActiveAssignments\": 5,\n  \"maximumWordCountPerDay\": 5000,\n  \"vacationStartDate\": null,\n  \"vacationEndDate\": null,\n  \"adminNotes\": \"Open for new assignments\"\n}" },
+            "url": { "raw": "{{baseUrl}}/api/editor/availability", "host": ["{{baseUrl}}"], "path": ["api", "editor", "availability"] }
+          }
+        },
+        {
+          "name": "Delete Account",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }],
+            "url": { "raw": "{{baseUrl}}/api/editor/delete-account", "host": ["{{baseUrl}}"], "path": ["api", "editor", "delete-account"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Admin",
+      "item": [
+        {
+          "name": "Dashboard",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }],
+            "url": { "raw": "{{baseUrl}}/api/admin/dashboard", "host": ["{{baseUrl}}"], "path": ["api", "admin", "dashboard"] }
+          }
+        },
+        {
+          "name": "Clients",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }],
+            "url": { "raw": "{{baseUrl}}/api/admin/clients?search=", "host": ["{{baseUrl}}"], "path": ["api", "admin", "clients"], "query": [{ "key": "search", "value": "" }] }
+          }
+        },
+        {
+          "name": "Client Detail",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }],
+            "url": { "raw": "{{baseUrl}}/api/admin/clients/{{clientId}}", "host": ["{{baseUrl}}"], "path": ["api", "admin", "clients", "{{clientId}}"] }
+          }
+        },
+        {
+          "name": "Restrict Client",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }, { "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"targetUserId\": \"{{clientId}}\",\n  \"restrictionType\": \"Messaging Block\",\n  \"restrictionDuration\": \"7 days\",\n  \"reason\": \"Repeated policy violations.\",\n  \"adminNotes\": \"Temporary restriction applied\"\n}" },
+            "url": { "raw": "{{baseUrl}}/api/admin/clients/restrict", "host": ["{{baseUrl}}"], "path": ["api", "admin", "clients", "restrict"] }
+          }
+        },
+        {
+          "name": "Suspend Client",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }, { "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"targetUserId\": \"{{clientId}}\",\n  \"reason\": \"Fraudulent activity suspected.\",\n  \"adminNotes\": \"Manual review required\"\n}" },
+            "url": { "raw": "{{baseUrl}}/api/admin/clients/suspend", "host": ["{{baseUrl}}"], "path": ["api", "admin", "clients", "suspend"] }
+          }
+        },
+        {
+          "name": "Editors",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }],
+            "url": { "raw": "{{baseUrl}}/api/admin/editors?search=", "host": ["{{baseUrl}}"], "path": ["api", "admin", "editors"], "query": [{ "key": "search", "value": "" }] }
+          }
+        },
+        {
+          "name": "Editor Detail",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }],
+            "url": { "raw": "{{baseUrl}}/api/admin/editors/{{editorId}}", "host": ["{{baseUrl}}"], "path": ["api", "admin", "editors", "{{editorId}}"] }
+          }
+        },
+        {
+          "name": "Restrict Editor",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }, { "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"targetUserId\": \"{{editorId}}\",\n  \"restrictionType\": \"Assignment Limit\",\n  \"restrictionDuration\": \"14 days\",\n  \"reason\": \"Low quality submissions.\",\n  \"adminNotes\": \"Monitor closely\"\n}" },
+            "url": { "raw": "{{baseUrl}}/api/admin/editors/restrict", "host": ["{{baseUrl}}"], "path": ["api", "admin", "editors", "restrict"] }
+          }
+        },
+        {
+          "name": "Suspend Editor",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }, { "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"targetUserId\": \"{{editorId}}\",\n  \"reason\": \"Missed repeated deadlines.\",\n  \"adminNotes\": \"Suspended pending review\"\n}" },
+            "url": { "raw": "{{baseUrl}}/api/admin/editors/suspend", "host": ["{{baseUrl}}"], "path": ["api", "admin", "editors", "suspend"] }
+          }
+        },
+        {
+          "name": "Adjust Editor Availability",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }, { "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"availabilityStatus\": \"busy\",\n  \"maximumActiveAssignments\": 3,\n  \"maximumWordCountPerDay\": 4000,\n  \"vacationStartDate\": null,\n  \"vacationEndDate\": null,\n  \"adminNotes\": \"Capacity adjusted by admin\"\n}" },
+            "url": { "raw": "{{baseUrl}}/api/admin/editors/availability?editorId={{editorId}}", "host": ["{{baseUrl}}"], "path": ["api", "admin", "editors", "availability"], "query": [{ "key": "editorId", "value": "{{editorId}}" }] }
+          }
+        },
+        {
+          "name": "Get Settings",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }],
+            "url": { "raw": "{{baseUrl}}/api/admin/settings", "host": ["{{baseUrl}}"], "path": ["api", "admin", "settings"] }
+          }
+        },
+        {
+          "name": "Update Settings",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }, { "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"supportEmail\": \"support@submitright.com\",\n  \"defaultTimezone\": \"Asia/Kolkata\",\n  \"defaultCurrency\": \"INR\"\n}" },
+            "url": { "raw": "{{baseUrl}}/api/admin/settings", "host": ["{{baseUrl}}"], "path": ["api", "admin", "settings"] }
+          }
+        },
+        {
+          "name": "Reports",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }],
+            "url": { "raw": "{{baseUrl}}/api/admin/reports?filter=30days", "host": ["{{baseUrl}}"], "path": ["api", "admin", "reports"], "query": [{ "key": "filter", "value": "30days" }] }
+          }
+        },
+        {
+          "name": "Payments",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }],
+            "url": { "raw": "{{baseUrl}}/api/admin/payments", "host": ["{{baseUrl}}"], "path": ["api", "admin", "payments"] }
+          }
+        },
+        {
+          "name": "Payment Detail",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }],
+            "url": { "raw": "{{baseUrl}}/api/admin/payments/{{paymentId}}", "host": ["{{baseUrl}}"], "path": ["api", "admin", "payments", "{{paymentId}}"] }
+          }
+        },
+        {
+          "name": "Documents",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }],
+            "url": { "raw": "{{baseUrl}}/api/admin/documents", "host": ["{{baseUrl}}"], "path": ["api", "admin", "documents"] }
+          }
+        },
+        {
+          "name": "Document Detail",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }],
+            "url": { "raw": "{{baseUrl}}/api/admin/documents/{{documentId}}", "host": ["{{baseUrl}}"], "path": ["api", "admin", "documents", "{{documentId}}"] }
+          }
+        },
+        {
+          "name": "Assign Or Reassign Editor",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }, { "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"documentId\": \"{{documentId}}\",\n  \"editorId\": \"{{editorId}}\",\n  \"reason\": \"Assigning based on expertise\",\n  \"adminNotes\": \"High priority document\"\n}" },
+            "url": { "raw": "{{baseUrl}}/api/admin/documents/assign", "host": ["{{baseUrl}}"], "path": ["api", "admin", "documents", "assign"] }
+          }
+        },
+        {
+          "name": "Adjust Deadline",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }, { "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"documentId\": \"{{documentId}}\",\n  \"newDeadline\": \"2026-04-10T12:00:00.000Z\",\n  \"reason\": \"Deadline adjusted due to client request\",\n  \"adminNotes\": \"Approved\"\n}" },
+            "url": { "raw": "{{baseUrl}}/api/admin/documents/deadline", "host": ["{{baseUrl}}"], "path": ["api", "admin", "documents", "deadline"] }
+          }
+        },
+        {
+          "name": "Cancel Document",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }, { "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"documentId\": \"{{documentId}}\",\n  \"cancellationReason\": \"Client requested cancellation\",\n  \"refundRequired\": true,\n  \"adminNotes\": \"Process refund manually if needed\"\n}" },
+            "url": { "raw": "{{baseUrl}}/api/admin/documents/cancel", "host": ["{{baseUrl}}"], "path": ["api", "admin", "documents", "cancel"] }
+          }
+        },
+        {
+          "name": "Tickets",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }],
+            "url": { "raw": "{{baseUrl}}/api/admin/tickets?status=", "host": ["{{baseUrl}}"], "path": ["api", "admin", "tickets"], "query": [{ "key": "status", "value": "" }] }
+          }
+        },
+        {
+          "name": "Resolve Ticket",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }, { "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"ticketId\": \"{{ticketId}}\",\n  \"message\": \"Your issue has been resolved.\"\n}" },
+            "url": { "raw": "{{baseUrl}}/api/admin/tickets/resolve", "host": ["{{baseUrl}}"], "path": ["api", "admin", "tickets", "resolve"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "System",
+      "item": [
+        {
+          "name": "Razorpay Webhook",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }, { "key": "x-razorpay-signature", "value": "{{razorpaySignature}}" }],
+            "body": { "mode": "raw", "raw": "{\n  \"event\": \"payment.captured\",\n  \"payload\": {\n    \"payment\": {\n      \"entity\": {\n        \"id\": \"pay_test_123\",\n        \"order_id\": \"order_test_123\",\n        \"method\": \"upi\"\n      }\n    }\n  }\n}" },
+            "url": { "raw": "{{baseUrl}}/api/payments/webhook", "host": ["{{baseUrl}}"], "path": ["api", "payments", "webhook"] }
+          }
+        },
+        {
+          "name": "Cleanup Drafts",
+          "request": {
+            "method": "POST",
+            "url": { "raw": "{{baseUrl}}/api/system/cleanup-drafts", "host": ["{{baseUrl}}"], "path": ["api", "system", "cleanup-drafts"] }
+          }
+        }
+      ]
+    }
+  ]
+}

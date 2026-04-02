@@ -100,7 +100,7 @@ export function AboutExperts() {
                 </p>
               </div>
 
-              {/* Card 4 - QA */}
+              {/* Car 4 - QA */}
               <div className="bg-white border border-[#F3F4F6] rounded-2xl p-6 w-full shadow-[0_4px_20px_rgb(0,0,0,0.03)]">
                 <div className="w-10 h-10 bg-[#F3F9FC] rounded-lg flex items-center justify-center mb-5">
                   {experts[3].icon}

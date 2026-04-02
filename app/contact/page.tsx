@@ -15,7 +15,7 @@ export default function ContactPage() {
         <div className="w-full max-w-[1280px] mx-auto px-6 lg:px-10 xl:px-14 relative z-10">
           <div className="flex flex-col lg:flex-row gap-12 lg:gap-24">
             
-            {/* Left Content */}
+            {/* Left Contet */}
             <div className="flex-1 lg:max-w-[480px]">
               <h1 className="text-[36px] lg:text-[44px] font-semibold text-[#1C1C1D] leading-[1.15] mb-4">
                 Lorem ipsum dolor sit amet consectetur

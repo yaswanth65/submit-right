@@ -5,6 +5,7 @@ import { AboutIntegrity } from "@/components/about/AboutIntegrity";
 import { AboutMidBanner } from "@/components/about/AboutMidBanner";
 import { AboutExperts } from "@/components/about/AboutExperts";
 import { AboutAudience } from "@/components/about/AboutAudience";
+import { TeamSection } from "@/components/about/TeamSection";
 import Testimonials from "@/components/landing/Testimonials";
 import { CTABanner } from "@/components/landing/CTABanner";
 import { FAQ } from "@/components/landing/FAQ";
@@ -21,6 +22,7 @@ export default function AboutPage() {
       <AboutMidBanner />
       <AboutExperts />
       <AboutAudience />
+      <TeamSection />
       <Testimonials />
       <CTABanner />
       <FAQ />

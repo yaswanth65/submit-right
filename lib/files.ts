@@ -1,5 +1,5 @@
 import mammoth from "mammoth";
-import pdfParse from "pdf-parse";
+import { PDFParse } from "pdf-parse";
 import WordExtractor from "word-extractor";
 import { env } from "@/lib/env";
 import { supabaseAdmin } from "@/lib/supabase";
@@ -21,7 +21,9 @@ export async function extractWordCount(file: File) {
   }
 
   if (fileName.endsWith(".pdf")) {
-    const result = await pdfParse(buffer);
+    const parser = new PDFParse({ data: buffer });
+    const result = await parser.getText();
+    await parser.destroy();
     return countWords(result.text);
   }
 

@@ -1,0 +1,33 @@
+import { ok, fail } from "@/lib/http";
+import { asResponse } from "@/lib/route";
+import { requireRole } from "@/lib/auth";
+import { supabaseAdmin } from "@/lib/supabase";
+
+export async function GET(
+  _req: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  try {
+    await requireRole("admin");
+    const { id } = await params;
+
+    const [{ data: profile }, { data: payments }, { data: audits }, { data: docs }] =
+      await Promise.all([
+        supabaseAdmin.from("profiles").select("*").eq("id", id).eq("role", "client").single(),
+        supabaseAdmin.from("payment_transactions").select("*").eq("client_id", id).order("created_at", { ascending: false }),
+        supabaseAdmin.from("audit_logs").select("*").eq("target_user_id", id).order("created_at", { ascending: false }),
+        supabaseAdmin.from("documents").select("*").eq("client_id", id).order("created_at", { ascending: false })
+      ]);
+
+    if (!profile) return fail("Client not found", 404);
+
+    return ok({
+      profileOverview: profile,
+      paymentHistory: payments ?? [],
+      auditTrail: audits ?? [],
+      documentHistory: docs ?? []
+    });
+  } catch (error) {
+    return asResponse(error);
+  }
+}

@@ -5,7 +5,7 @@ import Link from "next/link";
 export function Navbar() {
   return (
     <>
-      {/* Top Announcement Bar */}
+      {/* Top Announcemen Bar */}
      
       <header className="w-full sticky top-0 z-50" style={{ background: 'radial-gradient(circle at 35% 40%, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.6) 25%, rgba(255, 255, 255, 0.2) 45%, transparent 65%), linear-gradient(90deg, #F8FBFF 0%, #EEF5FB 40%, #E3EFF8 65%, #D6E8F5 100%)' }}>
       <div className="w-full max-w-[1280px] mx-auto px-6 lg:px-10 xl:px-14">

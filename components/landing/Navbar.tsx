@@ -36,7 +36,7 @@ export function Navbar() {
               </Link>
             </div>
             <Link href="/contact" className="text-[14px] font-medium text-[#1C1C1D] hover:text-[#00A0E3] transition-colors">
-              Support
+              Contact
             </Link>
             <Link href="/privacy-policy" className="text-[14px] font-medium text-[#1C1C1D] hover:text-[#00A0E3] transition-colors">
               Legal Pages

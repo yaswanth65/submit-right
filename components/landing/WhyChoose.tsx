@@ -77,7 +77,7 @@ export function WhyChoose() {
               className="text-center flex flex-col items-center"
             >
               <div className="w-12 h-12 mb-4 bg-white rounded-xl flex items-center justify-center shadow-sm border border-[#F0F0F0]">
-                <feature.icon className="w-5 h-5 text-[#1C1C1D]" strokeWidth={1.5} />
+                <feature.icon className="w-5 h-5 text-[#1C1C1D]" strokeWidth={2.5} />
               </div>
               <h3 className="text-[15px] font-semibold text-[#1C1C1D] mb-2">
                 {feature.title}

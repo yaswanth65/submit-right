@@ -36,8 +36,8 @@ body {
 /* Carousel Scroll Animation */
 .carousel-scroll {
   display: flex;
-  gap: 30px;
-  animation: scroll 45s linear infinite;
+  gap: 10px;
+  animation: scroll 15s linear infinite;
   padding: 20px 0;
 }
 
@@ -61,5 +61,35 @@ body {
 /* Pause animation on hover */
 .carousel-scroll:hover {
   animation-play-state: paused;
+}
+
+/* Hero background SVG styling */
+.hero-svg-bg::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 60%;
+  height: 100%;
+  background: url('/left.svg') right center/cover no-repeat;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.hero-svg-bg::after {
+  content: '';
+  position: absolute;
+  left: 45%;
+  top: 0;
+  width: 55%;
+  height: 100%;
+  background: url('/right.svg') left center/cover no-repeat;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Smooth gradient overlay to blend the SVGs */
+.hero-svg-bg {
+  position: relative;
 }
 

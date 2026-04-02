@@ -49,11 +49,15 @@ export function AboutIntegrity() {
           </div>
 
           {/* Right Column */}
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-12 pb-10">
             {standards.map((std, idx) => (
               <div 
                 key={idx}
-                className="bg-white rounded-2xl p-8 border border-[#F3F4F6] shadow-[0_4px_20px_rgb(0,0,0,0.03)] hover:border-[#00A0E3]/20 transition-colors"
+                className="sticky bg-white rounded-2xl p-8 border border-[#F3F4F6] shadow-[0_8px_30px_rgb(0,0,0,0.08)] hover:border-[#00A0E3]/20 transition-all duration-300 ease-in-out"
+                style={{
+                  top: `calc(120px + ${idx * 20}px)`,
+                  zIndex: 10 + idx,
+                }}
               >
                 <div className="text-[13px] font-semibold text-[#00A0E3] tracking-wider uppercase mb-3">
                   STANDARD {std.num}

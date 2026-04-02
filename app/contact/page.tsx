@@ -10,7 +10,8 @@ export default function ContactPage() {
       <Navbar />
 
       {/* Hero Section */}
-      <section className="relative pt-16 pb-20 lg:pt-24 lg:pb-32 overflow-hidden bg-gradient-to-b from-[#EBF4F9] to-white">
+      <section className="relative hero-svg-bg pt-16 pb-20 lg:pt-24 lg:pb-32 overflow-hidden">
+
         <div className="w-full max-w-[1280px] mx-auto px-6 lg:px-10 xl:px-14 relative z-10">
           <div className="flex flex-col lg:flex-row gap-12 lg:gap-24">
             

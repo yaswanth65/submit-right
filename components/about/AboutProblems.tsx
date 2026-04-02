@@ -73,7 +73,7 @@ export function AboutProblems() {
           {problems.map((problem, idx) => (
             <div 
               key={idx} 
-              className="bg-[#F8FAFC] rounded-2xl p-8 lg:p-10 flex flex-col items-start border border-[#F1F5F9] transition-all hover:shadow-lg"
+              className="bg-[#F8F8F8] rounded-2xl p-8 lg:p-10 flex flex-col items-start border border-[#F1F5F9] transition-all hover:shadow-lg"
             >
               <div className="w-12 h-12 bg-white rounded-lg shadow-sm flex items-center justify-center mb-6">
                 {problem.icon}

@@ -16,12 +16,7 @@ export function TrustedLogos() {
   return (
     <section className="py-12 bg-white">
       <div className="w-full max-w-[1280px] mx-auto px-6 lg:px-10 xl:px-14">
-        {/* Slider Dots */}
-        <div className="flex items-center justify-center gap-2 mb-8">
-          <div className="w-6 h-1.5 rounded-full bg-[#00A0E3]"></div>
-          <div className="w-1.5 h-1.5 rounded-full bg-[#E5E5E5]"></div>
-          <div className="w-1.5 h-1.5 rounded-full bg-[#E5E5E5]"></div>
-        </div>
+       
 
         {/* Title */}
         <div className="text-center mb-8">

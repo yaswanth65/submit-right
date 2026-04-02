@@ -48,32 +48,75 @@ export function AboutExperts() {
   ];
 
   return (
-    <section className="py-20 lg:py-24 bg-white relative">
+    <section className="py-20 lg:py-24 bg-[#F3F9FC] relative">
       <div className="w-full max-w-[1280px] mx-auto px-6 lg:px-10 xl:px-14">
         
-        <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+        <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-start">
           
-          {/* Left Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {experts.map((exp, idx) => (
-              <div 
-                key={idx}
-                className="bg-white border border-[#F3F4F6] rounded-2xl p-6 shadow-[0_4px_20px_rgb(0,0,0,0.03)] hover:shadow-md transition-shadow"
-              >
+          {/* Cards Container - Two Column Layout */}
+          <div className="flex gap-8 w-full">
+            
+            {/* Left Column */}
+            <div className="flex flex-col gap-12 flex-1">
+              {/* Card 1 - Editors */}
+              <div className="bg-white border border-[#F3F4F6] rounded-2xl p-6 w-full shadow-[0_4px_20px_rgb(0,0,0,0.03)]">
                 <div className="w-10 h-10 bg-[#F3F9FC] rounded-lg flex items-center justify-center mb-5">
-                  {exp.icon}
+                  {experts[0].icon}
                 </div>
                 <h3 className="text-[16px] font-medium text-[#1C1C1D] mb-2">
-                  {exp.title}
+                  {experts[0].title}
                 </h3>
                 <p className="text-[14px] text-[#65656D] leading-relaxed">
-                  {exp.description}
+                  {experts[0].description}
                 </p>
               </div>
-            ))}
+
+              {/* Card 3 - Subject Experts */}
+              <div className="bg-white border border-[#F3F4F6] rounded-2xl p-6 w-full shadow-[0_4px_20px_rgb(0,0,0,0.03)]">
+                <div className="w-10 h-10 bg-[#F3F9FC] rounded-lg flex items-center justify-center mb-5">
+                  {experts[2].icon}
+                </div>
+                <h3 className="text-[16px] font-medium text-[#1C1C1D] mb-2">
+                  {experts[2].title}
+                </h3>
+                <p className="text-[14px] text-[#65656D] leading-relaxed">
+                  {experts[2].description}
+                </p>
+              </div>
+            </div>
+
+            {/* Right Column */}
+            <div className="flex flex-col gap-12 flex-1 pt-12">
+              {/* Card 2 - Translators */}
+              <div className="bg-white border border-[#F3F4F6] rounded-2xl p-6 w-full shadow-[0_4px_20px_rgb(0,0,0,0.03)]">
+                <div className="w-10 h-10 bg-[#F3F9FC] rounded-lg flex items-center justify-center mb-5">
+                  {experts[1].icon}
+                </div>
+                <h3 className="text-[16px] font-medium text-[#1C1C1D] mb-2">
+                  {experts[1].title}
+                </h3>
+                <p className="text-[14px] text-[#65656D] leading-relaxed">
+                  {experts[1].description}
+                </p>
+              </div>
+
+              {/* Card 4 - QA */}
+              <div className="bg-white border border-[#F3F4F6] rounded-2xl p-6 w-full shadow-[0_4px_20px_rgb(0,0,0,0.03)]">
+                <div className="w-10 h-10 bg-[#F3F9FC] rounded-lg flex items-center justify-center mb-5">
+                  {experts[3].icon}
+                </div>
+                <h3 className="text-[16px] font-medium text-[#1C1C1D] mb-2">
+                  {experts[3].title}
+                </h3>
+                <p className="text-[14px] text-[#65656D] leading-relaxed">
+                  {experts[3].description}
+                </p>
+              </div>
+            </div>
+
           </div>
 
-          {/* Right Content */}
+          {/* Right Content (UNCHANGED) */}
           <div>
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded bg-[#F3F4F6] border border-[#E5E7EB] mb-6">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#65656D" strokeWidth="2">

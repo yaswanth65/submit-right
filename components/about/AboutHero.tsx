@@ -1,14 +1,15 @@
-import { User } from "lucide-react"; // assuming lucide-react is installed, if not we'll use SVG
+import { User } from "lucide-react";
 
 export function AboutHero() {
   return (
-    <section className="relative overflow-hidden pt-20 pb-24" style={{ background: 'radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.6) 25%, rgba(255, 255, 255, 0.2) 45%, transparent 65%), linear-gradient(180deg, #F8FBFF 0%, #EEF5FB 40%, #E3EFF8 65%, #FFFFFF 100%)' }}>
+    <section
+      className="relative hero-svg-bg overflow-hidden"
+      style={{
+        height: 'calc(100vh - 80px)'
+      }}
+    >
 
-      {/* Blur shapes */}
-      <div className="absolute top-[-100px] right-[10%] w-[500px] h-[400px] bg-[#00A0E3]/10 blur-[120px] rotate-[8deg] -z-10" />
-      <div className="absolute top-[-80px] left-[10%] w-[400px] h-[300px] bg-[#0078D4]/10 blur-[120px] -z-10" />
-
-      <div className="w-full max-w-[1000px] mx-auto px-6 lg:px-10 flex flex-col items-center justify-center text-center">
+      <div className="w-full max-w-[1000px] mx-auto px-6 lg:px-10 flex flex-col items-center justify-center text-center pt-20 pb-24 h-full relative z-10">
 
         {/* Badge */}
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[rgba(0,160,227,0.3)] bg-[#00A0E3]/10 mb-8">

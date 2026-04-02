@@ -3,6 +3,7 @@ import { Hero } from "@/components/landing/Hero";
 import { TrustedLogos } from "@/components/landing/TrustedLogos";
 import { DomainsServices } from "@/components/landing/DomainsServices";
 import { WhyChoose } from "@/components/landing/WhyChoose";
+import { ResearchStages } from "@/components/landing/ResearchStages";
 import { CTABanner } from "@/components/landing/CTABanner";
 import { QuoteCalculator } from "@/components/landing/QuoteCalculator";
 import { WhatWeSolve } from "@/components/landing/WhatWeSolve";
@@ -22,6 +23,7 @@ export default function Home() {
       <TrustedLogos />
       <DomainsServices />
       <WhyChoose />
+      <ResearchStages />
       <AboutMidBanner />
       <QuoteCalculator />
       <WhatWeSolve />

@@ -9,7 +9,7 @@ export function AboutHero() {
       }}
     >
 
-      <div className="w-full max-w-[1000px] mx-auto px-6 lg:px-10 flex flex-col items-center justify-center text-center pt-20 pb-24 h-full relative z-10">
+      <div className="w-full max-w-[1280px] mx-auto px-6 lg:px-10 xl:px-14 flex flex-col items-center justify-center text-center pt-20 pb-24 h-full relative z-10">
 
         {/* Badge */}
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[rgba(0,160,227,0.3)] bg-[#00A0E3]/10 mb-8">

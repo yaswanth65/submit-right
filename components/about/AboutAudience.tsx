@@ -13,7 +13,7 @@ export function AboutAudience() {
 
   return (
     <section className="py-20 lg:py-24 bg-white relative">
-      <div className="w-full max-w-[1000px] mx-auto px-6 lg:px-10">
+      <div className="w-full max-w-[1280px] mx-auto px-6 lg:px-10 xl:px-14">
         
         {/* Header */}
         <div className="flex flex-col items-center text-center mb-16">

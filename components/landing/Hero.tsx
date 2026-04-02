@@ -27,7 +27,7 @@ export function Hero() {
       }}
     >
 
-      <div className="w-full max-w-[1300px] mx-auto px-6 lg:px-10 xl:px-14 relative z-10 flex-1 flex flex-col justify-center">
+      <div className="w-full max-w-[1280px] mx-auto px-6 lg:px-10 xl:px-14 relative z-10 flex-1 flex flex-col justify-center">
         <div className="grid lg:grid-cols-2 gap-6 items-center w-full mt-8">
           
           {/* ===== LEFT (Static Content) ===== */}

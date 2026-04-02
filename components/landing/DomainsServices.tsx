@@ -9,7 +9,7 @@ export function DomainsServices() {
 
   return (
     <section className="min-h-[calc(100vh-96px)] py-16 lg:py-20 bg-white flex items-center">
-      <div className="w-full max-w-[1200px] mx-auto px-6 lg:px-10 xl:px-14">
+      <div className="w-full max-w-[1280px] mx-auto px-6 lg:px-10 xl:px-14">
         
         {/* Header Section */}
         <div className="text-center max-w-[720px] mx-auto mb-10 lg:mb-12">

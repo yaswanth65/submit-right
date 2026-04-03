@@ -33,7 +33,35 @@ body {
   background: #EAECF0;
 }
 
+/* Carousel Scroll Animation */
+.carousel-scroll {
+  display: flex;
+  gap: 30px;
+  animation: scroll 45s linear infinite;
+  padding: 20px 0;
+}
 
+.carousel-item {
+  min-width: calc(25% - 22.5px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(calc(-33.333% * 2));
+  }
+}
+
+/* Pause animation on hover */
+.carousel-scroll:hover {
+  animation-play-state: paused;
+}
 
 .breadcrumbs {
   display: none;

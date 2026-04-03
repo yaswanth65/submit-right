@@ -58,7 +58,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${dmSans.variable} ${inter.variable} antialiased font-dm-sans bg-[#FFFFFF] text-[#171717] flex min-h-screen`}>
+      <body className={`${dmSans.variable} ${inter.variable} antialiased font-dm-sans bg-[#FFFFFF] text-[#171717] min-h-screen w-full overflow-x-hidden`}>
         {children}
       </body>
     </html>

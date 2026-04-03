@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client API - Submit Right</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background: #f8f9fa;
+            color: #1c1c1d;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        header {
+            margin-bottom: 40px;
+        }
+
+        .breadcrumb {
+            margin-bottom: 20px;
+        }
+
+        .breadcrumb a {
+            color: #00a0e3;
+            text-decoration: none;
+            margin-right: 10px;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        h1 {
+            font-size: 36px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .icon {
+            font-size: 40px;
+        }
+
+        .subtitle {
+            color: #78788d;
+            font-size: 16px;
+        }
+
+        .section {
+            background: white;
+            border-radius: 12px;
+            padding: 32px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+        }
+
+        h2 {
+            font-size: 24px;
+            color: #1c1c1d;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #00a0e3;
+        }
+
+        h3 {
+            font-size: 18px;
+            color: #1c1c1d;
+            margin-top: 20px;
+            margin-bottom: 12px;
+        }
+
+        .endpoint {
+            background: #f8f9fa;
+            border-left: 4px solid #00a0e3;
+            padding: 20px;
+            margin-bottom: 24px;
+            border-radius: 6px;
+        }
+
+        .endpoint-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+
+        .method {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 12px;
+            white-space: nowrap;
+        }
+
+        .method.post {
+            background: #dcfce7;
+            color: #15803d;
+        }
+
+        .method.get {
+            background: #dbeafe;
+            color: #0369a1;
+        }
+
+        .method.patch {
+            background: #fef3c7;
+            color: #b45309;
+        }
+
+        .method.delete {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .path {
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            color: #1c1c1d;
+            font-weight: 600;
+            flex: 1;
+        }
+
+        .auth-badge {
+            background: #fee2e2;
+            color: #991b1b;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        code {
+            background: #f0f0f0;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            color: #c41e3a;
+        }
+
+        .code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 16px 0;
+        }
+
+        .code-block code {
+            background: none;
+            color: inherit;
+            padding: 0;
+        }
+
+        .input-section, .output-section {
+            margin-top: 16px;
+        }
+
+        .section-title {
+            font-weight: 600;
+            color: #1c1c1d;
+            margin-bottom: 12px;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 12px;
+            font-size: 13px;
+        }
+
+        th {
+            background: #f0f0f0;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .required {
+            color: #fb3748;
+            font-weight: 600;
+        }
+
+        .optional {
+            color: #78788d;
+        }
+
+        .type {
+            font-family: 'Courier New', monospace;
+            background: #f0f0f0;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 12px;
+        }
+
+        .use-case {
+            background: #f0f8fc;
+            border-left: 3px solid #00a0e3;
+            padding: 16px;
+            margin-bottom: 12px;
+            border-radius: 4px;
+        }
+
+        .use-case strong {
+            color: #00a0e3;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .error-code {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 12px;
+            padding: 12px;
+            background: #fff8f8;
+            border-left: 3px solid #fb3748;
+            border-radius: 4px;
+        }
+
+        .error-code .code-status {
+            font-weight: 600;
+            color: #fb3748;
+            min-width: 60px;
+        }
+
+        .error-code .description {
+            color: #78788d;
+        }
+
+        .auth-required {
+            background: #fef3c7;
+            border-left: 3px solid #f59e0b;
+            padding: 16px;
+            border-radius: 4px;
+            margin-bottom: 16px;
+        }
+
+        .auth-required strong {
+            color: #b45309;
+        }
+
+        .back-btn {
+            display: inline-block;
+            color: #00a0e3;
+            text-decoration: none;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .back-btn:hover {
+            text-decoration: underline;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: #78788d;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="../api-docs/" class="back-btn">← Back to API Docs</a>
+
+        <header>
+            <h1><span class="icon">📄</span> Client API</h1>
+            <p class="subtitle">Document management, payments, and messaging for clients</p>
+        </header>
+
+        <!-- Documents List -->
+        <div class="section">
+            <h2>GET /api/client/documents</h2>
+            
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">GET</span>
+                    <span class="path">/api/client/documents</span>
+                    <span class="auth-badge">🔒 Auth Required</span>
+                </div>
+
+                <p><strong>List client's documents</strong></p>
+                <p style="color: #78788d; margin-top: 8px; font-size: 13px;">Retrieve all documents submitted by the authenticated client with optional filtering and sorting.</p>
+
+                <div class="auth-required">
+                    <strong>Authentication:</strong> JWT token in Authorization header
+                </div>
+
+                <div class="input-section">
+                    <div class="section-title">📥 Query Parameters (Optional)</div>
+                    <ul style="margin-left: 20px; margin-top: 12px;">
+                        <li><code>search</code> - Search by document title</li>
+                        <li><code>status</code> - Filter by status (draft, submitted, being_edited, completed, etc.)</li>
+                        <li><code>sort</code> - Sort order: newest (default), oldest, a_to_z</li>
+                    </ul>
+                </div>
+
+                <div class="output-section">
+                    <div class="section-title">📤 Response (200 OK)</div>
+                    <div class="code-block"><code>{
+  "totalSubmittedDocumentsCount": 5,
+  "documents": [
+    {
+      "id": "doc-123",
+      "document_title": "Research Paper",
+      "status": "completed",
+      "academic_field": "Computer Science",
+      "document_type": "thesis",
+      "created_at": "2026-03-15T10:30:00Z",
+      "updated_at": "2026-04-01T14:22:00Z"
+    }
+  ]
+}</code></div>
+                </div>
+
+                <h3>Use Cases</h3>
+                <div class="use-case">
+                    <strong>1. Dashboard Display</strong>
+                    Show all client's documents in dashboard with filters
+                </div>
+                <div class="use-case">
+                    <strong>2. Document Search</strong>
+                    Search documents by title on documents page
+                </div>
+            </div>
+        </div>
+
+        <!-- Create Draft Document -->
+        <div class="section">
+            <h2>POST /api/client/documents</h2>
+            
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">POST</span>
+                    <span class="path">/api/client/documents</span>
+                    <span class="auth-badge">🔒 Auth Required</span>
+                </div>
+
+                <p><strong>Create new draft document</strong></p>
+                <p style="color: #78788d; margin-top: 8px; font-size: 13px;">Create a new draft document. Document starts in draft status and can be updated before submission.</p>
+
+                <div class="auth-required">
+                    <strong>Authentication:</strong> JWT token in Authorization header
+                </div>
+
+                <div class="input-section">
+                    <div class="section-title">📥 Request Body</div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Field</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="required">documentTitle</span></td>
+                                <td><span class="type">string</span></td>
+                                <td>Title of the document (max 200 chars)</td>
+                            </tr>
+                            <tr>
+                                <td><span class="required">academicField</span></td>
+                                <td><span class="type">string</span></td>
+                                <td>Academic field (Engineering, Medicine, etc.)</td>
+                            </tr>
+                            <tr>
+                                <td><span class="required">documentType</span></td>
+                                <td><span class="type">string</span></td>
+                                <td>Type: thesis, essay, research_paper, etc.</td>
+                            </tr>
+                            <tr>
+                                <td><span class="required">shortDescription</span></td>
+                                <td><span class="type">string</span></td>
+                                <td>Brief description of document (max 500 chars)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="code-block"><code>{
+  "documentTitle": "Climate Change Impact Study",
+  "academicField": "Environmental Science",
+  "documentType": "research_paper",
+  "shortDescription": "Analysis of climate change impacts on marine ecosystems"
+}</code></div>
+                </div>
+
+                <div class="output-section">
+                    <div class="section-title">📤 Response (201 Created)</div>
+                    <div class="code-block"><code>{
+  "id": "doc-456",
+  "document_title": "Climate Change Impact Study",
+  "status": "draft",
+  "academic_field": "Environmental Science",
+  "document_type": "research_paper",
+  "short_description": "Analysis of climate change impacts on marine ecosystems",
+  "created_at": "2026-04-02T10:30:00Z"
+}</code></div>
+                </div>
+
+                <h3>Error Codes</h3>
+                <div class="error-code">
+                    <div class="code-status">400</div>
+                    <div class="description">Invalid input - missing required fields or exceeds character limits</div>
+                </div>
+                <div class="error-code">
+                    <div class="code-status">401</div>
+                    <div class="description">Unauthorized - invalid token</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Upload Document File -->
+        <div class="section">
+            <h2>POST /api/client/documents/upload</h2>
+            
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">POST</span>
+                    <span class="path">/api/client/documents/upload</span>
+                    <span class="auth-badge">🔒 Auth Required</span>
+                </div>
+
+                <p><strong>Upload document file</strong></p>
+                <p style="color: #78788d; margin-top: 8px; font-size: 13px;">Upload the actual document file (.pdf, .docx, etc.) for a draft document.</p>
+
+                <div class="auth-required">
+                    <strong>Authentication:</strong> JWT token in Authorization header
+                </div>
+
+                <div class="input-section">
+                    <div class="section-title">📥 Request (Form Data)</div>
+                    <ul style="margin-left: 20px; margin-top: 12px;">
+                        <li><span class="required">documentId</span> - ID of the draft document (string)</li>
+                        <li><span class="required">file</span> - File to upload (multipart/form-data)</li>
+                    </ul>
+                </div>
+
+                <div class="output-section">
+                    <div class="section-title">📤 Response (200 OK)</div>
+                    <div class="code-block"><code>{
+  "id": "doc-456",
+  "file_url": "https://storage.example.com/docs/doc-456.pdf",
+  "file_name": "document.pdf",
+  "file_size": 2048576,
+  "uploaded_at": "2026-04-02T10:35:00Z"
+}</code></div>
+                </div>
+
+                <h3>Use Cases</h3>
+                <div class="use-case">
+                    <strong>1. Document Upload</strong>
+                    Client uploads document file during submission process
+                </div>
+
+                <h3>Error Codes</h3>
+                <div class="error-code">
+                    <div class="code-status">400</div>
+                    <div class="description">Missing documentId or file</div>
+                </div>
+                <div class="error-code">
+                    <div class="code-status">404</div>
+                    <div class="description">Document not found</div>
+                </div>
+                <div class="error-code">
+                    <div class="code-status">413</div>
+                    <div class="description">File too large</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Submit Document -->
+        <div class="section">
+            <h2>POST /api/client/documents/submit</h2>
+            
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">POST</span>
+                    <span class="path">/api/client/documents/submit</span>
+                    <span class="auth-badge">🔒 Auth Required</span>
+                </div>
+
+                <p><strong>Submit draft document</strong></p>
+                <p style="color: #78788d; margin-top: 8px; font-size: 13px;">Submit a draft document for editing. Moves document from draft to submitted status.</p>
+
+                <div class="auth-required">
+                    <strong>Authentication:</strong> JWT token in Authorization header
+                </div>
+
+                <div class="input-section">
+                    <div class="section-title">📥 Request Body</div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Field</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="required">documentId</span></td>
+                                <td><span class="type">string</span></td>
+                                <td>ID of draft document to submit</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="code-block"><code>{
+  "documentId": "doc-456"
+}</code></div>
+                </div>
+
+                <div class="output-section">
+                    <div class="section-title">📤 Response (200 OK)</div>
+                    <div class="code-block"><code>{
+  "id": "doc-456",
+  "status": "submitted",
+  "document_title": "Climate Change Impact Study",
+  "submitted_at": "2026-04-02T10:40:00Z"
+}</code></div>
+                </div>
+
+                <h3>Error Codes</h3>
+                <div class="error-code">
+                    <div class="code-status">400</div>
+                    <div class="description">Missing documentId</div>
+                </div>
+                <div class="error-code">
+                    <div class="code-status">404</div>
+                    <div class="description">Document not found</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Select Service -->
+        <div class="section">
+            <h2>POST /api/client/documents/service</h2>
+            
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">POST</span>
+                    <span class="path">/api/client/documents/service</span>
+                    <span class="auth-badge">🔒 Auth Required</span>
+                </div>
+
+                <p><strong>Select editing service</strong></p>
+                <p style="color: #78788d; margin-top: 8px; font-size: 13px;">Select the type of editing service needed for a document.</p>
+
+                <div class="auth-required">
+                    <strong>Authentication:</strong> JWT token in Authorization header
+                </div>
+
+                <div class="input-section">
+                    <div class="section-title">📥 Request Body</div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Field</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="required">documentId</span></td>
+                                <td><span class="type">string</span></td>
+                                <td>Document ID</td>
+                            </tr>
+                            <tr>
+                                <td><span class="required">serviceId</span></td>
+                                <td><span class="type">string</span></td>
+                                <td>Service type (proofreading, copy_edit, etc.)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="output-section">
+                    <div class="section-title">📤 Response (200 OK)</div>
+                    <div class="code-block"><code>{
+  "documentId": "doc-456",
+  "serviceId": "service-123",
+  "serviceName": "Professional Editing",
+  "estimatedCost": 150.00,
+  "estimatedTurnaround": "5 business days"
+}</code></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Create Payment Order -->
+        <div class="section">
+            <h2>POST /api/client/payments/create-order</h2>
+            
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">POST</span>
+                    <span class="path">/api/client/payments/create-order</span>
+                    <span class="auth-badge">🔒 Auth Required</span>
+                </div>
+
+                <p><strong>Create payment order</strong></p>
+                <p style="color: #78788d; margin-top: 8px; font-size: 13px;">Create a Razorpay payment order for document editing service.</p>
+
+                <div class="auth-required">
+                    <strong>Authentication:</strong> JWT token in Authorization header
+                </div>
+
+                <div class="input-section">
+                    <div class="section-title">📥 Request Body</div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Field</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="required">documentId</span></td>
+                                <td><span class="type">string</span></td>
+                                <td>Document ID for payment</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="code-block"><code>{
+  "documentId": "doc-456"
+}</code></div>
+                </div>
+
+                <div class="output-section">
+                    <div class="section-title">📤 Response (200 OK)</div>
+                    <div class="code-block"><code>{
+  "id": "order_123456",
+  "entity": "order",
+  "amount": 15000,
+  "currency": "INR",
+  "receipt": "INV-1680000000000",
+  "created_at": 1680000000
+}</code></div>
+                </div>
+
+                <h3>Use Cases</h3>
+                <div class="use-case">
+                    <strong>1. Payment Processing</strong>
+                    Create order before payment gateway integration
+                </div>
+
+                <h3>Error Codes</h3>
+                <div class="error-code">
+                    <div class="code-status">404</div>
+                    <div class="description">Document not found</div>
+                </div>
+                <div class="error-code">
+                    <div class="code-status">500</div>
+                    <div class="description">Payment gateway error</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Get Notifications -->
+        <div class="section">
+            <h2>GET /api/client/notifications</h2>
+            
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">GET</span>
+                    <span class="path">/api/client/notifications</span>
+                    <span class="auth-badge">🔒 Auth Required</span>
+                </div>
+
+                <p><strong>Get client notifications</strong></p>
+                <p style="color: #78788d; margin-top: 8px; font-size: 13px;">Retrieve all notifications for the authenticated client with filtering options.</p>
+
+                <div class="auth-required">
+                    <strong>Authentication:</strong> JWT token in Authorization header
+                </div>
+
+                <div class="input-section">
+                    <div class="section-title">📥 Query Parameters (Optional)</div>
+                    <ul style="margin-left: 20px; margin-top: 12px;">
+                        <li><code>type</code> - Filter by notification type (document_update, payment, message)</li>
+                        <li><code>unread</code> - Filter unread only (true/false)</li>
+                    </ul>
+                </div>
+
+                <div class="output-section">
+                    <div class="section-title">📤 Response (200 OK)</div>
+                    <div class="code-block"><code>{
+  "all": [...],
+  "unread": [...],
+  "documentUpdates": [...],
+  "payments": [...],
+  "messages": [...]
+}</code></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mark Notification as Read -->
+        <div class="section">
+            <h2>POST /api/client/notifications/read</h2>
+            
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">POST</span>
+                    <span class="path">/api/client/notifications/read</span>
+                    <span class="auth-badge">🔒 Auth Required</span>
+                </div>
+
+                <p><strong>Mark notification as read</strong></p>
+                <p style="color: #78788d; margin-top: 8px; font-size: 13px;">Mark a notification as read by the user.</p>
+
+                <div class="auth-required">
+                    <strong>Authentication:</strong> JWT token in Authorization header
+                </div>
+
+                <div class="input-section">
+                    <div class="section-title">📥 Request Body</div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Field</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="required">notificationId</span></td>
+                                <td><span class="type">string</span></td>
+                                <td>Notification ID to mark as read</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="output-section">
+                    <div class="section-title">📤 Response (200 OK)</div>
+                    <div class="code-block"><code>{
+  "success": true,
+  "notificationId": "notif-123"
+}</code></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Send Message -->
+        <div class="section">
+            <h2>POST /api/client/messages</h2>
+            
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">POST</span>
+                    <span class="path">/api/client/messages</span>
+                    <span class="auth-badge">🔒 Auth Required</span>
+                </div>
+
+                <p><strong>Send message to editor</strong></p>
+                <p style="color: #78788d; margin-top: 8px; font-size: 13px;">Send a message to the assigned editor for a document.</p>
+
+                <div class="auth-required">
+                    <strong>Authentication:</strong> JWT token in Authorization header
+                </div>
+
+                <div class="input-section">
+                    <div class="section-title">📥 Request Body</div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Field</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="required">documentId</span></td>
+                                <td><span class="type">string</span></td>
+                                <td>Document ID for messaging context</td>
+                            </tr>
+                            <tr>
+                                <td><span class="required">message</span></td>
+                                <td><span class="type">string</span></td>
+                                <td>Message content (max 2000 chars)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="code-block"><code>{
+  "documentId": "doc-456",
+  "message": "Can you focus on improving clarity in the introduction?"
+}</code></div>
+                </div>
+
+                <div class="output-section">
+                    <div class="section-title">📤 Response (201 Created)</div>
+                    <div class="code-block"><code>{
+  "id": "msg-789",
+  "documentId": "doc-456",
+  "senderId": "client-123",
+  "receiverId": "editor-456",
+  "message": "Can you focus on improving clarity...",
+  "createdAt": "2026-04-02T11:00:00Z"
+}</code></div>
+                </div>
+
+                <h3>Error Codes</h3>
+                <div class="error-code">
+                    <div class="code-status">400</div>
+                    <div class="description">Invalid documentId or message too long</div>
+                </div>
+                <div class="error-code">
+                    <div class="code-status">404</div>
+                    <div class="description">Document not found or no editor assigned</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Get Overview -->
+        <div class="section">
+            <h2>GET /api/client/overview</h2>
+            
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">GET</span>
+                    <span class="path">/api/client/overview</span>
+                    <span class="auth-badge">🔒 Auth Required</span>
+                </div>
+
+                <p><strong>Get dashboard overview</strong></p>
+                <p style="color: #78788d; margin-top: 8px; font-size: 13px;">Get summary statistics and recent documents for client dashboard.</p>
+
+                <div class="auth-required">
+                    <strong>Authentication:</strong> JWT token in Authorization header
+                </div>
+
+                <div class="output-section">
+                    <div class="section-title">📤 Response (200 OK)</div>
+                    <div class="code-block"><code>{
+  "pendingPaymentDocuments": [...],
+  "totalSubmittedDocumentsCount": 5,
+  "totalSubmittedDocuments": [...],
+  "inProgressCount": 2,
+  "completedCount": 3,
+  "recentProgress": [...]
+}</code></div>
+                </div>
+
+                <h3>Use Cases</h3>
+                <div class="use-case">
+                    <strong>1. Dashboard Summary</strong>
+                    Display overview statistics on client dashboard
+                </div>
+            </div>
+        </div>
+
+        <!-- Support Tickets -->
+        <div class="section">
+            <h2>GET/POST /api/client/tickets</h2>
+            
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">GET</span>
+                    <span class="path">/api/client/tickets</span>
+                    <span class="auth-badge">🔒 Auth Required</span>
+                </div>
+
+                <p><strong>Get support tickets</strong></p>
+                <p style="color: #78788d; margin-top: 8px; font-size: 13px;">Retrieve all support tickets created by the client.</p>
+
+                <div class="auth-required">
+                    <strong>Authentication:</strong> JWT token in Authorization header
+                </div>
+
+                <div class="output-section">
+                    <div class="section-title">📤 Response (200 OK)</div>
+                    <div class="code-block"><code>{
+  "tickets": [
+    {
+      "id": "ticket-123",
+      "title": "File upload issue",
+      "description": "Cannot upload PDF files",
+      "status": "open",
+      "created_at": "2026-04-01T10:00:00Z"
+    }
+  ]
+}</code></div>
+                </div>
+            </div>
+
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">POST</span>
+                    <span class="path">/api/client/tickets</span>
+                    <span class="auth-badge">🔒 Auth Required</span>
+                </div>
+
+                <p><strong>Create support ticket</strong></p>
+
+                <div class="input-section">
+                    <div class="section-title">📥 Request Body</div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Field</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="required">title</span></td>
+                                <td><span class="type">string</span></td>
+                                <td>Ticket title (max 200 chars)</td>
+                            </tr>
+                            <tr>
+                                <td><span class="required">description</span></td>
+                                <td><span class="type">string</span></td>
+                                <td>Detailed description (max 2000 chars)</td>
+                            </tr>
+                            <tr>
+                                <td><span class="optional">category</span></td>
+                                <td><span class="type">string</span></td>
+                                <td>Category (technical, billing, etc.)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="output-section">
+                    <div class="section-title">📤 Response (201 Created)</div>
+                    <div class="code-block"><code>{
+  "id": "ticket-124",
+  "title": "File upload issue",
+  "description": "Cannot upload PDF files",
+  "status": "open",
+  "created_at": "2026-04-02T11:30:00Z"
+}</code></div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>© 2026 Submit Right. API Documentation for Client Module</p>
+        </footer>
+    </div>
+</body>
+</html>

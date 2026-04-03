@@ -38,8 +38,8 @@ export function FAQ() {
         {/* Header */}
         <div className="text-center mb-12">
           <div className="inline-flex items-center gap-1.5 mb-4">
-             <div className="w-5 h-5 bg-[#1C1C1D] text-white rounded-full flex items-center justify-center font-bold text-[10px]">?</div>
-            <span className="text-[12px] font-semibold text-[#1C1C1D] uppercase tracking-wider">
+             <div className="w-5 h-5 bg-[#1C1C1D] text-white rounded-full flex items-center justify-center font-normal text-[10px]">?</div>
+            <span className="text-[12px] font-normal text-[#1C1C1D] uppercase tracking-wider">
               FAQ
             </span>
           </div>

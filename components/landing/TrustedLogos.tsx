@@ -20,7 +20,7 @@ export function TrustedLogos() {
 
         {/* Title */}
         <div className="text-center mb-8">
-          <h2 className="text-[32px] font-medium text-[#1C1C1D] leading-[1.1]">
+          <h2 className="text-[18px] font-medium text-[#78788D] leading-[1.1]">
             Lorem ipsum dolor sit amet
           </h2>
         </div>
@@ -37,11 +37,11 @@ export function TrustedLogos() {
           <div className="carousel-scroll">
             {extendedLogos.map((logo, index) => (
               <div key={`${logo.id}-${index}`} className="carousel-item flex items-center justify-center flex-shrink-0">
-                <div className="relative w-[120px] h-[80px] flex items-center justify-center">
+                <div className="relative w-[120px] h-[100px] flex items-center justify-center">
                   <img 
                     src={logo.src} 
                     alt={`Logo ${logo.id}`}
-                    className="max-w-[100px] max-h-[60px] object-contain opacity-80 grayscale hover:opacity-100 hover:grayscale-0 transition-all"
+                    className="max-w-[100px] max-h-[80px] object-contain opacity-80  hover:opacity-100 hover:grayscale-0 transition-all"
                   />
                 </div>
               </div>

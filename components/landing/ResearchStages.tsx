@@ -24,7 +24,7 @@ export function ResearchStages() {
           {/* Badge */}
           <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-white border border-[#E5E5E5] rounded-full mb-5">
             <HelpCircle className="w-3.5 h-3.5 text-[#1C1C1D]" />
-            <span className="text-[11px] font-semibold text-[#1C1C1D] uppercase tracking-wider">
+            <span className="text-[11px] font-normal text-[#1C1C1D] uppercase tracking-wider">
               Lorem Ipsum Dolor
             </span>
           </div>
@@ -55,7 +55,7 @@ export function ResearchStages() {
                 }`}
               >
                 <div
-                  className={`text-xs font-semibold mb-1 ${
+                  className={`text-xs font-normal mb-1 ${
                     activeStep === step.id ? 'text-[#00A0E3]' : 'text-gray-400'
                   }`}
                 >
@@ -100,43 +100,43 @@ export function ResearchStages() {
 function Step1Content() {
   return (
     <div className="flex flex-col gap-4 h-full">
-      <div className="bg-[#F8F9FA] rounded-2xl p-6 border border-gray-100 flex-1 flex flex-col justify-center">
+      <div className="bg-[#F8F8F8] rounded-[14px] p-6 border border-[#ECECEC] flex-1 flex flex-col justify-center">
         <div className="flex justify-between items-start mb-4">
-          <div className="text-xs font-bold text-[#00A0E3] uppercase tracking-wider">Our Tool</div>
+          <div className="text-[14px] font-medium text-[#00A0E3] uppercase tracking-wider leading-[110%]">Our Tool</div>
           <div className="flex items-center gap-2">
-            <div className="w-6 h-6 bg-[#00A0E3] rounded-full flex items-center justify-center text-white font-bold text-xs">B</div>
-            <span className="font-bold text-[#1C1C1D]">Logoispsum</span>
+            <div className="w-6 h-6 bg-[#00A0E3] rounded-full flex items-center justify-center text-white font-normal text-xs">B</div>
+            <span className="text-[24px] font-medium text-[#1C1C1D] leading-[110%]">Logoispsum</span>
           </div>
         </div>
-        <h3 className="text-xl font-bold text-[#1C1C1D] mb-2">Beentu AI Writing</h3>
-        <p className="text-[#65656D] text-sm mb-4 max-w-2xl leading-relaxed">
+        <h3 className="text-[24px] font-medium text-[#1C1C1D] mb-2 leading-[110%]">Beentu AI Writing</h3>
+        <p className="text-[#78788D] text-[15px] font-normal mb-4 max-w-2xl leading-[120%]">
           Lorem ipsum dolor sit amet consectetur. Sagittis eu vel habitant cursus. 
           Elementum suscipit donec viverra posuere at lorem nullam. Porttitor mauris morbi 
           tincidunt enim nascetur sed.
         </p>
         <div>
-          <button className="inline-flex items-center gap-2 bg-[#00A0E3] text-white px-5 py-2 rounded-full text-sm font-medium hover:bg-[#0088CC] transition-colors">
+          <button className="inline-flex items-center gap-2 bg-[#00A0E3] text-white px-5 py-2 mt-5 rounded-full text-sm font-medium hover:bg-[#0088CC] transition-colors">
             Explore Now <ArrowRight className="w-4 h-4" />
           </button>
         </div>
       </div>
 
-      <div className="bg-[#F8F9FA] rounded-2xl p-6 border border-gray-100 flex-1 flex flex-col justify-center">
+      <div className="bg-[#F8F8F8] rounded-[14px] p-6 border border-[#ECECEC] flex-1 flex flex-col justify-center">
         <div className="flex justify-between items-start mb-4">
-          <div className="text-xs font-bold text-[#00A0E3] uppercase tracking-wider">Our Tool</div>
+          <div className="text-[14px] font-medium text-[#00A0E3] uppercase tracking-wider leading-[110%]">Our Tool</div>
           <div className="flex items-center gap-2">
-            <div className="w-6 h-6 bg-[#00A0E3] rounded-full flex items-center justify-center text-white font-bold text-xs">S</div>
-            <span className="font-bold text-[#1C1C1D]">Logoispsum</span>
+            <div className="w-6 h-6 bg-[#00A0E3] rounded-full flex items-center justify-center text-white font-normal text-xs">S</div>
+            <span className="text-[24px] font-medium text-[#1C1C1D] leading-[110%]">Logoispsum</span>
           </div>
         </div>
-        <h3 className="text-xl font-bold text-[#1C1C1D] mb-2">Submit Right Service</h3>
-        <p className="text-[#65656D] text-sm mb-4 max-w-2xl leading-relaxed">
+        <h3 className="text-[18px] font-medium text-[#1C1C1D] mb-2 leading-[110%]">Submit Right Service</h3>
+        <p className="text-[#78788D] text-[15px] font-normal mb-4 max-w-2xl leading-[120%]">
           Lorem ipsum dolor sit amet consectetur. Sagittis eu vel habitant cursus. 
           Elementum suscipit donec viverra posuere at lorem nullam. Porttitor mauris morbi 
           tincidunt enim nascetur sed.
         </p>
         <div>
-          <button className="inline-flex items-center gap-2 bg-[#00A0E3] text-white px-5 py-2 rounded-full text-sm font-medium hover:bg-[#0088CC] transition-colors">
+          <button className="inline-flex items-center gap-2 bg-[#00A0E3] text-white px-5 py-2 mt-5 rounded-full text-sm font-medium hover:bg-[#0088CC] transition-colors">
             Explore Now <ArrowRight className="w-4 h-4" />
           </button>
         </div>
@@ -150,7 +150,7 @@ function Step2Content() {
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 h-full">
       {[1, 2].map((i) => (
         <div key={i} className="bg-[#F8F9FA] rounded-2xl p-6 border border-gray-100 flex flex-col h-full overflow-hidden">
-          <h3 className="text-lg font-bold text-[#1C1C1D] mb-1">Lorem ipsum dolor sit</h3>
+          <h3 className="text-lg font-normal text-[#1C1C1D] mb-1">Lorem ipsum dolor sit</h3>
           <p className="text-[#65656D] text-xs mb-4 pb-4 border-b border-gray-200 border-dashed">
             amet, consectetur adipiscing elit, sed do eiusmod tempor.
           </p>
@@ -158,7 +158,7 @@ function Step2Content() {
           <div className="flex items-center justify-between mb-4 pb-4 border-b border-gray-200 border-dashed">
             <div>
               <div className="text-xs text-[#65656D]">Starts from</div>
-              <div className="text-xl font-bold text-[#1C1C1D]">
+              <div className="text-xl font-normal text-[#1C1C1D]">
                 $0.0425 <span className="text-xs text-[#65656D] font-normal">/per word</span>
               </div>
             </div>
@@ -177,7 +177,7 @@ function Step2Content() {
           </div>
 
           <div className="mt-auto">
-            <h4 className="text-xs font-bold text-[#1C1C1D] mb-2">Lorem ipsum dolor sit</h4>
+            <h4 className="text-xs font-normal text-[#1C1C1D] mb-2">Lorem ipsum dolor sit</h4>
             <ul className="space-y-1.5 text-xs text-[#65656D]">
               <li className="flex items-start gap-1.5 before:content-['•'] before:text-gray-400 before:mr-0.5 truncate">Lorem ipsum consectetur adipiscing</li>
               <li className="flex items-start gap-1.5 before:content-['•'] before:text-gray-400 before:mr-0.5 truncate">sed do eiusmod tempor</li>
@@ -194,7 +194,7 @@ function Step2Content() {
 function Step3Content() {
   return (
     <div className="bg-[#F8F9FA] rounded-2xl p-6 border border-gray-100 h-full flex flex-col">
-      <div className="inline-flex items-center justify-center text-[#00A0E3] font-bold mb-3 self-start">
+      <div className="inline-flex items-center justify-center text-[#00A0E3] font-normal mb-3 self-start">
         <HomeIcon className="w-5 h-5 mr-1" /> Beentu <ArrowRight className="w-4 h-4 ml-1" />
       </div>
       <p className="text-[#1C1C1D] font-medium leading-relaxed mb-6 max-w-3xl text-sm">
@@ -218,7 +218,7 @@ function Step4Content() {
     <div className="grid grid-cols-1 md:grid-cols-2 grid-rows-2 gap-4 h-full">
       {/* Top Left */}
       <div className="bg-[#F8F9FA] rounded-2xl p-6 border border-gray-100 flex flex-col justify-center">
-        <h3 className="text-lg font-bold text-[#1C1C1D] mb-2">Lorem ipsum dolor</h3>
+        <h3 className="text-lg font-normal text-[#1C1C1D] mb-2">Lorem ipsum dolor</h3>
         <p className="text-[#65656D] mb-4 text-xs leading-relaxed">
           Lorem ipsum dolor sit amet consectetur. Sagittis eu vel habitant cursus. 
           Elementum suscipit donec viverra posuere at lorem nullam. Porttitor mauris morbi 
@@ -232,7 +232,7 @@ function Step4Content() {
       </div>
       {/* Top Right */}
       <div className="bg-[#F8F9FA] rounded-2xl p-6 border border-gray-100 flex flex-col justify-center">
-        <h3 className="text-lg font-bold text-[#1C1C1D] mb-2">Lorem ipsum dolor</h3>
+        <h3 className="text-lg font-normal text-[#1C1C1D] mb-2">Lorem ipsum dolor</h3>
         <p className="text-[#65656D] mb-4 text-xs leading-relaxed">
           Lorem ipsum dolor sit amet consectetur. Sagittis eu vel habitant cursus. 
           Elementum suscipit donec viverra posuere at lorem nullam. Porttitor mauris morbi 
@@ -247,7 +247,7 @@ function Step4Content() {
       {/* Bottom Left */}
       <div className="bg-[#F8F9FA] rounded-2xl p-6 border border-gray-100 flex flex-col justify-between">
         <div>
-          <h3 className="text-lg font-bold text-[#1C1C1D] mb-2">Lorem ipsum dolor</h3>
+          <h3 className="text-lg font-normal text-[#1C1C1D] mb-2">Lorem ipsum dolor</h3>
           <p className="text-[#65656D] text-xs leading-relaxed">
             Lorem ipsum dolor sit amet consectetur. Sagittis eu vel habitant cursus. 
             Elementum suscipit donec viverra posuere at lorem nullam. Porttitor mauris morbi 
@@ -263,7 +263,7 @@ function Step4Content() {
       {/* Bottom Right */}
       <div className="bg-[#F8F9FA] rounded-2xl p-6 border border-gray-100 flex flex-col justify-between">
         <div>
-          <h3 className="text-lg font-bold text-[#1C1C1D] mb-2">Lorem ipsum dolor</h3>
+          <h3 className="text-lg font-normal text-[#1C1C1D] mb-2">Lorem ipsum dolor</h3>
           <p className="text-[#65656D] text-xs leading-relaxed">
             Lorem ipsum dolor sit amet consectetur. Sagittis eu vel habitant cursus. 
             Elementum suscipit donec viverra posuere at lorem nullam. Porttitor mauris morbi 
@@ -286,7 +286,7 @@ function Step5Content() {
       {/* Top Card */}
       <div className="bg-[#F8F9FA] rounded-2xl p-6 border border-gray-100 flex flex-col justify-between flex-1">
         <div>
-          <h3 className="text-lg font-bold text-[#1C1C1D] mb-3">Lorem ipsum dolor</h3>
+          <h3 className="text-lg font-normal text-[#1C1C1D] mb-3">Lorem ipsum dolor</h3>
           <p className="text-[#65656D] text-xs leading-relaxed">
             Lorem ipsum dolor sit amet consectetur. Sagittis eu vel habitant cursus. 
             Elementum suscipit donec viverra posuere at lorem nullam. Porttitor mauris morbi 
@@ -304,7 +304,7 @@ function Step5Content() {
       {/* Bottom Card */}
       <div className="bg-[#F8F9FA] rounded-2xl p-6 border border-gray-100 flex flex-col justify-between flex-1">
         <div>
-          <h3 className="text-lg font-bold text-[#1C1C1D] mb-3">Lorem ipsum dolor</h3>
+          <h3 className="text-lg font-normal text-[#1C1C1D] mb-3">Lorem ipsum dolor</h3>
           <p className="text-[#65656D] text-xs leading-relaxed">
             Lorem ipsum dolor sit amet consectetur. Sagittis eu vel habitant cursus. 
             Elementum suscipit donec viverra posuere at lorem nullam. Porttitor mauris morbi 
@@ -328,7 +328,7 @@ function Step6Content() {
       {[1, 2].map((i) => (
         <div key={i} className="bg-[#F8F9FA] rounded-2xl p-6 border border-gray-100 flex flex-col justify-between h-full">
           <div>
-            <h3 className="text-lg font-bold text-[#1C1C1D] mb-2">Lorem ipsum dolor</h3>
+            <h3 className="text-lg font-normal text-[#1C1C1D] mb-2">Lorem ipsum dolor</h3>
             <p className="text-[#65656D] mb-4 text-xs leading-relaxed">
               Lorem ipsum dolor sit amet consectetur. Sagittis eu vel habitant cursus. 
               Elementum suscipit donec viverra posuere at lorem nullam. Porttitor mauris morbi 
@@ -356,8 +356,8 @@ function Step6Content() {
 function Step7Content() {
   return (
     <div className="bg-[#F8F9FA] rounded-3xl p-8 border border-gray-100 flex flex-col h-full">
-      <div className="text-xs font-bold text-[#00A0E3] uppercase tracking-wider mb-2">STEP 7</div>
-      <h3 className="text-2xl font-bold text-[#1C1C1D] mb-3">Publication Support</h3>
+      <div className="text-xs font-normal text-[#00A0E3] uppercase tracking-wider mb-2">STEP 7</div>
+      <h3 className="text-2xl font-normal text-[#1C1C1D] mb-3">Publication Support</h3>
       <p className="text-[#65656D] text-sm mb-8 max-w-md">
         Lorem ipsum dolor sit amet consectetur. Sagittis eu vel habitant cursus. 
         Elementum suscipit donec viverra posuere at lorem nullam.
@@ -366,10 +366,10 @@ function Step7Content() {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-auto">
         {/* Yellow Card */}
         <div className="rounded-2xl border border-[#F4C252] bg-[#FFFBF3] p-5 relative overflow-hidden flex flex-col">
-          <div className="absolute top-0 right-0 bg-[#F4C252] text-white text-[10px] font-bold px-3 py-1 rounded-bl-lg">
+          <div className="absolute top-0 right-0 bg-[#F4C252] text-white text-[10px] font-normal px-3 py-1 rounded-bl-lg">
             You Save: $328
           </div>
-          <h4 className="text-lg font-bold text-[#F4C252] mb-1">Lorem ipsum dolor</h4>
+          <h4 className="text-lg font-normal text-[#F4C252] mb-1">Lorem ipsum dolor</h4>
           <p className="text-xs text-[#65656D] mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing.</p>
           
           <div className="space-y-2 mb-6">
@@ -390,7 +390,7 @@ function Step7Content() {
               </div>
               <div className="text-right">
                 <div className="text-xs text-gray-400 line-through font-medium">$1240</div>
-                <div className="text-xl font-bold text-[#F4C252]">$912</div>
+                <div className="text-xl font-normal text-[#F4C252]">$912</div>
               </div>
             </div>
             <button className="w-full bg-[#1C1C1D] text-white py-2 rounded-full text-sm font-medium hover:bg-black transition-colors">
@@ -401,10 +401,10 @@ function Step7Content() {
 
         {/* Blue Card */}
         <div className="rounded-2xl border border-[#00A0E3] bg-[#F1F9FF] p-5 relative overflow-hidden flex flex-col">
-          <div className="absolute top-0 right-0 bg-[#00A0E3] text-white text-[10px] font-bold px-3 py-1 rounded-bl-lg">
+          <div className="absolute top-0 right-0 bg-[#00A0E3] text-white text-[10px] font-normal px-3 py-1 rounded-bl-lg">
             You Save: $328
           </div>
-          <h4 className="text-lg font-bold text-[#00A0E3] mb-1">Lorem ipsum dolor</h4>
+          <h4 className="text-lg font-normal text-[#00A0E3] mb-1">Lorem ipsum dolor</h4>
           <p className="text-xs text-[#65656D] mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing.</p>
           
           <div className="space-y-2 mb-6">
@@ -425,7 +425,7 @@ function Step7Content() {
               </div>
               <div className="text-right">
                 <div className="text-xs text-gray-400 line-through font-medium">$1240</div>
-                <div className="text-xl font-bold text-[#00A0E3]">$912</div>
+                <div className="text-xl font-normal text-[#00A0E3]">$912</div>
               </div>
             </div>
             <button className="w-full bg-[#00A0E3] text-white py-2 rounded-full text-sm font-medium hover:bg-[#0088CC] transition-colors">
@@ -441,8 +441,8 @@ function Step7Content() {
 function Step8Content() {
   return (
     <div className="bg-[#F8F9FA] rounded-3xl p-8 border border-gray-100 flex flex-col h-full">
-      <div className="text-xs font-bold text-[#00A0E3] uppercase tracking-wider mb-2">STEP 8</div>
-      <h3 className="text-2xl font-bold text-[#1C1C1D] mb-3">Post Publication</h3>
+      <div className="text-xs font-normal text-[#00A0E3] uppercase tracking-wider mb-2">STEP 8</div>
+      <h3 className="text-2xl font-normal text-[#1C1C1D] mb-3">Post Publication</h3>
       <p className="text-[#65656D] text-sm mb-8 max-w-md">
         Lorem ipsum dolor sit amet consectetur. Sagittis eu vel habitant cursus. 
         Elementum suscipit donec viverra posuere at lorem nullam.

@@ -109,11 +109,11 @@ export default function ServiceDetailPage() {
   ];
 
   return (
-    <div className="w-full font-dm-sans mx-auto pb-16 px-6 mt-10">
+    <div className="w-full font-dm-sans mx-auto md:pb-4 px-4 md:px-6 mt-3 md:mt-8">
       <div className="flex flex-col lg:flex-row gap-10 items-start relative">
         
         {/* --- LEFT COLUMN --- */}
-        <div className="w-full lg:flex-1 flex flex-col gap-12">
+        <div className="w-full lg:flex-1 flex flex-col gap-6 md:gap-8">
           
           {/* Top Section */}
           <div>
@@ -122,80 +122,200 @@ export default function ServiceDetailPage() {
               <span className="bg-[#171717] text-white text-[12px] font-bold px-3 py-1 rounded-full">
                 New
               </span>
-              <span className="text-[13px] text-[#525866] font-medium">
+              <span className=" text-[12px] md:text-[13px] text-[#525866] font-medium">
                 Service tag
               </span>
             </div>
 
             {/* Title & Description */}
-            <h1 className="text-[28px] font-bold text-[#171717] mb-3 tracking-tight">
+            <h1 className= " text-[16px] md:text-[22px] font-medium text-[#1C1C1D] mb-3 tracking-tight">
               Lorem ipsum dolor
             </h1>
-            <p className="text-[#8A94A6] text-[15px] leading-relaxed max-w-[95%] mb-6">
+            <p className="text-[#78788D] text-[12px] md:text-[14px] leading-relaxed max-w-[95%] mb-4">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam
             </p>
 
             {/* Tags */}
-            <div className="flex flex-wrap gap-3 mb-10">
-              <span className="border border-[#EAECF0] text-[#525866] text-[14px] px-4 py-1.5 rounded-full bg-white">
+            <div className="flex flex-wrap gap-3 mb-6">
+              
+              <span className="border border-[#EAECF0] text-[#78788D] text-[14px] px-4 py-1.5 rounded-full bg-white">
                 Service Domain
               </span>
-              <span className="border border-[#EAECF0] text-[#525866] text-[14px] px-4 py-1.5 rounded-full bg-white">
+              <span className="border border-[#EAECF0] text-[#78788D] text-[14px] px-4 py-1.5 rounded-full bg-white">
                 Lorem ipsum dolor
               </span>
             </div>
-
-            {/* Stats Box */}
-            <div className="flex flex-col lg:flex-row border border-[#EAECF0] rounded-[12px] overflow-hidden bg-white mb-10">
-              <div className="lg:w-[140px] bg-[#00A0E3] flex flex-col items-center justify-center text-white p-6 shrink-0">
-                <CheckCircle2 className="w-6 h-6 mb-2 text-white" fill="white" stroke="#00A0E3" />
-                <span className="text-[13px] font-bold text-center">Lorem ipsum</span>
-              </div>
-              
-              <div className="flex-1 p-6 border-b lg:border-b-0 lg:border-r border-[#EAECF0] flex items-center">
-                <p className="text-[#8A94A6] text-[14px] leading-relaxed">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.
-                </p>
-              </div>
-              
-              <div className="px-8 py-6 border-b lg:border-b-0 lg:border-r border-[#EAECF0] flex flex-col items-center justify-center shrink-0">
-                <span className="text-[22px] font-bold text-[#171717] mb-1">4.4</span>
-                <div className="flex gap-[2px] mb-2">
-                  <Star className="w-4 h-4 fill-[#FF8B00] text-[#FF8B00]" />
-                  <Star className="w-4 h-4 fill-[#FF8B00] text-[#FF8B00]" />
-                  <Star className="w-4 h-4 fill-[#FF8B00] text-[#FF8B00]" />
-                  <Star className="w-4 h-4 fill-[#FF8B00] text-[#FF8B00]" />
-                  <StarHalf className="w-4 h-4 fill-[#FF8B00] text-[#FF8B00]" />
+            <div className="w-full shrink-0 block lg:hidden mb-10">
+              <div className="border border-[#EAECF0] rounded-[16px] overflow-hidden bg-white shadow-sm">
+                
+                {/* Image Placeholder */}
+                <div className="h-[200px] w-full relative bg-[#D0D6DC] overflow-hidden">
+                  <svg className="absolute inset-0 w-full h-full" viewBox="0 0 400 200" preserveAspectRatio="none">
+                    <path d="M0,200 L0,120 C 60,90 120,180 200,120 C 280,60 340,90 400,140 L400,200 Z" fill="#F4F5F7" />
+                    <circle cx="80" cy="80" r="16" fill="#F4F5F7" />
+                  </svg>
                 </div>
-                <span className="text-[#525866] text-[13px] underline cursor-pointer hover:text-[#171717] font-medium">
-                  2,206 ratings
-                </span>
-              </div>
-              
-              <div className="px-8 py-6 flex flex-col items-center justify-center shrink-0">
-                <Users className="w-6 h-6 text-[#00A0E3] mb-2" />
-                <span className="text-[20px] font-bold text-[#171717] mb-0.5">15,969</span>
-                <span className="text-[#8A94A6] text-[13px]">learners</span>
+
+                <div className="p-4">
+                  {/* Pricing Header */}
+                  <div className="flex justify-between items-start mb-6">
+                    <div className="flex flex-col">
+                      <span className="text-[#78788D] text-[14px] mb-1">From</span>
+                      <div className="flex items-baseline gap-1.5">
+                        <span className="text-[24px] font-semibold text-[#171717]">$0.065</span>
+                        <span className="text-[#78788D] text-[14px]">/word</span>
+                      </div>
+                    </div>
+                    <span className="bg-[#E6F8EC] text-[#00A859] text-[12px] font-medium px-3 py-1.5 rounded-full mt-1">
+                      Upto 30% off
+                    </span>
+                  </div>
+
+                  {/* Action Buttons */}
+                  <div className="flex flex-col gap-3 mb-6">
+                    <button className="w-full bg-[#00A0E3] hover:bg-[#008bc5] text-white py-3 rounded-[8px] text-[14px] font-medium transition-colors">
+                      Submit Now
+                    </button>
+                    <button className="w-full bg-white border border-[#00A0E3] text-[#00A0E3] hover:bg-[#F0F8FC] py-3 rounded-[8px] text-[14px] font-medium transition-colors">
+                      Place Order Now
+                    </button>
+                  </div>
+
+                  <div className="w-full h-[1px] bg-[#EAECF0] mb-6"></div>
+
+                  {/* Estimate Calculator */}
+                  <div className="flex flex-col">
+                    <span className="text-[#78788D] text-[14px] mb-1">
+                      Estimated price based on word count
+                    </span>
+                    <div className="flex items-baseline gap-1.5 mb-6">
+                      <span className="text-[18px] font-bold text-[#171717]">From $0.065</span>
+                      <span className="text-[#78788D] text-[14px]">/word</span>
+                    </div>
+
+                    {/* Word Count Input */}
+                    <div className="relative mb-5">
+                      <input 
+                        type="text" 
+                        placeholder="Enter no.of words" 
+                        className="w-full border border-[#EAECF0] rounded-[8px] px-4 py-3 text-[14px] text-[#171717] placeholder:text-[#78788D] focus:outline-none focus:border-[#00A0E3] transition-colors"
+                      />
+                      <div className="absolute right-4 top-1/2 -translate-y-1/2 flex flex-col gap-1">
+                        <ChevronUp className="w-3.5 h-3.5 text-[#525866] cursor-pointer hover:text-[#171717]" strokeWidth={3} />
+                        <ChevronDown className="w-3.5 h-3.5 text-[#525866] cursor-pointer hover:text-[#171717]" strokeWidth={3} />
+                      </div>
+                    </div>
+
+                    {/* Document Type Select */}
+                    <div className="flex flex-col mb-6">
+                      <label className="text-[14px] font-semibold text-[#171717] mb-2">
+                        Document Type
+                      </label>
+                      <div className="relative">
+                        <select className="w-full border border-[#EAECF0] rounded-[8px] px-4 py-3 text-[14px] text-[#78788D] appearance-none focus:outline-none focus:border-[#00A0E3] bg-white transition-colors cursor-pointer">
+                          <option>Select document type</option>
+                          <option>Research Paper</option>
+                          <option>Thesis</option>
+                          <option>Essay</option>
+                        </select>
+                        <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#525866] pointer-events-none" />
+                      </div>
+                    </div>
+
+                    <button className="w-full bg-[#00A0E3] hover:bg-[#008bc5] text-white py-3 rounded-[8px] text-[14px] font-medium transition-colors">
+                      Calculate
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
+            {/* Stats Box */}
+           {/* --- MOBILE STATS BOX (Visible only on mobile) --- */}
+<div className="lg:hidden flex flex-col gap-4 mb-10">
+  <div className="flex border border-[#EAECF0] rounded-[12px] bg-white overflow-hidden">
+    {/* Item 1 */}
+    <div className="flex-1 py-5 px-2 border-r border-[#EAECF0] flex flex-col items-center justify-center shrink-0">
+      <CheckCircle2 className="w-7 h-7 mb-2 text-[#00A0E3]" fill="#00A0E3" stroke="white" />
+      <span className="text-[13px] text-[#171717] text-center">Lorem ipsum</span>
+    </div>
+    
+    {/* Item 2 */}
+    <div className="flex-[1.2] py-5 px-2 border-r border-[#EAECF0] flex flex-col items-center justify-center shrink-0">
+      <span className="text-[18px] font-bold text-[#171717] mb-1">4.4</span>
+      <div className="flex gap-[2px] mb-1.5">
+        <Star className="w-3.5 h-3.5 fill-[#FF8B00] text-[#FF8B00]" />
+        <Star className="w-3.5 h-3.5 fill-[#FF8B00] text-[#FF8B00]" />
+        <Star className="w-3.5 h-3.5 fill-[#FF8B00] text-[#FF8B00]" />
+        <Star className="w-3.5 h-3.5 fill-[#FF8B00] text-[#FF8B00]" />
+        <StarHalf className="w-3.5 h-3.5 fill-[#FF8B00] text-[#FF8B00]" />
+      </div>
+      <span className="text-[#525866] text-[12px] underline font-medium cursor-pointer">
+        2,206 ratings
+      </span>
+    </div>
+    
+    {/* Item 3 */}
+    <div className="flex-1 py-5 px-2 flex flex-col items-center justify-center shrink-0">
+      <Users className="w-6 h-6 text-[#00A0E3] mb-1.5" />
+      <span className="text-[16px] font-bold text-[#171717] mb-0.5">15,969</span>
+      <span className="text-[#8A94A6] text-[12px]">learners</span>
+    </div>
+  </div>
+
+   
+</div>
+
+{/* --- DESKTOP STATS BOX (Visible only on desktop) --- */}
+<div className="hidden lg:flex flex-row border border-[#EAECF0] rounded-[12px] overflow-hidden bg-white mb-8">
+  <div className="w-[140px] bg-[#00A0E3] flex flex-col items-center justify-center text-white p-6 shrink-0">
+    <CheckCircle2 className="w-6 h-6 mb-2 text-white" fill="white" stroke="#00A0E3" />
+    <span className="text-[13px] font-bold text-center">Lorem ipsum</span>
+  </div>
+  
+  <div className="flex-1 p-6 border-r border-[#EAECF0] flex items-center">
+    <p className="text-[#78788D] md:text-[14px] leading-relaxed">
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.
+    </p>
+  </div>
+  
+  <div className="px-8 py-6 border-r border-[#EAECF0] flex flex-col items-center justify-center shrink-0">
+    <span className="text-[22px] font-bold text-[#171717] mb-1">4.4</span>
+    <div className="flex gap-[2px] mb-2">
+      <Star className="w-4 h-4 fill-[#FF8B00] text-[#FF8B00]" />
+      <Star className="w-4 h-4 fill-[#FF8B00] text-[#FF8B00]" />
+      <Star className="w-4 h-4 fill-[#FF8B00] text-[#FF8B00]" />
+      <Star className="w-4 h-4 fill-[#FF8B00] text-[#FF8B00]" />
+      <StarHalf className="w-4 h-4 fill-[#FF8B00] text-[#FF8B00]" />
+    </div>
+    <span className="text-[#525866] text-[13px] underline cursor-pointer hover:text-[#171717] font-medium">
+      2,206 ratings
+    </span>
+  </div>
+  
+  <div className="px-8 py-6 flex flex-col items-center justify-center shrink-0">
+    <Users className="w-6 h-6 text-[#00A0E3] mb-2" />
+    <span className="text-[20px] font-bold text-[#171717] mb-0.5">15,969</span>
+    <span className="text-[#78788D] text-[13px]">learners</span>
+  </div>
+</div>
 
             {/* Features Box */}
-            <div className="border border-[#EAECF0] rounded-[12px] bg-white pt-6 pb-2 mb-10 overflow-hidden">
-              <h3 className="text-[16px] font-bold text-[#171717] mb-4 px-6">
+            <div className="border border-[#EAECF0] rounded-[12px] bg-white pt-6 md:pt-4 pb-2 mb-10 overflow-hidden">
+              <h3 className=" text-[18px] md:text-[16px] font-semibold text-[#171717] mb-4 px-4 md:px-6">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit
               </h3>
-              
+              <div className="h-[1px] bg-[#EAECF0] " ></div>
               <div className="grid grid-cols-1 md:grid-cols-2">
                 {[1, 2, 3, 4, 5, 6].map((item, index) => (
                   <div 
                     key={item} 
-                    className={`px-6 py-5 flex items-start gap-3.5 
+                    className={`px-4 md:px-6 py-5 flex items-start gap-3.5 
                       ${index % 2 === 0 ? "md:border-r border-[#EAECF0]" : ""} 
                       ${index < 4 ? "border-b border-[#EAECF0]" : ""}
                     `}
                   >
-                    <Check className="w-[18px] h-[18px] text-[#171717] shrink-0 mt-0.5" strokeWidth={2.5} />
-                    <span className="text-[#8A94A6] text-[14px] leading-relaxed">
+                    <Check className="w-[18px] h-[18px] text-[#171717] shrink-0 mt-3" strokeWidth={2.5} />
+                    <span className="text-[#78788D] text-[14px] leading-relaxed">
                       Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
                     </span>
                   </div>
@@ -205,20 +325,20 @@ export default function ServiceDetailPage() {
             
             {/* Explore Related Services Placeholder */}
             <div>
-              <h3 className="text-[18px] font-bold text-[#171717] mb-5">
+              <h3 className="text-[18px] md:text-[20px] font-semibold text-[#171717] mb-5">
                 Explore Related Services
               </h3>
               <div className="flex flex-wrap gap-2.5">
-                <span className="border border-[#EAECF0] text-[#525866] text-[13px] px-4 py-1.5 rounded-full bg-[#F9FAFB] font-medium">
+                <span className="border border-[#EAECF0] text-[#78788D] text-[14px] px-4 py-1.5 rounded-full bg-[#F9FAFB] font-medium">
                   Service Domain
                 </span>
-                <span className="border border-[#EAECF0] text-[#525866] text-[13px] px-4 py-1.5 rounded-full bg-[#F9FAFB] font-medium">
+                <span className="border border-[#EAECF0] text-[#78788D] text-[14px] px-4 py-1.5 rounded-full bg-[#F9FAFB] font-medium">
                   Lorem ipsum dolor
                 </span>
-                <span className="border border-[#EAECF0] text-[#525866] text-[13px] px-4 py-1.5 rounded-full bg-[#F9FAFB] font-medium">
+                <span className="border border-[#EAECF0] text-[#78788D] text-[14px] px-4 py-1.5 rounded-full bg-[#F9FAFB] font-medium">
                   Lorem ipsum dolor
                 </span>
-                <span className="border border-[#EAECF0] text-[#525866] text-[13px] px-4 py-1.5 rounded-full bg-[#F9FAFB] font-medium">
+                <span className="border border-[#EAECF0] text-[#78788D] text-[14px] px-4 py-1.5 rounded-full bg-[#F9FAFB] font-medium">
                   Lorem ipsum dolor
                 </span>
               </div>
@@ -227,12 +347,12 @@ export default function ServiceDetailPage() {
 
           {/* SECTION: What You'll Be Getting in This Service */}
           <div>
-            <h2 className="text-[18px] font-bold text-[#171717] mb-6">What You'll Be Getting in This Service</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">
+            <h2 className= " text-[18px] md:text-[20px] font-semibold text-[#171717] mb-6">What You'll Be Getting in This Service</h2>
+            <div className="grid grid-cols-2 md:grid-cols-2 gap-x-8 gap-y-4">
               {[1, 2, 3, 4, 5, 6].map((item) => (
                 <div key={item} className="flex items-center gap-2.5">
                   <Check className="w-[16px] h-[16px] text-[#A0AAB5] shrink-0" strokeWidth={2.5} />
-                  <span className="text-[#8A94A6] text-[14px]">Lorem ipsum dolor</span>
+                  <span className="text-[#78788D] text-[14px]">Lorem ipsum dolor</span>
                 </div>
               ))}
             </div>
@@ -240,7 +360,7 @@ export default function ServiceDetailPage() {
 
           {/* SECTION: Proofreading Plus Service Sample */}
           <div>
-            <h2 className="text-[18px] font-bold text-[#171717] mb-6">Proofreading Plus Service Sample</h2>
+            <h2 className="text-[18px] md:text-[20px] font-semibold text-[#171717] mb-6">Proofreading Plus Service Sample</h2>
             
             <div className="border border-[#EAECF0] rounded-[12px] bg-[#FAFAFB] overflow-hidden divide-y divide-[#EAECF0]">
               
@@ -248,14 +368,14 @@ export default function ServiceDetailPage() {
               <div className="flex flex-col bg-white">
                 <button 
                   onClick={() => toggleSection('mathematics')}
-                  className="flex items-center gap-3 px-6 py-4 text-left w-full hover:bg-[#F9FAFB] transition-colors"
+                  className="flex items-center gap-3 px-4 md:px-6 py-4 text-left w-full hover:bg-[#F9FAFB] transition-colors"
                 >
                   <ChevronUp className="w-5 h-5 text-[#525866] shrink-0" strokeWidth={2} />
-                  <span className="text-[15px] font-bold text-[#171717]">Mathematics</span>
+                  <span className="text-[14px] md:text-[18px] font-bold text-[#171717]">Mathematics</span>
                 </button>
                 {openSections.mathematics && (
-                  <div className="px-6 py-5 pl-[46px] border-t border-[#EAECF0]">
-                    <ul className="list-disc text-[#8A94A6] text-[14px] leading-relaxed space-y-4 marker:text-[#D1D5DB] ml-4">
+                  <div className=" px-4 md:px-6 py-4 md:py-5 pl-6 md:pl-[46px] border-t border-[#EAECF0]">
+                    <ul className="list-disc text-[#78788D] text-[12px] md:text-[16px] leading-relaxed space-y-4 marker:text-[#D1D5DB] ml-4">
                       <li className="pl-1">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.</li>
                       <li className="pl-1">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.</li>
                     </ul>
@@ -273,18 +393,18 @@ export default function ServiceDetailPage() {
                 <div key={section.id} className="flex flex-col">
                   <button 
                     onClick={() => toggleSection(section.id as keyof typeof openSections)}
-                    className="flex items-center gap-3 px-6 py-4 text-left w-full hover:bg-[#F9FAFB] transition-colors"
+                    className="flex items-center gap-3 px-4 md:px-6 py-4 text-left w-full hover:bg-[#F9FAFB] transition-colors"
                   >
                     {openSections[section.id as keyof typeof openSections] ? (
                       <ChevronUp className="w-5 h-5 text-[#525866] shrink-0" strokeWidth={2} />
                     ) : (
                       <ChevronDown className="w-5 h-5 text-[#525866] shrink-0" strokeWidth={2} />
                     )}
-                    <span className="text-[15px] font-bold text-[#171717]">{section.label}</span>
+                    <span className="text-[14px] md:text-[18px] font-semibold text-[#171717]">{section.label}</span>
                   </button>
                   {openSections[section.id as keyof typeof openSections] && (
-                    <div className="px-6 py-5 pl-[46px] border-t border-[#EAECF0] bg-white">
-                      <p className="text-[#8A94A6] text-[14px]">Content for {section.label} goes here.</p>
+                    <div className=" px-4 md:px-6 py-4 md:py-5 pl-7 md:pl-[46px]   border-t border-[#EAECF0] bg-white">
+                      <p className="text-[#78788D]  text-[12px] md:text-[16px]">Content for {section.label} goes here.</p>
                     </div>
                   )}
                 </div>
@@ -295,8 +415,8 @@ export default function ServiceDetailPage() {
 
           {/* SECTION: Service Examples */}
           <div>
-            <h2 className="text-[18px] font-bold text-[#171717] mb-5">Service Examples</h2>
-            <ul className="list-disc text-[#8A94A6] text-[14px] leading-relaxed space-y-4 marker:text-[#A0AAB5] ml-4">
+            <h2 className="text-[18px] md:text-[20px] font-semibold text-[#171717] mb-5">Service Examples</h2>
+            <ul className="list-disc text-[#78788D] text-[14px] md:text-[16px] leading-relaxed space-y-4 marker:text-[#A0AAB5] ml-4">
               <li className="pl-1">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</li>
               <li className="pl-1">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</li>
             </ul>
@@ -304,8 +424,8 @@ export default function ServiceDetailPage() {
 
           {/* SECTION: Other Services */}
           <div>
-            <h2 className="text-[18px] font-bold text-[#171717] mb-5">Other Services</h2>
-            <div className="flex flex-col gap-4">
+            <h2 className="text-[18px] md:text-[20px] font-semibold text-[#171717] mb-5">Other Services</h2>
+            <div className="flex flex-col gap-3 ">
               {otherServices.map((service, idx) => (
                 <div key={idx} className="flex flex-col sm:flex-row items-start sm:items-center p-4 border border-[#EAECF0] rounded-[12px] bg-white gap-4 shadow-[0_1px_2px_rgba(0,0,0,0.02)] transition-colors hover:border-[#D1D5DB]">
                   <div className="w-[64px] h-[64px] bg-[#E8ECEF] rounded-[8px] flex items-center justify-center shrink-0">
@@ -313,32 +433,32 @@ export default function ServiceDetailPage() {
                   </div>
                   
                   <div className="flex-1 flex flex-col gap-2">
-                    <h3 className="text-[15px] font-bold text-[#171717] leading-tight">
+                    <h3 className="text-[14px] md:text-[15px] font-semibold text-[#171717] leading-tight">
                       {service.title}
                     </h3>
                     <div className="flex flex-wrap items-center gap-3">
-                      <span className="text-[#00A0E3] bg-[#F0F8FC] border border-[#BBE3F5] text-[12px] px-2.5 py-0.5 rounded-[4px] font-medium">
+                      <span className="text-[#00A0E3] bg-[#F0F8FC] border border-[#BBE3F5] text-[14px] px-2.5 py-0.5 rounded-[8px] font-medium">
                         {service.domain}
                       </span>
-                      <div className="flex items-center gap-1 text-[13px] text-[#525866] font-medium">
+                      <div className="flex items-center gap-1 text-[14px] text-[#525866] font-medium">
                         <Star className="w-3.5 h-3.5 fill-[#FF8B00] text-[#FF8B00]" />
                         <span>{service.rating}</span>
                       </div>
-                      <div className="flex items-center gap-1 text-[13px] text-[#525866] font-medium">
+                      <div className="flex items-center gap-1 text-[14px] text-[#525866] font-medium">
                         <Users className="w-4 h-4 text-[#A0AAB5]" />
                         <span>{service.reviews}</span>
                       </div>
-                      <span className="text-[#525866] bg-white border border-[#EAECF0] text-[12px] px-2.5 py-0.5 rounded-[4px] font-medium">
+                      <span className="text-[#525866] bg-white border border-[#EAECF0] text-[14px] px-2.5 py-0.5 rounded-[8px] font-medium">
                         {service.tag}
                       </span>
                     </div>
                   </div>
 
-                  <div className="sm:border-l border-[#EAECF0] sm:pl-6 sm:ml-2 flex flex-col items-start sm:items-end w-full sm:w-auto mt-2 sm:mt-0 pt-4 sm:pt-0 border-t sm:border-t-0">
-                    <span className="text-[12px] text-[#8A94A6] mb-0.5">From</span>
+                  <div className="sm:border-l border-[#EAECF0] sm:pl-6 sm:ml-2 flex  items-start justify-between sm:items-end w-full sm:w-auto mt-2 sm:mt-0 pt-4 sm:pt-0 border-t sm:border-t-0">
+                    <span className="text-[14px] text-[#78788D] mb-0.5">From</span>
                     <div className="flex items-baseline gap-1">
-                      <span className="text-[18px] font-bold text-[#171717]">{service.price}</span>
-                      <span className="text-[13px] text-[#8A94A6]">/word</span>
+                      <span className=" text-[16px] md:text-[20px] font-bold text-[#171717]">{service.price}</span>
+                      <span className="text-[14px] text-[#78788D]">/word</span>
                     </div>
                   </div>
                 </div>
@@ -348,20 +468,20 @@ export default function ServiceDetailPage() {
 
           {/* SECTION: Other Packages */}
           <div>
-            <h2 className="text-[18px] font-bold text-[#171717] mb-5">Other Packages</h2>
+            <h2 className="text-[18px] md:text-[20px] font-semibold text-[#171717] mb-5">Other Packages</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {otherPackages.map((pkg) => (
                 <div key={pkg.id} className={`relative ${pkg.bg} border ${pkg.border} rounded-[16px] overflow-hidden flex flex-col`}>
                   {/* Badge */}
-                  <div className={`absolute top-0 right-0 ${pkg.badgeBg} text-white text-[12px] font-bold px-3 py-1.5 rounded-bl-[12px] rounded-tr-[16px]`}>
+                  <div className={`absolute top-0 right-0 ${pkg.badgeBg} text-white text-[12px] font-semibold px-3 py-1.5 rounded-bl-[12px] rounded-tr-[16px]`}>
                     You Save: $328
                   </div>
 
-                  <div className="p-6 flex-1 flex flex-col">
-                    <h3 className={`text-[18px] font-bold ${pkg.titleColor} mb-2 mt-1`}>
+                  <div className=" p-4 pt-6 md:p-6 flex-1 flex flex-col">
+                    <h3 className={`text-[18px] font-semibold ${pkg.titleColor} mb-2 mt-1`}>
                       Lorem ipsum dolor
                     </h3>
-                    <p className="text-[#8A94A6] text-[13px] mb-6 leading-relaxed">
+                    <p className="text-[#78788D] text-[14px] mb-6 leading-relaxed">
                       Lorem ipsum dolor sit amet, consectetur<br/>adipiscing.
                     </p>
 
@@ -379,12 +499,12 @@ export default function ServiceDetailPage() {
                     <div className="mt-auto">
                       <div className={`border-t ${pkg.divider} pt-5 mb-5`}>
                         <div className="flex justify-between items-center mb-1">
-                          <span className="text-[#8A94A6] text-[13px] font-medium">Get 6 services worth</span>
-                          <span className="text-[#171717] text-[14px] font-bold line-through">$1240</span>
+                          <span className="text-[#78788D] text-[14px] font-medium">Get 6 services worth</span>
+                          <span className="text-[#171717] text-[14px] font-semibold line-through">$1240</span>
                         </div>
                         <div className="flex justify-between items-center">
-                          <span className="text-[#8A94A6] text-[13px] font-medium">For only:</span>
-                          <span className={`${pkg.titleColor} text-[24px] font-bold tracking-tight`}>$912</span>
+                          <span className="text-[#78788D] text-[14px] font-medium">For only:</span>
+                          <span className={`${pkg.titleColor} text-[20px] md:text-[24px] font-bold tracking-tight`}>$912</span>
                         </div>
                       </div>
 
@@ -397,73 +517,118 @@ export default function ServiceDetailPage() {
               ))}
             </div>
           </div>
+         
           <div>
-            <h2 className="text-[18px] font-bold text-[#171717] mb-6">Testimonials</h2>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6 mb-6">
-              {[1, 2, 3, 4].map((item, idx) => (
-                <div 
-                  key={idx} 
-                  className={`flex flex-col ${idx < 2 ? 'border-b border-[#EAECF0] pb-6' : ''}`}
-                >
-                  <div className="flex items-center gap-3 mb-3">
-                    <img 
-                      src={`https://i.pravatar.cc/150?u=${item}`} 
-                      alt="Reviewer" 
-                      className="w-10 h-10 rounded-full object-cover shrink-0" 
-                    />
-                    <div>
-                      <h4 className="text-[14px] font-bold text-[#171717] leading-tight">Rick Wright</h4>
-                      <div className="flex items-center gap-2 mt-0.5">
-                        <div className="flex items-center gap-[2px]">
-                          <Star className="w-3.5 h-3.5 fill-[#FF8B00] text-[#FF8B00]" />
-                          <Star className="w-3.5 h-3.5 fill-[#FF8B00] text-[#FF8B00]" />
-                          <Star className="w-3.5 h-3.5 fill-[#FF8B00] text-[#FF8B00]" />
-                          <Star className="w-3.5 h-3.5 fill-[#FF8B00] text-[#FF8B00]" />
-                          <StarHalf className="w-3.5 h-3.5 fill-[#FF8B00] text-[#FF8B00]" />
-                        </div>
-                        <span className="text-[#8A94A6] text-[12px]">2 days ago</span>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <p className="text-[#8A94A6] text-[14px] leading-relaxed mb-4">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                  </p>
-                  
-                  <div className="flex items-center justify-end gap-3 text-[#00A0E3] mt-auto">
-                    <span className="text-[13px] font-medium">Helpful?</span>
-                    <ThumbsUp className="w-[16px] h-[16px] cursor-pointer hover:text-[#008bc5]" strokeWidth={2} />
-                    <ThumbsDown className="w-[16px] h-[16px] cursor-pointer hover:text-[#008bc5]" strokeWidth={2} />
-                  </div>
+  <h2 className="text-[18px] md:text-[20px] font-bold text-[#171717] mb-6">Testimonials</h2>
+  
+  {/* --- MOBILE VIEW --- */}
+  <div className="block md:hidden w-full min-w-0 max-w-[100vw]">
+    <div className="flex overflow-x-auto gap-[14px] mb-6 snap-x snap-mandatory pb-4 w-full [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+      {[1, 2, 3, 4].map((item, idx) => (
+        <div 
+          key={idx} 
+          className="flex flex-col shrink-0 snap-center w-[290px] h-[180px] border border-[#EAECF0] rounded-[14px] p-4 bg-white"
+        >
+          <div className="flex items-center gap-3 mb-3">
+            <img 
+              src={`https://i.pravatar.cc/150?u=${item}`} 
+              alt="Reviewer" 
+              className="w-10 h-10 rounded-full object-cover shrink-0" 
+            />
+            <div>
+              <h4 className="text-[14px] font-bold text-[#171717] leading-tight">Rick Wright</h4>
+              <div className="flex items-center gap-2 mt-0.5">
+                <div className="flex items-center gap-[2px]">
+                  <Star className="w-3.5 h-3.5 fill-[#FF8B00] text-[#FF8B00]" />
+                  <Star className="w-3.5 h-3.5 fill-[#FF8B00] text-[#FF8B00]" />
+                  <Star className="w-3.5 h-3.5 fill-[#FF8B00] text-[#FF8B00]" />
+                  <Star className="w-3.5 h-3.5 fill-[#FF8B00] text-[#FF8B00]" />
+                  <StarHalf className="w-3.5 h-3.5 fill-[#FF8B00] text-[#FF8B00]" />
                 </div>
-              ))}
+                <span className="text-[#78788D] text-[12px]">2 days ago</span>
+              </div>
             </div>
-
-            <button className="px-4 py-2 border border-[#00A0E3] text-[#00A0E3] rounded-[6px] text-[13px] font-bold hover:bg-[#F0F8FC] transition-colors">
-              Show All Reviews
-            </button>
           </div>
+          
+          <p className="text-[#78788D] text-[12px] leading-relaxed mb-4 line-clamp-3">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+          </p>
+          
+          <div className="flex items-center justify-end gap-3 text-[#00A0E3] mt-auto">
+            <span className="text-[13px] font-medium">Helpful?</span>
+            <ThumbsUp className="w-[16px] h-[16px] cursor-pointer hover:text-[#008bc5]" strokeWidth={2} />
+            <ThumbsDown className="w-[16px] h-[16px] cursor-pointer hover:text-[#008bc5]" strokeWidth={2} />
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  {/* --- DESKTOP VIEW --- */}
+  <div className="hidden md:grid grid-cols-2 gap-x-8 gap-y-6 mb-6">
+    {[1, 2, 3, 4].map((item, idx) => (
+      <div 
+        key={idx} 
+        className={`flex flex-col ${idx < 2 ? 'border-b border-[#EAECF0] pb-6' : ''}`}
+      >
+        <div className="flex items-center gap-3 mb-3">
+          <img 
+            src={`https://i.pravatar.cc/150?u=${item}`} 
+            alt="Reviewer" 
+            className="w-10 h-10 rounded-full object-cover shrink-0" 
+          />
+          <div>
+            <h4 className="text-[14px] font-bold text-[#171717] leading-tight">Rick Wright</h4>
+            <div className="flex items-center gap-2 mt-0.5">
+              <div className="flex items-center gap-[2px]">
+                <Star className="w-3.5 h-3.5 fill-[#FF8B00] text-[#FF8B00]" />
+                <Star className="w-3.5 h-3.5 fill-[#FF8B00] text-[#FF8B00]" />
+                <Star className="w-3.5 h-3.5 fill-[#FF8B00] text-[#FF8B00]" />
+                <Star className="w-3.5 h-3.5 fill-[#FF8B00] text-[#FF8B00]" />
+                <StarHalf className="w-3.5 h-3.5 fill-[#FF8B00] text-[#FF8B00]" />
+              </div>
+              <span className="text-[#78788D] text-[12px]">2 days ago</span>
+            </div>
+          </div>
+        </div>
+        
+        <p className="text-[#78788D] text-[14px] leading-relaxed mb-4">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+        </p>
+        
+        <div className="flex items-center justify-end gap-3 text-[#00A0E3] mt-auto">
+          <span className="text-[13px] font-medium">Helpful?</span>
+          <ThumbsUp className="w-[16px] h-[16px] cursor-pointer hover:text-[#008bc5]" strokeWidth={2} />
+          <ThumbsDown className="w-[16px] h-[16px] cursor-pointer hover:text-[#008bc5]" strokeWidth={2} />
+        </div>
+      </div>
+    ))}
+  </div>
+
+  <button className="w-full md:w-auto px-4 py-2 border border-[#00A0E3] text-[#00A0E3] rounded-[6px] text-[13px] font-bold hover:bg-[#F0F8FC] transition-colors">
+    Show All Reviews
+  </button>
+</div>
 
           {/* SECTION: Other Domains */}
           <div>
-            <h2 className="text-[18px] font-bold text-[#171717] mb-5 mt-6">Other Domains</h2>
+            <h2 className=" text-[18px] md:text-[20px] font-bold mb-4 text-[#171717] ">Other Domains</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
               {[1, 2, 3].map((domain) => (
-                <div key={domain} className="border border-[#EAECF0] rounded-[12px] bg-white overflow-hidden flex flex-col shadow-[0_1px_2px_rgba(0,0,0,0.02)] transition-colors hover:border-[#D1D5DB]">
+                <div key={domain} className="border border-[#EAECF0] p-[14px]  rounded-[12px] bg-white overflow-hidden flex flex-col shadow-[0_1px_2px_rgba(0,0,0,0.02)] transition-colors hover:border-[#D1D5DB]">
                   {/* Image Placeholder */}
-                  <div className="h-[140px] w-full relative bg-[#D0D6DC] overflow-hidden shrink-0">
+                  <div className=" h-[200px] md:h-[140px] w-full relative bg-[#D0D6DC] rounded-[14px] overflow-hidden shrink-0">
                     <svg className="absolute inset-0 w-full h-full" viewBox="0 0 400 200" preserveAspectRatio="none">
                       <path d="M0,200 L0,120 C 60,90 120,180 200,120 C 280,60 340,90 400,140 L400,200 Z" fill="#E8ECEF" />
                       <circle cx="80" cy="80" r="16" fill="#E8ECEF" />
                     </svg>
                   </div>
 
-                  <div className="p-5 flex-1 flex flex-col">
-                    <h3 className="text-[15px] font-bold text-[#171717] mb-1.5 leading-tight">
+                  <div className=" py-4 flex-1 flex flex-col">
+                    <h3 className= " text-[14px] md:text-[16px] font-semibold text-[#171717] mb-1.5 leading-tight">
                       Lorem ipsum dolor sit amet consectetur
                     </h3>
-                    <p className="text-[#8A94A6] text-[13px] leading-relaxed mb-4 line-clamp-2">
+                    <p className="text-[#78788D] text-[14px] leading-relaxed mb-4 line-clamp-2">
                       Lorem ipsum dolor sit amet, consectetur adipiscing elit, se...
                     </p>
 
@@ -481,8 +646,8 @@ export default function ServiceDetailPage() {
                     <div className="w-full h-[1px] bg-[#EAECF0] mb-4"></div>
 
                     <div className="flex items-baseline gap-1">
-                      <span className="text-[18px] font-bold text-[#171717]">$0.065</span>
-                      <span className="text-[13px] text-[#8A94A6]">/word</span>
+                      <span className= " text-[18px] md:text-[20px] font-bold text-[#171717]">$0.065</span>
+                      <span className="text-[14px] md:text-[16px] text-[#78788D]">/word</span>
                     </div>
                   </div>
                 </div>
@@ -491,8 +656,8 @@ export default function ServiceDetailPage() {
           </div>
 
          {/* SECTION: Frequently Asked Questions */}
-         <div className="mt-4">
-            <h2 className="text-[18px] font-bold text-[#171717] mb-5">
+         <div className="">
+            <h2 className="text-[18px] md:text-[20px] mb-4 font-semibold text-[#171717]">
               Frequently Asked Questions
             </h2>
             
@@ -503,13 +668,13 @@ export default function ServiceDetailPage() {
                   <div key={faq.id} className="flex flex-col">
                     <button
                       onClick={() => toggleFaq(faq.id)}
-                      className="flex items-center justify-between p-5 lg:px-6 w-full text-left transition-colors hover:bg-[#F9FAFB]"
+                      className="flex items-center justify-between p-4 lg:px-6 w-full text-left transition-colors hover:bg-[#F9FAFB]"
                     >
-                      <div className="flex items-center gap-4">
-                        <span className="text-[15px] font-bold text-[#171717] w-6 shrink-0">
+                      <div className="flex items-center gap-3 md:gap-4">
+                        <span className="text-[16px] md:text-[18px] font-bold text-[#171717] w-6 shrink-0">
                           {faq.id}
                         </span>
-                        <span className="text-[15px] text-[#8A94A6]">
+                        <span className="text-[14px] md:text-[16px] text-[#78788D]">
                           {faq.question}
                         </span>
                       </div>
@@ -535,7 +700,7 @@ export default function ServiceDetailPage() {
         </div> {/* END OF LEFT COLUMN */}
 
         {/* --- RIGHT COLUMN (Sticky Card) --- */}
-        <div className="w-full lg:w-[380px] shrink-0 lg:sticky lg:top-8">
+        <div className="w-full hidden lg:block lg:w-[380px] shrink-0 lg:sticky lg:top-8">
           <div className="border border-[#EAECF0] rounded-[16px] overflow-hidden bg-white shadow-sm">
             
             {/* Image Placeholder */}
@@ -550,10 +715,10 @@ export default function ServiceDetailPage() {
               {/* Pricing Header */}
               <div className="flex justify-between items-start mb-6">
                 <div className="flex flex-col">
-                  <span className="text-[#8A94A6] text-[13px] mb-1">From</span>
+                  <span className="text-[#78788D] text-[13px] mb-1">From</span>
                   <div className="flex items-baseline gap-1.5">
                     <span className="text-[28px] font-bold text-[#171717]">$0.065</span>
-                    <span className="text-[#8A94A6] text-[15px]">/word</span>
+                    <span className="text-[#78788D] text-[15px]">/word</span>
                   </div>
                 </div>
                 <span className="bg-[#E6F8EC] text-[#00A859] text-[12px] font-bold px-3 py-1.5 rounded-full mt-1">
@@ -575,12 +740,12 @@ export default function ServiceDetailPage() {
 
               {/* Estimate Calculator */}
               <div className="flex flex-col">
-                <span className="text-[#8A94A6] text-[13px] mb-1">
+                <span className="text-[#78788D] text-[13px] mb-1">
                   Estimated price based on word count
                 </span>
                 <div className="flex items-baseline gap-1.5 mb-6">
                   <span className="text-[18px] font-bold text-[#171717]">From $0.065</span>
-                  <span className="text-[#8A94A6] text-[14px]">/word</span>
+                  <span className="text-[#78788D] text-[14px]">/word</span>
                 </div>
 
                 {/* Word Count Input */}
@@ -588,7 +753,7 @@ export default function ServiceDetailPage() {
                   <input 
                     type="text" 
                     placeholder="Enter no.of words" 
-                    className="w-full border border-[#EAECF0] rounded-[8px] px-4 py-3 text-[14px] text-[#171717] placeholder:text-[#8A94A6] focus:outline-none focus:border-[#00A0E3] transition-colors"
+                    className="w-full border border-[#EAECF0] rounded-[8px] px-4 py-3 text-[14px] text-[#171717] placeholder:text-[#78788D] focus:outline-none focus:border-[#00A0E3] transition-colors"
                   />
                   <div className="absolute right-4 top-1/2 -translate-y-1/2 flex flex-col gap-1">
                     <ChevronUp className="w-3.5 h-3.5 text-[#525866] cursor-pointer hover:text-[#171717]" strokeWidth={3} />
@@ -602,7 +767,7 @@ export default function ServiceDetailPage() {
                     Document Type
                   </label>
                   <div className="relative">
-                    <select className="w-full border border-[#EAECF0] rounded-[8px] px-4 py-3 text-[14px] text-[#8A94A6] appearance-none focus:outline-none focus:border-[#00A0E3] bg-white transition-colors cursor-pointer">
+                    <select className="w-full border border-[#EAECF0] rounded-[8px] px-4 py-3 text-[14px] text-[#78788D] appearance-none focus:outline-none focus:border-[#00A0E3] bg-white transition-colors cursor-pointer">
                       <option>Select document type</option>
                       <option>Research Paper</option>
                       <option>Thesis</option>
@@ -622,9 +787,11 @@ export default function ServiceDetailPage() {
         </div>
 
       </div>
-
+{/* Footer */}
       {/* --- FOOTER --- */}
-      <div className="border-t border-[#EAECF0] mt-16 pt-8 pb-4 flex justify-center w-full">
+ 
+      <div className="border-t border-[#EAECF0] mt-4 md:mt-4 py-4 md:pt-4 flex justify-center w-full">
+  
         <p className="text-[#A0AAB5] text-[13px] font-medium">
           Copyright 2026 Submit Right. All rights reserved.
         </p>

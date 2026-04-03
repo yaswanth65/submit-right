@@ -27,7 +27,7 @@ export function WhatWeSolve() {
              <svg className="w-3.5 h-3.5 text-[#1C1C1D]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h16M4 18h16" />
              </svg>
-            <span className="text-[11px] font-semibold text-[#1C1C1D] uppercase tracking-wider">
+            <span className="text-[11px] font-normal text-[#1C1C1D] uppercase tracking-wider">
               EASY SOLUTIONS
             </span>
           </div>

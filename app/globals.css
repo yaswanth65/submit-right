@@ -93,3 +93,15 @@ body {
   position: relative;
 }
 
+.breadcrumbs {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .breadcrumbs {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 15px;
+  }
+}

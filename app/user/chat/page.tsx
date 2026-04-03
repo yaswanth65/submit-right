@@ -62,12 +62,20 @@ export default function MessagesPage() {
     <div className="w-full h-[calc(100vh-76px)] flex flex-col font-dm-sans bg-white">
       
       {/* --- PAGE HEADER --- */}
-      <div className="px-6 lg:px-8 py-3 border-b border-[#EAECF0] shrink-0">
+      {/* <div className="px-6 lg:px-8 py-3 border-b border-[#EAECF0] shrink-0">
         <h1 className="text-[28px] font-bold text-[#171717] mb-1.5 tracking-tight">
           Messages
         </h1>
         <p className="text-[#8A94A6] text-[15px]">
           Chat with your editor, review feedback, and manage document updates in one place.
+        </p>
+      </div> */}
+      <div className="shrink-0 border-b py-4 border-gray-100 px-4">
+        <h1 className="text-[22px] font-medium text-[#1C1C1D] mb-1.5 tracking-tight">
+        Messages
+        </h1>
+        <p className="text-[#78788D] text-[14px]">
+        Chat with your editor, review feedback, and manage document updates in one place.
         </p>
       </div>
 
@@ -76,8 +84,8 @@ export default function MessagesPage() {
         
         {/* LEFT SIDEBAR: Threads */}
         <div className="w-full lg:w-[380px] border-r border-[#EAECF0] flex flex-col shrink-0">
-          <div className="p-6 lg:p-8 lg:pb-5 border-b lg:border-none border-[#EAECF0]">
-            <h2 className="text-[20px] font-bold text-[#171717] mb-5">Messages</h2>
+          <div className="p-4 px-5 lg:pb-5 border-b lg:border-none border-[#EAECF0]">
+            <h2 className="text-[20px] font-semibold text-[#171717] mb-5">Messages</h2>
             <div className="relative">
               <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-[18px] h-[18px] text-[#A0AAB5]" />
               <input 
@@ -88,28 +96,28 @@ export default function MessagesPage() {
             </div>
           </div>
           
-          <div className="flex-1 overflow-y-auto px-6 lg:px-8 pb-8 space-y-4 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+          <div className="flex-1 overflow-y-auto px-5 pb-8 space-y-4 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
             {threads.map((thread) => (
               <div 
                 key={thread.id}
-                className={`p-4 rounded-[12px] border cursor-pointer transition-all duration-200 ${
+                className={`p-3 rounded-[12px] border cursor-pointer transition-all duration-200 ${
                   thread.active 
                     ? "border-[#00A0E3] bg-[#F4FAFD] shadow-[0_2px_8px_rgba(0,160,227,0.12)]" 
                     : "border-[#EAECF0] bg-white hover:border-[#A0AAB5] hover:shadow-sm"
                 }`}
               >
                 <div className="flex justify-between items-start mb-1">
-                  <h4 className="text-[15px] font-bold text-[#171717] truncate pr-2">
+                  <h4 className="text-[14px] font-medium text-[#171717] truncate pr-2">
                     {thread.title}
                   </h4>
                   <span className="text-[12px] text-[#A0AAB5] shrink-0 mt-0.5 font-medium">
                     {thread.time}
                   </span>
                 </div>
-                <p className="text-[#00A0E3] text-[13px] font-medium mb-2">
+                <p className="text-[#00A0E3] text-[12px] font-medium mb-2">
                   {thread.type}
                 </p>
-                <p className="text-[#8A94A6] text-[13px] truncate">
+                <p className="text-[#8A94A6] text-[14px] truncate">
                   {thread.snippet}
                 </p>
               </div>
@@ -121,13 +129,13 @@ export default function MessagesPage() {
         <div className="flex-1 flex flex-col min-w-0">
           
           {/* Chat Header */}
-          <div className="h-[96px] px-6 lg:px-8 border-b border-[#EAECF0] flex items-center justify-between shrink-0">
+          <div className="h-[96px] px-6 border-b border-[#EAECF0] flex items-center justify-between shrink-0">
             <div className="flex items-center gap-4">
               <div className="w-[48px] h-[48px] bg-[#EAF6FB] rounded-[12px] flex items-center justify-center shrink-0">
                 <FileText className="w-[24px] h-[24px] text-[#00A0E3]" strokeWidth={2.5} />
               </div>
               <div>
-                <h3 className="text-[18px] font-bold text-[#171717] mb-1">{threads[0].title}</h3>
+                <h3 className="text-[18px] font-semibold  text-[#171717] mb-1">{threads[0].title}</h3>
                 <p className="text-[14px] text-[#8A94A6] font-medium">Service: {threads[0].type}</p>
               </div>
             </div>
@@ -135,6 +143,7 @@ export default function MessagesPage() {
               Being Edited
             </span>
           </div>
+          
 
           {/* Messages Area */}
           <div className="flex-1 overflow-y-auto p-6 lg:p-8 space-y-8 flex flex-col bg-white">

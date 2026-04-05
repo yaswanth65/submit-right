@@ -1,14 +1,151 @@
 import { NextRequest } from "next/server";
-import { created, ok } from "@/lib/http";
+import { created, fail, ok } from "@/lib/http";
 import { asResponse, parseJson } from "@/lib/route";
 import { requireRole } from "@/lib/auth";
 import { documentListQuerySchema, submitDocumentStep1Schema } from "@/lib/validators";
 import { createDraftDocument } from "@/lib/services/document-service";
 import { supabaseAdmin } from "@/lib/supabase";
+import { z } from "zod";
+
+function buildDocumentTimeline(document: {
+  status: string;
+  submitted_at: string | null;
+  assigned_editor_id: string | null;
+  completed_at: string | null;
+  revision_requested: boolean | null;
+  created_at: string;
+  updated_at: string;
+}) {
+  return [
+    {
+      key: "submitted",
+      label: "Submitted",
+      status: document.submitted_at ? "completed" : "pending",
+      timestamp: document.submitted_at ?? null
+    },
+    {
+      key: "assigned_to_editor",
+      label: "Assigned to Editor",
+      status: document.assigned_editor_id ? "completed" : "pending",
+      timestamp: document.assigned_editor_id ? document.updated_at : null
+    },
+    {
+      key: "in_progress",
+      label: "In Progress",
+      status:
+        document.status === "being_edited" ||
+        document.status === "payment_needed" ||
+        document.status === "completed" ||
+        document.status === "in_revision"
+          ? "completed"
+          : "pending",
+      timestamp:
+        document.status === "being_edited" ||
+        document.status === "payment_needed" ||
+        document.status === "completed" ||
+        document.status === "in_revision"
+          ? document.updated_at
+          : null
+    },
+    {
+      key: "completed_and_delivered",
+      label: "Completed & Delivered",
+      status:
+        document.status === "payment_needed" || document.status === "completed"
+          ? "completed"
+          : "pending",
+      timestamp:
+        document.status === "payment_needed" || document.status === "completed"
+          ? document.completed_at ?? document.updated_at
+          : null
+    },
+    {
+      key: "revision_shared",
+      label: "Revision Shared",
+      status: document.revision_requested ? "active" : "pending",
+      timestamp: document.revision_requested ? document.updated_at : null
+    }
+  ];
+}
 
 export async function GET(req: NextRequest) {
   try {
     const user = await requireRole("client");
+    const documentId = req.nextUrl.searchParams.get("documentId");
+
+    if (documentId) {
+      const id = z.string().uuid().parse(documentId);
+      const [
+        { data: document },
+        { data: messages },
+        { data: versions },
+        { data: payments }
+      ] = await Promise.all([
+        supabaseAdmin
+          .from("documents")
+          .select(
+            "*, service:services(*), client:profiles!documents_client_id_fkey(id, full_name, email), assignedEditor:profiles!documents_assigned_editor_id_fkey(id, full_name, email)"
+          )
+          .eq("id", id)
+          .eq("client_id", user.profileId)
+          .single(),
+        supabaseAdmin
+          .from("messages")
+          .select(
+            "*, sender:profiles!messages_sender_id_fkey(id, full_name, email), receiver:profiles!messages_receiver_id_fkey(id, full_name, email)"
+          )
+          .eq("document_id", id)
+          .order("created_at", { ascending: true }),
+        supabaseAdmin
+          .from("file_versions")
+          .select("*, uploadedBy:profiles!file_versions_uploaded_by_profile_id_fkey(id, full_name, email)")
+          .eq("document_id", id)
+          .order("created_at", { ascending: false }),
+        supabaseAdmin
+          .from("payment_transactions")
+          .select("*")
+          .eq("document_id", id)
+          .eq("client_id", user.profileId)
+          .order("created_at", { ascending: false })
+      ]);
+
+      if (!document) return fail("Document not found", 404);
+
+      const canDownloadFinalFile =
+        document.payment_status === "paid" || document.status === "completed";
+
+      return ok({
+        detail: document,
+        paymentSummary: {
+          status: document.payment_status,
+          totalAmountDue: document.estimated_total,
+          ratePerWord: document.rate_per_word,
+          wordCount: document.word_count,
+          canMakePayment: document.status === "payment_needed",
+          canDownloadFinalFile
+        },
+        originalFile: document.uploaded_file_url
+          ? {
+              fileName: document.uploaded_file_name,
+              fileUrl: document.uploaded_file_url,
+              filePath: document.uploaded_file_path
+            }
+          : null,
+        latestEditorFile: document.latest_editor_file_url
+          ? {
+              fileName: document.latest_editor_file_name,
+              fileUrl: document.latest_editor_file_url,
+              filePath: document.latest_editor_file_path,
+              isLockedUntilPayment: !canDownloadFinalFile
+            }
+          : null,
+        documentTimeline: buildDocumentTimeline(document),
+        messageList: messages ?? [],
+        versionHistory: versions ?? [],
+        paymentHistory: payments ?? []
+      });
+    }
+
     const query = documentListQuerySchema.parse({
       search: req.nextUrl.searchParams.get("search") ?? undefined,
       status: req.nextUrl.searchParams.get("status") ?? undefined,

@@ -1,8 +1,30 @@
+import path from "node:path";
+import { pathToFileURL } from "node:url";
 import mammoth from "mammoth";
 import { PDFParse } from "pdf-parse";
 import WordExtractor from "word-extractor";
 import { env } from "@/lib/env";
 import { supabaseAdmin } from "@/lib/supabase";
+
+let isPdfWorkerConfigured = false;
+
+function ensurePdfWorkerConfigured() {
+  if (isPdfWorkerConfigured) {
+    return;
+  }
+
+  const workerPath = path.join(
+    process.cwd(),
+    "node_modules",
+    "pdfjs-dist",
+    "legacy",
+    "build",
+    "pdf.worker.mjs"
+  );
+
+  PDFParse.setWorker(pathToFileURL(workerPath).toString());
+  isPdfWorkerConfigured = true;
+}
 
 export function countWords(text: string) {
   return text
@@ -21,6 +43,7 @@ export async function extractWordCount(file: File) {
   }
 
   if (fileName.endsWith(".pdf")) {
+    ensurePdfWorkerConfigured();
     const parser = new PDFParse({ data: buffer });
     const result = await parser.getText();
     await parser.destroy();

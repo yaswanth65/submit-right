@@ -1,11 +1,15 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { LayoutDashboard, Users, UserCog, FileText, ClipboardList, CreditCard, MonitorCog, Type, MessageSquare, BarChart2, Settings, LogOut, ArrowLeftFromLine } from "lucide-react";
+import { usePathname, useRouter } from "next/navigation";
+import { LayoutDashboard, Users, UserCog, FileText, ClipboardList, CreditCard, MonitorCog, Type, MessageSquare, BarChart2, Settings, LogOut, ArrowLeftFromLine, UserCircle2 } from "lucide-react";
+import { useState } from "react";
+import { signOutClient } from "@/lib/client-auth";
 
 export function Sidebar() {
   const pathname = usePathname();
+  const router = useRouter();
+  const [isSigningOut, setIsSigningOut] = useState(false);
 
   const navItems = [
     { name: "Dashboard", href: "/admin/dashboard", icon: LayoutDashboard },
@@ -20,7 +24,14 @@ export function Sidebar() {
     { name: "Form Submissions", href: "#", icon: MessageSquare },
     { name: "Reports", href: "/admin/reports", icon: BarChart2 },
     { name: "Settings", href: "/admin/settings", icon: Settings },
+    { name: "Profile", href: "/admin/profile", icon: UserCircle2 },
   ];
+
+  const handleSignOut = async () => {
+    setIsSigningOut(true);
+    await signOutClient();
+    router.replace("/signin");
+  };
 
   return (
     <aside className="w-[260px] bg-[#F5F7FA] h-screen flex flex-col border-r border-[#EAECF0] fixed left-0 top-0 text-[#525866] font-dm-sans z-20">
@@ -68,7 +79,12 @@ export function Sidebar() {
               <span className="text-[12px] text-[#525866] leading-tight truncate mt-0.5">eaxmple@gmail.com</span>
             </div>
           </div>
-          <button className="text-[#FB3748] hover:bg-[#FEF2F2] p-2 rounded-lg transition-colors flex-shrink-0 border border-transparent hover:border-[#FB3748]/20">
+          <button
+            onClick={handleSignOut}
+            disabled={isSigningOut}
+            className="text-[#FB3748] hover:bg-[#FEF2F2] p-2 rounded-lg transition-colors flex-shrink-0 border border-transparent hover:border-[#FB3748]/20 disabled:opacity-60 disabled:cursor-not-allowed"
+            aria-label="Sign out"
+          >
             <LogOut className="w-[18px] h-[18px]" strokeWidth={2.5} />
           </button>
         </div>

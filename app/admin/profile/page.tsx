@@ -1,10 +1,10 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { AlertTriangle, LogOut, Save, Trash2 } from "lucide-react";
+import { AlertTriangle, LogOut, Save, ShieldCheck, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { apiGet, apiRequest } from "@/lib/client-api";
-import { signOutClient } from "@/lib/client-auth";
+import { getStoredAuthSession, signOutClient } from "@/lib/client-auth";
 
 type ProfileRecord = {
   full_name?: string | null;
@@ -63,8 +63,9 @@ function mapRecordToForm(record: ProfileRecord): ProfileForm {
   };
 }
 
-export default function UserProfilePage() {
+export default function AdminProfilePage() {
   const router = useRouter();
+  const session = getStoredAuthSession();
 
   const [form, setForm] = useState<ProfileForm>(emptyForm());
   const [isLoading, setIsLoading] = useState(true);
@@ -73,6 +74,14 @@ export default function UserProfilePage() {
   const [isDeactivating, setIsDeactivating] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
+
+  const roleLabel = useMemo(() => {
+    const role =
+      typeof session?.user?.role === "string" && session.user.role.trim()
+        ? session.user.role
+        : "admin";
+    return role;
+  }, [session]);
 
   const hasRequiredFields = useMemo(() => {
     return form.fullName.trim().length >= 2 && form.email.trim().length > 0;
@@ -168,10 +177,10 @@ export default function UserProfilePage() {
   };
 
   return (
-    <div className="w-full font-dm-sans px-4 py-4">
+    <div className="w-full font-dm-sans">
       <div className="mb-6">
         <div className="text-[22px] font-medium text-[#171717]">Profile & Settings</div>
-        <p className="text-[#78788D] text-[13px] mt-1">Manage your profile and workspace information.</p>
+        <p className="text-[13px] text-[#78788D] mt-1">Manage your admin identity and profile settings.</p>
       </div>
 
       {error ? <div className="mb-4 rounded-[8px] border border-[#FECACA] bg-[#FEF2F2] px-4 py-3 text-[13px] text-[#B42318]">{error}</div> : null}
@@ -181,6 +190,14 @@ export default function UserProfilePage() {
         <div className="rounded-[12px] border border-[#EAECF0] bg-white px-5 py-6 text-[14px] text-[#525866]">Loading profile...</div>
       ) : (
         <div className="rounded-[12px] border border-[#EAECF0] bg-white overflow-hidden">
+          <div className="p-5 border-b border-[#EAECF0] flex items-center justify-between">
+            <div className="text-[13px] font-medium text-[#171717]">Role</div>
+            <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-[999px] bg-[#EEF8F2] text-[#067647] text-[12px] font-medium capitalize">
+              <ShieldCheck className="w-3.5 h-3.5" />
+              {roleLabel}
+            </div>
+          </div>
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-5 border-b border-[#EAECF0]">
             <div>
               <label className="text-[12px] font-medium text-[#171717]">Full Name</label>
@@ -230,7 +247,7 @@ export default function UserProfilePage() {
           <div className="p-5 border-b border-[#EAECF0] flex items-center justify-between gap-4">
             <div>
               <div className="text-[14px] font-medium text-[#171717]">Sign Out</div>
-              <p className="text-[13px] text-[#78788D] mt-1">Sign out of this device and session.</p>
+              <p className="text-[13px] text-[#78788D] mt-1">Sign out of this admin session.</p>
             </div>
             <button onClick={handleSignOut} disabled={isSigningOut} className="inline-flex items-center gap-2 px-4 py-2 rounded-[8px] border border-[#EAECF0] text-[13px] text-[#171717] hover:bg-[#F9FAFB] disabled:opacity-60">
               <LogOut className="w-4 h-4" />

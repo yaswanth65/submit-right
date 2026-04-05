@@ -115,7 +115,7 @@ npm run dev
 - `PATCH /api/editor/availability`
 - `DELETE /api/editor/delete-account`
 
-### Admin
+### Admin 
 
 - `GET /api/admin/dashboard`
 - `GET /api/admin/clients`

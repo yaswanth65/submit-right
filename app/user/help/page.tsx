@@ -16,7 +16,7 @@ type SupportTicket = {
   created_at?: string;
 };
 
-function formatDate(value?: string) {
+function formatDate(value?: string | null) {
   if (!value) {
     return "-";
   }

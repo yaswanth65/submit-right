@@ -4,6 +4,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { Search, FileText, Send } from "lucide-react";
 import { apiGet, apiRequest } from "@/lib/client-api";
 import { getStoredAuthSession } from "@/lib/client-auth";
+import { formatDateTime } from "@/lib/utils";
 
 type EditorProfile = {
   id?: string;

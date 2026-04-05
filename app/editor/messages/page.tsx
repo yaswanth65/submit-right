@@ -1,8 +1,22 @@
 "use client";
 
-import React, { useEffect, useMemo, useState } from 'react';
-import { Search, Send, FileText } from 'lucide-react';
-import { apiGet } from '@/lib/client-api';
+import React, { useEffect, useMemo, useState } from "react";
+import { Search, Send, FileText } from "lucide-react";
+import { apiGet, apiRequest } from "@/lib/client-api";
+import { getStoredAuthSession } from "@/lib/client-auth";
+
+type RelProfile =
+  | {
+      id?: string;
+      full_name?: string;
+      email?: string;
+    }
+  | Array<{
+      id?: string;
+      full_name?: string;
+      email?: string;
+    }>
+  | null;
 
 type EditorMessage = {
   id: string;
@@ -11,33 +25,43 @@ type EditorMessage = {
   receiver_id?: string;
   message?: string;
   created_at?: string;
+  sender?: RelProfile;
+  receiver?: RelProfile;
 };
 
 type EditorDocument = {
   id: string;
+  client_id?: string;
   document_title?: string;
   status?: string;
   services?: { title?: string } | Array<{ title?: string }> | null;
   profiles?: { full_name?: string; email?: string } | Array<{ full_name?: string; email?: string }> | null;
 };
 
-function readService(services?: EditorDocument['services']) {
-  if (!services) return 'Service';
-  if (Array.isArray(services)) return services[0]?.title || 'Service';
-  return services.title || 'Service';
+type DetailPayload = {
+  assignmentOverview: EditorDocument;
+  messageList: EditorMessage[];
+};
+
+function readService(services?: EditorDocument["services"]) {
+  if (!services) return "Service";
+  if (Array.isArray(services)) return services[0]?.title || "Service";
+  return services.title || "Service";
 }
 
-function readProfile(profile?: EditorDocument['profiles']) {
-  if (!profile) return { name: 'Client', email: '' };
+function readProfile(profile?: EditorDocument["profiles"] | RelProfile) {
+  if (!profile) return { id: "", name: "Client", email: "" };
   const value = Array.isArray(profile) ? profile[0] : profile;
+  const valueWithId = value as { id?: string; full_name?: string; email?: string } | undefined;
   return {
-    name: value?.full_name || 'Client',
-    email: value?.email || ''
+    id: valueWithId?.id || "",
+    name: value?.full_name || "Client",
+    email: value?.email || ""
   };
 }
 
 function formatRelative(date?: string) {
-  if (!date) return '-';
+  if (!date) return "-";
   const diff = Date.now() - new Date(date).getTime();
   const minutes = Math.floor(diff / 60000);
   if (minutes < 60) return `${Math.max(minutes, 1)} min ago`;
@@ -48,62 +72,61 @@ function formatRelative(date?: string) {
 }
 
 function formatDateTime(date?: string) {
-  if (!date) return '-';
-  return new Date(date).toLocaleString('en-US', {
-    month: 'short',
-    day: '2-digit',
-    hour: '2-digit',
-    minute: '2-digit'
+  if (!date) return "-";
+  return new Date(date).toLocaleString("en-US", {
+    month: "short",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit"
   });
 }
 
 function statusLabel(status?: string) {
   switch (status) {
-    case 'being_edited':
-      return 'Being Edited';
-    case 'in_revision':
-      return 'In Revision';
-    case 'submitted':
-      return 'Submitted';
-    case 'completed':
-      return 'Completed';
+    case "being_edited":
+      return "Being Edited";
+    case "in_revision":
+      return "In Revision";
+    case "submitted":
+      return "Submitted";
+    case "completed":
+      return "Completed";
     default:
-      return 'In Progress';
+      return "In Progress";
   }
 }
 
 export default function EditorMessages() {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [messages, setMessages] = useState<EditorMessage[]>([]);
+  const [searchTerm, setSearchTerm] = useState("");
   const [documents, setDocuments] = useState<EditorDocument[]>([]);
   const [activeDocumentId, setActiveDocumentId] = useState<string | null>(null);
+  const [activeMessages, setActiveMessages] = useState<EditorMessage[]>([]);
+  const [messageText, setMessageText] = useState("");
+  const [sending, setSending] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  const profileId = useMemo(() => {
+    const session = getStoredAuthSession();
+    return typeof session?.user?.profileId === "string" ? session.user.profileId : "";
+  }, []);
 
   useEffect(() => {
     let active = true;
 
-    const load = async () => {
+    const loadDocuments = async () => {
       try {
         setLoading(true);
-        const [messageData, documentData] = await Promise.all([
-          apiGet<EditorMessage[]>('/api/editor/messages'),
-          apiGet<EditorDocument[]>('/api/editor/documents')
-        ]);
+        const documentData = await apiGet<EditorDocument[]>("/api/editor/documents");
 
         if (active) {
-          setMessages(messageData);
-          setDocuments(documentData);
-          const firstDocId =
-            messageData.find((item) => item.document_id)?.document_id ||
-            documentData[0]?.id ||
-            null;
-          setActiveDocumentId(firstDocId);
+          setDocuments(documentData || []);
+          setActiveDocumentId((documentData || [])[0]?.id ?? null);
           setError(null);
         }
       } catch (err) {
         if (active) {
-          setError(err instanceof Error ? err.message : 'Failed to load messages.');
+          setError(err instanceof Error ? err.message : "Failed to load messages.");
         }
       } finally {
         if (active) {
@@ -112,195 +135,236 @@ export default function EditorMessages() {
       }
     };
 
-    load();
+    void loadDocuments();
     return () => {
       active = false;
     };
   }, []);
 
-  const documentMap = useMemo(() => {
-    const map = new Map<string, EditorDocument>();
-    for (const doc of documents) {
-      map.set(doc.id, doc);
-    }
-    return map;
-  }, [documents]);
-
-  const conversations = useMemo(() => {
-    const grouped = new Map<string, EditorMessage[]>();
-    for (const item of messages) {
-      const key = item.document_id || 'unknown';
-      const list = grouped.get(key) || [];
-      list.push(item);
-      grouped.set(key, list);
+  useEffect(() => {
+    if (!activeDocumentId) {
+      setActiveMessages([]);
+      return;
     }
 
-    const rows = Array.from(grouped.entries()).map(([documentId, list]) => {
-      const doc = documentMap.get(documentId);
-      const last = list[list.length - 1];
-      const profile = readProfile(doc?.profiles);
-      return {
-        documentId,
-        document: doc?.document_title || `Document ${documentId.slice(0, 8)}`,
-        client: profile.name,
-        service: readService(doc?.services),
-        status: statusLabel(doc?.status),
-        lastMessage: last?.message || 'No message',
-        time: formatRelative(last?.created_at),
-        lastCreatedAt: last?.created_at ? new Date(last.created_at).getTime() : 0
-      };
-    });
+    let active = true;
+    const loadThread = async () => {
+      try {
+        const detail = await apiGet<DetailPayload>(`/api/editor/documents/${encodeURIComponent(activeDocumentId)}`);
+        if (!active) return;
+        setActiveMessages(detail.messageList || []);
+      } catch (err) {
+        if (!active) return;
+        setError(err instanceof Error ? err.message : "Failed to load conversation.");
+      }
+    };
 
-    const sorted = rows.sort((a, b) => b.lastCreatedAt - a.lastCreatedAt);
+    void loadThread();
+    return () => {
+      active = false;
+    };
+  }, [activeDocumentId]);
+
+  const filteredDocs = useMemo(() => {
     const term = searchTerm.trim().toLowerCase();
-    if (!term) return sorted;
-    return sorted.filter(
-      (row) =>
-        row.document.toLowerCase().includes(term) ||
-        row.client.toLowerCase().includes(term) ||
-        row.lastMessage.toLowerCase().includes(term)
-    );
-  }, [messages, documentMap, searchTerm]);
+    if (!term) return documents;
 
-  const activeConversation = useMemo(
-    () => conversations.find((row) => row.documentId === activeDocumentId) || conversations[0] || null,
-    [conversations, activeDocumentId]
+    return documents.filter((doc) => {
+      const client = readProfile(doc.profiles);
+      return (
+        (doc.document_title || "").toLowerCase().includes(term) ||
+        client.name.toLowerCase().includes(term) ||
+        readService(doc.services).toLowerCase().includes(term)
+      );
+    });
+  }, [documents, searchTerm]);
+
+  const activeDocument = useMemo(
+    () => filteredDocs.find((doc) => doc.id === activeDocumentId) || filteredDocs[0] || null,
+    [filteredDocs, activeDocumentId]
   );
 
-  const activeMessages = useMemo(() => {
-    if (!activeConversation) return [];
-    return messages
-      .filter((item) => (item.document_id || 'unknown') === activeConversation.documentId)
-      .sort((a, b) => new Date(a.created_at || 0).getTime() - new Date(b.created_at || 0).getTime());
-  }, [messages, activeConversation]);
+  const lastMessageByDoc = useMemo(() => {
+    const map = new Map<string, EditorMessage>();
+    for (const message of activeMessages) {
+      if (!message.document_id) continue;
+      map.set(message.document_id, message);
+    }
+    return map;
+  }, [activeMessages]);
+
+  const canSend = Boolean(activeDocument?.id && activeDocument.client_id) && activeDocument?.status !== "payment_needed";
+
+  const sendMessage = async () => {
+    if (!activeDocument?.id || !activeDocument.client_id || !messageText.trim() || sending) {
+      return;
+    }
+
+    try {
+      setSending(true);
+      const created = await apiRequest<EditorMessage>("/api/editor/messages", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          documentId: activeDocument.id,
+          receiverId: activeDocument.client_id,
+          message: messageText.trim()
+        })
+      });
+
+      const detail = await apiGet<DetailPayload>(`/api/editor/documents/${encodeURIComponent(activeDocument.id)}`);
+      setActiveMessages(detail.messageList || [created]);
+      setMessageText("");
+      setError(null);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to send message.");
+    } finally {
+      setSending(false);
+    }
+  };
+
+  const activeClient = readProfile(activeDocument?.profiles);
 
   return (
     <div className="flex flex-col h-[calc(100vh-160px)] w-full font-dm-sans bg-[#FFFFFF] border border-[#EAECF0] rounded-[12px] shadow-sm overflow-hidden">
-      
-      {/* Header */}
       <div className="px-8 py-5 border-b border-[#EAECF0] flex-shrink-0 bg-[#FFFFFF]">
-        <h1 className="text-[20px] font-bold text-[#171717] mb-1">Messages</h1>
-        <p className="text-[13px] text-[#525866]">Chat with your clients, review feedback, and manage document updates in one place.</p>
+        <div className="text-[20px] font-bold text-[#171717] mb-1">Messages</div>
+        <p className="text-[13px] text-[#525866]">Chat with your clients and keep communication linked to each document.</p>
       </div>
 
       {error ? (
         <div className="mx-5 mt-4 rounded-[10px] border border-[#FECACA] bg-[#FEF2F2] px-4 py-3 text-[13px] text-[#B91C1C]">{error}</div>
       ) : null}
 
-      {/* Main Content Split */}
       <div className="flex flex-1 overflow-hidden">
-        
-        {/* Left Panel: Conversation List */}
         <div className="w-[380px] flex-shrink-0 border-r border-[#EAECF0] flex flex-col bg-[#FFFFFF]">
           <div className="p-5 border-b border-[#EAECF0] flex-shrink-0">
             <div className="relative">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#A0AAB5]" />
-              <input 
-                type="text" 
+              <input
+                type="text"
                 value={searchTerm}
                 onChange={(event) => setSearchTerm(event.target.value)}
-                placeholder="Search..." 
+                placeholder="Search..."
                 className="w-full pl-9 pr-4 py-2.5 border border-[#EAECF0] rounded-[8px] text-[13px] text-[#171717] placeholder:text-[#A0AAB5] focus:outline-none focus:border-[#00A0E3] focus:ring-1 focus:ring-[#00A0E3] transition-all"
               />
             </div>
           </div>
 
           <div className="flex-1 overflow-y-auto p-3 space-y-2">
-            {conversations.map((conv) => (
-              <div 
-                key={conv.documentId}
-                onClick={() => setActiveDocumentId(conv.documentId)}
-                className={`p-4 rounded-[12px] cursor-pointer transition-colors ${
-                  activeConversation?.documentId === conv.documentId
-                    ? "bg-[#F0F9FF] border border-[#00A0E3]" 
-                    : "bg-[#F9FAFB] border border-transparent hover:bg-[#F3F4F6]"
-                }`}
-              >
-                <div className="flex justify-between items-start mb-1">
-                  <h3 className="text-[14px] font-bold text-[#171717]">
-                    {conv.document}
-                  </h3>
-                  <span className="text-[11px] text-[#A0AAB5]">{conv.time}</span>
-                </div>
-                <div className="text-[12px] text-[#00A0E3] mb-2 font-medium">
-                  {conv.client} <span className="text-[#A0AAB5] mx-1">•</span> {conv.service}
-                </div>
-                <p className={`text-[13px] truncate ${activeConversation?.documentId === conv.documentId ? "text-[#525866]" : "text-[#A0AAB5]"}`}>
-                  {conv.lastMessage}
-                </p>
-              </div>
-            ))}
-            {!loading && conversations.length === 0 ? (
+            {filteredDocs.map((doc) => {
+              const client = readProfile(doc.profiles);
+              const last = lastMessageByDoc.get(doc.id);
+              const isActive = (activeDocument?.id || activeDocumentId) === doc.id;
+
+              return (
+                <button
+                  key={doc.id}
+                  type="button"
+                  onClick={() => setActiveDocumentId(doc.id)}
+                  className={`w-full text-left p-4 rounded-[12px] transition-colors ${
+                    isActive
+                      ? "bg-[#F0F9FF] border border-[#00A0E3]"
+                      : "bg-[#F9FAFB] border border-transparent hover:bg-[#F3F4F6]"
+                  }`}
+                >
+                  <div className="flex justify-between items-start mb-1">
+                    <div className="text-[14px] font-bold text-[#171717] truncate pr-2">
+                      {doc.document_title || `Document ${doc.id.slice(0, 8)}`}
+                    </div>
+                    <span className="text-[11px] text-[#A0AAB5]">{formatRelative(last?.created_at)}</span>
+                  </div>
+                  <div className="text-[12px] text-[#00A0E3] mb-2 font-medium">
+                    {client.name} <span className="text-[#A0AAB5] mx-1">-</span> {readService(doc.services)}
+                  </div>
+                  <p className={`text-[13px] truncate ${isActive ? "text-[#525866]" : "text-[#A0AAB5]"}`}>
+                    {last?.message || "No messages yet"}
+                  </p>
+                </button>
+              );
+            })}
+            {!loading && filteredDocs.length === 0 ? (
               <p className="text-[13px] text-[#8A94A6] px-2 py-2">No conversations found.</p>
             ) : null}
           </div>
         </div>
 
-        {/* Right Panel: Active Chat */}
         <div className="flex-1 flex flex-col bg-[#FFFFFF]">
-          
-          {/* Chat Header */}
           <div className="px-6 py-5 border-b border-[#EAECF0] flex items-center justify-between flex-shrink-0">
             <div className="flex items-center space-x-4">
               <div className="w-12 h-12 bg-[#E0F6FF] text-[#00A0E3] rounded-[10px] flex items-center justify-center flex-shrink-0">
                 <FileText className="w-6 h-6" />
               </div>
               <div>
-                <h2 className="text-[18px] font-bold text-[#171717] mb-0.5">{activeConversation?.document || 'No conversation selected'}</h2>
+                <div className="text-[18px] font-bold text-[#171717] mb-0.5">{activeDocument?.document_title || "No conversation selected"}</div>
                 <div className="text-[13px] text-[#A0AAB5] font-medium">
-                  {activeConversation?.client || 'Client'} <span className="mx-1.5">•</span> {activeConversation?.service || 'Service'}
+                  {activeClient.name || "Client"} <span className="mx-1.5">-</span> {readService(activeDocument?.services)}
                 </div>
               </div>
             </div>
             <div className="px-3 py-1.5 bg-[#F0F9FF] border border-[#BFDBFE] text-[#00A0E3] text-[13px] font-semibold rounded-full">
-              {activeConversation?.status || 'In Progress'}
+              {statusLabel(activeDocument?.status)}
             </div>
           </div>
 
-          {/* Messages Area */}
           <div className="flex-1 overflow-y-auto p-6 space-y-6">
-            {activeMessages.map((msg) => (
-              <div key={msg.id} className="flex items-start max-w-[85%]">
-                <img 
-                  src="https://i.pravatar.cc/150?u=editor-message"
-                  alt="Sender"
-                  className="w-10 h-10 rounded-full flex-shrink-0 object-cover mr-4"
-                />
-                <div className="flex flex-col items-start">
-                  <span className="text-[13px] font-semibold text-[#00A0E3] mb-1 pl-1">Client</span>
-                  <div className={`p-4 rounded-[12px] ${
-                    "bg-[#F9FAFB] text-[#171717] text-[14px] rounded-tl-none border border-[#EAECF0]"
-                  }`}>
-                    <p className="text-[14px] leading-relaxed text-[#171717]">
-                      {msg.message || 'No content'}
-                    </p>
+            {activeMessages.map((msg) => {
+              const sender = readProfile(msg.sender);
+              const mine =
+                (Boolean(activeDocument?.client_id) && msg.sender_id !== activeDocument.client_id) ||
+                (Boolean(profileId) && msg.sender_id === profileId);
+
+              return (
+                <div key={msg.id} className={`flex ${mine ? "justify-end" : "justify-start"}`}>
+                  <div className={`max-w-[85%] flex flex-col ${mine ? "items-end" : "items-start"}`}>
+                    <span className={`text-[12px] mb-1 px-1 ${mine ? "text-[#00A0E3]" : "text-[#525866]"}`}>
+                      {mine ? "You" : sender.name}
+                    </span>
+                    <div
+                      className={`p-4 rounded-[12px] text-[14px] ${
+                        mine
+                          ? "bg-[#00A0E3] text-white rounded-tr-[4px]"
+                          : "bg-[#F9FAFB] border border-[#EAECF0] text-[#171717] rounded-tl-[4px]"
+                      }`}
+                    >
+                      <p className="text-[14px] leading-relaxed">{msg.message || ""}</p>
+                    </div>
+                    <span className="text-[11px] text-[#A0AAB5] mt-1.5 px-1">{formatDateTime(msg.created_at)}</span>
                   </div>
-                  <span className="text-[11px] text-[#A0AAB5] mt-1.5 px-1">
-                    {formatDateTime(msg.created_at)}
-                  </span>
                 </div>
-              </div>
-            ))}
-            {!loading && activeMessages.length === 0 ? (
+              );
+            })}
+
+            {!loading && activeDocument && activeMessages.length === 0 ? (
               <p className="text-[13px] text-[#8A94A6]">No messages found for this document.</p>
             ) : null}
           </div>
 
-          {/* Message Input */}
           <div className="p-5 border-t border-[#EAECF0] bg-[#FFFFFF]">
             <div className="relative flex items-center">
-              <input 
-                type="text" 
-                disabled
-                placeholder="Type your message..." 
+              <input
+                type="text"
+                value={messageText}
+                onChange={(event) => setMessageText(event.target.value.slice(0, 5000))}
+                disabled={!canSend || sending}
+                placeholder={canSend ? "Type your message..." : "Messaging unavailable for this document"}
                 className="w-full pl-4 pr-14 py-3.5 border border-[#EAECF0] rounded-[8px] text-[14px] text-[#171717] placeholder:text-[#A0AAB5] focus:outline-none focus:border-[#00A0E3] focus:ring-1 focus:ring-[#00A0E3] transition-all disabled:bg-[#F9FAFB] disabled:text-[#A0AAB5]"
+                onKeyDown={(event) => {
+                  if (event.key === "Enter") {
+                    event.preventDefault();
+                    void sendMessage();
+                  }
+                }}
               />
-              <button disabled className="absolute right-3 p-2 bg-[#A0AAB5] text-white rounded-[6px] transition-colors cursor-not-allowed">
+              <button
+                disabled={!canSend || sending || !messageText.trim()}
+                onClick={() => void sendMessage()}
+                className="absolute right-3 p-2 bg-[#00A0E3] disabled:bg-[#A0AAB5] text-white rounded-[6px] transition-colors disabled:cursor-not-allowed"
+              >
                 <Send className="w-4 h-4" />
               </button>
             </div>
           </div>
-
         </div>
       </div>
     </div>

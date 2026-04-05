@@ -76,6 +76,8 @@ export default function SubmitDocumentPage() {
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const [uploadedFileName, setUploadedFileName] = useState<string>("");
   const [uploadedFileSize, setUploadedFileSize] = useState<number>(0);
+  const [isUploadSynced, setIsUploadSynced] = useState(false);
+  const [uploadingFile, setUploadingFile] = useState(false);
 
   const [wordCount, setWordCount] = useState(0);
   const [ratePerWord, setRatePerWord] = useState(0);
@@ -147,6 +149,45 @@ export default function SubmitDocumentPage() {
     form.documentType.trim().length >= 2 &&
     form.shortDescription.trim().length >= 2;
 
+  const syncUploadWithServer = async (file: File) => {
+    if (!documentId) {
+      setActionError("Draft document is missing. Please go back to step 1.");
+      return false;
+    }
+
+    try {
+      setUploadingFile(true);
+      const formData = new FormData();
+      formData.append("documentId", documentId);
+      formData.append("file", file);
+
+      const uploaded = await apiRequest<DocumentRow>("/api/client/documents/upload", {
+        method: "POST",
+        body: formData
+      });
+
+      const nextWordCount = Number(uploaded.word_count ?? 0);
+      const apiRate = Number(uploaded.rate_per_word ?? 0);
+      const fallbackRate = Number(selectedService?.rate_per_word ?? ratePerWord ?? 0);
+      const nextRate = apiRate > 0 ? apiRate : fallbackRate;
+      const apiEstimate = Number(uploaded.estimated_total ?? 0);
+      const nextEstimate = apiEstimate > 0 ? apiEstimate : nextWordCount * nextRate;
+
+      setUploadedFileName(uploaded.uploaded_file_name || file.name);
+      setUploadedFileSize(file.size);
+      setWordCount(nextWordCount);
+      setRatePerWord(nextRate);
+      setEstimatedTotal(nextEstimate);
+      setIsUploadSynced(true);
+      return true;
+    } catch (error) {
+      setActionError(error instanceof Error ? error.message : "Failed to upload file.");
+      return false;
+    } finally {
+      setUploadingFile(false);
+    }
+  };
+
   const handleBrowseClick = () => {
     fileInputRef.current?.click();
   };
@@ -157,7 +198,11 @@ export default function SubmitDocumentPage() {
       setUploadedFile(file);
       setUploadedFileName(file.name);
       setUploadedFileSize(file.size);
+      setIsUploadSynced(false);
       setActionError(null);
+      if (documentId) {
+        void syncUploadWithServer(file);
+      }
     }
   };
 
@@ -168,13 +213,18 @@ export default function SubmitDocumentPage() {
     setUploadedFile(file);
     setUploadedFileName(file.name);
     setUploadedFileSize(file.size);
+    setIsUploadSynced(false);
     setActionError(null);
+    if (documentId) {
+      void syncUploadWithServer(file);
+    }
   };
 
   const handleRemoveFile = () => {
     setUploadedFile(null);
     setUploadedFileName("");
     setUploadedFileSize(0);
+    setIsUploadSynced(false);
     setWordCount(0);
     setEstimatedTotal(0);
     if (fileInputRef.current) {
@@ -224,24 +274,14 @@ export default function SubmitDocumentPage() {
         if (!uploadedFile) {
           throw new Error("Please upload a file before continuing.");
         }
-        if (!documentId) {
-          throw new Error("Draft document is missing. Please go back to step 1.");
+
+        if (!isUploadSynced) {
+          const success = await syncUploadWithServer(uploadedFile);
+          if (!success) {
+            return;
+          }
         }
 
-        const formData = new FormData();
-        formData.append("documentId", documentId);
-        formData.append("file", uploadedFile);
-
-        const uploaded = await apiRequest<DocumentRow>("/api/client/documents/upload", {
-          method: "POST",
-          body: formData
-        });
-
-        setUploadedFileName(uploaded.uploaded_file_name || uploadedFile.name);
-        setUploadedFileSize(uploadedFile.size);
-        setWordCount(Number(uploaded.word_count ?? 0));
-        setRatePerWord(Number(uploaded.rate_per_word ?? selectedService?.rate_per_word ?? ratePerWord));
-        setEstimatedTotal(Number(uploaded.estimated_total ?? 0));
         setCurrentStep(3);
         return;
       }
@@ -461,23 +501,47 @@ export default function SubmitDocumentPage() {
                 <p className="text-[#8A94A6] text-[13px]">Supported formats: DOC, DOCX, PDF. Maximum file size: 25MB.</p>
               </div>
             ) : (
-              <div className="w-full border border-[#EAECF0] bg-[#F4FAFD] rounded-[8px] p-4 flex items-center justify-between">
-                <div className="flex items-center gap-4">
-                  <div className="w-[40px] h-[40px] bg-[#E1F4FD] rounded-[8px] flex items-center justify-center shrink-0">
-                    <FileIcon className="w-5 h-5 text-[#00A0E3]" strokeWidth={2} />
+              <div className="w-full space-y-4">
+                <div className="w-full border border-[#EAECF0] bg-[#F4FAFD] rounded-[8px] p-4 flex items-center justify-between">
+                  <div className="flex items-center gap-4">
+                    <div className="w-[40px] h-[40px] bg-[#E1F4FD] rounded-[8px] flex items-center justify-center shrink-0">
+                      <FileIcon className="w-5 h-5 text-[#00A0E3]" strokeWidth={2} />
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-[14px] font-medium text-[#171717] truncate max-w-[400px]">{uploadedFile.name}</span>
+                      <span className="text-[12px] text-[#8A94A6]">{formatFileSize(uploadedFile.size)}</span>
+                    </div>
                   </div>
-                  <div className="flex flex-col">
-                    <span className="text-[14px] font-medium text-[#171717] truncate max-w-[400px]">{uploadedFile.name}</span>
-                    <span className="text-[12px] text-[#8A94A6]">{formatFileSize(uploadedFile.size)}</span>
-                  </div>
+                  <button
+                    type="button"
+                    onClick={handleRemoveFile}
+                    className="text-[#FF4D4F] text-[13px] font-medium hover:underline transition-all"
+                  >
+                    Remove
+                  </button>
                 </div>
-                <button
-                  type="button"
-                  onClick={handleRemoveFile}
-                  className="text-[#FF4D4F] text-[13px] font-medium hover:underline transition-all"
-                >
-                  Remove
-                </button>
+
+                <div className="border border-[#EAECF0] rounded-[10px] p-4 bg-white">
+                  <div className="text-[13px] font-semibold text-[#171717] mb-3">Upload Analysis</div>
+                  {uploadingFile ? (
+                    <p className="text-[13px] text-[#8A94A6]">Analyzing word count and pricing...</p>
+                  ) : (
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-[13px]">
+                      <div className="bg-[#F8FAFC] border border-[#EAECF0] rounded-[8px] px-3 py-2">
+                        <div className="text-[#8A94A6] text-[12px]">Word Count</div>
+                        <div className="text-[#171717] font-semibold mt-0.5">{wordCount > 0 ? wordCount.toLocaleString() : "Pending"}</div>
+                      </div>
+                      <div className="bg-[#F8FAFC] border border-[#EAECF0] rounded-[8px] px-3 py-2">
+                        <div className="text-[#8A94A6] text-[12px]">Rate Per Word</div>
+                        <div className="text-[#171717] font-semibold mt-0.5">{formatCurrency(activeRate)}</div>
+                      </div>
+                      <div className="bg-[#EFF7FB] border border-[#BFE7F8] rounded-[8px] px-3 py-2">
+                        <div className="text-[#8A94A6] text-[12px]">Approx. Price</div>
+                        <div className="text-[#00A0E3] font-semibold mt-0.5">{formatCurrency(liveEstimate)}</div>
+                      </div>
+                    </div>
+                  )}
+                </div>
               </div>
             )}
           </div>
@@ -724,7 +788,7 @@ export default function SubmitDocumentPage() {
           <button
             type="button"
             onClick={moveToNextStep}
-            disabled={isBusy || (currentStep === 1 && !canMoveFromStep1) || (currentStep === 3 && services.length === 0)}
+            disabled={isBusy || uploadingFile || (currentStep === 1 && !canMoveFromStep1) || (currentStep === 3 && services.length === 0)}
             className="px-6 py-2.5 bg-[#00A0E3] hover:bg-[#008bc5] text-white rounded-[8px] text-[14px] font-bold flex items-center gap-2 transition-colors shadow-sm disabled:opacity-60 disabled:cursor-not-allowed"
           >
             {currentStep === 4 ? (isBusy ? "Submitting..." : "Submit") : isBusy ? "Please wait..." : "Continue"}

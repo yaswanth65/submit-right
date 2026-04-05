@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useEffect } from "react";
-import { ArrowLeft, FileText, Download } from "lucide-react";
+import { ArrowLeft, FileText, Download, Calendar, X } from "lucide-react";
 import { useParams } from "next/navigation";
 import { apiGet, apiRequest } from "@/lib/client-api";
 import { AssignEditorModal } from "@/components/AssignEditorModal";
@@ -102,6 +102,13 @@ function formatDateTime(value?: string) {
   });
 }
 
+function toLocalDateTimeInput(value?: string) {
+  if (!value) return "";
+  const date = new Date(value);
+  const tzOffset = date.getTimezoneOffset() * 60000;
+  return new Date(date.getTime() - tzOffset).toISOString().slice(0, 16);
+}
+
 function formatBytes(size?: number) {
   if (!size || size <= 0) return "-";
   const units = ["B", "KB", "MB", "GB"];
@@ -138,6 +145,9 @@ function statusClass(status?: string) {
 
 export default function DocumentDetailsPage() {
   const [reassignOpen, setReassignOpen] = useState(false);
+  const [deadlineModalOpen, setDeadlineModalOpen] = useState(false);
+  const [deadlineValue, setDeadlineValue] = useState("");
+  const [deadlineReason, setDeadlineReason] = useState("Admin update");
   const [actionLoading, setActionLoading] = useState(false);
   const [actionError, setActionError] = useState<string | null>(null);
   const [editors, setEditors] = useState<EditorRow[]>([]);
@@ -221,11 +231,26 @@ export default function DocumentDetailsPage() {
     }
   };
 
+  const openAdjustDeadlineModal = () => {
+    setDeadlineValue(toLocalDateTimeInput(payload?.detail?.deadline_at));
+    setDeadlineReason("Admin update");
+    setActionError(null);
+    setDeadlineModalOpen(true);
+  };
+
   const handleAdjustDeadline = async () => {
-    const current = payload?.detail?.deadline_at?.slice(0, 10) || "";
-    const newDate = window.prompt("Enter new deadline (YYYY-MM-DD):", current);
-    if (!newDate) return;
-    const reason = window.prompt("Reason for deadline change:", "Admin update") || "Admin update";
+    if (!deadlineValue) {
+      setActionError("Please choose a new deadline date and time.");
+      return;
+    }
+
+    const parsedDeadline = new Date(deadlineValue);
+    if (Number.isNaN(parsedDeadline.getTime())) {
+      setActionError("Invalid deadline value.");
+      return;
+    }
+
+    const reason = deadlineReason.trim() || "Admin update";
 
     try {
       setActionLoading(true);
@@ -235,11 +260,12 @@ export default function DocumentDetailsPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           documentId: params.id,
-          newDeadline: new Date(`${newDate}T00:00:00.000Z`).toISOString(),
+          newDeadline: parsedDeadline.toISOString(),
           reason,
           adminNotes: "Updated from admin detail page"
         })
       });
+      setDeadlineModalOpen(false);
       await reloadDetail();
     } catch (err) {
       setActionError(err instanceof Error ? err.message : "Failed to adjust deadline.");
@@ -310,7 +336,7 @@ export default function DocumentDetailsPage() {
           </div>
         </div>
         <div className="flex gap-2">
-          <button onClick={handleAdjustDeadline} disabled={actionLoading} className="h-[34px] px-3.5 rounded-[8px] border border-[#EAECF0] text-[12px] font-semibold text-[#171717] hover:bg-[#F9FAFB] disabled:opacity-60">Adjust Deadline</button>
+          <button onClick={openAdjustDeadlineModal} disabled={actionLoading} className="h-[34px] px-3.5 rounded-[8px] border border-[#EAECF0] text-[12px] font-semibold text-[#171717] hover:bg-[#F9FAFB] disabled:opacity-60">Adjust Deadline</button>
           <button onClick={() => setReassignOpen(true)} className="h-[34px] px-3.5 rounded-[8px] border border-[#EAECF0] text-[12px] font-semibold text-[#171717] hover:bg-[#F9FAFB]">Reassign Editor</button>
         </div>
       </div>
@@ -409,6 +435,67 @@ export default function DocumentDetailsPage() {
           </div>
         </div>
       </div>
+
+      {deadlineModalOpen ? (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4">
+          <div className="w-full max-w-md rounded-[14px] border border-[#EAECF0] bg-white shadow-xl">
+            <div className="flex items-center justify-between border-b border-[#EAECF0] px-5 py-4">
+              <div className="flex items-center gap-2">
+                <Calendar className="w-4 h-4 text-[#00A0E3]" />
+                <div className="text-[15px] font-bold text-[#171717]">Adjust Deadline</div>
+              </div>
+              <button
+                onClick={() => {
+                  if (!actionLoading) {
+                    setDeadlineModalOpen(false);
+                  }
+                }}
+                className="p-1.5 rounded-md text-[#525866] hover:bg-[#F9FAFB]"
+                disabled={actionLoading}
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+            <div className="px-5 py-4 space-y-4">
+              <div>
+                <label className="block text-[12px] font-semibold text-[#171717] mb-1.5">New Deadline</label>
+                <input
+                  type="datetime-local"
+                  value={deadlineValue}
+                  onChange={(event) => setDeadlineValue(event.target.value)}
+                  className="w-full h-[40px] px-3 rounded-[8px] border border-[#EAECF0] text-[13px] text-[#171717] focus:outline-none focus:border-[#00A0E3]"
+                />
+              </div>
+              <div>
+                <label className="block text-[12px] font-semibold text-[#171717] mb-1.5">Reason</label>
+                <textarea
+                  value={deadlineReason}
+                  onChange={(event) => setDeadlineReason(event.target.value)}
+                  className="w-full min-h-[92px] px-3 py-2 rounded-[8px] border border-[#EAECF0] text-[13px] text-[#171717] focus:outline-none focus:border-[#00A0E3] resize-none"
+                  placeholder="Provide context for this deadline update"
+                />
+              </div>
+            </div>
+            <div className="flex items-center justify-end gap-2 border-t border-[#EAECF0] bg-[#F9FAFB] px-5 py-3">
+              <button
+                onClick={() => setDeadlineModalOpen(false)}
+                disabled={actionLoading}
+                className="h-[34px] px-3.5 rounded-[8px] border border-[#EAECF0] bg-white text-[12px] font-semibold text-[#171717] hover:bg-[#F9FAFB] disabled:opacity-60"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleAdjustDeadline}
+                disabled={actionLoading || !deadlineValue}
+                className="h-[34px] px-3.5 rounded-[8px] bg-[#00A0E3] text-[12px] font-semibold text-white hover:bg-[#008cc2] disabled:opacity-60"
+              >
+                {actionLoading ? "Updating..." : "Update Deadline"}
+              </button>
+            </div>
+          </div>
+        </div>
+      ) : null}
+
       <AssignEditorModal
         isOpen={reassignOpen}
         onClose={() => {

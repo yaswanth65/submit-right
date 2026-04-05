@@ -2,7 +2,8 @@
 
 import React, { useEffect, useMemo, useState } from "react";
 import { Search, FileText, Send } from "lucide-react";
-import { apiGet } from "@/lib/client-api";
+import { apiGet, apiRequest } from "@/lib/client-api";
+import { getStoredAuthSession } from "@/lib/client-auth";
 
 type EditorProfile = {
   id?: string;
@@ -18,6 +19,41 @@ type MessageThread = {
   status?: string;
 };
 
+type RelProfile =
+  | {
+      id?: string;
+      full_name?: string;
+      email?: string;
+    }
+  | Array<{
+      id?: string;
+      full_name?: string;
+      email?: string;
+    }>
+  | null;
+
+type MessageRow = {
+  id: string;
+  sender_id?: string;
+  receiver_id?: string;
+  message?: string;
+  created_at?: string;
+  sender?: RelProfile;
+  receiver?: RelProfile;
+};
+
+type DetailPayload = {
+  detail: {
+    id: string;
+    document_title?: string;
+    status?: string;
+    assigned_editor_id?: string | null;
+    assignedEditor?: RelProfile;
+    client?: RelProfile;
+  };
+  messageList: MessageRow[];
+};
+
 function readEditor(profile?: EditorProfile | EditorProfile[] | null) {
   if (!profile) {
     return { name: "Editor", email: "" };
@@ -27,6 +63,26 @@ function readEditor(profile?: EditorProfile | EditorProfile[] | null) {
   return {
     name: resolved?.full_name || "Editor",
     email: resolved?.email || ""
+  };
+}
+
+function readProfile(profile?: RelProfile) {
+  if (!profile) {
+    return { id: "", name: "Unknown", email: "" };
+  }
+
+  if (Array.isArray(profile)) {
+    return {
+      id: profile[0]?.id || "",
+      name: profile[0]?.full_name || "Unknown",
+      email: profile[0]?.email || ""
+    };
+  }
+
+  return {
+    id: profile.id || "",
+    name: profile.full_name || "Unknown",
+    email: profile.email || ""
   };
 }
 
@@ -49,8 +105,17 @@ export default function MessagesPage() {
   const [threads, setThreads] = useState<MessageThread[]>([]);
   const [activeId, setActiveId] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
+  const [activeMessages, setActiveMessages] = useState<MessageRow[]>([]);
+  const [activeDetail, setActiveDetail] = useState<DetailPayload["detail"] | null>(null);
+  const [messageText, setMessageText] = useState("");
+  const [sending, setSending] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  const profileId = useMemo(() => {
+    const session = getStoredAuthSession();
+    return typeof session?.user?.profileId === "string" ? session.user.profileId : "";
+  }, []);
 
   useEffect(() => {
     let active = true;
@@ -93,12 +158,95 @@ export default function MessagesPage() {
     });
   }, [threads, searchTerm]);
 
-  const activeThread = useMemo(
-    () => filteredThreads.find((item) => item.id === activeId) || filteredThreads[0] || null,
-    [filteredThreads, activeId]
-  );
+  useEffect(() => {
+    const resolvedActiveId = activeId || filteredThreads[0]?.id || null;
+    if (!resolvedActiveId) {
+      setActiveMessages([]);
+      setActiveDetail(null);
+      return;
+    }
+
+    let active = true;
+    const loadConversation = async () => {
+      try {
+        const detail = await apiGet<DetailPayload>(`/api/client/documents?documentId=${encodeURIComponent(resolvedActiveId)}`);
+        if (!active) return;
+        setActiveMessages(detail.messageList || []);
+        setActiveDetail(detail.detail || null);
+        setError(null);
+      } catch (err) {
+        if (!active) return;
+        setError(err instanceof Error ? err.message : "Failed to load conversation.");
+      }
+    };
+
+    void loadConversation();
+    return () => {
+      active = false;
+    };
+  }, [activeId, filteredThreads]);
+
+  const activeThread = useMemo(() => {
+    const source = filteredThreads.find((item) => item.id === activeId) || filteredThreads[0] || null;
+    if (!source && activeDetail) {
+      return {
+        id: activeDetail.id,
+        document_title: activeDetail.document_title,
+        assigned_editor_id: activeDetail.assigned_editor_id,
+        status: activeDetail.status,
+        profiles: activeDetail.assignedEditor
+      } as MessageThread;
+    }
+    return source;
+  }, [filteredThreads, activeId, activeDetail]);
 
   const activeEditor = readEditor(activeThread?.profiles);
+
+  const activeEditorId = useMemo(() => {
+    const fromThread = activeThread?.assigned_editor_id;
+    if (fromThread) return fromThread;
+    return readProfile(activeDetail?.assignedEditor).id;
+  }, [activeThread?.assigned_editor_id, activeDetail?.assignedEditor]);
+
+  const activeClientId = useMemo(() => readProfile(activeDetail?.client).id, [activeDetail?.client]);
+
+  const canSend = Boolean(activeThread?.id && activeEditorId) && activeThread?.status !== "payment_needed";
+
+  const sendMessage = async () => {
+    if (!activeThread?.id || !activeEditorId || !messageText.trim() || sending) {
+      return;
+    }
+
+    try {
+      setSending(true);
+      const created = await apiRequest<MessageRow>("/api/client/messages", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          documentId: activeThread.id,
+          receiverId: activeEditorId,
+          message: messageText.trim()
+        })
+      });
+
+      setActiveMessages((prev) => [
+        ...prev,
+        {
+          ...created,
+          sender: activeDetail?.client,
+          receiver: activeDetail?.assignedEditor
+        }
+      ]);
+      setMessageText("");
+      setError(null);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to send message.");
+    } finally {
+      setSending(false);
+    }
+  };
+
+  const activeStatus = statusLabel(activeThread?.status);
 
   return (
     <div className="w-full h-[calc(100vh-76px)] flex flex-col font-dm-sans bg-white">
@@ -198,20 +346,51 @@ export default function MessagesPage() {
               </div>
             </div>
             <span className="bg-[#EFF6FF] text-[#00A0E3] text-[14px] font-bold px-4 py-2 rounded-full border border-[#DBEAFE]">
-              {statusLabel(activeThread?.status)}
+              {activeStatus}
             </span>
           </div>
           
 
           {/* Messages Area */}
           <div className="flex-1 overflow-y-auto p-6 lg:p-8 space-y-8 flex flex-col bg-white">
-            {activeThread ? (
+            {activeMessages.map((message) => {
+              const sender = readProfile(message.sender);
+              const mine =
+                (Boolean(activeEditorId) && message.sender_id !== activeEditorId) ||
+                (Boolean(profileId) && message.sender_id === profileId) ||
+                (Boolean(activeClientId) && message.sender_id === activeClientId);
+              return (
+                <div key={message.id} className={`flex ${mine ? "justify-end" : "justify-start"}`}>
+                  <div className={`max-w-[85%] lg:max-w-[75%] flex flex-col ${mine ? "items-end" : "items-start"}`}>
+                    <span className={`text-[12px] mb-1 ${mine ? "text-[#00A0E3]" : "text-[#525866]"}`}>
+                      {mine ? "You" : sender.name}
+                    </span>
+                    <div
+                      className={`p-4 text-[14px] leading-relaxed rounded-[14px] ${
+                        mine
+                          ? "bg-[#00A0E3] text-white rounded-tr-[4px]"
+                          : "bg-[#F8FAFC] border border-[#EAECF0] text-[#171717] rounded-tl-[4px]"
+                      }`}
+                    >
+                      {message.message || ""}
+                    </div>
+                    <span className="text-[11px] text-[#A0AAB5] mt-1">
+                      {formatDateTime(message.created_at)}
+                    </span>
+                  </div>
+                </div>
+              );
+            })}
+
+            {activeThread && activeMessages.length === 0 ? (
               <div className="max-w-[85%] lg:max-w-[75%] border border-[#EAECF0] bg-[#F9FAFB] rounded-[16px] p-4 text-[14px] text-[#525866] leading-relaxed">
-                Live thread listing is connected. Message history requires a dedicated read endpoint per document conversation.
+                No messages yet for this document. Start the conversation with your editor.
               </div>
-            ) : (
+            ) : null}
+
+            {!activeThread ? (
               <p className="text-[14px] text-[#8A94A6]">No assigned documents are currently available for messaging.</p>
-            )}
+            ) : null}
           </div>
 
           {/* Chat Input */}
@@ -219,14 +398,29 @@ export default function MessagesPage() {
             <div className="flex gap-3">
               <input 
                 type="text" 
-                disabled
+                value={messageText}
+                onChange={(event) => setMessageText(event.target.value.slice(0, 5000))}
+                disabled={!canSend || sending}
                 placeholder="Type your message..." 
                 className="flex-1 border border-[#EAECF0] rounded-[8px] px-5 py-3.5 text-[14px] text-[#171717] placeholder:text-[#A0AAB5] focus:outline-none focus:border-[#00A0E3] transition-colors disabled:bg-[#F9FAFB] disabled:text-[#A0AAB5]"
+                onKeyDown={(event) => {
+                  if (event.key === "Enter") {
+                    event.preventDefault();
+                    void sendMessage();
+                  }
+                }}
               />
-              <button disabled className="w-[50px] h-[50px] bg-[#A0AAB5] rounded-[8px] flex items-center justify-center shrink-0 transition-colors shadow-sm cursor-not-allowed">
+              <button
+                disabled={!canSend || sending || !messageText.trim()}
+                onClick={() => void sendMessage()}
+                className="w-[50px] h-[50px] bg-[#00A0E3] disabled:bg-[#A0AAB5] rounded-[8px] flex items-center justify-center shrink-0 transition-colors shadow-sm disabled:cursor-not-allowed"
+              >
                 <Send className="w-[20px] h-[20px] text-white ml-0.5" strokeWidth={2.5} />
               </button>
             </div>
+            {!canSend && activeThread ? (
+              <p className="text-[12px] text-[#A0AAB5] mt-2">Messaging is disabled for this phase.</p>
+            ) : null}
           </div>
           
         </div>

@@ -773,8 +773,9 @@ export function Navbar() {
           <div className="relative" ref={notificationsRef}>
             <button
               onClick={() => {
-                setIsNotificationsOpen(!isNotificationsOpen);
+                setIsNotificationsOpen(false);
                 setIsProfileMenuOpen(false);
+                router.push("/user/notifications");
               }}
               className={`relative p-2.5 border rounded-[8px] transition-colors shadow-[0_1px_2px_rgba(0,0,0,0.02)] ${
                 isNotificationsOpen

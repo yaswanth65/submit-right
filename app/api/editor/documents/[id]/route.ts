@@ -2,6 +2,40 @@ import { ok, fail } from "@/lib/http";
 import { asResponse } from "@/lib/route";
 import { requireRole } from "@/lib/auth";
 import { supabaseAdmin } from "@/lib/supabase";
+import { env } from "@/lib/env";
+
+async function getSignedFileUrl(filePath?: string | null) {
+  if (!filePath) {
+    return null;
+  }
+
+  const { data, error } = await supabaseAdmin.storage
+    .from(env.SUPABASE_STORAGE_BUCKET)
+    .createSignedUrl(filePath, 60 * 60);
+
+  if (error) {
+    return null;
+  }
+
+  const signedUrl = data?.signedUrl || null;
+  if (!signedUrl) {
+    return null;
+  }
+
+  if (/^https?:\/\//i.test(signedUrl)) {
+    return signedUrl;
+  }
+
+  if (signedUrl.startsWith("/object/")) {
+    return `${env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1${signedUrl}`;
+  }
+
+  if (signedUrl.startsWith("/")) {
+    return `${env.NEXT_PUBLIC_SUPABASE_URL}${signedUrl}`;
+  }
+
+  return `${env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/${signedUrl}`;
+}
 
 export async function GET(
   _req: Request,
@@ -32,11 +66,24 @@ export async function GET(
 
     if (!document) return fail("Document not found", 404);
 
+    const [signedOriginal, signedVersions] = await Promise.all([
+      getSignedFileUrl(document.uploaded_file_path),
+      Promise.all(
+        (versions ?? []).map(async (version) => {
+          const signed = await getSignedFileUrl(version.file_path);
+          return {
+            ...version,
+            file_url: signed || version.file_url || null
+          };
+        })
+      )
+    ]);
+
     return ok({
       assignmentOverview: document,
-      originalFileDownloadLink: document.uploaded_file_url,
+      originalFileDownloadLink: signedOriginal || document.uploaded_file_url,
       messageList: messages ?? [],
-      versionHistory: versions ?? []
+      versionHistory: signedVersions
     });
   } catch (error) {
     return asResponse(error);

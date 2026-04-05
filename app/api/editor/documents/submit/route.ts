@@ -10,11 +10,20 @@ export async function POST(req: NextRequest) {
     const user = await requireRole("editor");
     const formData = await req.formData();
     const documentId = String(formData.get("documentId") ?? "");
-    const file = formData.get("file");
+    const filePart = formData.get("file");
+    const isValidFileLike =
+      !!filePart &&
+      typeof filePart !== "string" &&
+      "name" in filePart &&
+      "size" in filePart &&
+      "type" in filePart &&
+      "arrayBuffer" in filePart;
 
-    if (!documentId || !(file instanceof File)) {
+    if (!documentId || !isValidFileLike) {
       return fail("documentId and file are required");
     }
+
+    const file = filePart as File;
 
     const { data: document } = await supabaseAdmin
       .from("documents")

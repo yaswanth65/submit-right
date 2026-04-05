@@ -61,13 +61,22 @@ export async function extractWordCount(file: File) {
 
 export function validateUpload(file: File) {
   const maxBytes = 25 * 1024 * 1024;
-  const allowed = [
+  const allowedMimeTypes = [
     "application/msword",
     "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
     "application/pdf"
   ];
+  const allowedExtensions = [".doc", ".docx", ".pdf"];
+  const extension = path.extname(file.name || "").toLowerCase();
 
-  if (!allowed.includes(file.type)) {
+  if (!allowedExtensions.includes(extension)) {
+    throw new Error("Only DOC, DOCX, and PDF files are allowed");
+  }
+
+  const hasMimeType = typeof file.type === "string" && file.type.length > 0;
+  const isGenericMime = file.type === "application/octet-stream";
+
+  if (hasMimeType && !allowedMimeTypes.includes(file.type) && !isGenericMime) {
     throw new Error("Only DOC, DOCX, and PDF files are allowed");
   }
 
@@ -76,22 +85,58 @@ export function validateUpload(file: File) {
   }
 }
 
+async function ensureStorageBucketExists() {
+  const bucket = env.SUPABASE_STORAGE_BUCKET;
+  const { data, error } = await supabaseAdmin.storage.getBucket(bucket);
+
+  if (data && !error) {
+    return;
+  }
+
+  const notFound =
+    error && /not\s*found|bucket/i.test(`${error.message || ""}`);
+
+  if (notFound) {
+    const { error: createError } = await supabaseAdmin.storage.createBucket(bucket, {
+      public: true,
+      fileSizeLimit: "25MB"
+    });
+
+    if (!createError) {
+      return;
+    }
+
+    // Ignore race when another request creates the bucket concurrently.
+    if (/already exists/i.test(`${createError.message || ""}`)) {
+      return;
+    }
+
+    throw createError;
+  }
+
+  if (error) {
+    throw error;
+  }
+}
+
 export async function uploadDocumentFile(path: string, file: File) {
+  await ensureStorageBucketExists();
   const bytes = Buffer.from(await file.arrayBuffer());
+  const bucket = env.SUPABASE_STORAGE_BUCKET;
 
   const { data, error } = await supabaseAdmin.storage
-    .from(env.SUPABASE_STORAGE_BUCKET)
+    .from(bucket)
     .upload(path, bytes, {
       contentType: file.type,
       upsert: true
     });
 
   if (error) {
-    throw error;
+    throw new Error(`Storage upload failed for bucket '${bucket}': ${error.message}`);
   }
 
   const { data: publicUrl } = supabaseAdmin.storage
-    .from(env.SUPABASE_STORAGE_BUCKET)
+    .from(bucket)
     .getPublicUrl(data.path);
 
   return { path: data.path, publicUrl: publicUrl.publicUrl };

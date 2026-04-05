@@ -1,18 +1,20 @@
 "use client";
 
 import React, { useEffect, useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
 import { CheckCheck, FileText, Banknote, CheckCircle2, MessageSquare } from "lucide-react";
-import { apiGet } from "@/lib/client-api";
+import { apiGet, apiRequest } from "@/lib/client-api";
 
 type NotificationType = "document_update" | "payment" | "message";
 
 type NotificationRow = {
   id: string;
   title?: string;
-  message?: string;
+  body?: string;
   type?: NotificationType;
   is_read?: boolean;
   created_at?: string;
+  document_id?: string;
 };
 
 type NotificationsPayload = {
@@ -60,6 +62,7 @@ function formatRelative(date?: string) {
 }
 
 export default function NotificationsPage() {
+  const router = useRouter();
   const [activeTab, setActiveTab] = useState("All");
   const [payload, setPayload] = useState<NotificationsPayload>({
     all: [],
@@ -121,17 +124,87 @@ export default function NotificationsPage() {
     return payload.all;
   }, [activeTab, payload]);
 
-  const markAllAsRead = () => {
-    setPayload((previous) => {
-      const all = previous.all.map((item) => ({ ...item, is_read: true }));
-      return {
-        all,
-        unread: [],
-        documentUpdates: all.filter((item) => item.type === "document_update"),
-        payments: all.filter((item) => item.type === "payment"),
-        messages: all.filter((item) => item.type === "message")
-      };
-    });
+  const resolveNotificationTarget = (notif: NotificationRow) => {
+    const searchable = `${notif.title || ""} ${notif.body || ""}`.toLowerCase();
+
+    if (searchable.includes("ticket") || searchable.includes("support")) {
+      return "/user/help";
+    }
+
+    if (notif.type === "payment") {
+      return "/user/payments";
+    }
+
+    if (notif.type === "message") {
+      return "/user/chat";
+    }
+
+    if (notif.document_id) {
+      return `/user/documents/${notif.document_id}`;
+    }
+
+    if (notif.type === "document_update") {
+      return "/user/documents";
+    }
+
+    return "/user/notifications";
+  };
+
+  const markAllAsRead = async () => {
+    const unreadIds = payload.all.filter((item) => !item.is_read).map((item) => item.id);
+    if (unreadIds.length === 0) {
+      return;
+    }
+
+    try {
+      await apiRequest<NotificationRow[]>("/api/client/notifications/read", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ notificationIds: unreadIds })
+      });
+
+      setPayload((previous) => {
+        const all = previous.all.map((item) => ({ ...item, is_read: true }));
+        return {
+          all,
+          unread: [],
+          documentUpdates: all.filter((item) => item.type === "document_update"),
+          payments: all.filter((item) => item.type === "payment"),
+          messages: all.filter((item) => item.type === "message")
+        };
+      });
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to mark notifications as read.");
+    }
+  };
+
+  const openNotification = async (notif: NotificationRow) => {
+    try {
+      if (!notif.is_read) {
+        await apiRequest<NotificationRow[]>("/api/client/notifications/read", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ notificationIds: [notif.id] })
+        });
+
+        setPayload((previous) => {
+          const all = previous.all.map((item) =>
+            item.id === notif.id ? { ...item, is_read: true } : item
+          );
+          return {
+            all,
+            unread: all.filter((item) => !item.is_read),
+            documentUpdates: all.filter((item) => item.type === "document_update"),
+            payments: all.filter((item) => item.type === "payment"),
+            messages: all.filter((item) => item.type === "message")
+          };
+        });
+      }
+    } catch {
+      // Ignore read failures and continue with navigation.
+    } finally {
+      router.push(resolveNotificationTarget(notif));
+    }
   };
 
   return (
@@ -178,8 +251,10 @@ export default function NotificationsPage() {
           const unread = !notif.is_read;
 
           return (
-            <div
+            <button
               key={notif.id}
+              type="button"
+              onClick={() => void openNotification(notif)}
               className={`flex items-center gap-5 p-5 rounded-[16px] border transition-shadow hover:shadow-[0_2px_12px_rgba(0,0,0,0.03)] ${
                 unread ? "border-[#00A0E3] bg-[#EFF9FF]" : "border-[#EAECF0] bg-white"
               }`}
@@ -191,7 +266,7 @@ export default function NotificationsPage() {
               <div className="flex-1 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                 <div className="flex flex-col flex-1 pr-4">
                   <h3 className="text-[14px] font-medium text-[#171717] mb-1">{notif.title || "Notification"}</h3>
-                  <p className="text-[#78788D] text-[14px] leading-relaxed">{notif.message || "No details available."}</p>
+                  <p className="text-[#78788D] text-[14px] leading-relaxed">{notif.body || "No details available."}</p>
                 </div>
 
                 <div className="flex flex-col items-end justify-between self-stretch shrink-0 min-w-[80px] py-0.5">
@@ -199,7 +274,7 @@ export default function NotificationsPage() {
                   {unread ? <div className="w-[6px] h-[6px] bg-[#00A0E3] rounded-full"></div> : null}
                 </div>
               </div>
-            </div>
+            </button>
           );
         })}
 

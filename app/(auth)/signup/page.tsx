@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useMemo, useState } from "react";
+import React, { Suspense, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Eye, EyeOff, CheckCircle2 } from "lucide-react";
@@ -27,7 +27,7 @@ type SignupResponse = {
   };
 };
 
-export default function SignUpPage() {
+function SignUpContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -505,5 +505,31 @@ export default function SignUpPage() {
         </div>
       </div>
     </>
+  );
+}
+
+function SignUpFallback() {
+  return (
+    <div
+      style={{
+        minHeight: "100vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        fontFamily: "sans-serif",
+        color: "#525866",
+        fontSize: "14px",
+      }}
+    >
+      Loading sign up...
+    </div>
+  );
+}
+
+export default function SignUpPage() {
+  return (
+    <Suspense fallback={<SignUpFallback />}>
+      <SignUpContent />
+    </Suspense>
   );
 }

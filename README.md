@@ -17,7 +17,7 @@ Backend-first Next.js API scaffold for a document submission platform with:
 - Supabase SQL schema for users, documents, file versions, tickets, messages, notifications, settings, payments, availability, audit logs
 
 ## Project structure
-
+#comit
 - `app/api/...` route handlers
 - `lib/...` shared auth, env, files, validation, Razorpay, Supabase helpers
 - `lib/services/...` business logic

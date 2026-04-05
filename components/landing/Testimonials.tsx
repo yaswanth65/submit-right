@@ -46,7 +46,7 @@ export default function Testimonials() {
           <div className="w-full h-full bg-[#E5E5E5]" />
         </div>
         <div>
-          <div className="text-[14px] font-semibold text-[#1C1C1D]">
+          <div className="text-[14px] font-normal text-[#1C1C1D]">
             {t.name}
           </div>
           <div className="text-[12px] text-[#A0A0A0]">{t.role}</div>
@@ -68,7 +68,7 @@ export default function Testimonials() {
         <div className="text-center mb-16">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-white border border-[#E5E5E5] rounded-full mb-5">
             <span className="text-[14px]">❝</span>
-            <span className="text-[11px] font-semibold text-[#1C1C1D] uppercase tracking-wider">
+            <span className="text-[11px] font-normal text-[#1C1C1D] uppercase tracking-wider">
               TESTIMONIALS
             </span>
           </div>

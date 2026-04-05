@@ -25,12 +25,23 @@ const data = [
   { name: "Dec", revenue: 49000 },
 ];
 
-export function RevenueChart() {
+type RevenuePoint = {
+  name: string;
+  revenue: number;
+};
+
+type RevenueChartProps = {
+  data?: RevenuePoint[];
+};
+
+export function RevenueChart({ data: chartData }: RevenueChartProps) {
+  const resolvedData = chartData && chartData.length > 0 ? chartData : data;
+
   return (
     <div className="w-full h-full font-dm-sans">
       <ResponsiveContainer width="100%" height="100%" minHeight={250}>
         <AreaChart
-          data={data}
+          data={resolvedData}
           margin={{
             top: 20,
             right: 0,

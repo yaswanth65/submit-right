@@ -1,16 +1,45 @@
-import Link from "next/link";
-import { Search, SlidersHorizontal, MoreVertical } from "lucide-react";
+"use client";
 
-const students = [
-  { id: 1, name: "Sarah Johnson", date: "Feb 28, 2026", active: "2", completed: "12", spend: "$4,250", status: "Active", avatar: "https://i.pravatar.cc/100?u=student1" },
-  { id: 2, name: "Michael Chen", date: "Feb 24, 2026", active: "1", completed: "8", spend: "$3,100", status: "Active", avatar: "https://i.pravatar.cc/100?u=student2" },
-  { id: 3, name: "Emily Davis", date: "Mar 02, 2026", active: "3", completed: "24", spend: "$8,700", status: "Active", avatar: "https://i.pravatar.cc/100?u=student3" },
-  { id: 4, name: "James Wilson", date: "Mar 05, 2026", active: "1", completed: "12", spend: "$850", status: "Restricted", avatar: "https://i.pravatar.cc/100?u=student4" },
-  { id: 5, name: "Lisa Martinez", date: "Mar 10, 2026", active: "4", completed: "3", spend: "$12,400", status: "Active", avatar: "https://i.pravatar.cc/100?u=student5" },
-  { id: 6, name: "David Brown", date: "Feb 23, 2026", active: "2", completed: "4", spend: "$1,950", status: "Suspended", avatar: "https://i.pravatar.cc/100?u=student6" },
-  { id: 7, name: "Anna Garcia", date: "Mar 08, 2026", active: "6", completed: "9", spend: "$5,600", status: "Active", avatar: "https://i.pravatar.cc/100?u=student7" },
-  { id: 8, name: "Tom Anderson", date: "Feb 26, 2026", active: "3", completed: "6", spend: "$7,200", status: "Active", avatar: "https://i.pravatar.cc/100?u=student8" },
-];
+import Link from "next/link";
+import { useEffect, useMemo, useState } from "react";
+import { Search, SlidersHorizontal, MoreVertical } from "lucide-react";
+import { apiGet } from "@/lib/client-api";
+
+type ClientProfile = {
+  id: string;
+  full_name?: string;
+  email?: string;
+  created_at?: string;
+  avatar_url?: string;
+  is_restricted?: boolean;
+  is_suspended?: boolean;
+  restricted_at?: string | null;
+  suspended_at?: string | null;
+};
+
+function formatDate(value?: string) {
+  if (!value) {
+    return "-";
+  }
+
+  return new Date(value).toLocaleDateString("en-US", {
+    month: "short",
+    day: "2-digit",
+    year: "numeric"
+  });
+}
+
+function resolveStatus(profile: ClientProfile) {
+  if (profile.is_suspended || profile.suspended_at) {
+    return "Suspended";
+  }
+
+  if (profile.is_restricted || profile.restricted_at) {
+    return "Restricted";
+  }
+
+  return "Active";
+}
 
 function statusPill(status: string) {
   if (status === "Active") return "bg-[#E3F7EC] text-[#1CB061]";
@@ -20,6 +49,45 @@ function statusPill(status: string) {
 }
 
 export default function StudentsPage() {
+  const [searchTerm, setSearchTerm] = useState("");
+  const [profiles, setProfiles] = useState<ClientProfile[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    let active = true;
+
+    const timer = setTimeout(async () => {
+      try {
+        setLoading(true);
+        const query = searchTerm.trim()
+          ? `/api/admin/clients?search=${encodeURIComponent(searchTerm.trim())}`
+          : "/api/admin/clients";
+        const data = await apiGet<ClientProfile[]>(query);
+
+        if (active) {
+          setProfiles(data);
+          setError(null);
+        }
+      } catch (err) {
+        if (active) {
+          setError(err instanceof Error ? err.message : "Failed to load students.");
+        }
+      } finally {
+        if (active) {
+          setLoading(false);
+        }
+      }
+    }, 250);
+
+    return () => {
+      active = false;
+      clearTimeout(timer);
+    };
+  }, [searchTerm]);
+
+  const students = useMemo(() => profiles, [profiles]);
+
   return (
     <div className="space-y-6 animate-in fade-in duration-500 w-full font-dm-sans">
       <div className="mt-2">
@@ -29,11 +97,17 @@ export default function StudentsPage() {
 
       <div className="mx-auto w-[98%] h-px bg-[#EAECF0]" />
 
+      {error ? (
+        <div className="rounded-[10px] border border-[#FECACA] bg-[#FEF2F2] px-4 py-3 text-[13px] text-[#B91C1C]">{error}</div>
+      ) : null}
+
       <div className="bg-[#FFFFFF] rounded-[12px] border border-[#EAECF0] p-5 shadow-sm">
         <div className="flex items-center justify-between mb-4">
           <div className="relative w-[280px]">
             <Search className="w-[18px] h-[18px] absolute left-3 top-1/2 -translate-y-1/2 text-[#A0AAB5]" strokeWidth={2.25} />
             <input
+              value={searchTerm}
+              onChange={(event) => setSearchTerm(event.target.value)}
               placeholder="Search"
               className="h-[42px] w-full pl-10 pr-3 border border-[#EAECF0] rounded-[8px] text-[14px] text-[#171717] placeholder-[#A0AAB5] focus:outline-none focus:ring-1 focus:ring-[#00A0E3]"
             />
@@ -61,21 +135,21 @@ export default function StudentsPage() {
               {students.map((student) => (
                 <tr key={student.id} className="hover:bg-[#F9FAFB] transition-colors">
                   <td className="py-3 px-4">
-                    <Link href={`/admin/students/${student.id}`} className="flex items-center gap-3">
-                      <img src={student.avatar} alt={student.name} className="w-9 h-9 rounded-full object-cover" />
+                    <Link href="#" className="flex items-center gap-3">
+                      <img src={student.avatar_url || `https://i.pravatar.cc/100?u=${student.id}`} alt={student.full_name || "Student"} className="w-9 h-9 rounded-full object-cover" />
                       <div>
-                        <div className="text-[14px] font-bold text-[#171717] leading-tight">{student.name}</div>
-                        <div className="text-[12px] text-[#525866] mt-1">eaxmple@gmail.com</div>
+                        <div className="text-[14px] font-bold text-[#171717] leading-tight">{student.full_name || "Student"}</div>
+                        <div className="text-[12px] text-[#525866] mt-1">{student.email || "-"}</div>
                       </div>
                     </Link>
                   </td>
-                  <td className="py-3 px-4 text-[14px] font-medium text-[#525866]">{student.date}</td>
-                  <td className="py-3 px-4 text-[14px] font-medium text-[#525866]">{student.active}</td>
-                  <td className="py-3 px-4 text-[14px] font-medium text-[#525866]">{student.completed}</td>
-                  <td className="py-3 px-4 text-[14px] font-medium text-[#525866]">{student.spend}</td>
+                  <td className="py-3 px-4 text-[14px] font-medium text-[#525866]">{formatDate(student.created_at)}</td>
+                  <td className="py-3 px-4 text-[14px] font-medium text-[#525866]">-</td>
+                  <td className="py-3 px-4 text-[14px] font-medium text-[#525866]">-</td>
+                  <td className="py-3 px-4 text-[14px] font-medium text-[#525866]">-</td>
                   <td className="py-3 px-4">
-                    <span className={`px-3 py-[4px] rounded-full text-[11px] font-bold inline-flex ${statusPill(student.status)}`}>
-                      {student.status}
+                    <span className={`px-3 py-[4px] rounded-full text-[11px] font-bold inline-flex ${statusPill(resolveStatus(student))}`}>
+                      {resolveStatus(student)}
                     </span>
                   </td>
                   <td className="py-3 px-4">
@@ -85,6 +159,13 @@ export default function StudentsPage() {
                   </td>
                 </tr>
               ))}
+              {!loading && students.length === 0 ? (
+                <tr>
+                  <td colSpan={7} className="py-10 px-4 text-center text-[13px] text-[#78788D]">
+                    No students found.
+                  </td>
+                </tr>
+              ) : null}
             </tbody>
           </table>
         </div>

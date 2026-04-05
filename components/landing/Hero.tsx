@@ -28,93 +28,94 @@ export function Hero() {
     >
 
       <div className="w-full max-w-[1280px] mx-auto px-6 lg:px-10 xl:px-14 relative z-10 flex-1 flex flex-col justify-center">
-        <div className="grid lg:grid-cols-2 gap-6 items-center w-full mt-8">
-          
-          {/* ===== LEFT (Static Content) ===== */}
-          <div className="max-w-[580px] relative z-20">
-            {/* Badge */}
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#00A0E34D] bg-[#00A0E314] mb-6">
-              <span className="w-2 h-2 bg-[#00A0E3] rounded-full" />
-              <span className="text-[13px] font-semibold tracking-wide text-[#00A0E3]">
-                LOREM IPSUM DOLOR
-              </span>
-            </div>
+  <div className="grid lg:grid-cols-2 gap-12 items-center w-full mt-8">
+    
+    {/* ===== LEFT (Static Content) ===== */}
+    <div className="max-w-[580px] relative z-20">
+      
+      {/* Badge */}
+      <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#00A0E34D] bg-[#00A0E314] mb-6">
+        <span className="w-2 h-2 bg-[#00A0E3] rounded-full" />
+        <span className="text-[14px] font-medium leading-[1.4] tracking-normal text-[#00A0E3]">
+          LOREM IPSUM DOLOR
+        </span>
+      </div>
 
-            {/* Heading */}
-            <h1 className="text-[52px] leading-[1.1] font-semibold text-[#1C1C1D] mb-6 tracking-tight">
-              Lorem ipsum dolor sit amet consectetur
-            </h1>
+      {/* Heading */}
+      <h1 className="text-[54px] leading-[1.1] font-medium tracking-normal text-[#1C1C1D] mb-6">
+        Lorem ipsum dolor sit amet consectetur
+      </h1>
 
-            {/* Description */}
-            <p className="text-[17px] text-[#78788D] leading-[1.6] mb-10 pr-6">
-              Lorem ipsum dolor sit amet consectetur. Sagittis eu vel habitant cursus.
-              Elementum suscipit donec viverra posuere at lorem nullam. Porttitor mauris morbi tincidunt enim nascetur sed. Eu neque sagittis in gravida elementum.
-            </p>
+      {/* Description */}
+      <p className="text-[18px] text-[#78788D] leading-[1.4] mb-10 pr-6">
+        Lorem ipsum dolor sit amet consectetur. Sagittis eu vel habitant cursus.
+        Elementum suscipit donec viverra posuere at lorem nullam. Porttitor mauris morbi tincidunt enim nascetur sed. Eu neque sagittis in gravida elementum.
+      </p>
 
-            {/* Buttons */}
-            <div className="flex gap-4 mb-14">
-              <Link
-                href="#"
-                className="px-8 py-3.5 rounded-full bg-[#00A0E3] text-white font-medium shadow-[0_8px_20px_rgba(0,160,227,0.25)] hover:shadow-[0_10px_25px_rgba(0,160,227,0.35)] hover:bg-[#028ac7] transition-all"
-              >
-                Create Account
-              </Link>
-              <Link
-                href="#"
-                className="px-10 py-3.5 rounded-full border border-[#00A0E3] text-[#00A0E3] font-medium bg-white hover:bg-[#EAF5FB] transition-all"
-              >
-                Log in
-              </Link>
-            </div>
+      {/* Buttons */}
+      <div className="flex gap-4 mb-14">
+        <Link
+          href="#"
+          className="px-8 py-3.5 rounded-full bg-[#00A0E3] text-white text-[16px] font-medium leading-[1.2] shadow-[0_8px_20px_rgba(0,160,227,0.25)] hover:shadow-[0_10px_25px_rgba(0,160,227,0.35)] hover:bg-[#028ac7] transition-all"
+        >
+          Create Account
+        </Link>
+        <Link
+          href="#"
+          className="px-10 py-3.5 rounded-full border border-[#00A0E3] text-[#00A0E3] text-[16px] font-medium leading-[1.2] bg-white hover:bg-[#EAF5FB] transition-all"
+        >
+          Log in
+        </Link>
+      </div>
 
-            {/* Stats */}
-            <div className="flex gap-14">
-              <div className="flex items-center gap-4">
-                <div className="w-11 h-11 rounded-xl bg-[#EAF5FB] flex items-center justify-center text-[#00A0E3]">
-                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                  </svg>
-                </div>
-                <div className="flex flex-col">
-                  <span className="font-semibold text-base text-[#1C1C1D]">10,000+</span>
-                  <span className="text-[13px] text-[#78788D]">Lorem ipsum</span>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-4">
-                <div className="w-11 h-11 rounded-xl bg-[#EAF5FB] flex items-center justify-center text-[#00A0E3]">
-                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                  </svg>
-                </div>
-                <div className="flex flex-col">
-                  <span className="font-semibold text-base text-[#1C1C1D]">4.8/5</span>
-                  <span className="text-[13px] text-[#78788D]">Lorem ipsum</span>
-                </div>
-              </div>
-            </div>
+      {/* Stats */}
+      <div className="flex gap-14">
+        <div className="flex items-center gap-4">
+          <div className="w-11 h-11 rounded-xl bg-[#EAF5FB] flex items-center justify-center text-[#00A0E3]">
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
           </div>
-
-          {/* ===== RIGHT (Animated Carousel Content) ===== */}
-          <div className="relative h-[650px] w-full flex items-center justify-center perspective-[1200px]">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={currentSlide}
-                initial={{ opacity: 0, x: 60, scale: 0.98 }}
-                animate={{ opacity: 1, x: 0, scale: 1 }}
-                exit={{ opacity: 0, x: -60, scale: 0.98 }}
-                transition={{ duration: 0.5, ease: [0.25, 1, 0.5, 1] }}
-                className="absolute inset-0 flex items-center justify-center w-full h-full"
-              >
-                {currentSlide === 0 && <Slide1Right />}
-                {currentSlide === 1 && <Slide2Right />}
-                {currentSlide === 2 && <Slide3Right />}
-              </motion.div>
-            </AnimatePresence>
+          <div className="flex flex-col">
+            <span className="font-medium text-[16px] text-[#1C1C1D]">10,000+</span>
+            <span className="text-[14px] leading-[1.4] text-[#78788D]">Lorem ipsum</span>
           </div>
-          
+        </div>
+
+        <div className="flex items-center gap-4">
+          <div className="w-11 h-11 rounded-xl bg-[#EAF5FB] flex items-center justify-center text-[#00A0E3]">
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+          </div>
+          <div className="flex flex-col">
+            <span className="font-medium text-[16px] text-[#1C1C1D]">4.8/5</span>
+            <span className="text-[14px] leading-[1.4] text-[#78788D]">Lorem ipsum</span>
+          </div>
         </div>
       </div>
+    </div>
+
+    {/* ===== RIGHT (Animated Carousel Content) ===== */}
+    <div className="relative h-[650px] w-full flex items-center justify-center perspective-[1200px]">
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={currentSlide}
+          initial={{ opacity: 0, x: 60, scale: 0.98 }}
+          animate={{ opacity: 1, x: 0, scale: 1 }}
+          exit={{ opacity: 0, x: -60, scale: 0.98 }}
+          transition={{ duration: 0.5, ease: [0.25, 1, 0.5, 1] }}
+          className="absolute inset-0 flex items-center justify-center w-full h-full"
+        >
+          {currentSlide === 0 && <Slide1Right />}
+          {currentSlide === 1 && <Slide2Right />}
+          {currentSlide === 2 && <Slide3Right />}
+        </motion.div>
+      </AnimatePresence>
+    </div>
+    
+  </div>
+</div>
 
       {/* Pagination Dots (Inside Hero section styling adjusted to match exactly) */}
       <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex items-center gap-2 z-50">
@@ -145,8 +146,8 @@ function Slide1Right() {
         transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
         className="absolute top-2 right-0 bg-white rounded-[20px] shadow-[0_10px_35px_rgb(0,0,0,0.06)] p-6 w-[230px] z-10 border border-gray-50"
       >
-        <p className="text-[15px] font-semibold text-[#404040] mb-4">Lorem ipsum dolor</p>
-        <div className="text-[34px] font-bold text-[#1C1C1D] mb-4">124</div>
+        <p className="text-[15px] font-normal text-[#404040] mb-4">Lorem ipsum dolor</p>
+        <div className="text-[34px] font-normal text-[#1C1C1D] mb-4">124</div>
         <div className="w-full h-[1px] bg-gray-100 mb-4" />
         <p className="text-[13px] text-gray-500 leading-relaxed font-medium">
           Lorem ipsum dolor sit
@@ -159,7 +160,7 @@ function Slide1Right() {
         transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut", delay: 0.3 }}
         className="absolute top-[70px] -left-4 bg-white rounded-[20px] shadow-[0_20px_50px_rgb(0,0,0,0.08)] p-7 w-[240px] z-20 border border-gray-50"
       >
-        <p className="text-[15px] font-semibold text-[#1C1C1D] mb-6">Lorem ipsum dolor</p>
+        <p className="text-[15px] font-normal text-[#1C1C1D] mb-6">Lorem ipsum dolor</p>
         
         {/* Semi-circle Gauge */}
         <div className="relative w-[160px] h-[80px] mx-auto mb-4 overflow-hidden">
@@ -178,7 +179,7 @@ function Slide1Right() {
             />
           </svg>
           <div className="absolute bottom-0 inset-x-0 flex flex-col items-center justify-end pb-1">
-            <span className="text-[24px] font-bold text-[#1C1C1D] leading-none mb-1">84%</span>
+            <span className="text-[24px] font-normal text-[#1C1C1D] leading-none mb-1">84%</span>
             <span className="text-[12px] text-gray-400 font-medium">Lorem</span>
           </div>
         </div>
@@ -197,9 +198,9 @@ function Slide1Right() {
       >
         <div className="flex justify-between items-center mb-5">
           <div>
-            <p className="text-[15px] font-semibold text-[#1C1C1D] tracking-tight">Lorem ipsum dolor</p>
+            <p className="text-[15px] font-normal text-[#1C1C1D] tracking-tight">Lorem ipsum dolor</p>
             <div className="flex items-baseline gap-2 mt-2">
-              <span className="text-[28px] font-bold text-[#1C1C1D] leading-none">124</span>
+              <span className="text-[28px] font-normal text-[#1C1C1D] leading-none">124</span>
               <span className="text-[13px] text-gray-500 font-medium font-sans">Lorem</span>
             </div>
           </div>
@@ -213,9 +214,9 @@ function Slide1Right() {
         </div>
 
         <div className="flex justify-between text-xs mb-6 px-1">
-          <div className="text-center"><p className="text-[#22C55E] font-bold text-[14px] mb-1">78%</p><p className="text-[#9CA3AF] text-[12px] font-medium">Successful</p></div>
-          <div className="text-center"><p className="text-[#FBBF24] font-bold text-[14px] mb-1">15%</p><p className="text-[#9CA3AF] text-[12px] font-medium">Pending</p></div>
-          <div className="text-center"><p className="text-[#F97316] font-bold text-[14px] mb-1">02%</p><p className="text-[#9CA3AF] text-[12px] font-medium">Failed</p></div>
+          <div className="text-center"><p className="text-[#22C55E] font-normal text-[14px] mb-1">78%</p><p className="text-[#9CA3AF] text-[12px] font-medium">Successful</p></div>
+          <div className="text-center"><p className="text-[#FBBF24] font-normal text-[14px] mb-1">15%</p><p className="text-[#9CA3AF] text-[12px] font-medium">Pending</p></div>
+          <div className="text-center"><p className="text-[#F97316] font-normal text-[14px] mb-1">02%</p><p className="text-[#9CA3AF] text-[12px] font-medium">Failed</p></div>
         </div>
 
         <p className="text-[12px] text-[#6B7280] text-center pt-2 font-medium leading-relaxed px-4">
@@ -249,9 +250,6 @@ function Slide2Right() {
         const isActive = activeIndex === idx;
         return (
           <div key={idx} className="flex items-center gap-6 relative">
-            {/* External Dot */}
-            <div className={`w-[10px] h-[10px] rounded-full shrink-0 ${item.color} transition-transform duration-300 ${isActive ? "scale-150" : "scale-100 opacity-60"}`} />
-            
             {/* Card Content */}
             <motion.div
               layout
@@ -267,6 +265,9 @@ function Slide2Right() {
                   : "shadow-[0_8px_20px_rgba(0,0,0,0.03)] z-10"
               }`}
             >
+              {/* Colored Dot */}
+              <div className={`w-[10px] h-[10px] rounded-full shrink-0 mr-3 ${item.color} transition-transform duration-300 ${isActive ? "scale-150" : "scale-100 opacity-60"}`} />
+
               {/* Box Icon */}
               <div className={`w-[52px] h-[52px] rounded-xl flex items-center justify-center shrink-0 mr-5 transition-colors duration-300 ${item.iconBg}`}>
                 <svg className={`w-[22px] h-[22px] ${item.iconColor}`} fill="currentColor" viewBox="0 0 24 24">
@@ -277,7 +278,7 @@ function Slide2Right() {
 
               {/* Texts */}
               <div className="flex-1">
-                <h3 className={`font-bold text-[15px] mb-0.5 tracking-tight ${isActive ? "text-[#1C1C1D]" : "text-[#1C1C1D]"}`}>
+                <h3 className={`font-normal text-[15px] mb-0.5 tracking-tight ${isActive ? "text-[#1C1C1D]" : "text-[#1C1C1D]"}`}>
                   Editing
                 </h3>
                 <p className={`text-[13px] font-medium ${isActive ? "text-gray-400" : "text-gray-400"}`}>
@@ -309,15 +310,15 @@ function Slide3Right() {
         transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
         className="absolute -left-6 top-[30px] w-[290px] bg-[#F6E9C8] border border-[#DEB860]/40 rounded-2xl p-6 shadow-xl z-10"
       >
-        <div className="absolute top-0 right-0 bg-[#D4A33B] text-white text-[12px] font-bold px-3 py-1.5 rounded-bl-[16px] rounded-tr-[16px]">
+        <div className="absolute top-0 right-0 bg-[#D4A33B] text-white text-[12px] font-normal px-3 py-1.5 rounded-bl-[16px] rounded-tr-[16px]">
           You Save: $328
         </div>
-        <h3 className="text-[#C18C28] font-bold text-[17px] mb-1.5 tracking-tight border-b-0 pb-0 mt-3">Lorem ipsum dolor</h3>
+        <h3 className="text-[#C18C28] font-normal text-[17px] mb-1.5 tracking-tight border-b-0 pb-0 mt-3">Lorem ipsum dolor</h3>
         <p className="text-[13px] text-[#A6781E] mb-6 leading-relaxed font-medium">Lorem ipsum dolor sit amet, consectetur adipiscing.</p>
         
         <ul className="space-y-3 mb-6">
           {[1, 2, 3].map((i) => (
-            <li key={i} className="flex items-center gap-2.5 text-[13px] text-[#3E2B08] font-semibold">
+            <li key={i} className="flex items-center gap-2.5 text-[13px] text-[#3E2B08] font-normal">
               <div className="w-[18px] h-[18px] rounded-full bg-[#D4A33B] flex items-center justify-center shrink-0">
                 <svg className="w-[10px] h-[10px] text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3.5}><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>
               </div>
@@ -329,7 +330,7 @@ function Slide3Right() {
         <div className="border-t border-[#D4A33B]/30 pt-4 mb-4">
           <div className="flex justify-between items-center text-[12px] text-[#3E2B08] font-medium mb-1">
             <span>Get 6 services worth</span>
-            <span className="font-bold line-through opacity-80">$1240</span>
+            <span className="font-normal line-through opacity-80">$1240</span>
           </div>
           <div className="flex justify-between items-end text-[#D4A33B]">
             <span className="text-[13px] font-medium mb-1">For only:</span>
@@ -337,7 +338,7 @@ function Slide3Right() {
           </div>
         </div>
 
-        <button className="w-full py-3 bg-[#111111] text-white rounded-lg text-[14px] font-semibold hover:bg-black shadow-md transition-all">
+        <button className="w-full py-3 bg-[#111111] text-white rounded-lg text-[14px] font-normal hover:bg-black shadow-md transition-all">
           Buy Now
         </button>
       </motion.div>
@@ -348,15 +349,15 @@ function Slide3Right() {
         transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut", delay: 0.3 }}
         className="absolute -right-2 bottom-[10px] w-[300px] bg-white border border-[#00A0E3]/70 rounded-2xl p-6 shadow-[0_25px_60px_rgba(0,160,227,0.15)] z-20"
       >
-        <div className="absolute top-0 right-0 bg-[#00A0E3] text-white text-[12px] font-bold px-3 py-1.5 rounded-bl-[16px] rounded-tr-[16px]">
+        <div className="absolute top-0 right-0 bg-[#00A0E3] text-white text-[12px] font-normal px-3 py-1.5 rounded-bl-[16px] rounded-tr-[16px]">
           You Save: $328
         </div>
-        <h3 className="text-[#00A0E3] font-bold text-[18px] mb-1.5 tracking-tight border-b-0 pb-0 mt-3">Lorem ipsum dolor</h3>
+        <h3 className="text-[#00A0E3] font-normal text-[18px] mb-1.5 tracking-tight border-b-0 pb-0 mt-3">Lorem ipsum dolor</h3>
         <p className="text-[13px] text-[#6B7280] mb-6 leading-relaxed font-medium tracking-wide">Lorem ipsum dolor sit amet, consectetur adipiscing.</p>
         
         <ul className="space-y-3 mb-6">
           {[1, 2, 3].map((i) => (
-            <li key={i} className="flex items-center gap-2.5 text-[13px] text-[#1C1C1D] font-bold font-sans tracking-tight">
+            <li key={i} className="flex items-center gap-2.5 text-[13px] text-[#1C1C1D] font-normal font-sans tracking-tight">
               <div className="w-[18px] h-[18px] rounded-full bg-[#00A0E3] flex items-center justify-center shrink-0">
                 <svg className="w-[10px] h-[10px] text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3.5}><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>
               </div>
@@ -368,7 +369,7 @@ function Slide3Right() {
         <div className="border-t border-gray-100 pt-4 mb-4">
           <div className="flex justify-between items-center text-[12px] text-gray-500 font-medium mb-1">
             <span>Get 6 services worth</span>
-            <span className="font-bold line-through text-[#1C1C1D] opacity-80">$1240</span>
+            <span className="font-normal line-through text-[#1C1C1D] opacity-80">$1240</span>
           </div>
           <div className="flex justify-between items-end text-[#00A0E3]">
             <span className="text-[13px] font-medium mb-1">For only:</span>
@@ -376,10 +377,11 @@ function Slide3Right() {
           </div>
         </div>
 
-        <button className="w-full py-3 bg-[#00A0E3] text-white rounded-lg text-[14px] font-semibold hover:bg-[#028ac7] shadow-md transition-all">
+        <button className="w-full py-3 bg-[#00A0E3] text-white rounded-lg text-[14px] font-normal hover:bg-[#028ac7] shadow-md transition-all">
           Buy Now
         </button>
       </motion.div>
     </div>
   );
 }
+

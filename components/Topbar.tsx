@@ -102,6 +102,28 @@ export function Topbar() {
     );
   }
 
+  if (pathname === "/admin/tickets") {
+    breadcrumb = (
+      <>
+        <span className="text-[#525866]">Home</span>
+        <span className="text-[#A0AAB5]">&gt;</span>
+        <span className="text-[#171717] font-semibold">Tickets</span>
+      </>
+    );
+  }
+
+  if (pathname.startsWith("/admin/tickets/") && pathname !== "/admin/tickets") {
+    breadcrumb = (
+      <>
+        <span className="text-[#525866]">Home</span>
+        <span className="text-[#A0AAB5]">&gt;</span>
+        <span className="text-[#525866]">Tickets</span>
+        <span className="text-[#A0AAB5]">&gt;</span>
+        <span className="text-[#171717] font-semibold">Ticket Details</span>
+      </>
+    );
+  }
+
   return (
     <header className="h-[76px] bg-[#FFFFFF] border-b border-[#EAECF0] flex items-center justify-between px-8 sticky top-0 z-10 font-dm-sans">
       <div className="flex items-center space-x-2 text-[12px]">

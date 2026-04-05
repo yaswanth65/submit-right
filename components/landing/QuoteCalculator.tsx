@@ -12,7 +12,7 @@ export function QuoteCalculator() {
              <svg className="w-3.5 h-3.5 text-[#1C1C1D]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
              </svg>
-            <span className="text-[11px] font-semibold text-[#1C1C1D] uppercase tracking-wider">
+            <span className="text-[11px] font-normal text-[#1C1C1D] uppercase tracking-wider">
               LOREM IPSUM DOLOR
             </span>
           </div>
@@ -83,18 +83,18 @@ export function QuoteCalculator() {
             <div className="grid grid-cols-2 gap-4">
               <div className="bg-[#00A0E3] rounded-xl p-6 text-white shadow-[0_4px_20px_rgb(0,160,227,0.2)]">
                 <div className="text-[12px] font-medium mb-1">Estimated Pricing</div>
-                <div className="text-[28px] font-bold">$160.00</div>
+                <div className="text-[28px] font-normal">$160.00</div>
               </div>
               <div className="bg-[#015375] rounded-xl p-6 text-white shadow-[0_4px_20px_rgb(1,83,117,0.2)]">
                 <div className="text-[12px] font-medium mb-1">Estimated Time Period</div>
-                <div className="text-[28px] font-bold">5 days</div>
+                <div className="text-[28px] font-normal">5 days</div>
               </div>
             </div>
           </div>
 
           {/* Right Side - Chart */}
           <div className="bg-white rounded-2xl p-6 lg:p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-[#F0F0F0]">
-            <h3 className="text-[16px] font-semibold text-[#1C1C1D] mb-6">Lorem ipsum dolor</h3>
+            <h3 className="text-[16px] font-normal text-[#1C1C1D] mb-6">Lorem ipsum dolor</h3>
 
             {/* Chart Area */}
             <div className="relative h-[240px] flex">

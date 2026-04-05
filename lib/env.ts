@@ -7,7 +7,10 @@ const envSchema = z.object({
   SUPABASE_SERVICE_ROLE_KEY: z.string().min(1),
   SUPABASE_JWT_SECRET: z.string().min(1).optional(),
   APP_JWT_SECRET: z.string().min(1),
-  SUPABASE_STORAGE_BUCKET: z.string().default("documents"),
+  SUPABASE_STORAGE_BUCKET: z
+    .string()
+    .transform((value) => value.trim().replace(/^['\"]|['\"]$/g, ""))
+    .default("documents"),
   RAZORPAY_KEY_ID: z.string().min(1),
   RAZORPAY_KEY_SECRET: z.string().min(1),
   SMTP_FROM_EMAIL: z.string().email().default("no-reply@submitright.com"),

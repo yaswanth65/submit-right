@@ -1,18 +1,26 @@
-import Link from "next/link";
-import { Search, SlidersHorizontal, MoreVertical } from "lucide-react";
+"use client";
 
-const editors = [
-  { id: 1, name: "Dr. Sarah Williams", ass: "8", completed: "423", overdue: "-", onTime: 94, availability: "Available", revision: "12%", status: "Active", avatar: "https://i.pravatar.cc/100?u=editor1" },
-  { id: 2, name: "Prof. James Anderson", ass: "15", completed: "738", overdue: "4", onTime: 74, availability: "Available", revision: "38%", status: "Active", avatar: "https://i.pravatar.cc/100?u=editor2" },
-  { id: 3, name: "Dr. Maria Rodriguez", ass: "5", completed: "357", overdue: "-", onTime: 96, availability: "Available", revision: "10%", status: "Active", avatar: "https://i.pravatar.cc/100?u=editor3" },
-  { id: 4, name: "Dr. Robert Chen", ass: "2", completed: "536", overdue: "3", onTime: 88, availability: "Available", revision: "18%", status: "Available", avatar: "https://i.pravatar.cc/100?u=editor4" },
-  { id: 5, name: "Prof. Emily Thompson", ass: "12", completed: "447", overdue: "1", onTime: 91, availability: "Vacation Mode", revision: "14%", status: "Active", avatar: "https://i.pravatar.cc/100?u=editor5" },
-  { id: 6, name: "Dr. Michael Brown", ass: "-", completed: "196", overdue: "-", onTime: 64, availability: "Available", revision: "42%", status: "Restricted", avatar: "https://i.pravatar.cc/100?u=editor6" },
-  { id: 7, name: "Dr. Jennifer Lee", ass: "10", completed: "130", overdue: "-", onTime: 85, availability: "Available", revision: "13%", status: "Active", avatar: "https://i.pravatar.cc/100?u=editor7" },
-  { id: 8, name: "Prof. David Kumar", ass: "7", completed: "453", overdue: "6", onTime: 76, availability: "Unavailable", revision: "26%", status: "Suspended", avatar: "https://i.pravatar.cc/100?u=editor8" },
-  { id: 9, name: "Dr. Rachel Foster", ass: "2", completed: "994", overdue: "5", onTime: 61, availability: "Available", revision: "45%", status: "Available", avatar: "https://i.pravatar.cc/100?u=editor9" },
-  { id: 10, name: "Prof. Mark Stevens", ass: "3", completed: "703", overdue: "-", onTime: 95, availability: "Available", revision: "16%", status: "Available", avatar: "https://i.pravatar.cc/100?u=editor10" },
-];
+import Link from "next/link";
+import { useEffect, useMemo, useState } from "react";
+import { Search, SlidersHorizontal, MoreVertical } from "lucide-react";
+import { apiGet } from "@/lib/client-api";
+
+type AvailabilityItem = {
+  current_status?: string;
+  status?: string;
+};
+
+type EditorProfile = {
+  id: string;
+  full_name?: string;
+  email?: string;
+  avatar_url?: string;
+  is_restricted?: boolean;
+  is_suspended?: boolean;
+  restricted_at?: string | null;
+  suspended_at?: string | null;
+  editor_availability?: AvailabilityItem | AvailabilityItem[] | null;
+};
 
 function toneForRate(rate: number) {
   if (rate >= 85) return "#1CB061";
@@ -28,7 +36,79 @@ function pillClass(value: string) {
   return "bg-[#F1F5F9] text-[#64748B]";
 }
 
+function resolveAccountStatus(editor: EditorProfile) {
+  if (editor.is_suspended || editor.suspended_at) {
+    return "Suspended";
+  }
+
+  if (editor.is_restricted || editor.restricted_at) {
+    return "Restricted";
+  }
+
+  return "Active";
+}
+
+function resolveAvailability(editor: EditorProfile) {
+  const source = Array.isArray(editor.editor_availability)
+    ? editor.editor_availability[0]
+    : editor.editor_availability;
+  const status = source?.current_status || source?.status || "available";
+
+  if (status === "at_capacity") {
+    return "Unavailable";
+  }
+
+  if (status === "vacation") {
+    return "Vacation Mode";
+  }
+
+  if (status === "busy") {
+    return "Unavailable";
+  }
+
+  return "Available";
+}
+
 export default function EditorsPage() {
+  const [searchTerm, setSearchTerm] = useState("");
+  const [profiles, setProfiles] = useState<EditorProfile[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    let active = true;
+
+    const timer = setTimeout(async () => {
+      try {
+        setLoading(true);
+        const query = searchTerm.trim()
+          ? `/api/admin/editors?search=${encodeURIComponent(searchTerm.trim())}`
+          : "/api/admin/editors";
+        const data = await apiGet<EditorProfile[]>(query);
+
+        if (active) {
+          setProfiles(data);
+          setError(null);
+        }
+      } catch (err) {
+        if (active) {
+          setError(err instanceof Error ? err.message : "Failed to load editors.");
+        }
+      } finally {
+        if (active) {
+          setLoading(false);
+        }
+      }
+    }, 250);
+
+    return () => {
+      active = false;
+      clearTimeout(timer);
+    };
+  }, [searchTerm]);
+
+  const editors = useMemo(() => profiles, [profiles]);
+
   return (
     <div className="space-y-6 animate-in fade-in duration-500 w-full font-dm-sans">
       <div className="mt-2">
@@ -38,11 +118,17 @@ export default function EditorsPage() {
 
       <div className="mx-auto w-[98%] h-px bg-[#EAECF0]" />
 
+      {error ? (
+        <div className="rounded-[10px] border border-[#FECACA] bg-[#FEF2F2] px-4 py-3 text-[13px] text-[#B91C1C]">{error}</div>
+      ) : null}
+
       <div className="bg-[#FFFFFF] rounded-[12px] border border-[#EAECF0] p-6 shadow-sm">
         <div className="flex items-center justify-between mb-4">
           <div className="relative w-[280px]">
             <Search className="w-[18px] h-[18px] absolute left-3 top-1/2 -translate-y-1/2 text-[#A0AAB5]" strokeWidth={2.25} />
             <input
+              value={searchTerm}
+              onChange={(event) => setSearchTerm(event.target.value)}
               placeholder="Search"
               className="h-[42px] w-full pl-10 pr-3 border border-[#EAECF0] rounded-[8px] text-[14px] text-[#171717] placeholder-[#A0AAB5] focus:outline-none focus:ring-1 focus:ring-[#00A0E3]"
             />
@@ -70,40 +156,42 @@ export default function EditorsPage() {
             </thead>
             <tbody className="divide-y divide-[#EAECF0] bg-white">
               {editors.map((editor) => {
-                const rateColor = toneForRate(editor.onTime);
+                const rateColor = toneForRate(0);
+                const availability = resolveAvailability(editor);
+                const status = resolveAccountStatus(editor);
                 return (
                   <tr key={editor.id} className="hover:bg-[#F9FAFB] transition-colors">
                     <td className="py-3 px-4">
                       <Link href={`/admin/editors/${editor.id}`} className="flex items-center gap-3">
-                        <img src={editor.avatar} alt={editor.name} className="w-9 h-9 rounded-full object-cover" />
+                        <img src={editor.avatar_url || `https://i.pravatar.cc/100?u=${editor.id}`} alt={editor.full_name || "Editor"} className="w-9 h-9 rounded-full object-cover" />
                         <div>
-                          <div className="text-[14px] font-bold text-[#171717] leading-tight">{editor.name}</div>
-                          <div className="text-[12px] text-[#525866] mt-1">eaxmple@gmail.com</div>
+                          <div className="text-[14px] font-bold text-[#171717] leading-tight">{editor.full_name || "Editor"}</div>
+                          <div className="text-[12px] text-[#525866] mt-1">{editor.email || "-"}</div>
                         </div>
                       </Link>
                     </td>
-                    <td className="py-3 px-4 text-[14px] font-medium text-[#525866]">{editor.ass}</td>
-                    <td className="py-3 px-4 text-[14px] font-medium text-[#525866]">{editor.completed}</td>
-                    <td className={`py-3 px-4 text-[14px] font-medium ${editor.overdue === "-" ? "text-[#525866]" : "text-[#FB3748]"}`}>{editor.overdue}</td>
+                    <td className="py-3 px-4 text-[14px] font-medium text-[#525866]">-</td>
+                    <td className="py-3 px-4 text-[14px] font-medium text-[#525866]">-</td>
+                    <td className="py-3 px-4 text-[14px] font-medium text-[#525866]">-</td>
                     <td className="py-3 px-4">
                       <div className="flex items-center gap-3">
                         <div className="w-[74px] h-[8px] rounded-full bg-[#EAEFF4] overflow-hidden">
-                          <div className="h-full rounded-full" style={{ width: `${editor.onTime}%`, backgroundColor: rateColor }}></div>
+                          <div className="h-full rounded-full" style={{ width: `0%`, backgroundColor: rateColor }}></div>
                         </div>
-                        <span className="text-[14px] font-medium" style={{ color: rateColor }}>{editor.onTime}%</span>
+                        <span className="text-[14px] font-medium" style={{ color: rateColor }}>-</span>
                       </div>
                     </td>
                     <td className="py-3 px-4">
-                      <span className={`px-3 py-[4px] rounded-full text-[11px] font-bold inline-flex ${pillClass(editor.availability)}`}>
-                        {editor.availability}
+                      <span className={`px-3 py-[4px] rounded-full text-[11px] font-bold inline-flex ${pillClass(availability)}`}>
+                        {availability}
                       </span>
                     </td>
-                    <td className={`py-3 px-4 text-[14px] font-medium ${Number.parseInt(editor.revision, 10) >= 25 ? "text-[#FB3748]" : "text-[#525866]"}`}>
-                      {editor.revision}
+                    <td className="py-3 px-4 text-[14px] font-medium text-[#525866]">
+                      -
                     </td>
                     <td className="py-3 px-4">
-                      <span className={`px-3 py-[4px] rounded-full text-[11px] font-bold inline-flex ${pillClass(editor.status)}`}>
-                        {editor.status}
+                      <span className={`px-3 py-[4px] rounded-full text-[11px] font-bold inline-flex ${pillClass(status)}`}>
+                        {status}
                       </span>
                     </td>
                     <td className="py-3 px-4">
@@ -114,6 +202,13 @@ export default function EditorsPage() {
                   </tr>
                 );
               })}
+              {!loading && editors.length === 0 ? (
+                <tr>
+                  <td colSpan={9} className="py-10 px-4 text-center text-[13px] text-[#78788D]">
+                    No editors found.
+                  </td>
+                </tr>
+              ) : null}
             </tbody>
           </table>
         </div>

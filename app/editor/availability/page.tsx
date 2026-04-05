@@ -1,12 +1,65 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Globe } from "lucide-react";
+import { apiGet } from "@/lib/client-api";
+
+type AvailabilityPayload = {
+  availability_status?: string;
+  maximum_active_assignments?: number;
+  maximum_word_count_per_day?: number | null;
+  vacation_start_date?: string | null;
+  vacation_end_date?: string | null;
+};
+
+function toDateInput(value?: string | null) {
+  if (!value) {
+    return "";
+  }
+
+  return new Date(value).toISOString().slice(0, 10);
+}
 
 export default function AvailabilityPage() {
-  const [isAvailable, setIsAvailable] = useState(true);
-  const [scheduleEnabled, setScheduleEnabled] = useState(false);
-  const [vacationEnabled, setVacationEnabled] = useState(false);
+  const [data, setData] = useState<AvailabilityPayload | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    let active = true;
+
+    const load = async () => {
+      try {
+        setLoading(true);
+        const payload = await apiGet<AvailabilityPayload | null>("/api/editor/availability");
+        if (active) {
+          setData(payload);
+          setError(null);
+        }
+      } catch (err) {
+        if (active) {
+          setError(err instanceof Error ? err.message : "Failed to load availability.");
+        }
+      } finally {
+        if (active) {
+          setLoading(false);
+        }
+      }
+    };
+
+    load();
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  const isAvailable = useMemo(
+    () => (data?.availability_status || "available") !== "at_capacity" && (data?.availability_status || "available") !== "vacation",
+    [data]
+  );
+
+  const scheduleEnabled = Boolean(data?.maximum_active_assignments || data?.maximum_word_count_per_day);
+  const vacationEnabled = Boolean(data?.vacation_start_date || data?.vacation_end_date);
 
   return (
     <div className="w-full font-dm-sans text-[#171717] animate-in fade-in duration-500">
@@ -16,6 +69,10 @@ export default function AvailabilityPage() {
           Manage your assignment availability and workload preferences to optimize your queue.
         </p>
       </div>
+
+      {error ? (
+        <div className="mb-4 rounded-[10px] border border-[#FECACA] bg-[#FEF2F2] px-4 py-3 text-[13px] text-[#B91C1C]">{error}</div>
+      ) : null}
 
       <div className="space-y-6">
         {/* Availability Status */}
@@ -40,10 +97,10 @@ export default function AvailabilityPage() {
           <div className="flex items-center gap-3">
             <span className="text-[14px] font-medium text-[#171717]">Available</span>
             <button
-              onClick={() => setIsAvailable(!isAvailable)}
+              disabled
               className={`w-11 h-6 rounded-full relative transition-colors ${
                 isAvailable ? "bg-[#00A0E3]" : "bg-[#E5E7EB]"
-              }`}
+              } cursor-not-allowed`}
             >
               <div
                 className={`w-5 h-5 bg-white rounded-full absolute top-[2px] transition-transform ${
@@ -65,7 +122,8 @@ export default function AvailabilityPage() {
               </label>
               <input
                 type="text"
-                defaultValue="12"
+                value={loading ? "" : String(data?.maximum_active_assignments ?? 5)}
+                readOnly
                 className="w-full h-11 px-4 border border-[#EAECF0] rounded-[8px] text-[15px] outline-none focus:border-[#00A0E3] transition-colors"
               />
               <p className="text-[13px] text-[#8A94A6] mt-2">
@@ -78,7 +136,8 @@ export default function AvailabilityPage() {
               </label>
               <input
                 type="text"
-                defaultValue="10000"
+                value={loading ? "" : String(data?.maximum_word_count_per_day ?? "")}
+                readOnly
                 className="w-full h-11 px-4 border border-[#EAECF0] rounded-[8px] text-[15px] outline-none focus:border-[#00A0E3] transition-colors"
               />
               <p className="text-[13px] text-[#8A94A6] mt-2">
@@ -88,7 +147,7 @@ export default function AvailabilityPage() {
           </div>
           
           <div className="flex justify-end mt-6">
-            <button className="bg-[#00A0E3] text-white px-5 py-2.5 rounded-[8px] font-medium text-[14px] hover:bg-[#008AC5] transition-colors">
+            <button disabled className="bg-[#A0AAB5] text-white px-5 py-2.5 rounded-[8px] font-medium text-[14px] transition-colors cursor-not-allowed">
               Save Changes
             </button>
           </div>
@@ -99,13 +158,13 @@ export default function AvailabilityPage() {
           <div className="flex items-center justify-between">
             <div>
               <h2 className="text-[16px] font-semibold text-[#171717]">Schedule Settings</h2>
-              <p className="text-[14px] text-[#8A94A6] mt-0.5">Set your preferred working hours</p>
+              <p className="text-[14px] text-[#8A94A6] mt-0.5">Read-only in this phase (no writes wired).</p>
             </div>
             <button
-              onClick={() => setScheduleEnabled(!scheduleEnabled)}
+              disabled
               className={`w-11 h-6 rounded-full relative transition-colors ${
                 scheduleEnabled ? "bg-[#00A0E3]" : "bg-[#E5E7EB]"
-              }`}
+              } cursor-not-allowed`}
             >
               <div
                 className={`w-5 h-5 bg-white rounded-full absolute top-[2px] transition-transform ${
@@ -125,7 +184,8 @@ export default function AvailabilityPage() {
                   <div className="relative">
                     <input
                       type="text"
-                      defaultValue="09:00 AM"
+                      value="09:00 AM"
+                      readOnly
                       className="w-full h-11 px-4 border border-[#EAECF0] rounded-[8px] text-[15px] outline-none focus:border-[#00A0E3] transition-colors"
                     />
                     <div className="absolute right-4 top-1/2 -translate-y-1/2 text-[#8A94A6]">
@@ -143,7 +203,8 @@ export default function AvailabilityPage() {
                   <div className="relative">
                     <input
                       type="text"
-                      defaultValue="05:00 PM"
+                      value="05:00 PM"
+                      readOnly
                       className="w-full h-11 px-4 border border-[#EAECF0] rounded-[8px] text-[15px] outline-none focus:border-[#00A0E3] transition-colors"
                     />
                     <div className="absolute right-4 top-1/2 -translate-y-1/2 text-[#8A94A6]">
@@ -165,7 +226,7 @@ export default function AvailabilityPage() {
               </div>
 
               <div className="flex justify-end">
-                <button className="bg-[#00A0E3] text-white px-5 py-2.5 rounded-[8px] font-medium text-[14px] hover:bg-[#008AC5] transition-colors">
+                <button disabled className="bg-[#A0AAB5] text-white px-5 py-2.5 rounded-[8px] font-medium text-[14px] transition-colors cursor-not-allowed">
                   Save Changes
                 </button>
               </div>
@@ -181,10 +242,10 @@ export default function AvailabilityPage() {
               <p className="text-[14px] text-[#8A94A6] mt-0.5">Schedule time away from work</p>
             </div>
             <button
-              onClick={() => setVacationEnabled(!vacationEnabled)}
+              disabled
               className={`w-11 h-6 rounded-full relative transition-colors ${
                 vacationEnabled ? "bg-[#00A0E3]" : "bg-[#E5E7EB]"
-              }`}
+              } cursor-not-allowed`}
             >
               <div
                 className={`w-5 h-5 bg-white rounded-full absolute top-[2px] transition-transform ${
@@ -203,8 +264,9 @@ export default function AvailabilityPage() {
                   </label>
                   <div className="relative">
                     <input
-                      type="text"
-                      defaultValue="01-03-2026"
+                      type="date"
+                      value={toDateInput(data?.vacation_start_date)}
+                      readOnly
                       className="w-full h-11 px-4 border border-[#EAECF0] rounded-[8px] text-[15px] outline-none focus:border-[#00A0E3] transition-colors"
                     />
                     <div className="absolute right-4 top-1/2 -translate-y-1/2 text-[#8A94A6]">
@@ -223,8 +285,9 @@ export default function AvailabilityPage() {
                   </label>
                   <div className="relative">
                     <input
-                      type="text"
-                      defaultValue="07-03-2026"
+                      type="date"
+                      value={toDateInput(data?.vacation_end_date)}
+                      readOnly
                       className="w-full h-11 px-4 border border-[#EAECF0] rounded-[8px] text-[15px] outline-none focus:border-[#00A0E3] transition-colors"
                     />
                     <div className="absolute right-4 top-1/2 -translate-y-1/2 text-[#8A94A6]">
@@ -251,7 +314,7 @@ export default function AvailabilityPage() {
               </div>
 
               <div className="flex justify-end">
-                <button className="bg-[#00A0E3] text-white px-5 py-2.5 rounded-[8px] font-medium text-[14px] hover:bg-[#008AC5] transition-colors">
+                <button disabled className="bg-[#A0AAB5] text-white px-5 py-2.5 rounded-[8px] font-medium text-[14px] transition-colors cursor-not-allowed">
                   Save Vacation Schedule
                 </button>
               </div>

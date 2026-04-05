@@ -39,7 +39,7 @@ export function Steps() {
              <svg className="w-3.5 h-3.5 text-[#1C1C1D]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h16M4 18h16" />
              </svg>
-            <span className="text-[11px] font-semibold text-[#1C1C1D] uppercase tracking-wider">
+            <span className="text-[11px] font-normal text-[#1C1C1D] uppercase tracking-wider">
               HOW IT WORKS
             </span>
           </div>
@@ -58,7 +58,7 @@ export function Steps() {
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 max-w-6xl mx-auto">
           {steps.map((step, idx) => (
             <div key={idx} className="bg-[#F9F9F9] rounded-xl p-5 relative border border-[#F0F0F0]">
-              <div className="absolute top-4 right-4 text-[24px] font-bold text-[#E5E5E5]">
+              <div className="absolute top-4 right-4 text-[24px] font-normal text-[#E5E5E5]">
                 0{idx + 1}
               </div>
               
@@ -66,7 +66,7 @@ export function Steps() {
                 <step.icon className="w-5 h-5 text-[#00A0E3]" />
               </div>
               
-              <h3 className="text-[15px] font-semibold text-[#1C1C1D] mb-2 leading-tight">
+              <h3 className="text-[15px] font-normal text-[#1C1C1D] mb-2 leading-tight">
                 {step.title}
               </h3>
               

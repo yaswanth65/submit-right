@@ -5,6 +5,7 @@ import { requireRole } from "@/lib/auth";
 import { documentListQuerySchema, submitDocumentStep1Schema } from "@/lib/validators";
 import { createDraftDocument } from "@/lib/services/document-service";
 import { supabaseAdmin } from "@/lib/supabase";
+import { env } from "@/lib/env";
 import { z } from "zod";
 
 function buildDocumentTimeline(document: {
@@ -68,6 +69,39 @@ function buildDocumentTimeline(document: {
   ];
 }
 
+async function getSignedFileUrl(filePath?: string | null) {
+  if (!filePath) {
+    return null;
+  }
+
+  const { data, error } = await supabaseAdmin.storage
+    .from(env.SUPABASE_STORAGE_BUCKET)
+    .createSignedUrl(filePath, 60 * 60);
+
+  if (error) {
+    return null;
+  }
+
+  const signedUrl = data?.signedUrl || null;
+  if (!signedUrl) {
+    return null;
+  }
+
+  if (/^https?:\/\//i.test(signedUrl)) {
+    return signedUrl;
+  }
+
+  if (signedUrl.startsWith("/object/")) {
+    return `${env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1${signedUrl}`;
+  }
+
+  if (signedUrl.startsWith("/")) {
+    return `${env.NEXT_PUBLIC_SUPABASE_URL}${signedUrl}`;
+  }
+
+  return `${env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/${signedUrl}`;
+}
+
 export async function GET(req: NextRequest) {
   try {
     const user = await requireRole("client");
@@ -114,6 +148,20 @@ export async function GET(req: NextRequest) {
       const canDownloadFinalFile =
         document.payment_status === "paid" || document.status === "completed";
 
+      const [signedOriginalFileUrl, signedLatestEditorFileUrl, signedVersions] = await Promise.all([
+        getSignedFileUrl(document.uploaded_file_path),
+        canDownloadFinalFile ? getSignedFileUrl(document.latest_editor_file_path) : Promise.resolve(null),
+        Promise.all(
+          (versions ?? []).map(async (version) => {
+            const signed = await getSignedFileUrl(version.file_path);
+            return {
+              ...version,
+              file_url: signed || version.file_url || null
+            };
+          })
+        )
+      ]);
+
       return ok({
         detail: document,
         paymentSummary: {
@@ -127,21 +175,21 @@ export async function GET(req: NextRequest) {
         originalFile: document.uploaded_file_url
           ? {
               fileName: document.uploaded_file_name,
-              fileUrl: document.uploaded_file_url,
+              fileUrl: signedOriginalFileUrl || document.uploaded_file_url,
               filePath: document.uploaded_file_path
             }
           : null,
         latestEditorFile: document.latest_editor_file_url
           ? {
               fileName: document.latest_editor_file_name,
-              fileUrl: document.latest_editor_file_url,
+              fileUrl: signedLatestEditorFileUrl || document.latest_editor_file_url,
               filePath: document.latest_editor_file_path,
               isLockedUntilPayment: !canDownloadFinalFile
             }
           : null,
         documentTimeline: buildDocumentTimeline(document),
         messageList: messages ?? [],
-        versionHistory: versions ?? [],
+        versionHistory: signedVersions,
         paymentHistory: payments ?? []
       });
     }

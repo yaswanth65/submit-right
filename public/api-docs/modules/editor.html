@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editor API - Submit Right</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background: #f8f9fa;
+            color: #1c1c1d;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        header {
+            margin-bottom: 40px;
+        }
+
+        .breadcrumb {
+            margin-bottom: 20px;
+        }
+
+        .breadcrumb a {
+            color: #00a0e3;
+            text-decoration: none;
+            margin-right: 10px;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        h1 {
+            font-size: 36px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .icon {
+            font-size: 40px;
+        }
+
+        .subtitle {
+            color: #78788d;
+            font-size: 16px;
+        }
+
+        .section {
+            background: white;
+            border-radius: 12px;
+            padding: 32px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+        }
+
+        h2 {
+            font-size: 24px;
+            color: #1c1c1d;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #00a0e3;
+        }
+
+        h3 {
+            font-size: 18px;
+            color: #1c1c1d;
+            margin-top: 20px;
+            margin-bottom: 12px;
+        }
+
+        .endpoint {
+            background: #f8f9fa;
+            border-left: 4px solid #00a0e3;
+            padding: 20px;
+            margin-bottom: 24px;
+            border-radius: 6px;
+        }
+
+        .endpoint-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+
+        .method {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 12px;
+            white-space: nowrap;
+        }
+
+        .method.post {
+            background: #dcfce7;
+            color: #15803d;
+        }
+
+        .method.get {
+            background: #dbeafe;
+            color: #0369a1;
+        }
+
+        .method.patch {
+            background: #fef3c7;
+            color: #b45309;
+        }
+
+        .method.delete {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .path {
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            color: #1c1c1d;
+            font-weight: 600;
+            flex: 1;
+        }
+
+        .auth-badge {
+            background: #fee2e2;
+            color: #991b1b;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        code {
+            background: #f0f0f0;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            color: #c41e3a;
+        }
+
+        .code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 16px 0;
+        }
+
+        .code-block code {
+            background: none;
+            color: inherit;
+            padding: 0;
+        }
+
+        .input-section, .output-section {
+            margin-top: 16px;
+        }
+
+        .section-title {
+            font-weight: 600;
+            color: #1c1c1d;
+            margin-bottom: 12px;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 12px;
+            font-size: 13px;
+        }
+
+        th {
+            background: #f0f0f0;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .required {
+            color: #fb3748;
+            font-weight: 600;
+        }
+
+        .optional {
+            color: #78788d;
+        }
+
+        .type {
+            font-family: 'Courier New', monospace;
+            background: #f0f0f0;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 12px;
+        }
+
+        .use-case {
+            background: #f0f8fc;
+            border-left: 3px solid #00a0e3;
+            padding: 16px;
+            margin-bottom: 12px;
+            border-radius: 4px;
+        }
+
+        .use-case strong {
+            color: #00a0e3;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .error-code {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 12px;
+            padding: 12px;
+            background: #fff8f8;
+            border-left: 3px solid #fb3748;
+            border-radius: 4px;
+        }
+
+        .error-code .code-status {
+            font-weight: 600;
+            color: #fb3748;
+            min-width: 60px;
+        }
+
+        .error-code .description {
+            color: #78788d;
+        }
+
+        .auth-required {
+            background: #fef3c7;
+            border-left: 3px solid #f59e0b;
+            padding: 16px;
+            border-radius: 4px;
+            margin-bottom: 16px;
+        }
+
+        .auth-required strong {
+            color: #b45309;
+        }
+
+        .back-btn {
+            display: inline-block;
+            color: #00a0e3;
+            text-decoration: none;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .back-btn:hover {
+            text-decoration: underline;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: #78788d;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="../api-docs/" class="back-btn">← Back to API Docs</a>
+
+        <header>
+            <h1><span class="icon">✏️</span> Editor API</h1>
+            <p class="subtitle">Document editing, submission, notifications, and availability management</p>
+        </header>
+
+        <!-- Dashboard -->
+        <div class="section">
+            <h2>GET /api/editor/dashboard</h2>
+            
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">GET</span>
+                    <span class="path">/api/editor/dashboard</span>
+                    <span class="auth-badge">🔒 Auth Required</span>
+                </div>
+
+                <p><strong>Get editor dashboard summary</strong></p>
+                <p style="color: #78788d; margin-top: 8px; font-size: 13px;">Retrieve dashboard statistics including active documents, pending revisions, and due dates.</p>
+
+                <div class="auth-required">
+                    <strong>Authentication:</strong> JWT token in Authorization header
+                </div>
+
+                <div class="output-section">
+                    <div class="section-title">📤 Response (200 OK)</div>
+                    <div class="code-block"><code>{
+  "activeDocumentCount": 3,
+  "activeDocuments": [...],
+  "pendingRevisionCount": 1,
+  "pendingRevisionDocuments": [...],
+  "dueTodayCount": 1,
+  "dueTodayDocuments": [...],
+  "completedCount": 12,
+  "completedDocuments": [...],
+  "recentActivity": [...],
+  "dueSoon": [...],
+  "user": {
+    "full_name": "Jane Editor",
+    "email": "jane@example.com"
+  }
+}</code></div>
+                </div>
+
+                <h3>Use Cases</h3>
+                <div class="use-case">
+                    <strong>1. Dashboard Display</strong>
+                    Show editor their work summary and statistics
+                </div>
+                <div class="use-case">
+                    <strong>2. Priority Management</strong>
+                    Display documents due today or soon
+                </div>
+            </div>
+        </div>
+
+        <!-- Get Editor Documents -->
+        <div class="section">
+            <h2>GET /api/editor/documents</h2>
+            
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">GET</span>
+                    <span class="path">/api/editor/documents</span>
+                    <span class="auth-badge">🔒 Auth Required</span>
+                </div>
+
+                <p><strong>List assigned documents</strong></p>
+                <p style="color: #78788d; margin-top: 8px; font-size: 13px;">Retrieve all documents assigned to the editor.</p>
+
+                <div class="auth-required">
+                    <strong>Authentication:</strong> JWT token in Authorization header
+                </div>
+
+                <div class="output-section">
+                    <div class="section-title">📤 Response (200 OK)</div>
+                                        <div class="code-block"><code>{
+    "success": true,
+    "data": [
+        {
+            "id": "doc-123",
+            "document_title": "Research Paper",
+            "status": "being_edited",
+            "deadline_at": "2026-04-10T23:59:59Z",
+            "profiles": {
+                "full_name": "John Client",
+                "email": "john@example.com"
+            },
+            "services": {
+                "title": "Professional Editing"
+            }
+        }
+    ]
+}</code></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Get Document Details -->
+        <div class="section">
+            <h2>GET /api/editor/documents/[id]</h2>
+            
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">GET</span>
+                    <span class="path">/api/editor/documents/[id]</span>
+                    <span class="auth-badge">🔒 Auth Required</span>
+                </div>
+
+                <p><strong>Get document details</strong></p>
+                <p style="color: #78788d; margin-top: 8px; font-size: 13px;">Retrieve full details of a specific document assigned to the editor.</p>
+
+                <div class="auth-required">
+                    <strong>Authentication:</strong> JWT token in Authorization header
+                </div>
+
+                <div class="input-section">
+                    <div class="section-title">📥 Path Parameters</div>
+                    <ul style="margin-left: 20px; margin-top: 12px;">
+                        <li><span class="required">id</span> - Document ID (string)</li>
+                    </ul>
+                </div>
+
+                <div class="output-section">
+                    <div class="section-title">📤 Response (200 OK)</div>
+                                        <div class="code-block"><code>{
+    "success": true,
+    "data": {
+        "assignmentOverview": {
+            "id": "doc-123",
+            "document_title": "Research Paper",
+            "status": "being_edited",
+            "academic_field": "Computer Science",
+            "document_type": "thesis",
+            "uploaded_file_url": "https://storage.example.com/doc-123.pdf"
+        },
+        "originalFileDownloadLink": "https://storage.example.com/doc-123.pdf",
+        "messageList": [...],
+        "versionHistory": [...]
+    }
+}</code></div>
+                </div>
+
+                <h3>Error Codes</h3>
+                <div class="error-code">
+                    <div class="code-status">404</div>
+                    <div class="description">Document not found or not assigned to editor</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Submit Edited Document -->
+        <div class="section">
+            <h2>POST /api/editor/documents/submit</h2>
+            
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">POST</span>
+                    <span class="path">/api/editor/documents/submit</span>
+                    <span class="auth-badge">🔒 Auth Required</span>
+                </div>
+
+                <p><strong>Submit edited document</strong></p>
+                <p style="color: #78788d; margin-top: 8px; font-size: 13px;">Upload edited document file and submit it back to the client.</p>
+
+                <div class="auth-required">
+                    <strong>Authentication:</strong> JWT token in Authorization header
+                </div>
+
+                <div class="input-section">
+                    <div class="section-title">📥 Request (Form Data)</div>
+                    <ul style="margin-left: 20px; margin-top: 12px;">
+                        <li><span class="required">documentId</span> - Document ID being submitted (string)</li>
+                        <li><span class="required">file</span> - Edited document file (multipart/form-data)</li>
+                    </ul>
+                </div>
+
+                <div class="output-section">
+                    <div class="section-title">📤 Response (200 OK)</div>
+                                        <div class="code-block"><code>{
+    "success": true,
+    "data": {
+        "id": "doc-123",
+        "status": "payment_needed",
+        "latest_editor_file_name": "doc-123-edited.pdf",
+        "latest_editor_file_url": "https://storage.example.com/doc-123-edited.pdf",
+        "revision_requested": false
+    }
+}</code></div>
+                </div>
+
+                <h3>Error Codes</h3>
+                <div class="error-code">
+                    <div class="code-status">400</div>
+                    <div class="description">Missing documentId or file</div>
+                </div>
+                <div class="error-code">
+                    <div class="code-status">404</div>
+                    <div class="description">Document not found</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Request Extension -->
+        <div class="section">
+            <h2>POST /api/editor/documents/request-extension</h2>
+            
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">POST</span>
+                    <span class="path">/api/editor/documents/request-extension</span>
+                    <span class="auth-badge">🔒 Auth Required</span>
+                </div>
+
+                <p><strong>Request deadline extension</strong></p>
+                <p style="color: #78788d; margin-top: 8px; font-size: 13px;">Request additional time to complete document editing.</p>
+
+                <div class="auth-required">
+                    <strong>Authentication:</strong> JWT token in Authorization header
+                </div>
+
+                <div class="input-section">
+                    <div class="section-title">📥 Request Body</div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Field</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="required">documentId</span></td>
+                                <td><span class="type">string</span></td>
+                                <td>Document ID</td>
+                            </tr>
+                            <tr>
+                                <td><span class="required">proposedNewDeadline</span></td>
+                                <td><span class="type">string</span></td>
+                                <td>ISO datetime for proposed deadline extension</td>
+                            </tr>
+                            <tr>
+                                <td><span class="required">reason</span></td>
+                                <td><span class="type">string</span></td>
+                                <td>Reason for extension (max 500 chars)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="code-block"><code>{
+  "documentId": "doc-123",
+    "proposedNewDeadline": "2026-04-12T23:59:59Z",
+  "reason": "Complex document requires additional review time"
+}</code></div>
+                </div>
+
+                <div class="output-section">
+                    <div class="section-title">📤 Response (200 OK)</div>
+                                        <div class="code-block"><code>{
+    "success": true,
+    "data": {
+        "id": "audit-123",
+        "document_id": "doc-123",
+        "action": "deadline_extension_requested",
+        "notes": "Complex document requires additional review time",
+        "payload": {
+            "proposedNewDeadline": "2026-04-12T23:59:59Z"
+        }
+    }
+}</code></div>
+                </div>
+
+                <h3>Error Codes</h3>
+                <div class="error-code">
+                    <div class="code-status">400</div>
+                    <div class="description">Invalid extension days (must be 1-7)</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Get Notifications -->
+        <div class="section">
+            <h2>GET /api/editor/notifications</h2>
+            
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">GET</span>
+                    <span class="path">/api/editor/notifications</span>
+                    <span class="auth-badge">🔒 Auth Required</span>
+                </div>
+
+                <p><strong>Get editor notifications</strong></p>
+                <p style="color: #78788d; margin-top: 8px; font-size: 13px;">Retrieve notifications for the editor including document assignments and messages.</p>
+
+                <div class="auth-required">
+                    <strong>Authentication:</strong> JWT token in Authorization header
+                </div>
+
+                <div class="input-section">
+                    <div class="section-title">📥 Query Parameters (Optional)</div>
+                    <ul style="margin-left: 20px; margin-top: 12px;">
+                        <li><code>type</code> - Filter by notification type</li>
+                    </ul>
+                </div>
+
+                <div class="output-section">
+                    <div class="section-title">📤 Response (200 OK)</div>
+                                        <div class="code-block"><code>{
+    "success": true,
+    "data": [
+        {
+            "id": "notif-123",
+            "type": "document_update",
+            "title": "New document assigned",
+            "is_read": false
+        }
+    ]
+}</code></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Send Message -->
+        <div class="section">
+            <h2>GET/POST /api/editor/messages</h2>
+            
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">POST</span>
+                    <span class="path">/api/editor/messages</span>
+                    <span class="auth-badge">🔒 Auth Required</span>
+                </div>
+
+                <p><strong>Send message to client</strong></p>
+                <p style="color: #78788d; margin-top: 8px; font-size: 13px;">Send a message to the client regarding a document.</p>
+
+                <div class="input-section">
+                    <div class="section-title">📥 Query Parameters for GET (Optional)</div>
+                    <ul style="margin-left: 20px; margin-top: 12px;">
+                        <li><code>documentId</code> - Filter received messages to a specific document</li>
+                    </ul>
+                </div>
+
+                <div class="auth-required">
+                    <strong>Authentication:</strong> JWT token in Authorization header
+                </div>
+
+                <div class="input-section">
+                    <div class="section-title">📥 Request Body</div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Field</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="required">documentId</span></td>
+                                <td><span class="type">string</span></td>
+                                <td>Document ID for messaging context</td>
+                            </tr>
+                            <tr>
+                                <td><span class="required">receiverId</span></td>
+                                <td><span class="type">string</span></td>
+                                <td>Recipient profile ID (usually client)</td>
+                            </tr>
+                            <tr>
+                                <td><span class="required">message</span></td>
+                                <td><span class="type">string</span></td>
+                                <td>Message content (1-5000 chars)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="code-block"><code>{
+  "documentId": "doc-123",
+    "receiverId": "client-789",
+  "message": "I've completed the initial review. Please check for my suggestions."
+}</code></div>
+                </div>
+
+                <div class="output-section">
+                    <div class="section-title">📤 Response (201 Created)</div>
+                                        <div class="code-block"><code>{
+    "success": true,
+    "data": {
+        "id": "msg-123",
+        "document_id": "doc-123",
+        "sender_id": "editor-456",
+        "receiver_id": "client-789",
+        "message": "I've completed the initial review...",
+        "created_at": "2026-04-02T14:30:00Z"
+    }
+}</code></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Get Completed Documents -->
+        <div class="section">
+            <h2>GET /api/editor/completed</h2>
+            
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">GET</span>
+                    <span class="path">/api/editor/completed</span>
+                    <span class="auth-badge">🔒 Auth Required</span>
+                </div>
+
+                <p><strong>Get completed documents</strong></p>
+                <p style="color: #78788d; margin-top: 8px; font-size: 13px;">Retrieve list of documents the editor has completed.</p>
+
+                <div class="auth-required">
+                    <strong>Authentication:</strong> JWT token in Authorization header
+                </div>
+
+                <div class="input-section">
+                    <div class="section-title">📥 Query Parameters (Optional)</div>
+                    <ul style="margin-left: 20px; margin-top: 12px;">
+                        <li><code>limit</code> - Number of documents to return (default: 20)</li>
+                        <li><code>offset</code> - Pagination offset (default: 0)</li>
+                    </ul>
+                </div>
+
+                <div class="output-section">
+                    <div class="section-title">📤 Response (200 OK)</div>
+                                        <div class="code-block"><code>{
+    "success": true,
+    "data": {
+        "totalCompletedCount": 12,
+        "completedThisMonthCount": 4,
+        "averageTurnaroundTimeInDays": 0,
+        "revisionRatePercent": 0,
+        "documents": [
+            {
+                "id": "doc-100",
+                "document_title": "Thesis Chapter 1",
+                "status": "completed",
+                "completed_at": "2026-03-25T16:00:00Z"
+            }
+        ]
+    }
+}</code></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Get/Update Availability -->
+        <div class="section">
+            <h2>GET /api/editor/availability</h2>
+            
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">GET</span>
+                    <span class="path">/api/editor/availability</span>
+                    <span class="auth-badge">🔒 Auth Required</span>
+                </div>
+
+                <p><strong>Get editor availability</strong></p>
+                <p style="color: #78788d; margin-top: 8px; font-size: 13px;">Retrieve the editor's current availability status and limits.</p>
+
+                <div class="auth-required">
+                    <strong>Authentication:</strong> JWT token in Authorization header
+                </div>
+
+                <div class="output-section">
+                    <div class="section-title">📤 Response (200 OK)</div>
+                                        <div class="code-block"><code>{
+    "success": true,
+    "data": {
+        "editor_id": "editor-456",
+        "availability_status": "available",
+        "maximum_active_assignments": 5,
+        "maximum_word_count_per_day": 5000,
+        "vacation_start_date": null,
+        "vacation_end_date": null,
+        "updated_at": "2026-04-01T10:00:00Z"
+    }
+}</code></div>
+                </div>
+            </div>
+
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method patch">PATCH</span>
+                    <span class="path">/api/editor/availability</span>
+                    <span class="auth-badge">🔒 Auth Required</span>
+                </div>
+
+                <p><strong>Update availability settings</strong></p>
+
+                <div class="input-section">
+                    <div class="section-title">📥 Request Body</div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Field</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="required">availabilityStatus</span></td>
+                                <td><span class="type">string</span></td>
+                                <td>Status: available, busy, at_capacity, vacation</td>
+                            </tr>
+                            <tr>
+                                <td><span class="optional">maximumActiveAssignments</span></td>
+                                <td><span class="type">number</span></td>
+                                <td>Max concurrent assignments (1-20)</td>
+                            </tr>
+                            <tr>
+                                <td><span class="optional">maximumWordCountPerDay</span></td>
+                                <td><span class="type">number|null</span></td>
+                                <td>Max words per day, null for unlimited</td>
+                            </tr>
+                            <tr>
+                                <td><span class="optional">vacationStartDate</span></td>
+                                <td><span class="type">string|null</span></td>
+                                <td>ISO 8601 date format</td>
+                            </tr>
+                            <tr>
+                                <td><span class="optional">vacationEndDate</span></td>
+                                <td><span class="type">string|null</span></td>
+                                <td>ISO 8601 date format</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="code-block"><code>{
+  "availabilityStatus": "vacation",
+    "vacationStartDate": "2026-04-15T00:00:00Z",
+    "vacationEndDate": "2026-04-20T23:59:59Z"
+}</code></div>
+                </div>
+
+                <div class="output-section">
+                    <div class="section-title">📤 Response (200 OK)</div>
+                                        <div class="code-block"><code>{
+    "success": true,
+    "data": {
+        "editor_id": "editor-456",
+        "availability_status": "vacation",
+        "maximum_active_assignments": 5,
+        "vacation_start_date": "2026-04-15T00:00:00Z",
+        "vacation_end_date": "2026-04-20T23:59:59Z",
+        "updated_at": "2026-04-02T11:00:00Z"
+    }
+}</code></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Delete Account -->
+        <div class="section">
+            <h2>DELETE /api/editor/delete-account</h2>
+            
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">DELETE</span>
+                    <span class="path">/api/editor/delete-account</span>
+                    <span class="auth-badge">🔒 Auth Required</span>
+                </div>
+
+                <p><strong>Delete editor account</strong></p>
+                <p style="color: #78788d; margin-top: 8px; font-size: 13px;">Permanently delete the editor's account and all associated data.</p>
+
+                <div class="auth-required">
+                    <strong>Authentication:</strong> JWT token in Authorization header
+                </div>
+
+                <p style="margin-top: 12px; color: #525866;">No request body is required.</p>
+
+                <div class="output-section">
+                    <div class="section-title">📤 Response (200 OK)</div>
+                                        <div class="code-block"><code>{
+    "success": true,
+    "data": {
+        "deactivated": true
+    }
+}</code></div>
+                </div>
+
+                <h3>Error Codes</h3>
+                <div class="error-code">
+                    <div class="code-status">400</div>
+                    <div class="description">Missing password or has active assignments</div>
+                </div>
+                <div class="error-code">
+                    <div class="code-status">401</div>
+                    <div class="description">Invalid password</div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>© 2026 Submit Right. API Documentation for Editor Module</p>
+        </footer>
+    </div>
+</body>
+</html>

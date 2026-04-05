@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Documentation - Submit Right</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+                'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+            color: #1c1c1d;
+        }
+
+        header h1 {
+            font-size: 48px;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, #00a0e3 0%, #0090d1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        header p {
+            font-size: 18px;
+            color: #65656d;
+        }
+
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-bottom: 60px;
+        }
+
+        .module-card {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border-left: 4px solid #00a0e3;
+        }
+
+        .module-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        .module-card h3 {
+            font-size: 24px;
+            color: #1c1c1d;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .module-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #00a0e3 0%, #0090d1 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+        }
+
+        .module-card p {
+            color: #78788d;
+            margin-bottom: 20px;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .endpoints {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .endpoint-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px;
+            background: #f8f9fa;
+            border-radius: 6px;
+            font-size: 13px;
+        }
+
+        .method-badge {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 11px;
+            white-space: nowrap;
+        }
+
+        .method-get {
+            background: #dbeafe;
+            color: #0369a1;
+        }
+
+        .method-post {
+            background: #dcfce7;
+            color: #15803d;
+        }
+
+        .method-patch {
+            background: #fef3c7;
+            color: #b45309;
+        }
+
+        .method-delete {
+            background: #fee2e2;
+            color: #b91c1c;
+        }
+
+        .endpoint-path {
+            color: #65656d;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            flex: 1;
+        }
+
+        .view-btn {
+            background: linear-gradient(135deg, #00a0e3 0%, #0090d1 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .view-btn:hover {
+            box-shadow: 0 8px 20px rgba(0, 160, 227, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin: 60px 0;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .stat-card .number {
+            font-size: 36px;
+            font-weight: 700;
+            color: #00a0e3;
+            margin-bottom: 8px;
+        }
+
+        .stat-card .label {
+            font-size: 13px;
+            color: #78788d;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .search-box {
+            max-width: 600px;
+            margin: 0 auto 40px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 14px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 15px;
+            transition: all 0.3s ease;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #00a0e3;
+            box-shadow: 0 0 0 3px rgba(0, 160, 227, 0.1);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+            color: #78788d;
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🚀 API Documentation</h1>
+            <p>Complete API Reference for Submit Right Platform</p>
+        </header>
+
+        <div class="search-box">
+            <input type="text" id="search" placeholder="Search for API endpoints..." onkeyup="filterModules()">
+        </div>
+
+        <div class="stats">
+            <div class="stat-card">
+                <div class="number">7</div>
+                <div class="label">Modules</div>
+            </div>
+            <div class="stat-card">
+                <div class="number">50+</div>
+                <div class="label">Endpoints</div>
+            </div>
+            <div class="stat-card">
+                <div class="number">REST</div>
+                <div class="label">API Type</div>
+            </div>
+        </div>
+
+        <div class="modules-grid" id="modules-grid">
+            <!-- Auth Module -->
+            <div class="module-card" data-module="auth">
+                <h3>
+                    <div class="module-icon">🔐</div>
+                    Authentication
+                </h3>
+                <p>User registration, login, password management, and session handling</p>
+                <div class="endpoints">
+                    <div class="endpoint-item">
+                        <span class="method-badge method-post">POST</span>
+                        <span class="endpoint-path">/api/auth/signup</span>
+                    </div>
+                    <div class="endpoint-item">
+                        <span class="method-badge method-post">POST</span>
+                        <span class="endpoint-path">/api/auth/signin</span>
+                    </div>
+                    <div class="endpoint-item">
+                        <span class="method-badge method-post">POST</span>
+                        <span class="endpoint-path">/api/auth/forgot-password</span>
+                    </div>
+                </div>
+                <a href="modules/auth.html" class="view-btn">View Details →</a>
+            </div>
+
+            <!-- Profile Module -->
+            <div class="module-card" data-module="profile">
+                <h3>
+                    <div class="module-icon">👤</div>
+                    Profile
+                </h3>
+                <p>User profile management, information updates, and preferences</p>
+                <div class="endpoints">
+                    <div class="endpoint-item">
+                        <span class="method-badge method-get">GET</span>
+                        <span class="endpoint-path">/api/profile</span>
+                    </div>
+                    <div class="endpoint-item">
+                        <span class="method-badge method-patch">PATCH</span>
+                        <span class="endpoint-path">/api/profile</span>
+                    </div>
+                </div>
+                <a href="modules/profile.html" class="view-btn">View Details →</a>
+            </div>
+
+            <!-- Client Module -->
+            <div class="module-card" data-module="client">
+                <h3>
+                    <div class="module-icon">📄</div>
+                    Client
+                </h3>
+                <p>Document submission, payments, notifications, and messages</p>
+                <div class="endpoints">
+                    <div class="endpoint-item">
+                        <span class="method-badge method-post">POST</span>
+                        <span class="endpoint-path">/api/client/documents</span>
+                    </div>
+                    <div class="endpoint-item">
+                        <span class="method-badge method-post">POST</span>
+                        <span class="endpoint-path">/api/client/documents/upload</span>
+                    </div>
+                    <div class="endpoint-item">
+                        <span class="method-badge method-post">POST</span>
+                        <span class="endpoint-path">/api/client/payments/create-order</span>
+                    </div>
+                </div>
+                <a href="modules/client.html" class="view-btn">View Details →</a>
+            </div>
+
+            <!-- Editor Module -->
+            <div class="module-card" data-module="editor">
+                <h3>
+                    <div class="module-icon">✏️</div>
+                    Editor
+                </h3>
+                <p>Assignment management, notifications, messages, and availability</p>
+                <div class="endpoints">
+                    <div class="endpoint-item">
+                        <span class="method-badge method-get">GET</span>
+                        <span class="endpoint-path">/api/editor/dashboard</span>
+                    </div>
+                    <div class="endpoint-item">
+                        <span class="method-badge method-post">POST</span>
+                        <span class="endpoint-path">/api/editor/documents/submit</span>
+                    </div>
+                    <div class="endpoint-item">
+                        <span class="method-badge method-patch">PATCH</span>
+                        <span class="endpoint-path">/api/editor/availability</span>
+                    </div>
+                </div>
+                <a href="modules/editor.html" class="view-btn">View Details →</a>
+            </div>
+
+            <!-- Admin Module -->
+            <div class="module-card" data-module="admin">
+                <h3>
+                    <div class="module-icon">👨‍💼</div>
+                    Admin
+                </h3>
+                <p>System management, user restrictions, document control, reports</p>
+                <div class="endpoints">
+                    <div class="endpoint-item">
+                        <span class="method-badge method-get">GET</span>
+                        <span class="endpoint-path">/api/admin/dashboard</span>
+                    </div>
+                    <div class="endpoint-item">
+                        <span class="method-badge method-post">POST</span>
+                        <span class="endpoint-path">/api/admin/documents/assign</span>
+                    </div>
+                    <div class="endpoint-item">
+                        <span class="method-badge method-post">POST</span>
+                        <span class="endpoint-path">/api/admin/tickets/resolve</span>
+                    </div>
+                </div>
+                <a href="modules/admin.html" class="view-btn">View Details →</a>
+            </div>
+
+            <!-- Payments Module -->
+            <div class="module-card" data-module="payments">
+                <h3>
+                    <div class="module-icon">💳</div>
+                    Payments
+                </h3>
+                <p>Payment processing, webhook handling, transaction management</p>
+                <div class="endpoints">
+                    <div class="endpoint-item">
+                        <span class="method-badge method-post">POST</span>
+                        <span class="endpoint-path">/api/payments/webhook</span>
+                    </div>
+                    <div class="endpoint-item">
+                        <span class="method-badge method-post">POST</span>
+                        <span class="endpoint-path">/api/client/payments/create-order</span>
+                    </div>
+                </div>
+                <a href="modules/payments.html" class="view-btn">View Details →</a>
+            </div>
+
+            <!-- System Module -->
+            <div class="module-card" data-module="system">
+                <h3>
+                    <div class="module-icon">⚙️</div>
+                    System
+                </h3>
+                <p>System maintenance, cleanup jobs, and housekeeping tasks</p>
+                <div class="endpoints">
+                    <div class="endpoint-item">
+                        <span class="method-badge method-post">POST</span>
+                        <span class="endpoint-path">/api/system/cleanup-drafts</span>
+                    </div>
+                </div>
+                <a href="modules/system.html" class="view-btn">View Details →</a>
+            </div>
+        </div>
+
+        <footer>
+            <p>© 2026 Submit Right. API Documentation v1.0 | Last Updated: April 2, 2026</p>
+        </footer>
+    </div>
+
+    <script>
+        function filterModules() {
+            const search = document.getElementById('search').value.toLowerCase();
+            const cards = document.querySelectorAll('.module-card');
+            
+            cards.forEach(card => {
+                const text = card.textContent.toLowerCase();
+                card.style.display = text.includes(search) ? '' : 'none';
+            });
+        }
+    </script>
+</body>
+</html>

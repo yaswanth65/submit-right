@@ -1,4 +1,4 @@
-// Admin layout.tsx (app/admin/layout.tsx)
+// Admin layout.tsx app/admin/layout.tsx
 import { Sidebar } from "@/components/Sidebar";
 import { Topbar } from "@/components/Topbar";
 

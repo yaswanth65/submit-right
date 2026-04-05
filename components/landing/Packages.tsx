@@ -18,7 +18,7 @@ export function Packages() {
              <svg className="w-3.5 h-3.5 text-[#1C1C1D]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h16M4 18h16" />
              </svg>
-            <span className="text-[11px] font-semibold text-[#1C1C1D] uppercase tracking-wider">
+            <span className="text-[11px] font-normal text-[#1C1C1D] uppercase tracking-wider">
               LOREM IPSUM
             </span>
           </div>
@@ -49,7 +49,7 @@ export function Packages() {
 
           {/* Package 1 (Blue Highlight) */}
           <div className="flex-1 bg-[#E8F6FC] p-8 pt-8 relative">
-            <h3 className="text-[16px] font-semibold text-[#1C1C1D] mb-6">Package Name</h3>
+            <h3 className="text-[16px] font-normal text-[#1C1C1D] mb-6">Package Name</h3>
             {col1.map((val, idx) => (
               <div key={idx} className="flex items-center gap-3 h-10 mb-2">
                 <svg className="w-4 h-4 text-[#00A0E3] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -73,7 +73,7 @@ export function Packages() {
 
           {/* Package 2 */}
           <div className="flex-1 p-8 pt-8 border-l border-[#F0F0F0] bg-white">
-            <h3 className="text-[16px] font-semibold text-[#65656D] mb-6">Package Name</h3>
+            <h3 className="text-[16px] font-normal text-[#65656D] mb-6">Package Name</h3>
             {col2.map((val, idx) => (
               <div key={idx} className="flex items-center gap-3 h-10 mb-2">
                 {val ? (
@@ -97,7 +97,7 @@ export function Packages() {
 
           {/* Package 3 */}
           <div className="flex-1 p-8 pt-8 border-l border-[#F0F0F0] bg-white hidden md:block">
-            <h3 className="text-[16px] font-semibold text-[#65656D] mb-6">Package Name</h3>
+            <h3 className="text-[16px] font-normal text-[#65656D] mb-6">Package Name</h3>
             {col3.map((val, idx) => (
               <div key={idx} className="flex items-center gap-3 h-10 mb-2">
                 {val ? (

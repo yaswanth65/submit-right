@@ -28,7 +28,7 @@ export function AboutMidBanner() {
           <div className="flex flex-col items-center gap-4 relative z-10 shrink-0">
             <Link
               href="/user/dashboard"
-              className="inline-flex items-center justify-center px-8 py-3.5 bg-white text-[#1C1C1D] text-[15px] font-semibold rounded-full hover:bg-gray-50 transition-colors w-full"
+              className="inline-flex items-center justify-center px-8 py-3.5 bg-white text-[#1C1C1D] text-[15px] font-normal rounded-full hover:bg-gray-50 transition-colors w-full"
             >
               Gets Started
             </Link>

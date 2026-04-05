@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payments API - Submit Right</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background: #f8f9fa;
+            color: #1c1c1d;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        header {
+            margin-bottom: 40px;
+        }
+
+        .breadcrumb {
+            margin-bottom: 20px;
+        }
+
+        .breadcrumb a {
+            color: #00a0e3;
+            text-decoration: none;
+            margin-right: 10px;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        h1 {
+            font-size: 36px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .icon {
+            font-size: 40px;
+        }
+
+        .subtitle {
+            color: #78788d;
+            font-size: 16px;
+        }
+
+        .section {
+            background: white;
+            border-radius: 12px;
+            padding: 32px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+        }
+
+        h2 {
+            font-size: 24px;
+            color: #1c1c1d;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #00a0e3;
+        }
+
+        h3 {
+            font-size: 18px;
+            color: #1c1c1d;
+            margin-top: 20px;
+            margin-bottom: 12px;
+        }
+
+        .endpoint {
+            background: #f8f9fa;
+            border-left: 4px solid #00a0e3;
+            padding: 20px;
+            margin-bottom: 24px;
+            border-radius: 6px;
+        }
+
+        .endpoint-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+
+        .method {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 12px;
+            white-space: nowrap;
+        }
+
+        .method.post {
+            background: #dcfce7;
+            color: #15803d;
+        }
+
+        .path {
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            color: #1c1c1d;
+            font-weight: 600;
+            flex: 1;
+        }
+
+        .webhook-badge {
+            background: #ddd6fe;
+            color: #7c3aed;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        code {
+            background: #f0f0f0;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            color: #c41e3a;
+        }
+
+        .code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 16px 0;
+        }
+
+        .code-block code {
+            background: none;
+            color: inherit;
+            padding: 0;
+        }
+
+        .input-section, .output-section {
+            margin-top: 16px;
+        }
+
+        .section-title {
+            font-weight: 600;
+            color: #1c1c1d;
+            margin-bottom: 12px;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 12px;
+            font-size: 13px;
+        }
+
+        th {
+            background: #f0f0f0;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .required {
+            color: #fb3748;
+            font-weight: 600;
+        }
+
+        .optional {
+            color: #78788d;
+        }
+
+        .type {
+            font-family: 'Courier New', monospace;
+            background: #f0f0f0;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 12px;
+        }
+
+        .use-case {
+            background: #f0f8fc;
+            border-left: 3px solid #00a0e3;
+            padding: 16px;
+            margin-bottom: 12px;
+            border-radius: 4px;
+        }
+
+        .use-case strong {
+            color: #00a0e3;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .error-code {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 12px;
+            padding: 12px;
+            background: #fff8f8;
+            border-left: 3px solid #fb3748;
+            border-radius: 4px;
+        }
+
+        .error-code .code-status {
+            font-weight: 600;
+            color: #fb3748;
+            min-width: 60px;
+        }
+
+        .error-code .description {
+            color: #78788d;
+        }
+
+        .back-btn {
+            display: inline-block;
+            color: #00a0e3;
+            text-decoration: none;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .back-btn:hover {
+            text-decoration: underline;
+        }
+
+        .note {
+            background: #fef3c7;
+            border-left: 3px solid #f59e0b;
+            padding: 16px;
+            border-radius: 4px;
+            margin: 16px 0;
+        }
+
+        .note strong {
+            color: #b45309;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: #78788d;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="../api-docs/" class="back-btn">← Back to API Docs</a>
+
+        <header>
+            <h1><span class="icon">💳</span> Payments API</h1>
+            <p class="subtitle">Payment processing and webhook handling via Razorpay</p>
+        </header>
+
+        <!-- Webhook -->
+        <div class="section">
+            <h2>POST /api/payments/webhook</h2>
+            
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">POST</span>
+                    <span class="path">/api/payments/webhook</span>
+                    <span class="webhook-badge">🔗 Webhook</span>
+                </div>
+
+                <p><strong>Razorpay payment webhook handler</strong></p>
+                <p style="color: #78788d; margin-top: 8px; font-size: 13px;">Webhook endpoint that receives payment status updates from Razorpay. Called by Razorpay servers on payment events.</p>
+
+                <div class="note">
+                    <strong>⚠️ Note:</strong> This is a webhook endpoint. It does not require standard bearer token authentication. Instead, it validates the webhook signature from Razorpay header.
+                </div>
+
+                <div class="input-section">
+                    <div class="section-title">📥 Request Headers</div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Header</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="required">x-razorpay-signature</span></td>
+                                <td><span class="type">string</span></td>
+                                <td>HMAC SHA256 signature for verification</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="input-section">
+                    <div class="section-title">📥 Request Body</div>
+                    <p style="margin-bottom: 12px;">Webhook payload from Razorpay containing payment event details:</p>
+                    <div class="code-block"><code>{
+  "event": "payment.captured",
+  "payload": {
+    "payment": {
+      "entity": {
+        "id": "pay_123456",
+        "entity": "payment",
+        "amount": 15000,
+        "currency": "INR",
+        "status": "captured",
+        "method": "card",
+        "order_id": "order_123456"
+      }
+    }
+  }
+}</code></div>
+                </div>
+
+                <div class="output-section">
+                    <div class="section-title">📤 Response (200 OK)</div>
+                                        <div class="code-block"><code>{
+    "success": true,
+    "data": {
+        "received": true
+    }
+}</code></div>
+                </div>
+
+                <h3>Supported Events</h3>
+                <ul style="margin-left: 20px; margin-top: 12px;">
+                    <li><code>payment.captured</code> - Payment successfully captured and persisted</li>
+                    <li>Other events are accepted but currently ignored by business logic</li>
+                </ul>
+
+                <h3>Processing Flow</h3>
+                <ol style="margin-left: 20px; margin-top: 12px;">
+                    <li>Razorpay sends webhook with x-razorpay-signature header</li>
+                    <li>API verifies signature using Razorpay webhook secret</li>
+                    <li>If valid: Update payment transaction status in database</li>
+                    <li>If valid: Update document status to "completed"</li>
+                    <li>If valid: Send confirmation notification to client</li>
+                    <li>Return 200 OK to acknowledge receipt</li>
+                </ol>
+
+                <h3>Error Codes</h3>
+                <div class="error-code">
+                    <div class="code-status">401</div>
+                    <div class="description">Invalid webhook signature - rejected</div>
+                </div>
+                <div class="error-code">
+                    <div class="code-status">500</div>
+                    <div class="description">Server error processing payment</div>
+                </div>
+
+                <h3>Implementation Notes</h3>
+                <ul style="margin-left: 20px; margin-top: 12px;">
+                    <li>Webhook signature validation is mandatory for security</li>
+                    <li>Implementation must handle duplicate webhook deliveries</li>
+                    <li>Empty/null responses are acceptable for webhook</li>
+                    <li>Razorpay retries webhook on non-2xx responses</li>
+                    <li>Store webhook payloads for audit trails</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Payment Workflow -->
+        <div class="section">
+            <h2>Payment Processing Flow</h2>
+            
+            <h3>1. Client Initiates Payment</h3>
+            <p>Client calls <code>POST /api/client/payments/create-order</code> to create a Razorpay order.</p>
+            <div class="code-block"><code>Request:
+{
+  "documentId": "doc-123"
+}
+
+Response:
+{
+    "success": true,
+    "data": {
+        "id": "order_123456",
+        "amount": 15000,
+        "currency": "INR"
+    }
+}</code></div>
+
+            <h3>2. Frontend Integration</h3>
+            <p>Frontend receives order details and opens Razorpay checkout popup:</p>
+            <div class="code-block"><code>// Frontend JavaScript
+const options = {
+  key: "razorpay_key_id",
+  order_id: "order_123456",
+  amount: 15000,
+  currency: "INR",
+  handler: (response) => {
+    // Handle payment success
+  }
+};
+const razorpay = new Razorpay(options);
+razorpay.open();</code></div>
+
+            <h3>3. Payment Processing</h3>
+            <p>User completes payment in Razorpay checkout modal.</p>
+
+            <h3>4. Webhook Notification</h3>
+            <p>Razorpay sends <code>payment.captured</code> webhook to <code>POST /api/payments/webhook</code></p>
+
+            <h3>5. Database Update</h3>
+            <p>API updates payment transaction and document status:</p>
+            <ul style="margin-left: 20px; margin-top: 12px;">
+                <li>Payment status: <code>pending</code> → <code>paid</code></li>
+                <li>Document status: <code>payment_needed</code> → <code>completed</code></li>
+                <li>Notification sent to client</li>
+                <li>Client notification sent</li>
+            </ul>
+
+            <h3>6. Confirmation</h3>
+            <p>Client receives confirmation and document becomes available for download.</p>
+        </div>
+
+        <!-- Razorpay Integration -->
+        <div class="section">
+            <h2>Razorpay Integration Details</h2>
+            
+            <h3>Configuration</h3>
+            <ul style="margin-left: 20px; margin-top: 12px;">
+                <li><strong>Gateway:</strong> Razorpay (Indian payment service)</li>
+                <li><strong>Currency:</strong> INR (Indian Rupees)</li>
+                <li><strong>Amount Format:</strong> Paise (100 paise = 1 rupee)</li>
+                <li><strong>Minimum Amount:</strong> 100 paise (₹1.00)</li>
+                <li><strong>Authentication:</strong> API Key + Secret Key</li>
+            </ul>
+
+            <h3>Supported Payment Methods</h3>
+            <ul style="margin-left: 20px; margin-top: 12px;">
+                <li>Credit/Debit Cards (all networks)</li>
+                <li>Net Banking (all major banks)</li>
+                <li>UPI (Google Pay, WhatsApp Pay, etc.)</li>
+                <li>Wallets (PayZapp, Mobikwik, etc.)</li>
+                <li>EMI options</li>
+            </ul>
+
+            <h3>Key Concepts</h3>
+            <ul style="margin-left: 20px; margin-top: 12px;">
+                <li><strong>Order:</strong> Represents a payment request with amount and metadata</li>
+                <li><strong>Payment:</strong> Actual transaction after customer pays</li>
+                <li><strong>Webhook Signature:</strong> HMAC-SHA256 hash for security verification</li>
+                <li><strong>Webhook Secret:</strong> Private key for signature validation</li>
+            </ul>
+        </div>
+
+        <!-- Testing -->
+        <div class="section">
+            <h2>Testing Payment Webhook</h2>
+            
+            <h3>Development Environment</h3>
+            <p>For testing webhooks locally, use Razorpay's Test Webhook feature:</p>
+            <ol style="margin-left: 20px; margin-top: 12px;">
+                <li>Log in to Razorpay Dashboard</li>
+                <li>Navigate to Settings → Webhooks</li>
+                <li>Click "Test Webhook" button</li>
+                <li>Select event type (payment.captured)</li>
+                <li>Send test payload</li>
+            </ol>
+
+            <h3>Test Payment Methods</h3>
+            <p>Razorpay provides test card numbers:</p>
+            <ul style="margin-left: 20px; margin-top: 12px;">
+                <li><strong>Success:</strong> 4111 1111 1111 1111</li>
+                <li><strong>Decline:</strong> 4000 0000 0000 0002</li>
+                <li><strong>Any CVV/Date</strong> (in test mode)</li>
+            </ul>
+        </div>
+
+        <footer>
+            <p>© 2026 Submit Right. API Documentation for Payments Module</p>
+        </footer>
+    </div>
+</body>
+</html>

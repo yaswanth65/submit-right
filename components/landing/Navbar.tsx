@@ -1,8 +1,30 @@
 "use client";
 
 import Link from "next/link";
+import { useEffect, useMemo, useState } from "react";
+import { getStoredAuthSession, resolvePostLoginPath } from "@/lib/client-auth";
 
 export function Navbar() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [dashboardPath, setDashboardPath] = useState("/user/dashboard");
+
+  useEffect(() => {
+    const session = getStoredAuthSession();
+    if (!session?.token) {
+      setIsLoggedIn(false);
+      setDashboardPath("/user/dashboard");
+      return;
+    }
+
+    setIsLoggedIn(true);
+    setDashboardPath(resolvePostLoginPath(session));
+  }, []);
+
+  const cta = useMemo(
+    () => ({ isLoggedIn, dashboardPath }),
+    [isLoggedIn, dashboardPath]
+  );
+
   return (
     <>
       {/* Top Announcemen Bar */}
@@ -45,18 +67,29 @@ export function Navbar() {
 
           {/* CTA Buttons */}
           <div className="hidden md:flex items-center space-x-3">
-            <Link
-              href="/user/dashboard"
-              className="inline-flex items-center justify-center px-6 py-2 border border-[#00A0E3] text-[#00A0E3] text-[14px] font-medium rounded-full hover:bg-[#EFF7FB] transition-colors"
-            >
-              Log In
-            </Link>
-            <Link
-              href="/user/dashboard"
-              className="inline-flex items-center justify-center px-6 py-2 bg-[#00A0E3] text-white text-[14px] font-medium rounded-full hover:bg-[#0189C2] transition-colors"
-            >
-              Create Account
-            </Link>
+            {cta.isLoggedIn ? (
+              <Link
+                href={cta.dashboardPath}
+                className="inline-flex items-center justify-center px-6 py-2 bg-[#00A0E3] text-white text-[14px] font-medium rounded-full hover:bg-[#0189C2] transition-colors"
+              >
+                Dashboard
+              </Link>
+            ) : (
+              <>
+                <Link
+                  href="/signin"
+                  className="inline-flex items-center justify-center px-6 py-2 border border-[#00A0E3] text-[#00A0E3] text-[14px] font-medium rounded-full hover:bg-[#EFF7FB] transition-colors"
+                >
+                  Log In
+                </Link>
+                <Link
+                  href="/signup"
+                  className="inline-flex items-center justify-center px-6 py-2 bg-[#00A0E3] text-white text-[14px] font-medium rounded-full hover:bg-[#0189C2] transition-colors"
+                >
+                  Create Account
+                </Link>
+              </>
+            )}
           </div>
 
           {/* Mobile Menu Button */}

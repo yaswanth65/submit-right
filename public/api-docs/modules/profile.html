@@ -311,20 +311,23 @@
 
                 <div class="output-section">
                     <div class="section-title">📤 Response (200 OK)</div>
-                    <div class="code-block"><code>{
-  "id": "550e8400-e29b-41d4-a716-446655440000",
-  "fullName": "John Doe",
-  "email": "john@example.com",
-  "mobileNumber": "+1-555-0123",
-  "country": "United States",
-  "state": "California",
-  "yearsOfExperience": 5,
-  "primaryLanguage": "English",
-  "primaryExpertise": "Academic Editing",
-  "languagePairs": ["EN-ES", "EN-FR"],
-  "role": "editor",
-  "createdAt": "2026-01-15T08:30:00.000Z",
-  "updatedAt": "2026-04-01T14:22:00.000Z"
+                                        <div class="code-block"><code>{
+    "success": true,
+    "data": {
+        "id": "550e8400-e29b-41d4-a716-446655440000",
+        "full_name": "John Doe",
+        "email": "john@example.com",
+        "mobile_number": "+1-555-0123",
+        "country": "United States",
+        "state": "California",
+        "years_of_experience": 5,
+        "primary_language": "English",
+        "primary_expertise": "Academic Editing",
+        "language_pairs": ["EN-ES", "EN-FR"],
+        "role": "editor",
+        "created_at": "2026-01-15T08:30:00.000Z",
+        "updated_at": "2026-04-01T14:22:00.000Z"
+    }
 }</code></div>
                 </div>
 
@@ -446,20 +449,23 @@
                 <div class="output-section">
                     <div class="section-title">📤 Response (200 OK)</div>
                     <p style="margin-bottom: 12px;">Returns the updated profile object:</p>
-                    <div class="code-block"><code>{
-  "id": "550e8400-e29b-41d4-a716-446655440000",
-  "fullName": "Jane Smith",
-  "email": "john@example.com",
-  "mobileNumber": "+1-555-0123",
-  "country": "United States",
-  "state": "California",
-  "yearsOfExperience": 8,
-  "primaryLanguage": "English",
-  "primaryExpertise": "Scientific Translation",
-  "languagePairs": ["EN-ES", "EN-FR"],
-  "role": "editor",
-  "createdAt": "2026-01-15T08:30:00.000Z",
-  "updatedAt": "2026-04-02T14:45:00.000Z"
+                                        <div class="code-block"><code>{
+    "success": true,
+    "data": {
+        "id": "550e8400-e29b-41d4-a716-446655440000",
+        "full_name": "Jane Smith",
+        "email": "john@example.com",
+        "mobile_number": "+1-555-0123",
+        "country": "United States",
+        "state": "California",
+        "years_of_experience": 8,
+        "primary_language": "English",
+        "primary_expertise": "Scientific Translation",
+        "language_pairs": ["EN-ES", "EN-FR"],
+        "role": "editor",
+        "created_at": "2026-01-15T08:30:00.000Z",
+        "updated_at": "2026-04-02T14:45:00.000Z"
+    }
 }</code></div>
                 </div>
 
@@ -496,10 +502,6 @@
                 <div class="error-code">
                     <div class="code-status">401</div>
                     <div class="description">Unauthorized - missing or invalid JWT token</div>
-                </div>
-                <div class="error-code">
-                    <div class="code-status">409</div>
-                    <div class="description">Email already in use by another account</div>
                 </div>
                 <div class="error-code">
                     <div class="code-status">500</div>

@@ -13,6 +13,7 @@ export function Sidebar() {
     { name: "Editors", href: "/admin/editors", icon: UserCog },
     { name: "Documents", href: "/admin/documents", icon: FileText },
     { name: "Assignments", href: "/admin/assignments", icon: ClipboardList },
+    { name: "Tickets", href: "/admin/tickets", icon: MessageSquare },
     { name: "Payments", href: "/admin/payments", icon: CreditCard },
     { name: "CMS", href: "#", icon: MonitorCog },
     { name: "Blogs", href: "#", icon: Type },

@@ -343,18 +343,18 @@
 
                 <div class="output-section">
                     <div class="section-title">📤 Response (200 OK)</div>
-                    <div class="code-block"><code>{
-  "event": "payment.captured",
-  "documentId": "doc-123",
-  "status": "paid",
-  "updated_at": "2026-04-02T15:00:00Z"
+                                        <div class="code-block"><code>{
+    "success": true,
+    "data": {
+        "received": true
+    }
 }</code></div>
                 </div>
 
                 <h3>Supported Events</h3>
                 <ul style="margin-left: 20px; margin-top: 12px;">
-                    <li><code>payment.captured</code> - Payment successfully captured</li>
-                    <li><code>payment.failed</code> - Payment failed (optional handling)</li>
+                    <li><code>payment.captured</code> - Payment successfully captured and persisted</li>
+                    <li>Other events are accepted but currently ignored by business logic</li>
                 </ul>
 
                 <h3>Processing Flow</h3>
@@ -401,9 +401,12 @@
 
 Response:
 {
-  "id": "order_123456",
-  "amount": 15000,
-  "currency": "INR"
+    "success": true,
+    "data": {
+        "id": "order_123456",
+        "amount": 15000,
+        "currency": "INR"
+    }
 }</code></div>
 
             <h3>2. Frontend Integration</h3>
@@ -432,7 +435,7 @@ razorpay.open();</code></div>
             <ul style="margin-left: 20px; margin-top: 12px;">
                 <li>Payment status: <code>pending</code> → <code>paid</code></li>
                 <li>Document status: <code>payment_needed</code> → <code>completed</code></li>
-                <li>Audit log entry created</li>
+                <li>Notification sent to client</li>
                 <li>Client notification sent</li>
             </ul>
 

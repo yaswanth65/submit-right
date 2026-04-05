@@ -1,7 +1,8 @@
  
 // User layout.tsx (app/user/layout.tsx)
-import { Sidebar } from "@/app/user/components/UserSidebar";
+import { ResponsiveSidebar } from "@/app/user/components/ResponsiveSidebar";
 import { Navbar } from "@/app/user/components/UserNavbar";
+import { UserAuthGuard } from "@/app/user/components/UserAuthGuard";
 import type { Viewport } from 'next'
 export const viewport: Viewport = {
   width: 'device-width',
@@ -15,38 +16,20 @@ export default function UserLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <>
-    <style>{`
-        .sidebar-wrapper {
-          display: none;
-        }
+    <UserAuthGuard>
+      <>
+        <ResponsiveSidebar />
 
-        .main-content {
-          margin-left: 0;
-        }
-
-        @media (min-width: 768px) {
-          .sidebar-wrapper {
-            display: block;
-          }
-
-          .main-content {
-            margin-left: 260px;
-          }
-        }
-      `}</style>
-
-    <div className="sidebar-wrapper" >
-      <Sidebar /></div>
  
-      <div className="flex-1 w-full max-w-[100vw] overflow-x-hidden main-content flex flex-col min-h-screen pt-[76px]">
+      <div className="flex-1 w-full md:w-[calc(100%-260px)] main-content flex flex-col min-h-screen pt-[76px]">
  
         <Navbar />
-        <main className="flex-1 w-full bg-[#FFFFFF]">
+        <main className="flex-1 w-full bg-[#FFFFFF] overflow-x-auto">
           {children}
         </main>
       </div>
     </>
+    </UserAuthGuard>
   );
 } 
  

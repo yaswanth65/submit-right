@@ -371,13 +371,17 @@
 
                 <div class="output-section">
                     <div class="section-title">📤 Response (201 Created)</div>
-                    <div class="code-block"><code>{
-  "id": "550e8400-e29b-41d4-a716-446655440000",
-  "email": "john@example.com",
-  "fullName": "John Doe",
-  "role": "client",
-  "token": "eyJhbGciOiJIUzI1NiIs...",
-  "createdAt": "2026-04-02T10:30:00.000Z"
+                                        <div class="code-block"><code>{
+    "success": true,
+    "data": {
+        "user": {
+            "id": "550e8400-e29b-41d4-a716-446655440000",
+            "role": "client",
+            "full_name": "John Doe",
+            "email": "john@example.com"
+        },
+        "token": "eyJhbGciOiJIUzI1NiIs..."
+    }
 }</code></div>
                 </div>
 
@@ -387,8 +391,8 @@
                     New students/researchers signing up to submit documents for editing
                 </div>
                 <div class="use-case">
-                    <strong>2. Editor Registration</strong>
-                    Professional editors joining the platform to accept editing assignments
+                    <strong>2. Client Onboarding</strong>
+                    New clients register and immediately get a bearer token for authenticated APIs
                 </div>
 
                 <h3>Error Codes</h3>
@@ -452,13 +456,18 @@
 
                 <div class="output-section">
                     <div class="section-title">📤 Response (200 OK)</div>
-                    <div class="code-block"><code>{
-  "id": "550e8400-e29b-41d4-a716-446655440000",
-  "email": "john@example.com",
-  "fullName": "John Doe",
-  "role": "client",
-  "token": "eyJhbGciOiJIUzI1NiIs...",
-  "expiresIn": 86400
+                                        <div class="code-block"><code>{
+    "success": true,
+    "data": {
+        "user": {
+            "id": "550e8400-e29b-41d4-a716-446655440000",
+            "role": "client",
+            "full_name": "John Doe",
+            "email": "john@example.com",
+            "account_status": "active"
+        },
+        "token": "eyJhbGciOiJIUzI1NiIs..."
+    }
 }</code></div>
                 </div>
 
@@ -527,9 +536,11 @@
 
                 <div class="output-section">
                     <div class="section-title">📤 Response (200 OK)</div>
-                    <div class="code-block"><code>{
-  "message": "Password reset link sent to your email",
-  "email": "john@example.com"
+                                        <div class="code-block"><code>{
+    "success": true,
+    "data": {
+        "accepted": true
+    }
 }</code></div>
                 </div>
 
@@ -547,10 +558,6 @@
                 <div class="error-code">
                     <div class="code-status">400</div>
                     <div class="description">Invalid email format</div>
-                </div>
-                <div class="error-code">
-                    <div class="code-status">404</div>
-                    <div class="description">Email not found in database</div>
                 </div>
                 <div class="error-code">
                     <div class="code-status">500</div>
@@ -593,20 +600,28 @@
                                 <td><span class="type">string</span></td>
                                 <td>New password (min 8, max 128 characters)</td>
                             </tr>
+                            <tr>
+                                <td><span class="required">confirmPassword</span></td>
+                                <td><span class="type">string</span></td>
+                                <td>Must match newPassword</td>
+                            </tr>
                         </tbody>
                     </table>
 
                     <div class="code-block"><code>{
   "token": "eyJhbGciOiJIUzI1NiIs...",
-  "newPassword": "NewSecurePassword123"
+    "newPassword": "NewSecurePassword123",
+    "confirmPassword": "NewSecurePassword123"
 }</code></div>
                 </div>
 
                 <div class="output-section">
                     <div class="section-title">📤 Response (200 OK)</div>
-                    <div class="code-block"><code>{
-  "success": true,
-  "message": "Password reset successfully"
+                                        <div class="code-block"><code>{
+    "success": true,
+    "data": {
+        "success": true
+    }
 }</code></div>
                 </div>
 
@@ -616,8 +631,8 @@
                     <div class="description">Invalid token or password format</div>
                 </div>
                 <div class="error-code">
-                    <div class="code-status">401</div>
-                    <div class="description">Token expired or invalid</div>
+                    <div class="code-status">400</div>
+                    <div class="description">Reset token is invalid or expired</div>
                 </div>
                 <div class="error-code">
                     <div class="code-status">500</div>
@@ -628,11 +643,11 @@
 
         <!-- Deactivate Account -->
         <div class="section">
-            <h2>POST /api/auth/deactivate</h2>
+            <h2>DELETE /api/auth/deactivate</h2>
             
             <div class="endpoint">
                 <div class="endpoint-header">
-                    <span class="method post">POST</span>
+                    <span class="method post">DELETE</span>
                     <span class="path">/api/auth/deactivate</span>
                     <span class="auth-badge">🔒 Auth Required</span>
                 </div>
@@ -644,42 +659,15 @@
                     <strong>Authentication:</strong> JWT token in Authorization header
                 </div>
 
-                <div class="input-section">
-                    <div class="section-title">📥 Request Body</div>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Field</th>
-                                <th>Type</th>
-                                <th>Description</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><span class="required">password</span></td>
-                                <td><span class="type">string</span></td>
-                                <td>Current password for confirmation</td>
-                            </tr>
-                            <tr>
-                                <td><span class="optional">reason</span></td>
-                                <td><span class="type">string|null</span></td>
-                                <td>Optional reason for deactivation</td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                    <div class="code-block"><code>{
-  "password": "CurrentPassword123",
-  "reason": "Taking a break from platform"
-}</code></div>
-                </div>
+                <p style="margin-top: 12px; color: #525866;">No request body is required.</p>
 
                 <div class="output-section">
                     <div class="section-title">📤 Response (200 OK)</div>
-                    <div class="code-block"><code>{
-  "success": true,
-  "message": "Account deactivated successfully",
-  "email": "john@example.com"
+                                        <div class="code-block"><code>{
+    "success": true,
+    "data": {
+        "deactivated": true
+    }
 }</code></div>
                 </div>
 
@@ -695,12 +683,8 @@
 
                 <h3>Error Codes</h3>
                 <div class="error-code">
-                    <div class="code-status">400</div>
-                    <div class="description">Missing password or invalid input</div>
-                </div>
-                <div class="error-code">
                     <div class="code-status">401</div>
-                    <div class="description">Unauthorized - invalid password</div>
+                    <div class="description">Unauthorized - missing/invalid bearer token</div>
                 </div>
                 <div class="error-code">
                     <div class="code-status">500</div>
@@ -717,21 +701,22 @@
                 <div class="endpoint-header">
                     <span class="method post">POST</span>
                     <span class="path">/api/auth/signout</span>
-                    <span class="auth-badge">🔒 Auth Required</span>
+                    <span class="auth-badge">ℹ️ Auth Not Required</span>
                 </div>
 
                 <p><strong>End user session</strong></p>
                 <p style="color: #78788d; margin-top: 8px; font-size: 13px;">Sign out the current user. Client should delete the bearer token after receiving this response.</p>
 
-                <div class="auth-required">
-                    <strong>Authentication:</strong> JWT token in Authorization header
-                </div>
+                <p style="margin-top: 12px; color: #525866;">No request body and no token required. This endpoint is stateless and instructs clients to clear local tokens.</p>
 
                 <div class="output-section">
                     <div class="section-title">📤 Response (200 OK)</div>
-                    <div class="code-block"><code>{
-  "signedOut": true,
-  "message": "Client should delete the local bearer token for this device/session."
+                                        <div class="code-block"><code>{
+    "success": true,
+    "data": {
+        "signedOut": true,
+        "message": "Client should delete the local bearer token for this device/session."
+    }
 }</code></div>
                 </div>
 

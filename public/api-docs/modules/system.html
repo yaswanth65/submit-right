@@ -227,21 +227,21 @@
 
                 <div class="output-section">
                     <div class="section-title">📤 Response (200 OK)</div>
-                    <div class="code-block"><code>{
-  "deletedCount": 12,
-  "deletedDrafts": [
-    {
-      "id": "doc-draft-001",
-      "document_title": "Old Draft Paper",
-      "expired_at": "2026-03-29T10:30:00Z"
-    },
-    {
-      "id": "doc-draft-002",
-      "document_title": "Unused Document",
-      "expired_at": "2026-03-28T15:45:00Z"
+                                        <div class="code-block"><code>{
+    "success": true,
+    "data": {
+        "deletedCount": 2,
+        "deletedDrafts": [
+            {
+                "id": "doc-draft-001",
+                "document_title": "Old Draft Paper"
+            },
+            {
+                "id": "doc-draft-002",
+                "document_title": "Unused Document"
+            }
+        ]
     }
-  ],
-  "executed_at": "2026-04-02T00:00:00Z"
 }</code></div>
                 </div>
 
@@ -250,7 +250,7 @@
                     <li>Query database for draft documents with <code>status = 'draft'</code></li>
                     <li>Find drafts where <code>draft_expires_at < current_time</code></li>
                     <li>Delete matching draft documents from the database</li>
-                    <li>Clean up associated files from storage (if applicable)</li>
+                    <li>Return IDs and titles of deleted drafts</li>
                     <li>Return count of deleted drafts and list of deleted items</li>
                     <li>Log cleanup operation for audit trail</li>
                 </ol>
@@ -258,17 +258,16 @@
                 <h3>Draft Expiration Policy</h3>
                 <ul style="margin-left: 20px; margin-top: 12px;">
                     <li><strong>Draft Creation:</strong> New drafts are created with <code>draft_expires_at</code> timestamp</li>
-                    <li><strong>Expiration Period:</strong> Drafts expire after 30 days of inactivity (configurable)</li>
+                    <li><strong>Expiration Period:</strong> Drafts currently expire after 2 hours from creation</li>
                     <li><strong>Auto-Cleanup:</strong> Expired drafts are permanently deleted</li>
-                    <li><strong>Grace Period:</strong> Clients may receive warning notification 7 days before expiration</li>
+                    <li><strong>Grace Period:</strong> No grace-period notification is implemented in this endpoint</li>
                 </ul>
 
                 <h3>Database Impact</h3>
                 <ul style="margin-left: 20px; margin-top: 12px;">
                     <li>Deletes records from <code>documents</code> table where <code>status = 'draft'</code> and expired</li>
-                    <li>Deletes associated <code>document_services</code> entries</li>
-                    <li>Cleans up attached files from storage location</li>
-                    <li>Creates audit log entry for deletion</li>
+                    <li>Deletes rows from <code>documents</code> only, with <code>status = 'draft'</code> and expired timestamp</li>
+                    <li>No extra storage cleanup or audit log is performed here</li>
                 </ul>
 
                 <h3>Scheduling Recommendations</h3>
@@ -282,7 +281,7 @@
                 <div class="note">
                     <strong>⏰ Cron Job Example:</strong>
                     <div class="code-block"><code># Run cleanup daily at 2 AM
-0 2 * * * curl -X POST https://api.submitright.com/api/system/cleanup-drafts?secret=YOUR_CRON_SECRET
+0 2 * * * curl -X POST https://api.submitright.com/api/system/cleanup-drafts
 
 # Or using a task scheduler (Windows)
 schtasks /create /tn "CleanupDrafts" /tr "curl -X POST http://api.submitright.com/api/system/cleanup-drafts" /sc DAILY /st 02:00</code></div>
@@ -291,7 +290,7 @@ schtasks /create /tn "CleanupDrafts" /tr "curl -X POST http://api.submitright.co
                 <h3>Security Considerations</h3>
                 <ul style="margin-left: 20px; margin-top: 12px;">
                     <li>This endpoint should only be accessible from internal networks or cron job runners</li>
-                    <li>Consider requiring a secret token parameter for additional security</li>
+                    <li>If exposed publicly, add infrastructure-level protection (IP allow-list/WAF)</li>
                     <li>Monitor execution logs for failures or anomalies</li>
                     <li>Set up alerts if cleanup fails to complete</li>
                 </ul>

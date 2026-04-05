@@ -105,3 +105,22 @@ body {
     font-size: 15px;
   }
 }
+
+/* User Layout Responsive Styles */
+.sidebar-wrapper {
+  display: none;
+}
+
+.main-content {
+  margin-left: 0;
+}
+
+@media (min-width: 768px) {
+  .sidebar-wrapper {
+    display: block;
+  }
+
+  .main-content {
+    margin-left: 260px;
+  }
+}

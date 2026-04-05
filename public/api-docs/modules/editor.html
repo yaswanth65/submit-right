@@ -367,17 +367,23 @@
 
                 <div class="output-section">
                     <div class="section-title">📤 Response (200 OK)</div>
-                    <div class="code-block"><code>{
-  "documents": [
-    {
-      "id": "doc-123",
-      "document_title": "Research Paper",
-      "status": "being_edited",
-      "deadline_at": "2026-04-10T23:59:59Z",
-      "client_id": "client-456",
-      "last_activity_at": "2026-04-02T10:00:00Z"
-    }
-  ]
+                                        <div class="code-block"><code>{
+    "success": true,
+    "data": [
+        {
+            "id": "doc-123",
+            "document_title": "Research Paper",
+            "status": "being_edited",
+            "deadline_at": "2026-04-10T23:59:59Z",
+            "profiles": {
+                "full_name": "John Client",
+                "email": "john@example.com"
+            },
+            "services": {
+                "title": "Professional Editing"
+            }
+        }
+    ]
 }</code></div>
                 </div>
             </div>
@@ -410,19 +416,21 @@
 
                 <div class="output-section">
                     <div class="section-title">📤 Response (200 OK)</div>
-                    <div class="code-block"><code>{
-  "id": "doc-123",
-  "document_title": "Research Paper",
-  "status": "being_edited",
-  "academic_field": "Computer Science",
-  "document_type": "thesis",
-  "file_url": "https://storage.example.com/doc-123.pdf",
-  "deadline_at": "2026-04-10T23:59:59Z",
-  "client": {
-    "id": "client-456",
-    "full_name": "John Client",
-    "email": "john@example.com"
-  }
+                                        <div class="code-block"><code>{
+    "success": true,
+    "data": {
+        "assignmentOverview": {
+            "id": "doc-123",
+            "document_title": "Research Paper",
+            "status": "being_edited",
+            "academic_field": "Computer Science",
+            "document_type": "thesis",
+            "uploaded_file_url": "https://storage.example.com/doc-123.pdf"
+        },
+        "originalFileDownloadLink": "https://storage.example.com/doc-123.pdf",
+        "messageList": [...],
+        "versionHistory": [...]
+    }
 }</code></div>
                 </div>
 
@@ -462,11 +470,15 @@
 
                 <div class="output-section">
                     <div class="section-title">📤 Response (200 OK)</div>
-                    <div class="code-block"><code>{
-  "id": "doc-123",
-  "status": "submitted_by_editor",
-  "submitted_at": "2026-04-02T15:30:00Z",
-  "edited_file_url": "https://storage.example.com/doc-123-edited.pdf"
+                                        <div class="code-block"><code>{
+    "success": true,
+    "data": {
+        "id": "doc-123",
+        "status": "payment_needed",
+        "latest_editor_file_name": "doc-123-edited.pdf",
+        "latest_editor_file_url": "https://storage.example.com/doc-123-edited.pdf",
+        "revision_requested": false
+    }
 }</code></div>
                 </div>
 
@@ -517,9 +529,9 @@
                                 <td>Document ID</td>
                             </tr>
                             <tr>
-                                <td><span class="required">extensionDays</span></td>
-                                <td><span class="type">number</span></td>
-                                <td>Number of days to extend (1-7)</td>
+                                <td><span class="required">proposedNewDeadline</span></td>
+                                <td><span class="type">string</span></td>
+                                <td>ISO datetime for proposed deadline extension</td>
                             </tr>
                             <tr>
                                 <td><span class="required">reason</span></td>
@@ -531,18 +543,24 @@
 
                     <div class="code-block"><code>{
   "documentId": "doc-123",
-  "extensionDays": 2,
+    "proposedNewDeadline": "2026-04-12T23:59:59Z",
   "reason": "Complex document requires additional review time"
 }</code></div>
                 </div>
 
                 <div class="output-section">
                     <div class="section-title">📤 Response (200 OK)</div>
-                    <div class="code-block"><code>{
-  "documentId": "doc-123",
-  "extensionRequested": true,
-  "newDeadline": "2026-04-12T23:59:59Z",
-  "requestedAt": "2026-04-02T14:00:00Z"
+                                        <div class="code-block"><code>{
+    "success": true,
+    "data": {
+        "id": "audit-123",
+        "document_id": "doc-123",
+        "action": "deadline_extension_requested",
+        "notes": "Complex document requires additional review time",
+        "payload": {
+            "proposedNewDeadline": "2026-04-12T23:59:59Z"
+        }
+    }
 }</code></div>
                 </div>
 
@@ -576,17 +594,21 @@
                     <div class="section-title">📥 Query Parameters (Optional)</div>
                     <ul style="margin-left: 20px; margin-top: 12px;">
                         <li><code>type</code> - Filter by notification type</li>
-                        <li><code>unread</code> - Show only unread (true/false)</li>
                     </ul>
                 </div>
 
                 <div class="output-section">
                     <div class="section-title">📤 Response (200 OK)</div>
-                    <div class="code-block"><code>{
-  "all": [...],
-  "unread": [...],
-  "documentUpdates": [...],
-  "messages": [...]
+                                        <div class="code-block"><code>{
+    "success": true,
+    "data": [
+        {
+            "id": "notif-123",
+            "type": "document_update",
+            "title": "New document assigned",
+            "is_read": false
+        }
+    ]
 }</code></div>
                 </div>
             </div>
@@ -594,7 +616,7 @@
 
         <!-- Send Message -->
         <div class="section">
-            <h2>POST /api/editor/messages</h2>
+            <h2>GET/POST /api/editor/messages</h2>
             
             <div class="endpoint">
                 <div class="endpoint-header">
@@ -605,6 +627,13 @@
 
                 <p><strong>Send message to client</strong></p>
                 <p style="color: #78788d; margin-top: 8px; font-size: 13px;">Send a message to the client regarding a document.</p>
+
+                <div class="input-section">
+                    <div class="section-title">📥 Query Parameters for GET (Optional)</div>
+                    <ul style="margin-left: 20px; margin-top: 12px;">
+                        <li><code>documentId</code> - Filter received messages to a specific document</li>
+                    </ul>
+                </div>
 
                 <div class="auth-required">
                     <strong>Authentication:</strong> JWT token in Authorization header
@@ -627,28 +656,37 @@
                                 <td>Document ID for messaging context</td>
                             </tr>
                             <tr>
+                                <td><span class="required">receiverId</span></td>
+                                <td><span class="type">string</span></td>
+                                <td>Recipient profile ID (usually client)</td>
+                            </tr>
+                            <tr>
                                 <td><span class="required">message</span></td>
                                 <td><span class="type">string</span></td>
-                                <td>Message content (max 2000 chars)</td>
+                                <td>Message content (1-5000 chars)</td>
                             </tr>
                         </tbody>
                     </table>
 
                     <div class="code-block"><code>{
   "documentId": "doc-123",
+    "receiverId": "client-789",
   "message": "I've completed the initial review. Please check for my suggestions."
 }</code></div>
                 </div>
 
                 <div class="output-section">
                     <div class="section-title">📤 Response (201 Created)</div>
-                    <div class="code-block"><code>{
-  "id": "msg-123",
-  "documentId": "doc-123",
-  "senderId": "editor-456",
-  "receiverId": "client-789",
-  "message": "I've completed the initial review...",
-  "createdAt": "2026-04-02T14:30:00Z"
+                                        <div class="code-block"><code>{
+    "success": true,
+    "data": {
+        "id": "msg-123",
+        "document_id": "doc-123",
+        "sender_id": "editor-456",
+        "receiver_id": "client-789",
+        "message": "I've completed the initial review...",
+        "created_at": "2026-04-02T14:30:00Z"
+    }
 }</code></div>
                 </div>
             </div>
@@ -682,17 +720,22 @@
 
                 <div class="output-section">
                     <div class="section-title">📤 Response (200 OK)</div>
-                    <div class="code-block"><code>{
-  "completed": [
-    {
-      "id": "doc-100",
-      "document_title": "Thesis Chapter 1",
-      "status": "completed",
-      "completed_at": "2026-03-25T16:00:00Z",
-      "turnaround_time_hours": 48
+                                        <div class="code-block"><code>{
+    "success": true,
+    "data": {
+        "totalCompletedCount": 12,
+        "completedThisMonthCount": 4,
+        "averageTurnaroundTimeInDays": 0,
+        "revisionRatePercent": 0,
+        "documents": [
+            {
+                "id": "doc-100",
+                "document_title": "Thesis Chapter 1",
+                "status": "completed",
+                "completed_at": "2026-03-25T16:00:00Z"
+            }
+        ]
     }
-  ],
-  "total": 12
 }</code></div>
                 </div>
             </div>
@@ -718,14 +761,17 @@
 
                 <div class="output-section">
                     <div class="section-title">📤 Response (200 OK)</div>
-                    <div class="code-block"><code>{
-  "editor_id": "editor-456",
-  "availability_status": "available",
-  "maximum_active_assignments": 5,
-  "maximum_word_count_per_day": 5000,
-  "vacation_start_date": null,
-  "vacation_end_date": null,
-  "updated_at": "2026-04-01T10:00:00Z"
+                                        <div class="code-block"><code>{
+    "success": true,
+    "data": {
+        "editor_id": "editor-456",
+        "availability_status": "available",
+        "maximum_active_assignments": 5,
+        "maximum_word_count_per_day": 5000,
+        "vacation_start_date": null,
+        "vacation_end_date": null,
+        "updated_at": "2026-04-01T10:00:00Z"
+    }
 }</code></div>
                 </div>
             </div>
@@ -740,7 +786,7 @@
                 <p><strong>Update availability settings</strong></p>
 
                 <div class="input-section">
-                    <div class="section-title">📥 Request Body (All Optional)</div>
+                    <div class="section-title">📥 Request Body</div>
                     <table>
                         <thead>
                             <tr>
@@ -751,7 +797,7 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td><span class="optional">availabilityStatus</span></td>
+                                <td><span class="required">availabilityStatus</span></td>
                                 <td><span class="type">string</span></td>
                                 <td>Status: available, busy, at_capacity, vacation</td>
                             </tr>
@@ -780,20 +826,23 @@
 
                     <div class="code-block"><code>{
   "availabilityStatus": "vacation",
-  "vacationStartDate": "2026-04-15",
-  "vacationEndDate": "2026-04-20"
+    "vacationStartDate": "2026-04-15T00:00:00Z",
+    "vacationEndDate": "2026-04-20T23:59:59Z"
 }</code></div>
                 </div>
 
                 <div class="output-section">
                     <div class="section-title">📤 Response (200 OK)</div>
-                    <div class="code-block"><code>{
-  "editor_id": "editor-456",
-  "availability_status": "vacation",
-  "maximum_active_assignments": 5,
-  "vacation_start_date": "2026-04-15",
-  "vacation_end_date": "2026-04-20",
-  "updated_at": "2026-04-02T11:00:00Z"
+                                        <div class="code-block"><code>{
+    "success": true,
+    "data": {
+        "editor_id": "editor-456",
+        "availability_status": "vacation",
+        "maximum_active_assignments": 5,
+        "vacation_start_date": "2026-04-15T00:00:00Z",
+        "vacation_end_date": "2026-04-20T23:59:59Z",
+        "updated_at": "2026-04-02T11:00:00Z"
+    }
 }</code></div>
                 </div>
             </div>
@@ -801,11 +850,11 @@
 
         <!-- Delete Account -->
         <div class="section">
-            <h2>POST /api/editor/delete-account</h2>
+            <h2>DELETE /api/editor/delete-account</h2>
             
             <div class="endpoint">
                 <div class="endpoint-header">
-                    <span class="method post">POST</span>
+                    <span class="method post">DELETE</span>
                     <span class="path">/api/editor/delete-account</span>
                     <span class="auth-badge">🔒 Auth Required</span>
                 </div>
@@ -817,42 +866,15 @@
                     <strong>Authentication:</strong> JWT token in Authorization header
                 </div>
 
-                <div class="input-section">
-                    <div class="section-title">📥 Request Body</div>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Field</th>
-                                <th>Type</th>
-                                <th>Description</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><span class="required">password</span></td>
-                                <td><span class="type">string</span></td>
-                                <td>Password for confirmation</td>
-                            </tr>
-                            <tr>
-                                <td><span class="optional">reason</span></td>
-                                <td><span class="type">string|null</span></td>
-                                <td>Reason for deletion</td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                    <div class="code-block"><code>{
-  "password": "EditorPassword123",
-  "reason": "No longer interested in editorial work"
-}</code></div>
-                </div>
+                <p style="margin-top: 12px; color: #525866;">No request body is required.</p>
 
                 <div class="output-section">
                     <div class="section-title">📤 Response (200 OK)</div>
-                    <div class="code-block"><code>{
-  "success": true,
-  "message": "Account deleted successfully",
-  "email": "jane@example.com"
+                                        <div class="code-block"><code>{
+    "success": true,
+    "data": {
+        "deactivated": true
+    }
 }</code></div>
                 </div>
 

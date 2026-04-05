@@ -317,15 +317,20 @@
 
                 <div class="output-section">
                     <div class="section-title">📤 Response (200 OK)</div>
-                    <div class="code-block"><code>{
-  "activeUsers": 150,
-  "totalDocuments": 425,
-  "pendingDocuments": 12,
-  "completedThisMonth": 89,
-  "totalRevenue": 15000,
-  "revenueThisMonth": 3500,
-  "averageEditorRating": 4.8,
-  "pendingTickets": 3
+                                        <div class="code-block"><code>{
+    "success": true,
+    "data": {
+        "activeDocuments": { "totalCount": 12, "list": [...] },
+        "pendingDocuments": { "totalCount": 3, "list": [...] },
+        "revisionRequests": { "totalCount": 1, "list": [...] },
+        "overdueTasks": { "totalCount": 2, "list": [...] },
+        "activeEditors": { "totalCount": 8, "list": [...] },
+        "revenueThisMonth": { "totalCount": 3500, "list": [...] },
+        "revenueSnapshot": { "thisMonth": 3500, "pendingPayouts": 700, "paidPayouts": 3500, "graph": [...] },
+        "pendingAction": [...],
+        "workloadDistribution": [...],
+        "myData": { "id": "settings-1" }
+    }
 }</code></div>
                 </div>
             </div>
@@ -352,24 +357,23 @@
                 <div class="input-section">
                     <div class="section-title">📥 Query Parameters (Optional)</div>
                     <ul style="margin-left: 20px; margin-top: 12px;">
-                        <li><code>search</code> - Filter by client name or email</li>
+                        <li><code>search</code> - Filter by client full name</li>
                     </ul>
                 </div>
 
                 <div class="output-section">
                     <div class="section-title">📤 Response (200 OK)</div>
-                    <div class="code-block"><code>{
-  "clients": [
-    {
-      "id": "client-123",
-      "full_name": "John Client",
-      "email": "john@example.com",
-      "account_status": "active",
-      "created_at": "2026-02-01T10:00:00Z",
-      "total_documents": 5,
-      "total_spent": 500.00
-    }
-  ]
+                                        <div class="code-block"><code>{
+    "success": true,
+    "data": [
+        {
+            "id": "client-123",
+            "full_name": "John Client",
+            "email": "john@example.com",
+            "account_status": "active",
+            "created_at": "2026-02-01T10:00:00Z"
+        }
+    ]
 }</code></div>
                 </div>
             </div>
@@ -395,16 +399,14 @@
 
                 <div class="output-section">
                     <div class="section-title">📤 Response (200 OK)</div>
-                    <div class="code-block"><code>{
-  "id": "client-123",
-  "full_name": "John Client",
-  "email": "john@example.com",
-  "account_status": "active",
-  "total_documents": 5,
-  "total_spent": 500.00,
-  "created_at": "2026-02-01T10:00:00Z",
-  "recent_documents": [...],
-  "payment_history": [...]
+                                        <div class="code-block"><code>{
+    "success": true,
+    "data": {
+        "profileOverview": { "id": "client-123", "full_name": "John Client" },
+        "paymentHistory": [...],
+        "auditTrail": [...],
+        "documentHistory": [...]
+    }
 }</code></div>
                 </div>
             </div>
@@ -445,6 +447,16 @@
                                 <td>Client ID to restrict</td>
                             </tr>
                             <tr>
+                                <td><span class="required">restrictionType</span></td>
+                                <td><span class="type">string</span></td>
+                                <td>Restriction type label</td>
+                            </tr>
+                            <tr>
+                                <td><span class="required">restrictionDuration</span></td>
+                                <td><span class="type">string</span></td>
+                                <td>Restriction duration text</td>
+                            </tr>
+                            <tr>
                                 <td><span class="required">reason</span></td>
                                 <td><span class="type">string</span></td>
                                 <td>Reason for restriction (max 500 chars)</td>
@@ -454,17 +466,21 @@
 
                     <div class="code-block"><code>{
   "targetUserId": "client-123",
+    "restrictionType": "submission_block",
+    "restrictionDuration": "14_days",
   "reason": "Repeated policy violations"
 }</code></div>
                 </div>
 
                 <div class="output-section">
                     <div class="section-title">📤 Response (201 Created)</div>
-                    <div class="code-block"><code>{
-  "success": true,
-  "auditLogId": "audit-123",
-  "action": "restrict_client_account",
-  "targetUserId": "client-123"
+                                        <div class="code-block"><code>{
+    "success": true,
+    "data": {
+        "id": "audit-123",
+        "action": "restrict_client_account",
+        "target_user_id": "client-123"
+    }
 }</code></div>
                 </div>
             </div>
@@ -509,22 +525,19 @@
                                 <td><span class="type">string</span></td>
                                 <td>Reason for suspension (max 500 chars)</td>
                             </tr>
-                            <tr>
-                                <td><span class="optional">suspensionDays</span></td>
-                                <td><span class="type">number|null</span></td>
-                                <td>Duration in days (null = indefinite)</td>
-                            </tr>
                         </tbody>
                     </table>
                 </div>
 
                 <div class="output-section">
                     <div class="section-title">📤 Response (201 Created)</div>
-                    <div class="code-block"><code>{
-  "success": true,
-  "action": "suspend_client_account",
-  "targetUserId": "client-123",
-  "suspensionUntil": "2026-04-10T00:00:00Z"
+                                        <div class="code-block"><code>{
+    "success": true,
+    "data": {
+        "id": "audit-456",
+        "action": "suspend_client_account",
+        "target_user_id": "client-123"
+    }
 }</code></div>
                 </div>
             </div>
@@ -551,26 +564,23 @@
                 <div class="input-section">
                     <div class="section-title">📥 Query Parameters (Optional)</div>
                     <ul style="margin-left: 20px; margin-top: 12px;">
-                        <li><code>search</code> - Filter by editor name</li>
-                        <li><code>status</code> - Filter by availability status</li>
+                        <li><code>search</code> - Filter by editor full name</li>
                     </ul>
                 </div>
 
                 <div class="output-section">
                     <div class="section-title">📤 Response (200 OK)</div>
-                    <div class="code-block"><code>{
-  "editors": [
-    {
-      "id": "editor-456",
-      "full_name": "Jane Editor",
-      "email": "jane@example.com",
-      "account_status": "active",
-      "availability_status": "available",
-      "rating": 4.9,
-      "completed_documents": 47,
-      "created_at": "2026-01-01T10:00:00Z"
-    }
-  ]
+                                        <div class="code-block"><code>{
+    "success": true,
+    "data": [
+        {
+            "id": "editor-456",
+            "full_name": "Jane Editor",
+            "email": "jane@example.com",
+            "account_status": "active",
+            "editor_availability": [{ "availability_status": "available" }]
+        }
+    ]
 }</code></div>
                 </div>
             </div>
@@ -611,6 +621,16 @@
                                 <td>Editor ID to restrict</td>
                             </tr>
                             <tr>
+                                <td><span class="required">restrictionType</span></td>
+                                <td><span class="type">string</span></td>
+                                <td>Restriction type label</td>
+                            </tr>
+                            <tr>
+                                <td><span class="required">restrictionDuration</span></td>
+                                <td><span class="type">string</span></td>
+                                <td>Restriction duration text</td>
+                            </tr>
+                            <tr>
                                 <td><span class="required">reason</span></td>
                                 <td><span class="type">string</span></td>
                                 <td>Reason for restriction (max 500 chars)</td>
@@ -621,10 +641,13 @@
 
                 <div class="output-section">
                     <div class="section-title">📤 Response (201 Created)</div>
-                    <div class="code-block"><code>{
-  "success": true,
-  "action": "restrict_editor_account",
-  "targetUserId": "editor-456"
+                                        <div class="code-block"><code>{
+    "success": true,
+    "data": {
+        "id": "audit-789",
+        "action": "restrict_editor_account",
+        "target_user_id": "editor-456"
+    }
 }</code></div>
                 </div>
             </div>
@@ -649,7 +672,8 @@
                 </div>
 
                 <div class="input-section">
-                    <div class="section-title">📥 Request Body</div>
+                    <div class="section-title">📥 Query + Request Body</div>
+                    <p style="margin-bottom: 12px;"><code>editorId</code> is required as a query param: <code>/api/admin/editors/availability?editorId=...</code></p>
                     <table>
                         <thead>
                             <tr>
@@ -659,11 +683,6 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td><span class="required">editorId</span></td>
-                                <td><span class="type">string</span></td>
-                                <td>Editor ID</td>
-                            </tr>
                             <tr>
                                 <td><span class="required">availabilityStatus</span></td>
                                 <td><span class="type">string</span></td>
@@ -680,10 +699,13 @@
 
                 <div class="output-section">
                     <div class="section-title">📤 Response (200 OK)</div>
-                    <div class="code-block"><code>{
-  "success": true,
-  "editorId": "editor-456",
-  "availability_status": "at_capacity"
+                                        <div class="code-block"><code>{
+    "success": true,
+    "data": {
+        "editor_id": "editor-456",
+        "availability_status": "at_capacity",
+        "maximum_active_assignments": 5
+    }
 }</code></div>
                 </div>
             </div>
@@ -709,12 +731,15 @@
 
                 <div class="output-section">
                     <div class="section-title">📤 Response (200 OK)</div>
-                    <div class="code-block"><code>{
-  "totalActive": 12,
-  "overdueTasks": 2,
-  "pendingRevisions": 1,
-  "avgTime": 3.5,
-  "list": [...]
+                                        <div class="code-block"><code>{
+    "success": true,
+    "data": {
+        "totalActive": 12,
+        "overdueTasks": 2,
+        "pendingRevisions": 1,
+        "avgTime": 0,
+        "list": [...]
+    }
 }</code></div>
                 </div>
             </div>
@@ -776,11 +801,14 @@
 
                 <div class="output-section">
                     <div class="section-title">📤 Response (200 OK)</div>
-                    <div class="code-block"><code>{
-  "id": "doc-123",
-  "assigned_editor_id": "editor-456",
-  "status": "being_edited",
-  "assigned_at": "2026-04-02T12:30:00Z"
+                                        <div class="code-block"><code>{
+    "success": true,
+    "data": {
+        "id": "doc-123",
+        "assigned_editor_id": "editor-456",
+        "status": "being_edited",
+        "last_activity_at": "2026-04-02T12:30:00Z"
+    }
 }</code></div>
                 </div>
             </div>
@@ -842,10 +870,13 @@
 
                 <div class="output-section">
                     <div class="section-title">📤 Response (200 OK)</div>
-                    <div class="code-block"><code>{
-  "id": "doc-123",
-  "deadline_at": "2026-04-15T23:59:59Z",
-  "updated_at": "2026-04-02T13:00:00Z"
+                                        <div class="code-block"><code>{
+    "success": true,
+    "data": {
+        "id": "doc-123",
+        "deadline_at": "2026-04-15T23:59:59Z",
+        "last_activity_at": "2026-04-02T13:00:00Z"
+    }
 }</code></div>
                 </div>
             </div>
@@ -878,17 +909,18 @@
 
                 <div class="output-section">
                     <div class="section-title">📤 Response (200 OK)</div>
-                    <div class="code-block"><code>{
-  "tickets": [
-    {
-      "id": "ticket-123",
-      "title": "File upload issue",
-      "description": "Cannot upload PDF files",
-      "status": "open",
-      "created_by": "client-123",
-      "created_at": "2026-04-01T10:00:00Z"
-    }
-  ]
+                                        <div class="code-block"><code>{
+    "success": true,
+    "data": [
+        {
+            "id": "ticket-123",
+            "subject": "File upload issue",
+            "category": "technical",
+            "message": "Cannot upload PDF files",
+            "status": "open",
+            "profiles": { "full_name": "John Client", "email": "john@example.com" }
+        }
+    ]
 }</code></div>
                 </div>
             </div>
@@ -944,11 +976,14 @@
 
                 <div class="output-section">
                     <div class="section-title">📤 Response (200 OK)</div>
-                    <div class="code-block"><code>{
-  "id": "ticket-123",
-  "status": "resolved",
-  "resolved_by": "admin-789",
-  "resolved_at": "2026-04-02T14:15:00Z"
+                                        <div class="code-block"><code>{
+    "success": true,
+    "data": {
+        "id": "ticket-123",
+        "status": "resolved",
+        "resolved_by": "admin-789",
+        "resolved_at": "2026-04-02T14:15:00Z"
+    }
 }</code></div>
                 </div>
             </div>
@@ -974,19 +1009,23 @@
 
                 <div class="output-section">
                     <div class="section-title">📤 Response (200 OK)</div>
-                    <div class="code-block"><code>{
-  "transactions": [
-    {
-      "id": "txn-123",
-      "document_id": "doc-456",
-      "amount": 150.00,
-      "status": "paid",
-      "payment_method": "razorpay",
-      "paid_at": "2026-04-01T10:30:00Z"
+                                        <div class="code-block"><code>{
+    "success": true,
+    "data": {
+        "totalRevenueThisMonth": 3500,
+        "pendingStudentPayments": 2,
+        "transactionsAwaitingSettlement": [...],
+        "studentPayments": [
+            {
+                "id": "txn-123",
+                "document_id": "doc-456",
+                "amount": 150,
+                "status": "paid",
+                "payment_method": "card",
+                "paid_at": "2026-04-01T10:30:00Z"
+            }
+        ]
     }
-  ],
-  "total_revenue": 15000.00,
-  "this_month": 3500.00
 }</code></div>
                 </div>
             </div>
@@ -1003,14 +1042,18 @@
 
                 <div class="output-section">
                     <div class="section-title">📤 Response (200 OK)</div>
-                    <div class="code-block"><code>{
-  "period": "monthly",
-  "totalDocuments": 425,
-  "completedDocuments": 389,
-  "averageTurnaround": 3.2,
-  "totalRevenue": 15000.00,
-  "topEditors": [...],
-  "clientSatisfaction": 4.7
+                                        <div class="code-block"><code>{
+    "success": true,
+    "data": {
+        "filter": "30days",
+        "totalDocumentsSubmitted": 425,
+        "documentsCompleted": 389,
+        "averageTurnaroundTime": 0,
+        "overdueRate": 0,
+        "revenueAnalyticsLine": [...],
+        "revenueAnalyticsBar": { "totalOrders": 120, "totalRevenue": 15000 },
+        "editorPerformanceOverview": [...]
+    }
 }</code></div>
                 </div>
             </div>

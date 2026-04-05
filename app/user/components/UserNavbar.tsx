@@ -220,9 +220,9 @@
 
  "use client";
 
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useMemo, useRef, useSyncExternalStore, useCallback } from "react";
 import {
   PanelLeft,
   ChevronRight,
@@ -240,52 +240,75 @@ import {
   Headset,
   User,
   ChevronDown,
+  LogOut,
+  Settings,
   X,
 } from "lucide-react";
+import { getStoredAuthSession, signOutClient } from "@/lib/client-auth";
+import { apiGet, apiRequest } from "@/lib/client-api";
 
-// ─── Notifications Data ───────────────────────────────────────────────────────
-const notificationsData = [
-  {
-    id: 1,
-    title: "Revision uploaded for AI Research Paper",
-    desc: "The editor has completed the requested revision...",
-    time: "2 hours ago",
-    unread: true,
+type NotificationType = "document_update" | "payment" | "message" | "system";
+
+type NotificationRow = {
+  id: string;
+  title?: string | null;
+  body?: string | null;
+  created_at?: string | null;
+  is_read?: boolean | null;
+  type?: NotificationType;
+};
+
+type NotificationsPayload = {
+  all: NotificationRow[];
+};
+
+function getNotificationVisual(type?: NotificationType) {
+  if (type === "payment") {
+    return {
+      icon: Banknote,
+      iconBg: "bg-[#FEF0E6]",
+      iconColor: "text-[#F97316]"
+    };
+  }
+
+  if (type === "message") {
+    return {
+      icon: MessageSquare,
+      iconBg: "bg-[#F5F7FA]",
+      iconColor: "text-[#525866]"
+    };
+  }
+
+  if (type === "system") {
+    return {
+      icon: CheckCircle2,
+      iconBg: "bg-[#E6F8EC]",
+      iconColor: "text-[#00A859]"
+    };
+  }
+
+  return {
     icon: FileText,
     iconBg: "bg-[#E1F4FD]",
-    iconColor: "text-[#00A0E3]",
-  },
-  {
-    id: 2,
-    title: "Payment required for Thesis Editing",
-    desc: "The final invoice for your doctoral thesis editing i...",
-    time: "4 hours ago",
-    unread: true,
-    icon: Banknote,
-    iconBg: "bg-[#FEF0E6]",
-    iconColor: "text-[#F97316]",
-  },
-  {
-    id: 3,
-    title: "Payment completed successfully",
-    desc: "Your transaction #TRX-99218 for the proofreading...",
-    time: "Yesterday",
-    unread: false,
-    icon: CheckCircle2,
-    iconBg: "bg-[#E6F8EC]",
-    iconColor: "text-[#00A859]",
-  },
-  {
-    id: 4,
-    title: "New message from Editor Sarah",
-    desc: '"Hi Alex, I\'ve finished the abstract review. Let me...',
-    time: "2 days ago",
-    unread: false,
-    icon: MessageSquare,
-    iconBg: "bg-[#F5F7FA]",
-    iconColor: "text-[#525866]",
-  },
-];
+    iconColor: "text-[#00A0E3]"
+  };
+}
+
+function getRelativeTime(value?: string | null) {
+  if (!value) return "Just now";
+  const createdAt = new Date(value).getTime();
+  if (Number.isNaN(createdAt)) return "Just now";
+
+  const diff = Date.now() - createdAt;
+  const minute = 60 * 1000;
+  const hour = 60 * minute;
+  const day = 24 * hour;
+
+  if (diff < minute) return "Just now";
+  if (diff < hour) return `${Math.floor(diff / minute)}m ago`;
+  if (diff < day) return `${Math.floor(diff / hour)}h ago`;
+  return `${Math.floor(diff / day)}d ago`;
+}
 
 // ─── Sidebar Nav Data ─────────────────────────────────────────────────────────
 const navSections = [
@@ -344,19 +367,17 @@ const navSections = [
 ];
 
 // ─── Hook: detect mobile (< 1024px) using window.matchMedia ──────────────────
-// Returns null on first render (SSR) so we never flash wrong content.
-function useIsMobile(): boolean | null {
-  const [isMobile, setIsMobile] = useState<boolean | null>(null);
+function useIsMobile(): boolean {
+  const subscribe = (callback: () => void) => {
+    const mediaQuery = window.matchMedia("(max-width: 1023px)");
+    mediaQuery.addEventListener("change", callback);
+    return () => mediaQuery.removeEventListener("change", callback);
+  };
 
-  useEffect(() => {
-    const mq = window.matchMedia("(max-width: 1023px)");
-    setIsMobile(mq.matches);
-    const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches);
-    mq.addEventListener("change", handler);
-    return () => mq.removeEventListener("change", handler);
-  }, []);
+  const getSnapshot = () => window.matchMedia("(max-width: 1023px)").matches;
+  const getServerSnapshot = () => false;
 
-  return isMobile;
+  return useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 }
 
 // ─── Mobile Sidebar ───────────────────────────────────────────────────────────
@@ -577,16 +598,41 @@ function MobileSidebar({
 
 // ─── Navbar ───────────────────────────────────────────────────────────────────
 export function Navbar() {
+  const router = useRouter();
   const pathname = usePathname();
   const isMobile = useIsMobile();
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
+  const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
+  const [isSigningOut, setIsSigningOut] = useState(false);
+  const [notifications, setNotifications] = useState<NotificationRow[]>([]);
+  const [notificationsLoading, setNotificationsLoading] = useState(false);
+  const [notificationsError, setNotificationsError] = useState<string | null>(null);
+  const notificationsRef = useRef<HTMLDivElement>(null);
+  const profileMenuRef = useRef<HTMLDivElement>(null);
 
-  // Auto-close sidebar if resized to desktop
-  useEffect(() => {
-    if (isMobile === false) setIsMobileSidebarOpen(false);
-  }, [isMobile]);
+  const fetchNotifications = useCallback(async () => {
+    try {
+      setNotificationsLoading(true);
+      setNotificationsError(null);
+      const data = await apiGet<NotificationsPayload>("/api/client/notifications");
+      setNotifications(Array.isArray(data.all) ? data.all : []);
+    } catch (error) {
+      setNotificationsError(error instanceof Error ? error.message : "Failed to load notifications.");
+    } finally {
+      setNotificationsLoading(false);
+    }
+  }, []);
+
+  const unreadCount = useMemo(
+    () => notifications.filter((item) => !item.is_read).length,
+    [notifications]
+  );
+
+  const visibleNotifications = useMemo(
+    () => notifications.slice(0, 8),
+    [notifications]
+  );
 
   const generateBreadcrumbs = () => {
     if (!pathname || pathname === "/") return [{ name: "Home", href: "/" }];
@@ -599,24 +645,84 @@ export function Navbar() {
 
   const breadcrumbs = generateBreadcrumbs();
 
+  const { userName, userEmail } = useMemo(() => {
+    const session = getStoredAuthSession();
+    const safeName =
+      typeof session?.user?.full_name === "string" && session.user.full_name.trim()
+        ? session.user.full_name
+        : "User";
+    const safeEmail =
+      typeof session?.user?.email === "string" && session.user.email.trim()
+        ? session.user.email
+        : "user@submitright.com";
+
+    return {
+      userName: safeName,
+      userEmail: safeEmail,
+    };
+  }, []);
+
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+      if (notificationsRef.current && !notificationsRef.current.contains(e.target as Node)) {
         setIsNotificationsOpen(false);
+      }
+
+      if (profileMenuRef.current && !profileMenuRef.current.contains(e.target as Node)) {
+        setIsProfileMenuOpen(false);
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  useEffect(() => {
+    void fetchNotifications();
+  }, [fetchNotifications]);
+
+  useEffect(() => {
+    if (!isNotificationsOpen) return;
+    void fetchNotifications();
+  }, [isNotificationsOpen, fetchNotifications]);
+
+  const userInitials = userName
+    .split(" ")
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part[0]?.toUpperCase())
+    .join("") || "U";
+
+  const handleSignOut = async () => {
+    setIsSigningOut(true);
+    await signOutClient();
+    router.replace("/signin");
+  };
+
+  const handleMarkAllRead = async () => {
+    const unreadIds = notifications.filter((item) => !item.is_read).map((item) => item.id);
+    if (unreadIds.length === 0) return;
+
+    try {
+      await apiRequest<NotificationRow[]>("/api/client/notifications/read", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ notificationIds: unreadIds })
+      });
+
+      setNotifications((prev) => prev.map((item) => ({ ...item, is_read: true })));
+    } catch (error) {
+      setNotificationsError(error instanceof Error ? error.message : "Failed to mark notifications as read.");
+    }
+  };
+
   return (
     <>
      
       {/* MobileSidebar is only mounted when isMobile is confirmed true — 
           so it NEVER exists in the DOM on desktop */}
-      {isMobile === true && (
+      {isMobile && (
         <MobileSidebar
-          isOpen={isMobileSidebarOpen}
+          isOpen={isMobile ? isMobileSidebarOpen : false}
           onClose={() => setIsMobileSidebarOpen(false)}
         />
       )}
@@ -664,9 +770,12 @@ export function Navbar() {
             <span className="">Submit Document</span>
           </Link>
 
-          <div className="relative" ref={dropdownRef}>
+          <div className="relative" ref={notificationsRef}>
             <button
-              onClick={() => setIsNotificationsOpen(!isNotificationsOpen)}
+              onClick={() => {
+                setIsNotificationsOpen(!isNotificationsOpen);
+                setIsProfileMenuOpen(false);
+              }}
               className={`relative p-2.5 border rounded-[8px] transition-colors shadow-[0_1px_2px_rgba(0,0,0,0.02)] ${
                 isNotificationsOpen
                   ? "border-[#00A0E3] bg-[#F4FAFD] text-[#00A0E3]"
@@ -674,7 +783,11 @@ export function Navbar() {
               }`}
             >
               <Bell className="w-[20px] h-[20px]" strokeWidth={1.5} />
-              <span className="absolute top-[9px] right-[10px] w-[6px] h-[6px] bg-[#00A0E3] rounded-full ring-2 ring-white"></span>
+              {unreadCount > 0 ? (
+                <span className="absolute top-[7px] right-[7px] min-w-[16px] h-[16px] px-1 rounded-full bg-[#00A0E3] text-white text-[10px] font-semibold leading-[16px] text-center ring-2 ring-white">
+                  {unreadCount > 9 ? "9+" : unreadCount}
+                </span>
+              ) : null}
             </button>
  
 {/* Notifications */}
@@ -683,40 +796,64 @@ export function Navbar() {
  
                 <div className="px-5 pt-5 pb-4 border-b border-gray-100 flex items-center justify-between">
                   <h3 className="text-[16px] font-bold text-[#171717]">Notifications</h3>
-                  <button className="text-[#00A0E3] text-[13px] font-medium hover:underline">
+                  <button
+                    type="button"
+                    onClick={handleMarkAllRead}
+                    disabled={notificationsLoading || unreadCount === 0}
+                    className="text-[#00A0E3] text-[13px] font-medium hover:underline disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
                     Mark All as Read
                   </button>
                 </div>
 
                 <div className="flex flex-col divide-y divide-[#EAECF0] max-h-[420px] overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
-                  {notificationsData.map((notif) => (
-                    <div
-                      key={notif.id}
-                      className="p-2 flex items-start gap-3 hover:bg-[#F9FAFB] transition-colors cursor-pointer group"
-                    >
-                      <div className={`w-[40px] h-[40px] rounded-[10px] flex items-center justify-center shrink-0 ${notif.iconBg}`}>
-                        <notif.icon className={`w-[20px] h-[20px] ${notif.iconColor}`} strokeWidth={2.5} />
-                      </div>
-                      <div className="flex-1 flex flex-col pt-0.5">
-                        <div className="flex items-start justify-between gap-2 mb-1">
-                          <h4 className="text-[14px] font-medium text-[#171717] leading-tight group-hover:text-[#00A0E3] transition-colors pr-2">
-                            {notif.title}
-                          </h4>
-                          <span className="text-[12px] text-[#A0AAB5] shrink-0 whitespace-nowrap">
-                            {notif.time}
-                          </span>
-                        </div>
-                        <div className="flex items-end justify-between gap-4">
-                          <p className="text-[#8A94A6] text-[13px] leading-relaxed line-clamp-1 pr-4">
-                            {notif.desc}
-                          </p>
-                          {notif.unread && (
-                            <div className="w-[6px] h-[6px] bg-[#00A0E3] rounded-full shrink-0 mb-1.5"></div>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                  ))}
+                  {notificationsLoading ? (
+                    <p className="p-4 text-[13px] text-[#8A94A6]">Loading notifications...</p>
+                  ) : null}
+
+                  {!notificationsLoading && notificationsError ? (
+                    <p className="p-4 text-[13px] text-[#B42318]">{notificationsError}</p>
+                  ) : null}
+
+                  {!notificationsLoading && !notificationsError && visibleNotifications.length === 0 ? (
+                    <p className="p-4 text-[13px] text-[#8A94A6]">No notifications yet.</p>
+                  ) : null}
+
+                  {!notificationsLoading && !notificationsError
+                    ? visibleNotifications.map((notif) => {
+                        const visual = getNotificationVisual(notif.type);
+                        const Icon = visual.icon;
+
+                        return (
+                          <div
+                            key={notif.id}
+                            className="p-2 flex items-start gap-3 hover:bg-[#F9FAFB] transition-colors cursor-pointer group"
+                          >
+                            <div className={`w-[40px] h-[40px] rounded-[10px] flex items-center justify-center shrink-0 ${visual.iconBg}`}>
+                              <Icon className={`w-[20px] h-[20px] ${visual.iconColor}`} strokeWidth={2.5} />
+                            </div>
+                            <div className="flex-1 flex flex-col pt-0.5">
+                              <div className="flex items-start justify-between gap-2 mb-1">
+                                <h4 className="text-[14px] font-medium text-[#171717] leading-tight group-hover:text-[#00A0E3] transition-colors pr-2">
+                                  {notif.title || "Notification"}
+                                </h4>
+                                <span className="text-[12px] text-[#A0AAB5] shrink-0 whitespace-nowrap">
+                                  {getRelativeTime(notif.created_at)}
+                                </span>
+                              </div>
+                              <div className="flex items-end justify-between gap-4">
+                                <p className="text-[#8A94A6] text-[13px] leading-relaxed line-clamp-1 pr-4">
+                                  {notif.body || "No additional details available."}
+                                </p>
+                                {!notif.is_read ? (
+                                  <div className="w-[6px] h-[6px] bg-[#00A0E3] rounded-full shrink-0 mb-1.5" />
+                                ) : null}
+                              </div>
+                            </div>
+                          </div>
+                        );
+                      })
+                    : null}
                 </div>
 
                 <div className="p-4 border-t border-[#EAECF0] bg-[#FAFAFB] text-center">
@@ -732,12 +869,46 @@ export function Navbar() {
             )}
           </div>
 
-          <div className="w-[40px] h-[40px] rounded-full overflow-hidden border border-[#EAECF0] cursor-pointer flex-shrink-0">
-            <img
-              src="https://i.pravatar.cc/150?u=a042581f4e29026024d"
-              alt="User Profile"
-              className="w-full h-full object-cover"
-            />
+          <div className="relative" ref={profileMenuRef}>
+            <button
+              onClick={() => {
+                setIsProfileMenuOpen(!isProfileMenuOpen);
+                setIsNotificationsOpen(false);
+              }}
+              className="w-[40px] h-[40px] rounded-full border border-[#EAECF0] cursor-pointer flex-shrink-0 bg-[#F0F7FB] text-[#0B74A5] text-[13px] font-semibold flex items-center justify-center"
+              aria-label="Open profile menu"
+            >
+              {userInitials}
+            </button>
+
+            {isProfileMenuOpen && (
+              <div className="absolute right-0 top-[calc(100%+12px)] w-[250px] bg-white border border-[#EAECF0] rounded-[12px] shadow-[0_8px_30px_rgba(0,0,0,0.08)] overflow-hidden z-50">
+                <div className="px-4 pt-4 pb-3 border-b border-[#EAECF0]">
+                  <p className="text-[14px] font-semibold text-[#171717] leading-tight">{userName}</p>
+                  <p className="text-[12px] text-[#8A94A6] mt-1 truncate">{userEmail}</p>
+                </div>
+
+                <div className="py-1.5">
+                  <Link
+                    href="/user/profile"
+                    onClick={() => setIsProfileMenuOpen(false)}
+                    className="px-4 py-2.5 text-[13px] text-[#171717] hover:bg-[#F8FAFB] flex items-center gap-2"
+                  >
+                    <Settings className="w-4 h-4 text-[#8A94A6]" strokeWidth={2} />
+                    Profile Settings
+                  </Link>
+                  <button
+                    type="button"
+                    onClick={handleSignOut}
+                    disabled={isSigningOut}
+                    className="w-full px-4 py-2.5 text-left text-[13px] text-[#B42318] hover:bg-[#FFF5F5] flex items-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
+                  >
+                    <LogOut className="w-4 h-4" strokeWidth={2} />
+                    {isSigningOut ? "Signing out..." : "Sign Out"}
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </header>

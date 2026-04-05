@@ -150,7 +150,7 @@ npm run dev
 - `documents` and `assignments` are modeled as one record, as requested. Assignment state lives directly on the `documents` table through `assigned_editor_id`, `status`, and `deadline_at`.
 - Draft submissions expire after 2 hours. Run `POST /api/system/cleanup-drafts` from a cron job.
 - DOC, DOCX, and PDF uploads are supported up to 25 MB.
-- Word count is stored as a number only. Extracted text is not persisted.
+- Word count is stored as a number only. Extracted text is not persisted
 - The email sender is a placeholder in `lib/email.ts`. Replace it with Resend, SMTP, or another provider before production.
 - Some analytics fields currently return `0` placeholders where exact business rules were not fully specified, such as turnaround averages and revision percentages.
 

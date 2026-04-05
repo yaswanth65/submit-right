@@ -86,6 +86,7 @@ npm run dev
 - `GET /api/client/home`
 - `GET /api/client/overview`
 - `GET /api/client/documents`
+- `GET /api/client/documents/:documentId`
 - `POST /api/client/documents`
 - `POST /api/client/documents/upload` multipart: `documentId`, `file`
 - `POST /api/client/documents/service`

@@ -157,6 +157,14 @@
           }
         },
         {
+          "name": "Document Detail",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }],
+            "url": { "raw": "{{baseUrl}}/api/client/documents/{{documentId}}", "host": ["{{baseUrl}}"], "path": ["api", "client", "documents", "{{documentId}}"] }
+          }
+        },
+        {
           "name": "Create Draft Document - Step 1",
           "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["const json = pm.response.json();", "if (json.id) pm.collectionVariables.set('documentId', json.id);"] } }],
           "request": {

@@ -19,7 +19,7 @@ export function Sidebar() {
     { name: "Assignments", href: "/admin/assignments", icon: ClipboardList },
     { name: "Tickets", href: "/admin/tickets", icon: MessageSquare },
     { name: "Payments", href: "/admin/payments", icon: CreditCard },
-    { name: "CMS", href: "#", icon: MonitorCog },
+    { name: "CMS", href: "/admin/cms", icon: MonitorCog },
     { name: "Blogs", href: "#", icon: Type },
     { name: "Form Submissions", href: "#", icon: MessageSquare },
     { name: "Reports", href: "/admin/reports", icon: BarChart2 },

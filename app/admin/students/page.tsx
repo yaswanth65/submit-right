@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
-import { Search, SlidersHorizontal, MoreVertical } from "lucide-react";
+import { Search, SlidersHorizontal, ChevronRight } from "lucide-react";
 import { apiGet } from "@/lib/client-api";
 
 type ClientProfile = {
@@ -11,11 +11,26 @@ type ClientProfile = {
   email?: string;
   created_at?: string;
   avatar_url?: string;
-  is_restricted?: boolean;
-  is_suspended?: boolean;
-  restricted_at?: string | null;
-  suspended_at?: string | null;
+  account_status?: string;
 };
+
+type StudentDetailPayload = {
+  paymentHistory: Array<{
+    amount?: number | string;
+    status?: string;
+  }>;
+  documentHistory: Array<{
+    status?: string;
+  }>;
+};
+
+type StudentMetrics = {
+  activeDocs: number;
+  completedDocs: number;
+  totalSpend: number;
+};
+
+const paidStatuses = new Set(["paid", "success", "captured", "completed"]);
 
 function formatDate(value?: string) {
   if (!value) {
@@ -30,11 +45,11 @@ function formatDate(value?: string) {
 }
 
 function resolveStatus(profile: ClientProfile) {
-  if (profile.is_suspended || profile.suspended_at) {
+  if (profile.account_status === "suspended") {
     return "Suspended";
   }
 
-  if (profile.is_restricted || profile.restricted_at) {
+  if (profile.account_status === "restricted") {
     return "Restricted";
   }
 
@@ -51,8 +66,21 @@ function statusPill(status: string) {
 export default function StudentsPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [profiles, setProfiles] = useState<ClientProfile[]>([]);
+  const [metricsById, setMetricsById] = useState<Record<string, StudentMetrics>>({});
   const [loading, setLoading] = useState(true);
+  const [metricsLoading, setMetricsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  const currencyFormatter = useMemo(
+    () =>
+      new Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency: "USD",
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      }),
+    []
+  );
 
   useEffect(() => {
     let active = true;
@@ -85,6 +113,71 @@ export default function StudentsPage() {
       clearTimeout(timer);
     };
   }, [searchTerm]);
+
+  useEffect(() => {
+    let active = true;
+
+    const loadMetrics = async () => {
+      if (profiles.length === 0) {
+        setMetricsById({});
+        return;
+      }
+
+      try {
+        setMetricsLoading(true);
+        const settled = await Promise.allSettled(
+          profiles.map(async (profile) => {
+            const detail = await apiGet<StudentDetailPayload>(`/api/admin/clients/${profile.id}`);
+            const documents = Array.isArray(detail.documentHistory) ? detail.documentHistory : [];
+            const payments = Array.isArray(detail.paymentHistory) ? detail.paymentHistory : [];
+
+            const completedDocs = documents.filter((doc) => doc.status === "completed").length;
+            const activeDocs = documents.filter((doc) => doc.status !== "completed" && doc.status !== "cancelled").length;
+            const totalSpend = payments.reduce((sum, row) => {
+              const status = (row.status || "").toLowerCase();
+              if (!paidStatuses.has(status)) {
+                return sum;
+              }
+              const amount = Number(row.amount ?? 0);
+              return Number.isFinite(amount) ? sum + amount : sum;
+            }, 0);
+
+            return [
+              profile.id,
+              {
+                activeDocs,
+                completedDocs,
+                totalSpend
+              }
+            ] as const;
+          })
+        );
+
+        if (!active) {
+          return;
+        }
+
+        const next: Record<string, StudentMetrics> = {};
+        for (const result of settled) {
+          if (result.status === "fulfilled") {
+            const [id, metrics] = result.value;
+            next[id] = metrics;
+          }
+        }
+        setMetricsById(next);
+      } finally {
+        if (active) {
+          setMetricsLoading(false);
+        }
+      }
+    };
+
+    void loadMetrics();
+
+    return () => {
+      active = false;
+    };
+  }, [profiles]);
 
   const students = useMemo(() => profiles, [profiles]);
 
@@ -128,34 +221,46 @@ export default function StudentsPage() {
                 <th className="py-3 px-4 text-[13px] font-bold text-[#525866]">Completed Docs.</th>
                 <th className="py-3 px-4 text-[13px] font-bold text-[#525866]">Total Spend</th>
                 <th className="py-3 px-4 text-[13px] font-bold text-[#525866]">Account Status</th>
-                <th className="py-3 px-4 text-[13px] font-bold text-[#525866]">Action</th>
+                <th className="py-3 px-4 text-[13px] font-bold text-[#525866]">Open</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-[#EAECF0] bg-white">
               {students.map((student) => (
                 <tr key={student.id} className="hover:bg-[#F9FAFB] transition-colors">
                   <td className="py-3 px-4">
-                    <Link href="#" className="flex items-center gap-3">
+                    <Link href={`/admin/students/${student.id}`} className="flex items-center gap-3">
                       <img src={student.avatar_url || `https://i.pravatar.cc/100?u=${student.id}`} alt={student.full_name || "Student"} className="w-9 h-9 rounded-full object-cover" />
                       <div>
-                        <div className="text-[14px] font-bold text-[#171717] leading-tight">{student.full_name || "Student"}</div>
-                        <div className="text-[12px] text-[#525866] mt-1">{student.email || "-"}</div>
+                        <div className="text-[13px] font-bold text-[#171717] leading-tight">{student.full_name || "Student"}</div>
+                        <div className="text-[11px] text-[#525866] mt-1">{student.email || "-"}</div>
                       </div>
                     </Link>
                   </td>
-                  <td className="py-3 px-4 text-[14px] font-medium text-[#525866]">{formatDate(student.created_at)}</td>
-                  <td className="py-3 px-4 text-[14px] font-medium text-[#525866]">-</td>
-                  <td className="py-3 px-4 text-[14px] font-medium text-[#525866]">-</td>
-                  <td className="py-3 px-4 text-[14px] font-medium text-[#525866]">-</td>
+                  <td className="py-3 px-4 text-[13px] font-medium text-[#525866]">{formatDate(student.created_at)}</td>
+                  <td className="py-3 px-4 text-[13px] font-medium text-[#525866]">
+                    {metricsLoading && !metricsById[student.id] ? "..." : (metricsById[student.id]?.activeDocs ?? 0)}
+                  </td>
+                  <td className="py-3 px-4 text-[13px] font-medium text-[#525866]">
+                    {metricsLoading && !metricsById[student.id] ? "..." : (metricsById[student.id]?.completedDocs ?? 0)}
+                  </td>
+                  <td className="py-3 px-4 text-[13px] font-medium text-[#525866]">
+                    {metricsLoading && !metricsById[student.id]
+                      ? "..."
+                      : currencyFormatter.format(metricsById[student.id]?.totalSpend ?? 0)}
+                  </td>
                   <td className="py-3 px-4">
                     <span className={`px-3 py-[4px] rounded-full text-[11px] font-bold inline-flex ${statusPill(resolveStatus(student))}`}>
                       {resolveStatus(student)}
                     </span>
                   </td>
                   <td className="py-3 px-4">
-                    <button className="text-[#171717] hover:bg-[#F3F4F6] rounded p-1.5 transition-colors">
-                      <MoreVertical className="w-[18px] h-[18px]" />
-                    </button>
+                    <Link
+                      href={`/admin/students/${student.id}`}
+                      className="inline-flex items-center gap-1.5 text-[12px] font-semibold text-[#00A0E3] hover:text-[#0090D1]"
+                    >
+                      View
+                      <ChevronRight className="w-[14px] h-[14px]" />
+                    </Link>
                   </td>
                 </tr>
               ))}

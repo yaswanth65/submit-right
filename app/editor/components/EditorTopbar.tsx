@@ -1,16 +1,44 @@
-﻿"use client";
+"use client";
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { Bell, CheckCircle2, FileText, LayoutDashboard, LayoutTemplate, MessageSquare, TriangleAlert } from "lucide-react";
-import { usePathname } from "next/navigation";
+import {
+  Bell,
+  CheckCircle2,
+  FileText,
+  LayoutDashboard,
+  LayoutTemplate,
+  LogOut,
+  MessageSquare,
+  Settings,
+  TriangleAlert,
+} from "lucide-react";
+import { usePathname, useRouter } from "next/navigation";
+import { getStoredAuthSession, signOutClient } from "@/lib/client-auth";
+
+type NotificationItem = {
+  id: number;
+  title: string;
+  subtitle: string;
+  time: string;
+  unread: boolean;
+  icon: typeof FileText;
+  iconBg: string;
+  iconColor: string;
+};
 
 export function EditorTopbar() {
   const pathname = usePathname();
-  const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
-  const notificationsRef = useRef<HTMLDivElement | null>(null);
+  const router = useRouter();
 
-  const [notifications, setNotifications] = useState([
+  const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
+  const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
+  const [isSigningOut, setIsSigningOut] = useState(false);
+
+  const notificationsRef = useRef<HTMLDivElement | null>(null);
+  const profileMenuRef = useRef<HTMLDivElement | null>(null);
+
+  const [notifications, setNotifications] = useState<NotificationItem[]>([
     {
       id: 1,
       title: "New document assigned",
@@ -63,6 +91,23 @@ export function EditorTopbar() {
     },
   ]);
 
+  const session = getStoredAuthSession();
+  const userName =
+    typeof session?.user?.full_name === "string" && session.user.full_name.trim()
+      ? session.user.full_name
+      : "Editor";
+  const userEmail =
+    typeof session?.user?.email === "string" && session.user.email.trim()
+      ? session.user.email
+      : "editor@submitright.com";
+  const userInitials =
+    userName
+      .split(" ")
+      .filter(Boolean)
+      .slice(0, 2)
+      .map((part) => part[0]?.toUpperCase())
+      .join("") || "E";
+
   const hasUnread = notifications.some((item) => item.unread);
 
   const markAllAsRead = () => {
@@ -70,18 +115,23 @@ export function EditorTopbar() {
   };
 
   const markAsRead = (id: number) => {
-    setNotifications((prev) =>
-      prev.map((item) => (item.id === id ? { ...item, unread: false } : item))
-    );
+    setNotifications((prev) => prev.map((item) => (item.id === id ? { ...item, unread: false } : item)));
+  };
+
+  const handleSignOut = async () => {
+    setIsSigningOut(true);
+    await signOutClient();
+    router.replace("/signin");
   };
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (
-        notificationsRef.current &&
-        !notificationsRef.current.contains(event.target as Node)
-      ) {
+      if (notificationsRef.current && !notificationsRef.current.contains(event.target as Node)) {
         setIsNotificationsOpen(false);
+      }
+
+      if (profileMenuRef.current && !profileMenuRef.current.contains(event.target as Node)) {
+        setIsProfileMenuOpen(false);
       }
     };
 
@@ -144,14 +194,15 @@ export function EditorTopbar() {
 
   return (
     <header className="h-[76px] bg-[#FFFFFF] border-b border-[#EAECF0] flex items-center justify-between px-8 sticky top-0 z-10 font-dm-sans">
-      <div className="flex items-center text-[13px] font-medium">
-        {breadcrumb}
-      </div>
+      <div className="flex items-center text-[13px] font-medium">{breadcrumb}</div>
 
-      <div className="flex items-center space-x-4" ref={notificationsRef}>
-        <div className="relative">
+      <div className="flex items-center space-x-4">
+        <div className="relative" ref={notificationsRef}>
           <button
-            onClick={() => setIsNotificationsOpen((prev) => !prev)}
+            onClick={() => {
+              setIsNotificationsOpen((prev) => !prev);
+              setIsProfileMenuOpen(false);
+            }}
             className="w-[42px] h-[42px] border border-[#EAECF0] rounded-[10px] flex items-center justify-center text-[#525866] hover:bg-[#F9FAFB] relative shadow-[0_1px_2px_rgba(0,0,0,0.02)] transition-colors"
           >
             <Bell className="w-[18px] h-[18px]" strokeWidth={2} />
@@ -164,12 +215,18 @@ export function EditorTopbar() {
             <div className="absolute right-0 top-[52px] w-[360px] bg-white border border-[#EAECF0] rounded-[16px] shadow-[0_16px_32px_rgba(0,0,0,0.08)] overflow-hidden z-50">
               <div className="px-5 py-4 border-b border-[#EAECF0] flex items-center justify-between">
                 <div className="text-[18px] leading-[24px] font-semibold text-[#171717]">Notifications</div>
-                <button onClick={markAllAsRead} className="text-[13px] text-[#00A0E3] font-medium hover:underline">Mark All as Read</button>
+                <button onClick={markAllAsRead} className="text-[13px] text-[#00A0E3] font-medium hover:underline">
+                  Mark All as Read
+                </button>
               </div>
 
               <div className="max-h-[360px] overflow-y-auto">
                 {notifications.map((item) => (
-                  <button key={item.id} onClick={() => markAsRead(item.id)} className="w-full text-left px-5 py-3 border-b border-[#EAECF0] last:border-b-0 hover:bg-[#F9FAFB] transition-colors">
+                  <button
+                    key={item.id}
+                    onClick={() => markAsRead(item.id)}
+                    className="w-full text-left px-5 py-3 border-b border-[#EAECF0] last:border-b-0 hover:bg-[#F9FAFB] transition-colors"
+                  >
                     <div className="flex items-start gap-3">
                       <div className={`w-8 h-8 rounded-[8px] flex items-center justify-center shrink-0 ${item.iconBg}`}>
                         <item.icon className={`w-3.5 h-3.5 ${item.iconColor}`} />
@@ -180,9 +237,7 @@ export function EditorTopbar() {
                       </div>
                       <div className="text-right shrink-0 min-w-[70px]">
                         <div className="text-[12px] leading-[16px] text-[#8A94A6]">{item.time}</div>
-                        {item.unread ? (
-                          <div className="w-[6px] h-[6px] rounded-full bg-[#00A0E3] mt-1.5 ml-auto"></div>
-                        ) : null}
+                        {item.unread ? <div className="w-[6px] h-[6px] rounded-full bg-[#00A0E3] mt-1.5 ml-auto"></div> : null}
                       </div>
                     </div>
                   </button>
@@ -200,12 +255,46 @@ export function EditorTopbar() {
           ) : null}
         </div>
 
-        <div className="w-[40px] h-[40px] rounded-full overflow-hidden border border-[#EAECF0] cursor-pointer flex-shrink-0">
-          <img
-            src="https://i.pravatar.cc/150?u=a042581f4e29026024d"
-            alt="User Profile"
-            className="w-full h-full object-cover"
-          />
+        <div className="relative" ref={profileMenuRef}>
+          <button
+            onClick={() => {
+              setIsProfileMenuOpen((prev) => !prev);
+              setIsNotificationsOpen(false);
+            }}
+            className="w-[40px] h-[40px] rounded-full border border-[#EAECF0] cursor-pointer flex-shrink-0 bg-[#F0F7FB] text-[#0B74A5] text-[13px] font-semibold flex items-center justify-center"
+            aria-label="Open profile menu"
+          >
+            {userInitials}
+          </button>
+
+          {isProfileMenuOpen ? (
+            <div className="absolute right-0 top-[52px] w-[250px] bg-white border border-[#EAECF0] rounded-[12px] shadow-[0_8px_30px_rgba(0,0,0,0.08)] overflow-hidden z-50">
+              <div className="px-4 pt-4 pb-3 border-b border-[#EAECF0]">
+                <p className="text-[14px] font-semibold text-[#171717] leading-tight">{userName}</p>
+                <p className="text-[12px] text-[#8A94A6] mt-1 truncate">{userEmail}</p>
+              </div>
+
+              <div className="py-1.5">
+                <Link
+                  href="/editor/profile"
+                  onClick={() => setIsProfileMenuOpen(false)}
+                  className="px-4 py-2.5 text-[13px] text-[#171717] hover:bg-[#F8FAFB] flex items-center gap-2"
+                >
+                  <Settings className="w-4 h-4 text-[#8A94A6]" strokeWidth={2} />
+                  Profile Settings
+                </Link>
+                <button
+                  type="button"
+                  onClick={handleSignOut}
+                  disabled={isSigningOut}
+                  className="w-full px-4 py-2.5 text-left text-[13px] text-[#B42318] hover:bg-[#FFF5F5] flex items-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
+                >
+                  <LogOut className="w-4 h-4" strokeWidth={2} />
+                  {isSigningOut ? "Signing out..." : "Sign Out"}
+                </button>
+              </div>
+            </div>
+          ) : null}
         </div>
       </div>
     </header>

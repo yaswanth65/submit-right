@@ -287,6 +287,36 @@ export function Topbar() {
     );
   }
 
+  if (pathname === "/admin/coupon-management") {
+    breadcrumb = (
+      <>
+        <span className="text-[#525866]">Home</span>
+        <span className="text-[#A0AAB5]">&gt;</span>
+        <span className="text-[#171717] font-semibold">Coupon Management</span>
+      </>
+    );
+  }
+
+  if (pathname === "/admin/blogs") {
+    breadcrumb = (
+      <>
+        <span className="text-[#525866]">Home</span>
+        <span className="text-[#A0AAB5]">&gt;</span>
+        <span className="text-[#171717] font-semibold">Blogs</span>
+      </>
+    );
+  }
+
+  if (pathname === "/admin/form-submissions") {
+    breadcrumb = (
+      <>
+        <span className="text-[#525866]">Home</span>
+        <span className="text-[#A0AAB5]">&gt;</span>
+        <span className="text-[#171717] font-semibold">Form Submissions</span>
+      </>
+    );
+  }
+
   return (
     <header className="h-[76px] bg-[#FFFFFF] border-b border-[#EAECF0] flex items-center justify-between px-8 sticky top-0 z-10 font-dm-sans">
       <div className="flex items-center space-x-2 text-[12px]">

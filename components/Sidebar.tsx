@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { LayoutDashboard, Users, UserCog, FileText, ClipboardList, CreditCard, MonitorCog, Type, MessageSquare, BarChart2, Settings, LogOut, ArrowLeftFromLine, UserCircle2 } from "lucide-react";
+import { LayoutDashboard, Users, UserCog, FileText, ClipboardList, CreditCard, MonitorCog, Type, MessageSquare, BarChart2, Settings, LogOut, ArrowLeftFromLine, UserCircle2, Folder, Package, Ticket } from "lucide-react";
 import { useState } from "react";
 import { signOutClient } from "@/lib/client-auth";
 
@@ -13,18 +13,19 @@ export function Sidebar() {
 
   const navItems = [
     { name: "Dashboard", href: "/admin/dashboard", icon: LayoutDashboard },
-    { name: "Students", href: "/admin/students", icon: Users },
+    { name: "User Management", href: "/admin/students", icon: Users },
+    { name: "Domains & Services", href: "/admin/domains-services", icon: Folder },
+    { name: "Packages", href: "/admin/packages", icon: Package },
     { name: "Editors", href: "/admin/editors", icon: UserCog },
     { name: "Documents", href: "/admin/documents", icon: FileText },
     { name: "Assignments", href: "/admin/assignments", icon: ClipboardList },
-    { name: "Tickets", href: "/admin/tickets", icon: MessageSquare },
     { name: "Payments", href: "/admin/payments", icon: CreditCard },
     { name: "CMS", href: "/admin/cms", icon: MonitorCog },
-    { name: "Blogs", href: "#", icon: Type },
-    { name: "Form Submissions", href: "#", icon: MessageSquare },
+    { name: "Blogs", href: "/admin/blogs", icon: Type },
+    { name: "Form Submissions", href: "/admin/form-submissions", icon: MessageSquare },
+    { name: "Coupon Management", href: "/admin/coupon-management", icon: Ticket },
     { name: "Reports", href: "/admin/reports", icon: BarChart2 },
     { name: "Settings", href: "/admin/settings", icon: Settings },
-    { name: "Profile", href: "/admin/profile", icon: UserCircle2 },
   ];
 
   const handleSignOut = async () => {

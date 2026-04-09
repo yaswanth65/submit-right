@@ -2,11 +2,11 @@
 
 export function QuoteCalculator() {
   return (
-    <section className="py-16 lg:py-24 bg-[#F3F9FC]">
-      <div className="w-full max-w-[1280px] mx-auto px-6 lg:px-10 xl:px-14">
+    <section className="py-12 sm:py-16 lg:py-24 bg-[#F3F9FC]">
+      <div className="w-full max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-14">
         
         {/* Header Section */}
-        <div className="text-center max-w-2xl mx-auto mb-12">
+        <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-12">
           {/* Badge */}
           <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-white border border-[#E5E5E5] rounded-full mb-5">
              <svg className="w-3.5 h-3.5 text-[#1C1C1D]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -18,22 +18,22 @@ export function QuoteCalculator() {
           </div>
 
           {/* Heading */}
-          <h2 className="text-[32px] lg:text-[32px] font-normal text-[#1C1C1D] leading-tight mb-4">
+          <h2 className="text-[26px] sm:text-[32px] font-normal text-[#1C1C1D] leading-tight mb-4">
             Quote Calculator
           </h2>
 
           {/* Description */}
-          <p className="text-[15px] text-[#65656D] leading-relaxed">
+          <p className="text-[13px] sm:text-[15px] text-[#65656D] leading-relaxed">
             Lorem ipsum dolor sit amet consectetur. Sagittis eu vel habitant cursus. 
             Elementum suscipit donec viverra posuere at lorem nullam.
           </p>
         </div>
 
         {/* Calculator Content */}
-        <div className="grid lg:grid-cols-2 gap-6 lg:gap-8 items-stretch max-w-[1040px] mx-auto">
+        <div className="grid lg:grid-cols-2 gap-5 sm:gap-6 lg:gap-8 items-stretch max-w-[1040px] mx-auto">
           {/* Left Side - Form */}
-          <div className="bg-white rounded-[24px] p-6 lg:p-8 shadow-[0_4px_20px_rgb(0,0,0,0.03)] flex flex-col justify-between">
-            <div className="space-y-7">
+          <div className="bg-white rounded-2xl sm:rounded-[24px] p-4 sm:p-6 lg:p-8 shadow-[0_4px_20px_rgb(0,0,0,0.03)] flex flex-col justify-between">
+            <div className="space-y-6 sm:space-y-7">
               {/* Input Words */}
               <div>
                 <label className="block text-[13px] font-semibold text-[#1C1C1D] mb-2.5">
@@ -56,15 +56,15 @@ export function QuoteCalculator() {
               </div>
 
               {/* Document Type & Service grid */}
-              <div className="grid grid-cols-2 gap-5">
+              <div className="grid grid-cols-2 gap-3 sm:gap-5">
                 {/* Document Type */}
                 <div>
                   <label className="block text-[13px] font-semibold text-[#1C1C1D] mb-2.5">
                     Document Type
                   </label>
-                  <div className="flex items-center justify-between h-[46px] px-4 border border-[#F0F0F0] rounded-xl cursor-pointer bg-[#FAFAFA]">
-                    <span className="text-[14px] text-[#65656D]">Select</span>
-                    <svg className="w-4 h-4 text-[#1C1C1D]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" /></svg>
+                  <div className="flex items-center justify-between h-[46px] px-3 sm:px-4 border border-[#F0F0F0] rounded-xl cursor-pointer bg-[#FAFAFA]">
+                    <span className="text-[13px] sm:text-[14px] text-[#65656D] truncate">Select</span>
+                    <svg className="w-4 h-4 text-[#1C1C1D] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" /></svg>
                   </div>
                 </div>
 
@@ -73,33 +73,33 @@ export function QuoteCalculator() {
                   <label className="block text-[13px] font-semibold text-[#1C1C1D] mb-2.5">
                     Service
                   </label>
-                  <div className="flex items-center justify-between h-[46px] px-4 border border-[#F0F0F0] rounded-xl cursor-pointer bg-[#FAFAFA]">
-                    <span className="text-[14px] text-[#65656D]">Select</span>
-                    <svg className="w-4 h-4 text-[#1C1C1D]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" /></svg>
+                  <div className="flex items-center justify-between h-[46px] px-3 sm:px-4 border border-[#F0F0F0] rounded-xl cursor-pointer bg-[#FAFAFA]">
+                    <span className="text-[13px] sm:text-[14px] text-[#65656D] truncate">Select</span>
+                    <svg className="w-4 h-4 text-[#1C1C1D] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" /></svg>
                   </div>
                 </div>
               </div>
             </div>
 
             {/* Price Cards */}
-            <div className="grid grid-cols-2 gap-4 mt-8 lg:mt-10">
-              <div className="bg-[#008CC9] rounded-[16px] p-6 text-white shadow-[0_8px_20px_rgba(0,140,201,0.15)]">
-                <div className="text-[13px] font-medium mb-1">Estimated Pricing</div>
-                <div className="text-[32px] font-semibold tracking-tight">$160.00</div>
+            <div className="grid grid-cols-2 gap-3 sm:gap-4 mt-7 sm:mt-8 lg:mt-10">
+              <div className="bg-[#008CC9] rounded-[14px] sm:rounded-[16px] p-4 sm:p-5 text-white shadow-[0_8px_20px_rgba(0,140,201,0.15)] flex flex-col justify-center">
+                <div className="text-[11px] sm:text-[13px] font-medium mb-1">Estimated Pricing</div>
+                <div className="text-[20px] sm:text-[28px] lg:text-[32px] font-semibold tracking-tight leading-none">$160.00</div>
               </div>
-              <div className="bg-[#01405B] rounded-[16px] p-6 text-white shadow-[0_8px_20px_rgba(1,64,91,0.15)]">
-                <div className="text-[13px] font-medium mb-1">Estimated Time Period</div>
-                <div className="text-[32px] font-semibold tracking-tight">5 days</div>
+              <div className="bg-[#01405B] rounded-[14px] sm:rounded-[16px] p-4 sm:p-5 text-white shadow-[0_8px_20px_rgba(1,64,91,0.15)] flex flex-col justify-center">
+                <div className="text-[11px] sm:text-[13px] font-medium mb-1">Estimated Time Period</div>
+                <div className="text-[20px] sm:text-[28px] lg:text-[32px] font-semibold tracking-tight leading-none">5 days</div>
               </div>
             </div>
           </div>
 
           {/* Right Side - Chart */}
-          <div className="bg-white rounded-[24px] p-6 lg:p-8 shadow-[0_4px_20px_rgb(0,0,0,0.03)] flex flex-col">
+          <div className="bg-white rounded-2xl sm:rounded-[24px] p-4 sm:p-6 lg:p-8 shadow-[0_4px_20px_rgb(0,0,0,0.03)] flex flex-col">
             <h3 className="text-[17px] font-semibold text-[#1C1C1D] mb-8">Lorem ipsum dolor</h3>
 
             {/* Chart Area */}
-            <div className="relative flex-1 flex flex-col justify-end min-h-[300px]">
+            <div className="relative flex-1 flex flex-col justify-end min-h-[240px] sm:min-h-[300px]">
               <div className="absolute inset-0 flex">
                 {/* Y Axis */}
                 <div className="flex flex-col justify-between text-[12px] text-[#65656D] h-full pr-4 pb-[36px] w-[50px] text-right">
@@ -136,7 +136,7 @@ export function QuoteCalculator() {
               </div>
 
               {/* X Axis Labels */}
-              <div className="flex justify-between text-[12px] text-[#65656D] pl-[50px] relative z-20">
+              <div className="flex justify-between text-[11px] sm:text-[12px] text-[#65656D] pl-[50px] relative z-20">
                 <span className="w-10 text-center -ml-5 mt-2">2 days</span>
                 <span className="w-10 text-center -ml-5 mt-2">4 days</span>
                 <span className="w-10 text-center -ml-5 mt-2">6 days</span>

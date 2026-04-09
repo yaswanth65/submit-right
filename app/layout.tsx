@@ -32,7 +32,7 @@
 //   );
 // }
 // Global layout.tsx (app/layout.tsx)
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { DM_Sans, Inter } from "next/font/google";
 import "./globals.css";
 
@@ -49,6 +49,11 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "Dashboard",
   description: "Pixel-perfect tailwind dashboard",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
 };
 
 export default function RootLayout({

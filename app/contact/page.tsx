@@ -10,22 +10,22 @@ export default function ContactPage() {
       <Navbar />
 
       {/* Hero Section */}
-      <section className="relative hero-svg-bg pt-16 pb-20 lg:pt-24 lg:pb-32 overflow-hidden">
+      <section className="relative hero-svg-bg pt-14 sm:pt-16 pb-16 sm:pb-20 lg:pt-24 lg:pb-32 overflow-hidden">
 
-        <div className="w-full max-w-[1280px] mx-auto px-6 lg:px-10 xl:px-14 relative z-10">
-          <div className="flex flex-col lg:flex-row gap-12 lg:gap-24">
+        <div className="w-full max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-14 relative z-10">
+          <div className="flex flex-col lg:flex-row gap-10 sm:gap-12 lg:gap-24">
             
             {/* Left Contet */}
             <div className="flex-1 lg:max-w-[480px]">
-              <h1 className="text-[36px] lg:text-[44px] font-semibold text-[#1C1C1D] leading-[1.15] mb-4">
+              <h1 className="text-[30px] sm:text-[36px] lg:text-[44px] font-semibold text-[#1C1C1D] leading-[1.15] mb-4">
                 Lorem ipsum dolor sit amet consectetur
               </h1>
-              <p className="text-[15px] text-[#65656D] leading-relaxed mb-12">
+              <p className="text-[14px] sm:text-[15px] text-[#65656D] leading-relaxed mb-8 sm:mb-12">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
                 tempor, amet, consectetur adipiscing elit, sed do eiusmod tempor.
               </p>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-12">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8 mb-8 sm:mb-12">
                 {/* Find us on */}
                 <div>
                   <div className="flex items-center gap-2 mb-2">
@@ -36,7 +36,7 @@ export default function ContactPage() {
                     <span className="text-[14px] font-semibold text-[#1C1C1D]">Find us on</span>
                   </div>
                   <p className="text-[14px] text-[#65656D] leading-relaxed">
-                    Lorem ipsum dolor sit amet,<br />
+                    Lorem ipsum dolor sit amet,<br className="hidden sm:block" />
                     consectetur adipiscing elit
                   </p>
                 </div>
@@ -69,7 +69,7 @@ export default function ContactPage() {
               </div>
 
               {/* Separator / Socials */}
-              <div className="border-t border-[#DDE7ED] pt-6 flex items-center gap-4">
+              <div className="border-t border-[#DDE7ED] pt-6 flex items-center gap-4 flex-wrap">
                 <a href="#" className="w-8 h-8 rounded-full bg-white flex items-center justify-center text-[#65656D] hover:text-[#00A0E3] shadow-sm border border-[#E5E7EB] transition-all">
                   <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M18.77 7.46H14.5v-1.9c0-.9.6-1.1 1-1.1h3V.5h-4.33C10.24.5 9.5 3.44 9.5 5.32v2.15h-3v4h3v12h5v-12h3.85l.42-4z"/></svg>
                 </a>
@@ -84,7 +84,7 @@ export default function ContactPage() {
 
             {/* Right Form Card */}
             <div className="flex-1">
-              <div className="bg-white rounded-[24px] shadow-[0_8px_30px_rgb(0,0,0,0.04)] p-8 lg:p-10 border border-[#F3F4F6]">
+              <div className="bg-white rounded-[20px] sm:rounded-[24px] shadow-[0_8px_30px_rgb(0,0,0,0.04)] p-5 sm:p-8 lg:p-10 border border-[#F3F4F6]">
                 <form className="space-y-5">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                     <div className="space-y-2">
@@ -160,25 +160,25 @@ export default function ContactPage() {
       </section>
 
       {/* FAQ Wrap */}
-      <section className="py-20 lg:py-24 bg-white relative z-10 -mt-10">
-        <div className="w-full max-w-[1000px] mx-auto px-6 lg:px-10 xl:px-14">
-          <h2 className="text-[32px] font-semibold text-[#1C1C1D] text-center mb-12">
+      <section className="py-14 sm:py-20 lg:py-24 bg-white relative z-10 -mt-3 sm:-mt-10">
+        <div className="w-full max-w-[1000px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-14">
+          <h2 className="text-[26px] sm:text-[32px] font-semibold text-[#1C1C1D] text-center mb-8 sm:mb-12">
             Frequently Asked Questions
           </h2>
           
           <div className="space-y-0">
             {[1, 2, 3, 4, 5, 6].map((num) => (
               <div key={num} className="border-b border-[#F0F0F0] last:border-0 group">
-                <button className="w-full flex items-center justify-between py-6 text-left hover:text-[#00A0E3] transition-colors">
-                  <div className="flex items-center gap-4">
-                    <span className="text-[14px] font-bold text-[#1C1C1D]">
+                <button className="w-full flex items-center justify-between py-5 sm:py-6 text-left hover:text-[#00A0E3] transition-colors gap-4">
+                  <div className="flex items-start sm:items-center gap-3 sm:gap-4 pr-3">
+                    <span className="text-[13px] sm:text-[14px] font-bold text-[#1C1C1D] shrink-0 mt-0.5 sm:mt-0">
                       {num.toString().padStart(2, '0')}
                     </span>
-                    <span className="text-[15px] font-medium text-[#65656D] group-hover:text-[#00A0E3]">
+                    <span className="text-[14px] sm:text-[15px] font-medium text-[#65656D] group-hover:text-[#00A0E3] leading-relaxed">
                       Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.
                     </span>
                   </div>
-                  <span className="text-[20px] text-[#00A0E3] font-light">
+                  <span className="text-[20px] text-[#00A0E3] font-light shrink-0">
                     +
                   </span>
                 </button>

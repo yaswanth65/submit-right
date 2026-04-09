@@ -51,11 +51,11 @@ export function TeamSection() {
   ];
 
   return (
-    <section className="py-20 lg:py-24 bg-white relative">
-      <div className="w-full max-w-[1280px] mx-auto px-6 lg:px-10 xl:px-14">
+    <section className="py-14 sm:py-20 lg:py-24 bg-white relative">
+      <div className="w-full max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-14">
         
         {/* Header */}
-        <div className="text-center mb-16">
+        <div className="text-center mb-10 sm:mb-16">
           {/* Badge */}
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#00A0E34D] bg-[#00A0E314] mb-6">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00A0E3" strokeWidth="2">
@@ -68,19 +68,19 @@ export function TeamSection() {
           </div>
 
           {/* Heading */}
-          <h2 className="text-[36px] lg:text-[44px] font-semibold text-[#1C1C1D] leading-[1.15] mb-4 max-w-[700px] mx-auto">
+          <h2 className="text-[28px] sm:text-[36px] lg:text-[44px] font-semibold text-[#1C1C1D] leading-[1.15] mb-4 max-w-[700px] mx-auto">
             Meet Our Submit Right Editorial Team
           </h2>
 
           {/* Description */}
-          <p className="text-[15px] text-[#65656D] leading-relaxed max-w-[600px] mx-auto">
+          <p className="text-[14px] sm:text-[15px] text-[#65656D] leading-relaxed max-w-[600px] mx-auto">
             Lorem ipsum dolor sit amet consectetur. Sagittis eu vel habitant cursus. 
             Elementum suscipit donec viverra posuere at lorem nullam.
           </p>
         </div>
 
         {/* Team Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6 lg:gap-8">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
           {team.map((member) => (
             <div key={member.id} className="flex flex-col">
               {/* Image Card */}
@@ -101,7 +101,7 @@ export function TeamSection() {
 
               {/* Text Below */}
               <div>
-                <h3 className="text-[15px] font-medium text-[#1C1C1D] mb-1">
+                <h3 className="text-[14px] sm:text-[15px] font-medium text-[#1C1C1D] mb-1">
                   {member.name}
                 </h3>
                 <p className="text-[13px] text-[#65656D]">

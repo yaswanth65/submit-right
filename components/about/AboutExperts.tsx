@@ -48,18 +48,18 @@ export function AboutExperts() {
   ];
 
   return (
-    <section className="py-20 lg:py-24 bg-[#F3F9FC] relative">
-      <div className="w-full max-w-[1280px] mx-auto px-6 lg:px-10 xl:px-14">
+    <section className="py-14 sm:py-20 lg:py-24 bg-[#F3F9FC] relative">
+      <div className="w-full max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-14">
         
-        <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-start">
+        <div className="grid lg:grid-cols-2 gap-10 sm:gap-16 lg:gap-24 items-start">
           
           {/* Cards Container - Two Column Layout */}
-          <div className="flex gap-8 w-full">
+          <div className="flex flex-col sm:flex-row gap-6 sm:gap-8 w-full">
             
             {/* Left Column */}
-            <div className="flex flex-col gap-12 flex-1">
+            <div className="flex flex-col gap-6 sm:gap-12 flex-1">
               {/* Card 1 - Editors */}
-              <div className="bg-white border border-[#F3F4F6] rounded-2xl p-6 w-full shadow-[0_4px_20px_rgb(0,0,0,0.03)]">
+              <div className="bg-white border border-[#F3F4F6] rounded-2xl p-5 sm:p-6 w-full shadow-[0_4px_20px_rgb(0,0,0,0.03)]">
                 <div className="w-10 h-10 bg-[#F3F9FC] rounded-lg flex items-center justify-center mb-5">
                   {experts[0].icon}
                 </div>
@@ -72,7 +72,7 @@ export function AboutExperts() {
               </div>
 
               {/* Card 3 - Subject Experts */}
-              <div className="bg-white border border-[#F3F4F6] rounded-2xl p-6 w-full shadow-[0_4px_20px_rgb(0,0,0,0.03)]">
+              <div className="bg-white border border-[#F3F4F6] rounded-2xl p-5 sm:p-6 w-full shadow-[0_4px_20px_rgb(0,0,0,0.03)]">
                 <div className="w-10 h-10 bg-[#F3F9FC] rounded-lg flex items-center justify-center mb-5">
                   {experts[2].icon}
                 </div>
@@ -86,9 +86,9 @@ export function AboutExperts() {
             </div>
 
             {/* Right Column */}
-            <div className="flex flex-col gap-12 flex-1 pt-12">
+            <div className="flex flex-col gap-6 sm:gap-12 flex-1 pt-0 sm:pt-12">
               {/* Card 2 - Translators */}
-              <div className="bg-white border border-[#F3F4F6] rounded-2xl p-6 w-full shadow-[0_4px_20px_rgb(0,0,0,0.03)]">
+              <div className="bg-white border border-[#F3F4F6] rounded-2xl p-5 sm:p-6 w-full shadow-[0_4px_20px_rgb(0,0,0,0.03)]">
                 <div className="w-10 h-10 bg-[#F3F9FC] rounded-lg flex items-center justify-center mb-5">
                   {experts[1].icon}
                 </div>
@@ -101,7 +101,7 @@ export function AboutExperts() {
               </div>
 
               {/* Car 4 - QA */}
-              <div className="bg-white border border-[#F3F4F6] rounded-2xl p-6 w-full shadow-[0_4px_20px_rgb(0,0,0,0.03)]">
+              <div className="bg-white border border-[#F3F4F6] rounded-2xl p-5 sm:p-6 w-full shadow-[0_4px_20px_rgb(0,0,0,0.03)]">
                 <div className="w-10 h-10 bg-[#F3F9FC] rounded-lg flex items-center justify-center mb-5">
                   {experts[3].icon}
                 </div>
@@ -128,11 +128,11 @@ export function AboutExperts() {
               </span>
             </div>
             
-            <h2 className="text-[32px] lg:text-[40px] font-medium text-[#1C1C1D] leading-[1.2] mb-6">
+            <h2 className="text-[26px] sm:text-[32px] lg:text-[40px] font-medium text-[#1C1C1D] leading-[1.2] mb-5 sm:mb-6">
               Our Work Is Completed By Qualified Academic Specialists
             </h2>
             
-            <div className="flex flex-col gap-5 text-[16px] text-[#65656D] leading-relaxed lg:max-w-[90%]">
+            <div className="flex flex-col gap-4 sm:gap-5 text-[14px] sm:text-[16px] text-[#65656D] leading-relaxed lg:max-w-[90%]">
               <p>
                 Every manuscript is assigned to a specialist with a background in your specific field of study. We don't believe in "generalist" editing.
               </p>

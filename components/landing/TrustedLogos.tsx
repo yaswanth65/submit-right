@@ -14,13 +14,13 @@ export function TrustedLogos() {
   const extendedLogos = [...logos, ...logos, ...logos];
 
   return (
-    <section className="py-12 bg-white">
-      <div className="w-full max-w-[1280px] mx-auto px-6 lg:px-10 xl:px-14">
+    <section className="py-10 sm:py-12 bg-white">
+      <div className="w-full max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-14">
        
 
         {/* Title */}
-        <div className="text-center mb-8">
-          <h2 className="text-[18px] font-medium text-[#78788D] leading-[1.1]">
+        <div className="text-center mb-6 sm:mb-8">
+          <h2 className="text-[16px] sm:text-[18px] font-medium text-[#78788D] leading-[1.2]">
             Lorem ipsum dolor sit amet
           </h2>
         </div>
@@ -37,11 +37,11 @@ export function TrustedLogos() {
           <div className="carousel-scroll">
             {extendedLogos.map((logo, index) => (
               <div key={`${logo.id}-${index}`} className="carousel-item flex items-center justify-center flex-shrink-0">
-                <div className="relative w-[120px] h-[100px] flex items-center justify-center">
+                <div className="relative w-[108px] h-[88px] sm:w-[120px] sm:h-[100px] flex items-center justify-center">
                   <img 
                     src={logo.src} 
                     alt={`Logo ${logo.id}`}
-                    className="max-w-[100px] max-h-[80px] object-contain opacity-80  hover:opacity-100 hover:grayscale-0 transition-all"
+                    className="max-w-[90px] max-h-[70px] sm:max-w-[100px] sm:max-h-[80px] object-contain opacity-80 hover:opacity-100 hover:grayscale-0 transition-all"
                   />
                 </div>
               </div>

@@ -22,6 +22,7 @@ export default function Home() {
       <Hero />
       <TrustedLogos />
       <DomainsServices />
+      <CTABanner />
       <WhyChoose />
       <ResearchStages />
       <AboutMidBanner />
@@ -32,7 +33,6 @@ export default function Home() {
       <Testimonials />
       <CTABanner />
       <FAQ />
-      <Newsletter />
       <Footer />
     </main>
   );

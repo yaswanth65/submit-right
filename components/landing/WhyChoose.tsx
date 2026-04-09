@@ -45,10 +45,10 @@ export function WhyChoose() {
   ];
 
   return (
-    <section className="py-16 lg:py-24 bg-[#FAFAFA]">
-      <div className="w-full max-w-[1280px] mx-auto px-6 lg:px-10 xl:px-14">
+    <section className="py-12 sm:py-16 lg:py-24 bg-[#FAFAFA]">
+      <div className="w-full max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-14">
         {/* Header */}
-        <div className="text-center mb-16">
+        <div className="text-center mb-10 sm:mb-16">
           {/* Badge */}
           <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-white border border-[#E5E5E5] rounded-full mb-5">
              <svg className="w-3.5 h-3.5 text-[#1C1C1D]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -59,30 +59,30 @@ export function WhyChoose() {
             </span>
           </div>
 
-          <h2 className="text-[32px] font-medium text-[#1C1C1D] leading-[1.1] mb-4">
+          <h2 className="text-[26px] sm:text-[32px] font-medium text-[#1C1C1D] leading-[1.15] sm:leading-[1.1] mb-4">
             Why Choose Submit Right
           </h2>
 
-          <p className="text-[15px] text-[#65656D] leading-relaxed max-w-xl mx-auto">
+          <p className="text-[13px] sm:text-[15px] text-[#65656D] leading-relaxed max-w-xl mx-auto">
             Lorem ipsum dolor sit amet consectetur. Sagittis eu vel habitant cursus. 
             Elementum suscipit donec viverra posuere at lorem nullam.
           </p>
         </div>
 
         {/* Features Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-x-12 lg:gap-y-12 max-w-5xl mx-auto">
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-8 lg:gap-x-12 lg:gap-y-12 max-w-5xl mx-auto">
           {features.map((feature, idx) => (
             <div
               key={idx}
               className="text-center flex flex-col items-center"
             >
-              <div className="w-12 h-12 mb-4 bg-white rounded-xl flex items-center justify-center shadow-sm border border-[#F0F0F0]">
-                <feature.icon className="w-5 h-5 text-[#1C1C1D]" strokeWidth={2.5} />
+              <div className="w-11 h-11 sm:w-12 sm:h-12 mb-3 sm:mb-4 bg-white rounded-xl flex items-center justify-center shadow-sm border border-[#F0F0F0]">
+                <feature.icon className="w-4 h-4 sm:w-5 sm:h-5 text-[#1C1C1D]" strokeWidth={2.5} />
               </div>
-              <h3 className="text-[15px] font-normal text-[#1C1C1D] mb-2">
+              <h3 className="text-[14px] sm:text-[15px] font-normal text-[#1C1C1D] mb-1.5 sm:mb-2">
                 {feature.title}
               </h3>
-              <p className="text-[13px] text-[#65656D] leading-relaxed px-4">
+              <p className="text-[12px] sm:text-[13px] text-[#65656D] leading-relaxed px-1 sm:px-4">
                 {feature.description}
               </p>
             </div>

@@ -47,11 +47,11 @@ export function AboutProblems() {
   ];
 
   return (
-    <section className="py-20 lg:py-24 bg-white relative">
-      <div className="w-full max-w-[1280px] mx-auto px-6 lg:px-10 xl:px-14">
+    <section className="py-14 sm:py-20 lg:py-24 bg-white relative">
+      <div className="w-full max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-14">
         
         {/* Header */}
-        <div className="flex flex-col items-center text-center max-w-[800px] mx-auto mb-16">
+        <div className="flex flex-col items-center text-center max-w-[800px] mx-auto mb-10 sm:mb-16">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded bg-[#F3F4F6] border border-[#E5E7EB] mb-6">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#65656D" strokeWidth="2">
               <path d="M4 6h16M4 12h16M4 18h16" />
@@ -60,28 +60,28 @@ export function AboutProblems() {
               LOREM IPSUM
             </span>
           </div>
-          <h2 className="text-[32px] lg:text-[36px] font-medium text-[#1C1C1D] leading-[1.2] mb-4">
+          <h2 className="text-[26px] sm:text-[32px] lg:text-[36px] font-medium text-[#1C1C1D] leading-[1.2] mb-4">
             Academic Support Should Be Clear, Ethical, and Transparent
           </h2>
-          <p className="text-[16px] text-[#65656D]">
+          <p className="text-[14px] sm:text-[16px] text-[#65656D]">
             Academic Support Should Be Clear, Ethical, and Transparent
           </p>
         </div>
 
         {/* Cards */}
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-3 gap-4 sm:gap-6">
           {problems.map((problem, idx) => (
             <div 
               key={idx} 
-              className="bg-[#F8F8F8] rounded-2xl p-8 lg:p-10 flex flex-col items-start border border-[#F1F5F9] transition-all hover:shadow-lg"
+              className="bg-[#F8F8F8] rounded-2xl p-6 sm:p-8 lg:p-10 flex flex-col items-start border border-[#F1F5F9] transition-all hover:shadow-lg"
             >
               <div className="w-12 h-12 bg-white rounded-lg shadow-sm flex items-center justify-center mb-6">
                 {problem.icon}
               </div>
-              <h3 className="text-[18px] font-medium text-[#1C1C1D] mb-4">
+              <h3 className="text-[16px] sm:text-[18px] font-medium text-[#1C1C1D] mb-3 sm:mb-4">
                 {problem.title}
               </h3>
-              <p className="text-[15px] text-[#65656D] leading-relaxed">
+              <p className="text-[14px] sm:text-[15px] text-[#65656D] leading-relaxed">
                 {problem.description}
               </p>
             </div>

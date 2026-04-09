@@ -23,12 +23,12 @@ export function AboutIntegrity() {
   ];
 
   return (
-    <section className="py-20 lg:py-24 bg-white relative">
-      <div className="w-full max-w-[1280px] mx-auto px-6 lg:px-10 xl:px-14">
-        <div className="grid lg:grid-cols-2 gap-16 lg:gap-20 items-start">
+    <section className="py-14 sm:py-20 lg:py-24 bg-white relative">
+      <div className="w-full max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-14">
+        <div className="grid lg:grid-cols-2 gap-10 sm:gap-16 lg:gap-20 items-start">
           
           {/* Left Column */}
-          <div className="sticky top-24">
+          <div className="lg:sticky lg:top-24">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded bg-[#F3F4F6] border border-[#E5E7EB] mb-6">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#65656D" strokeWidth="2">
                 <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
@@ -38,22 +38,22 @@ export function AboutIntegrity() {
               </span>
             </div>
             
-            <h2 className="text-[32px] lg:text-[40px] font-medium text-[#1C1C1D] leading-[1.2] mb-6">
+            <h2 className="text-[26px] sm:text-[32px] lg:text-[40px] font-medium text-[#1C1C1D] leading-[1.2] mb-5 sm:mb-6">
               We Do Not Support Plagiarism, Ghostwriting, or Misconduct
             </h2>
             
-            <p className="text-[16px] text-[#65656D] leading-relaxed">
+            <p className="text-[14px] sm:text-[16px] text-[#65656D] leading-relaxed">
               Lorem ipsum dolor sit amet consectetur. Sagittis eu vel habitant cursus. 
               Elementum suscipit donec viverra posuere at lorem nullam.
             </p>
           </div>
 
           {/* Right Column */}
-          <div className="flex flex-col gap-12 pb-10">
+          <div className="flex flex-col gap-6 sm:gap-12 pb-0 sm:pb-10">
             {standards.map((std, idx) => (
               <div 
                 key={idx}
-                className="sticky bg-white rounded-2xl p-8 border border-[#F3F4F6] shadow-[0_8px_30px_rgb(0,0,0,0.08)] hover:border-[#00A0E3]/20 transition-all duration-300 ease-in-out"
+                className="bg-white rounded-2xl p-6 sm:p-8 border border-[#F3F4F6] shadow-[0_8px_30px_rgb(0,0,0,0.08)] hover:border-[#00A0E3]/20 transition-all duration-300 ease-in-out lg:sticky"
                 style={{
                   top: `calc(120px + ${idx * 20}px)`,
                   zIndex: 10 + idx,
@@ -62,10 +62,10 @@ export function AboutIntegrity() {
                 <div className="text-[13px] font-semibold text-[#00A0E3] tracking-wider uppercase mb-3">
                   STANDARD {std.num}
                 </div>
-                <h3 className="text-[20px] font-medium text-[#1C1C1D] mb-3">
+                <h3 className="text-[18px] sm:text-[20px] font-medium text-[#1C1C1D] mb-3">
                   {std.title}
                 </h3>
-                <p className="text-[15px] text-[#65656D] leading-relaxed">
+                <p className="text-[14px] sm:text-[15px] text-[#65656D] leading-relaxed">
                   {std.description}
                 </p>
               </div>

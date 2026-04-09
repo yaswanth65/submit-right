@@ -17,10 +17,10 @@ export function ResearchStages() {
   const [activeStep, setActiveStep] = useState(1);
 
   return (
-    <section className="py-20 bg-white">
-      <div className="w-full max-w-[1280px] mx-auto px-6 lg:px-10 xl:px-14">
+    <section className="py-12 sm:py-16 lg:py-20 bg-white">
+      <div className="w-full max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-14">
         {/* Header */}
-        <div className="text-center mb-16">
+        <div className="text-center mb-10 sm:mb-16">
           {/* Badge */}
           <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-white border border-[#E5E5E5] rounded-full mb-5">
             <HelpCircle className="w-3.5 h-3.5 text-[#1C1C1D]" />
@@ -29,40 +29,40 @@ export function ResearchStages() {
             </span>
           </div>
 
-          <h2 className="text-[32px] font-medium text-[#1C1C1D] leading-[1.1] mb-4">
+          <h2 className="text-[26px] sm:text-[32px] font-medium text-[#1C1C1D] leading-[1.15] sm:leading-[1.1] mb-4">
             Solutions for Every Stage of Your Research
           </h2>
 
-          <p className="text-[15px] text-[#65656D] leading-relaxed max-w-xl mx-auto">
+          <p className="text-[13px] sm:text-[15px] text-[#65656D] leading-relaxed max-w-xl mx-auto">
             Lorem ipsum dolor sit amet consectetur. Sagittis eu vel habitant cursus.
-            <br />
+            <br className="hidden sm:block" />
             Elementum suscipit donec viverra posuere at lorem nullam.
           </p>
         </div>
 
         {/* Main Content Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 mb-8 items-stretch">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-5 sm:gap-8 mb-5 sm:mb-8 items-stretch">
           {/* Sidebar Steps */}
-          <div className="lg:col-span-1 flex flex-col gap-3">
+          <div className="lg:col-span-1 flex lg:flex-col gap-2.5 sm:gap-3 overflow-x-auto snap-x lg:overflow-visible lg:snap-none pb-2 lg:pb-0 custom-scrollbar">
             {steps.map((step) => (
               <button
                 key={step.id}
                 onClick={() => setActiveStep(step.id)}
-                className={`text-left p-4 rounded-xl border transition-all duration-200 ${
+                className={`flex-none text-left p-3.5 sm:p-4 rounded-xl border transition-all duration-200 snap-center min-w-[200px] lg:min-w-0 ${
                   activeStep === step.id
                     ? 'border-[#00A0E3] bg-[#F8FCFF] shadow-sm'
                     : 'border-[#ECECEC] bg-white hover:border-[#00A0E3]/50'
                 }`}
               >
                 <div
-                  className={`text-xs font-normal mb-1 ${
+                  className={`text-[11px] sm:text-xs font-normal mb-1 ${
                     activeStep === step.id ? 'text-[#00A0E3]' : 'text-gray-400'
                   }`}
                 >
                   STEP {step.id}
                 </div>
                 <div
-                  className={`font-medium ${
+                  className={`text-[14px] sm:text-[15px] font-medium ${
                     activeStep === step.id ? 'text-[#1C1C1D]' : 'text-[#65656D]'
                   }`}
                 >
@@ -84,7 +84,7 @@ export function ResearchStages() {
         </div>
 
         {/* Bottom Steps (7 & 8) */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 sm:gap-8">
           <Step7Content />
           <Step8Content />
         </div>

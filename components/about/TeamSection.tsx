@@ -63,19 +63,18 @@ export function TeamSection() {
               <circle cx="12" cy="7" r="4" />
             </svg>
             <span className="text-[13px] font-semibold tracking-wider text-[#00A0E3] uppercase">
-              TEAM
+              The People Behind Submit Right
             </span>
           </div>
 
           {/* Heading */}
           <h2 className="text-[28px] sm:text-[36px] lg:text-[44px] font-semibold text-[#1C1C1D] leading-[1.15] mb-4 max-w-[700px] mx-auto">
-            Meet Our Submit Right Editorial Team
+            Your Manuscript Is in the Hands of People Who've Published in Your Field
           </h2>
 
           {/* Description */}
           <p className="text-[14px] sm:text-[15px] text-[#65656D] leading-relaxed max-w-[600px] mx-auto">
-            Lorem ipsum dolor sit amet consectetur. Sagittis eu vel habitant cursus. 
-            Elementum suscipit donec viverra posuere at lorem nullam.
+            Every editor, reviewer, and subject expert on Submit Right has been vetted, tested, and approved through a rigorous onboarding process.
           </p>
         </div>
 

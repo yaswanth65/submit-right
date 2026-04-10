@@ -19,8 +19,8 @@ export default function EditorHelp() {
       
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-[24px] font-bold text-[#171717] mb-1">Help & Support</h1>
-        <p className="text-[14px] text-[#525866]">Find answers or contact our support team.</p>
+        <h1 className="text-[24px] font-bold text-[#171717] mb-1">Messages</h1>
+        <p className="text-[14px] text-[#525866]">Chat with your clients, review feedback, and manage document updates in one place.</p>
       </div>
 
       <div className="flex flex-col md:flex-row gap-8">

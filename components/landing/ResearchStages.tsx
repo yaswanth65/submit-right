@@ -17,7 +17,7 @@ export function ResearchStages() {
   const [activeStep, setActiveStep] = useState(1);
 
   return (
-    <section className="py-12 sm:py-16 lg:py-20 bg-white">
+    <section className="py-12 sm:py-16 lg:py-20 bg-white max-sm:[&_p]:text-[12px] max-sm:[&_p]:leading-[1.45]">
       <div className="w-full max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-14">
         {/* Header */}
         <div className="text-center mb-10 sm:mb-16">
@@ -33,7 +33,7 @@ export function ResearchStages() {
             Solutions for Every Stage of Your Research
           </h2>
 
-          <p className="text-[13px] sm:text-[15px] text-[#65656D] leading-relaxed max-w-xl mx-auto">
+          <p className="text-[12px] sm:text-[15px] text-[#65656D] leading-relaxed max-w-xl mx-auto">
             Lorem ipsum dolor sit amet consectetur. Sagittis eu vel habitant cursus.
             <br className="hidden sm:block" />
             Elementum suscipit donec viverra posuere at lorem nullam.
@@ -43,26 +43,26 @@ export function ResearchStages() {
         {/* Main Content Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-5 sm:gap-8 mb-5 sm:mb-8 items-stretch">
           {/* Sidebar Steps */}
-          <div className="lg:col-span-1 flex lg:flex-col gap-2.5 sm:gap-3 overflow-x-auto snap-x lg:overflow-visible lg:snap-none pb-2 lg:pb-0 custom-scrollbar">
+          <div className="lg:col-span-1 flex lg:flex-col max-sm:gap-2 sm:gap-2.5 lg:gap-3 overflow-x-auto snap-x lg:overflow-visible lg:snap-none pb-2 lg:pb-0 custom-scrollbar">
             {steps.map((step) => (
               <button
                 key={step.id}
                 onClick={() => setActiveStep(step.id)}
-                className={`flex-none text-left p-3.5 sm:p-4 rounded-xl border transition-all duration-200 snap-center min-w-[200px] lg:min-w-0 ${
+                className={`flex-none text-left max-sm:p-3 sm:p-3.5 lg:p-4 max-sm:rounded-lg sm:rounded-xl max-sm:border-0 sm:border transition-all duration-200 snap-center max-sm:min-w-[100px] sm:min-w-[200px] lg:min-w-0 max-sm:min-h-[90px] ${
                   activeStep === step.id
-                    ? 'border-[#00A0E3] bg-[#F8FCFF] shadow-sm'
-                    : 'border-[#ECECEC] bg-white hover:border-[#00A0E3]/50'
+                    ? 'max-sm:bg-transparent sm:border-[#00A0E3] sm:bg-[#F8FCFF] sm:shadow-sm'
+                    : 'max-sm:bg-transparent sm:border-[#ECECEC] sm:bg-white sm:hover:border-[#00A0E3]/50'
                 }`}
               >
                 <div
-                  className={`text-[11px] sm:text-xs font-normal mb-1 ${
+                  className={`text-[10px] sm:text-xs font-normal mb-1.5 ${
                     activeStep === step.id ? 'text-[#00A0E3]' : 'text-gray-400'
                   }`}
                 >
                   STEP {step.id}
                 </div>
                 <div
-                  className={`text-[14px] sm:text-[15px] font-medium ${
+                  className={`text-[12px] sm:text-[15px] font-medium leading-snug max-sm:max-w-[70px] ${
                     activeStep === step.id ? 'text-[#1C1C1D]' : 'text-[#65656D]'
                   }`}
                 >

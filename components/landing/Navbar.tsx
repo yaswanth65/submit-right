@@ -33,6 +33,8 @@ export function Navbar() {
     { href: "/packages", label: "Packages" },
     { href: "/contact", label: "Contact" },
     { href: "/privacy-policy", label: "Legal Pages" },
+        { href: "/blogs", label: "Blogs" },
+
   ];
 
   const [isMobileServicesOpen, setIsMobileServicesOpen] = useState(false);
@@ -159,6 +161,9 @@ export function Navbar() {
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
               </Link>
             </div>
+            <Link href="/blogs" className="text-[14px] font-medium text-[#1C1C1D] hover:text-[#00A0E3] transition-colors">
+              Blogs
+            </Link>
             <Link href="/contact" className="text-[14px] font-medium text-[#1C1C1D] hover:text-[#00A0E3] transition-colors">
               Contact
             </Link>
@@ -214,8 +219,8 @@ export function Navbar() {
           </button>
         </div>
 
-        <div className={`md:hidden overflow-hidden transition-all duration-300 ${isMobileOpen ? "max-h-[85vh] overflow-y-auto opacity-100 pb-4" : "max-h-0 opacity-0"}`}>
-          <nav className="grid gap-1 rounded-2xl border border-[#DDE8F2] bg-white/90 backdrop-blur p-2 shadow-[0_12px_30px_rgba(8,34,56,0.08)]">
+        <div className={`md:hidden fixed top-[68px] left-0 right-0 z-40 transition-all duration-300 ${isMobileOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}>
+          <nav className="grid gap-1 rounded-2xl border border-[#DDE8F2] bg-white/90 backdrop-blur p-2 shadow-[0_12px_30px_rgba(8,34,56,0.08)] mx-4 mt-2 max-h-[calc(100vh-80px)] overflow-y-auto custom-scrollbar">
             {navLinks.map((item) => {
               if (item.label === "Services") {
                 return (

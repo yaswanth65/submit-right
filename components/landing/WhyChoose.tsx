@@ -4,43 +4,43 @@ export function WhyChoose() {
   const features = [
     {
       icon: Shield,
-      title: "Secure & Trusted",
-      description: "Lorem ipsum dolor sit amet consectetur Sagittis eu vel habitant.",
+      title: "ISO-Certified Security",
+      description: "Files encrypted and auto-deleted after 90 days  your research stays yours",
     },
     {
       icon: Settings,
-      title: "Automate Your Workflows",
-      description: "Lorem ipsum dolor sit amet consectetur Sagittis eu vel habitant.",
+      title: "Express Delivery",
+      description: "Turnaround as fast as 8 hours for urgent pre-submission editing",
     },
     {
       icon: BarChart2,
-      title: "Real-Time Analytics",
-      description: "Lorem ipsum dolor sit amet consectetur Sagittis eu vel habitant.",
+      title: "Unlimited Re-Editing",
+      description: "Revise as many times as needed on Publication-Ready and High-Impact plans",
     },
     {
       icon: Users,
-      title: "Collaborate Effortlessly",
-      description: "Lorem ipsum dolor sit amet consectetur Sagittis eu vel habitant.",
+      title: "1,600+ Subject Areas",
+      description: "Manuscripts matched to editors who specialize in your exact field",
     },
     {
       icon: Puzzle,
-      title: "Seamless Integrations",
-      description: "Lorem ipsum dolor sit amet consectetur Sagittis eu vel habitant.",
+      title: "Dual-Expert Review",
+      description: "Every paper passes through two independent expert reviewers before delivery",
     },
     {
       icon: Star,
-      title: "Prioritize Opportunities",
-      description: "Lorem ipsum dolor sit amet consectetur Sagittis eu vel habitant.",
+      title: "Real-Time Order Tracking",
+      description: "Watch your manuscript move from submitted to delivered  live on your dashboard",
     },
     {
       icon: Lock,
-      title: "Secure & Compliant",
-      description: "Lorem ipsum dolor sit amet consectetur Sagittis eu vel habitant.",
+      title: "24/7 Multilingual Support",
+      description: "Chat, WhatsApp, or callback  support available around the clock",
     },
     {
       icon: HeadphonesIcon,
-      title: "24/7 Priority Support",
-      description: "Lorem ipsum dolor sit amet consectetur Sagittis eu vel habitant.",
+      title: "100% Satisfaction Guarantee",
+      description: "Not satisfied with the output? We re-edit it or refund you in full",
     },
   ];
 
@@ -55,17 +55,16 @@ export function WhyChoose() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
              </svg>
             <span className="text-[11px] font-normal text-[#1C1C1D] uppercase tracking-wider">
-              LOREM IPSUM DOLOR
+              WHY SUBMIT RIGHT
             </span>
           </div>
 
           <h2 className="text-[26px] sm:text-[32px] font-medium text-[#1C1C1D] leading-[1.15] sm:leading-[1.1] mb-4">
-            Why Choose Submit Right
+            The Platform Serious Researchers Choose
           </h2>
 
           <p className="text-[13px] sm:text-[15px] text-[#65656D] leading-relaxed max-w-xl mx-auto">
-            Lorem ipsum dolor sit amet consectetur. Sagittis eu vel habitant cursus. 
-            Elementum suscipit donec viverra posuere at lorem nullam.
+            Every feature on Submit Right is built for one outcome: your research gets published, on time, with your data fully protected.
           </p>
         </div>
 

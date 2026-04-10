@@ -7,8 +7,8 @@ export function AboutExperts() {
           <circle cx="12" cy="7" r="4" />
         </svg>
       ),
-      title: "Editors",
-      description: "Native-speaking PhDs with 10+ years experience."
+      title: "Language Editors",
+      description: "PhD-qualified experts who correct grammar, tone, clarity, and flow. While preserving the researcher's academic voice throughout."
     },
     {
       icon: (
@@ -21,8 +21,8 @@ export function AboutExperts() {
           <path d="M14 18h6" />
         </svg>
       ),
-      title: "Translators",
-      description: "Specialists in technical nomenclature translation."
+      title: "Academic Translators",
+      description: "Specialists in translating research from native languages into publication-standard English. With domain knowledge that ensures terminology accuracy."
     },
     {
       icon: (
@@ -31,8 +31,8 @@ export function AboutExperts() {
           <path d="m9 12 2 2 4-4" />
         </svg>
       ),
-      title: "Subject Experts",
-      description: "Domain-specific reviewers for STEM and Humanities."
+      title: "Subject-Matter Experts",
+      description: "Field-specific reviewers across 1,600+ disciplines who evaluate scientific accuracy, methodological consistency, and domain-specific terminology before delivery."
     },
     {
       icon: (
@@ -42,8 +42,8 @@ export function AboutExperts() {
           <path d="m9 15 2 2 4-4" />
         </svg>
       ),
-      title: "QA",
-      description: "Rigorous multi-stage quality assurance protocol."
+      title: "QA Reviewers",
+      description: "Senior-level quality assurance professionals who independently verify every manuscript before it leaves the platform. Ensuring it meets both language and journal-readiness standards."
     }
   ];
 
@@ -124,20 +124,20 @@ export function AboutExperts() {
                 <path d="m9 12 2 2 4-4" />
               </svg>
               <span className="text-[12px] font-medium text-[#4B5563] tracking-widest uppercase">
-                EXPERT NETWORK
+                Our Expert Network
               </span>
             </div>
             
             <h2 className="text-[26px] sm:text-[32px] lg:text-[40px] font-medium text-[#1C1C1D] leading-[1.2] mb-5 sm:mb-6">
-              Our Work Is Completed By Qualified Academic Specialists
+              The Specialists Behind Every Manuscript We Deliver
             </h2>
             
             <div className="flex flex-col gap-4 sm:gap-5 text-[14px] sm:text-[16px] text-[#65656D] leading-relaxed lg:max-w-[90%]">
               <p>
-                Every manuscript is assigned to a specialist with a background in your specific field of study. We don't believe in "generalist" editing.
+                Submit Right's quality doesn't come from software. It comes from a hand-selected, subject-verified network of academic professionals. Each assigned to manuscripts based on expertise, not availability.
               </p>
               <p>
-                Note: All editors undergo continuous peer evaluation and must maintain a 98%+ satisfaction rating to remain in our network.
+                Every editor goes through a multi-step vetting process that includes qualification verification, subject-area testing, sample editing evaluation, and compliance training. Editors are only assigned to manuscripts within their verified subject domain. No editor on Submit Right handles work outside their area of expertise.
               </p>
             </div>
           </div>

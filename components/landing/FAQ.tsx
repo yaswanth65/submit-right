@@ -2,10 +2,22 @@
 
 import { useState } from "react";
 
-export function FAQ() {
+interface FAQItem {
+  question: string;
+  answer: string;
+}
+
+interface FAQProps {
+  items?: FAQItem[];
+  tag?: string;
+  title?: string;
+  description?: string;
+}
+
+export function FAQ({ items, tag = "FAQ", title = "Got Questions We've Got Answers", description = "Lorem ipsum dolor sit amet consectetur. Sagittis eu vel habitant cursus. Elementum suscipit donec viverra posuere at lorem nullam" }: FAQProps) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
-  const faqs = [
+  const defaultFaqs = [
     {
       question: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.",
       answer: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
@@ -32,25 +44,26 @@ export function FAQ() {
     }
   ];
 
+  const faqs = items || defaultFaqs;
+
   return (
     <section className="py-12 sm:py-20 lg:py-24 bg-white">
-      <div className="w-full max-w-[900px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-14">
+      <div className="w-full max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-14">
         {/* Header */}
         <div className="text-center mb-10 sm:mb-12">
           <div className="inline-flex items-center gap-1.5 mb-4">
              <div className="w-5 h-5 bg-[#1C1C1D] text-white rounded-full flex items-center justify-center font-normal text-[10px]">?</div>
             <span className="text-[12px] font-normal text-[#1C1C1D] uppercase tracking-wider">
-              FAQ
+              {tag}
             </span>
           </div>
 
           <h2 className="text-[26px] sm:text-[32px] font-medium text-[#1C1C1D] leading-[1.15] sm:leading-[1.1] mb-4">
-            Got Questions We've Got Answers
+            {title}
           </h2>
 
           <p className="text-[13px] sm:text-[15px] text-[#65656D] leading-relaxed max-w-xl mx-auto">
-            Lorem ipsum dolor sit amet consectetur. Sagittis eu vel habitant cursus. 
-            Elementum suscipit donec viverra posuere at lorem nullam
+            {description}
           </p>
         </div>
 

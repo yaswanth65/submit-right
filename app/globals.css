@@ -21,6 +21,7 @@ body {
 /* Custom Scrollbar for exact figma matching */
 .custom-scrollbar::-webkit-scrollbar {
   width: 4px;
+  height: 3px;
 }
 .custom-scrollbar::-webkit-scrollbar-track {
   background: transparent;

@@ -16,27 +16,29 @@ export function AboutMidBanner() {
           </div>
 
           <div className="text-center lg:text-left max-w-[540px] relative z-10">
-            <h2 className="text-[26px] sm:text-[32px] lg:text-[40px] font-medium text-white leading-[1.15] sm:leading-[1.1] mb-4">
-              Lorem ipsum dolor sit amet
+            <h2 className="text-[26px] sm:text-[22px] lg:text-[30px] font-medium text-white leading-[1.15] sm:leading-[1.1] mb-4">
+              Research That Changed the World Started with a Manuscript Just Like Yours
             </h2>
             <p className="text-[14px] sm:text-[15px] lg:text-[16px] text-white/85 leading-relaxed">
-              Lorem ipsum dolor sit amet consectetur. Sagittis eu vel habitant cursus. 
-              Elementum suscipit donec viverra posuere.
+              Every paper we edit represents months. Sometimes years. Of someone's life work. We take that seriously. Let our experts make sure your research gets the reception it deserves.
             </p>
           </div>
           
           <div className="grid grid-cols-1 min-[420px]:grid-cols-2 sm:flex sm:flex-row items-center gap-3 sm:gap-4 relative z-10 shrink-0 w-full sm:w-auto">
             <Link
               href="/user/dashboard"
-              className="inline-flex items-center justify-center px-6 sm:px-8 py-3.5 bg-white text-[#1C1C1D] text-[15px] font-normal rounded-full hover:bg-gray-50 transition-colors w-full sm:w-auto"
+              className="inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3.5 bg-white text-[#1C1C1D] text-[15px] font-normal rounded-full hover:bg-gray-50 transition-colors w-full sm:w-auto"
             >
-              Gets Started
+              Get Instant Quote
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
             </Link>
             <Link
               href="/user/dashboard"
               className="inline-flex items-center justify-center gap-2 text-[14px] font-medium text-white hover:text-white/80 transition-colors"
             >
-              Submit Now
+              Explore Our Services
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M5 12h14M12 5l7 7-7 7" />
               </svg>

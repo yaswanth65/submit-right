@@ -1,14 +1,14 @@
 export function AboutAudience() {
   const isFor = [
-    "Doctoral candidates polishing their final dissertation for defense.",
-    "Faculty members preparing manuscripts for high-impact journals.",
-    "ESL researchers ensuring their linguistic precision matches their scientific rigor."
+    "Researchers and Authors Seeking Expert Editing. If you've written your research and need a qualified expert to improve its language, structure, and publication-readiness.",
+    "Non-Native English Speakers Submitting to International Journals. If English isn't your first language and you need your manuscript to meet the language standards of top-tier journals. Our editors preserve your voice while elevating your English.",
+    "PhD Students and Academics Under Submission Deadlines. If you're working against a conference, journal, or thesis submission deadline and need fast, professional, trackable editing support. Submit Right was designed for this exact moment."
   ];
 
   const isNotFor = [
-    "Students looking for someone to \"write\" their essays or homework.",
-    "Researchers seeking to artificially inflate their data or findings.",
-    "Any request involving ghostwriting or circumventing ethical declarations."
+    "Anyone Seeking Ghostwriting or Full Paper Writing Services. Submit Right does not write research on behalf of clients. If you are looking for someone to write your paper, thesis, or assignment for you, this is not that platform.",
+    "Students Looking to Submit AI-Generated or Plagiarised Work. We screen all manuscripts for plagiarism and will not process, edit, or support any work intended to misrepresent AI-generated content as original research. Academic integrity is non-negotiable here.",
+    "Anyone Who Wants to Alter Research Findings Through Editing. Our editors improve how your research is communicated. Not what it says. If you want an editor to change your conclusions, manipulate your data presentation, or misrepresent your findings, Submit Right is not the right platform."
   ];
 
   return (
@@ -22,17 +22,16 @@ export function AboutAudience() {
               <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
             </svg>
             <span className="text-[12px] font-medium text-[#4B5563] tracking-widest uppercase">
-              LOREM IPSUM DOLOR
+              Right Fit
             </span>
           </div>
           
           <h2 className="text-[26px] sm:text-[32px] lg:text-[36px] font-medium text-[#1C1C1D] leading-[1.2] mb-4 max-w-[700px]">
-            Designed For Researchers Who Want Legitimate Academic Support
+            Submit Right Is Built for Serious Researchers. And We Mean That.
           </h2>
           
           <p className="text-[14px] sm:text-[16px] text-[#65656D] leading-relaxed max-w-[600px]">
-            Lorem ipsum dolor sit amet consectetur. Sagittis eu vel habitant cursus. 
-            Elementum suscipit donec viverra posuere at lorem nullam.
+            We built Submit Right for a specific kind of person. Someone who takes their research seriously and wants professional support to communicate it better.
           </p>
         </div>
 

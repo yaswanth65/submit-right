@@ -3,8 +3,10 @@
 import { Footer } from "@/components/landing/Footer";
 import { Navbar } from "@/components/landing/Navbar";
 import { CTABanner } from "@/components/landing/CTABanner";
+import { useState } from "react";
 
 export default function ContactPage() {
+  const [expandedFAQ, setExpandedFAQ] = useState<number | null>(null);
   return (
     <div className="min-h-screen bg-white">
       <Navbar />
@@ -15,14 +17,16 @@ export default function ContactPage() {
         <div className="w-full max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-14 relative z-10">
           <div className="flex flex-col lg:flex-row gap-10 sm:gap-12 lg:gap-24">
             
-            {/* Left Contet */}
+            {/* Left Content */}
             <div className="flex-1 lg:max-w-[480px]">
-              <h1 className="text-[30px] sm:text-[36px] lg:text-[44px] font-semibold text-[#1C1C1D] leading-[1.15] mb-4">
-                Lorem ipsum dolor sit amet consectetur
+              {/* Badge */}
+             
+
+              <h1 className="text-[30px] sm:text-[36px] lg:text-[34px] font-semibold text-[#1C1C1D] leading-[1.15] mb-4">
+                Have a Question? We're Here Before You Submit, While You Wait, and After You Publish.
               </h1>
               <p className="text-[14px] sm:text-[15px] text-[#65656D] leading-relaxed mb-8 sm:mb-12">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
-                tempor, amet, consectetur adipiscing elit, sed do eiusmod tempor.
+                Whether you're unsure which service fits your manuscript, have a question about an active order, or need help with payment  our support team responds fast.
               </p>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8 mb-8 sm:mb-12">
@@ -107,33 +111,36 @@ export default function ContactPage() {
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                     <div className="space-y-2">
-                      <label className="text-[13px] font-medium text-[#1C1C1D]">Phone</label>
+                      <label className="text-[13px] font-medium text-[#1C1C1D]">Email Address</label>
+                      <input 
+                        type="email" 
+                        placeholder="Enter your email"
+                        className="w-full h-[46px] px-4 bg-white border border-[#E5E7EB] rounded-lg text-[14px] focus:outline-none focus:border-[#00A0E3] focus:ring-1 focus:ring-[#00A0E3] transition-all placeholder:text-[#9CA3AF]"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <label className="text-[13px] font-medium text-[#1C1C1D]">Phone Number (optional)</label>
                       <input 
                         type="tel" 
                         placeholder="Phone Number"
                         className="w-full h-[46px] px-4 bg-white border border-[#E5E7EB] rounded-lg text-[14px] focus:outline-none focus:border-[#00A0E3] focus:ring-1 focus:ring-[#00A0E3] transition-all placeholder:text-[#9CA3AF]"
                       />
                     </div>
-                    <div className="space-y-2">
-                      <label className="text-[13px] font-medium text-[#1C1C1D]">Subject</label>
-                      <div className="relative">
-                        <select className="w-full h-[46px] px-4 bg-white border border-[#E5E7EB] rounded-lg text-[14px] text-[#65656D] appearance-none focus:outline-none focus:border-[#00A0E3] focus:ring-1 focus:ring-[#00A0E3] transition-all">
-                          <option value="">Select</option>
-                          <option value="support">Support</option>
-                          <option value="sales">Sales</option>
-                        </select>
-                        <svg className="w-4 h-4 absolute right-4 top-1/2 -translate-y-1/2 text-[#9CA3AF] pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
-                      </div>
-                    </div>
                   </div>
 
                   <div className="space-y-2">
-                    <label className="text-[13px] font-medium text-[#1C1C1D]">Email</label>
-                    <input 
-                      type="email" 
-                      placeholder="Enter your email"
-                      className="w-full h-[46px] px-4 bg-white border border-[#E5E7EB] rounded-lg text-[14px] focus:outline-none focus:border-[#00A0E3] focus:ring-1 focus:ring-[#00A0E3] transition-all placeholder:text-[#9CA3AF]"
-                    />
+                    <label className="text-[13px] font-medium text-[#1C1C1D]">Subject / Query Type</label>
+                    <div className="relative">
+                      <select className="w-full h-[46px] px-4 bg-white border border-[#E5E7EB] rounded-lg text-[14px] text-[#65656D] appearance-none focus:outline-none focus:border-[#00A0E3] focus:ring-1 focus:ring-[#00A0E3] transition-all">
+                        <option value="">Select</option>
+                        <option value="general">General Enquiry</option>
+                        <option value="order">Order Support</option>
+                        <option value="payment">Payment Issue</option>
+                        <option value="partnership">Partnership</option>
+                        <option value="other">Other</option>
+                      </select>
+                      <svg className="w-4 h-4 absolute right-4 top-1/2 -translate-y-1/2 text-[#9CA3AF] pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
+                    </div>
                   </div>
 
                   <div className="space-y-2">
@@ -149,8 +156,12 @@ export default function ContactPage() {
                     type="submit"
                     className="w-full h-[46px] mt-2 bg-[#00A0E3] hover:bg-[#028ac7] text-white font-medium rounded-lg text-[14px] transition-colors"
                   >
-                    Submit Message
+                    Send My Message →
                   </button>
+
+                  <p className="text-[12px] text-[#65656D] text-center mt-4">
+                    Your message and details are fully encrypted. We never share your information with third parties.
+                  </p>
                 </form>
               </div>
             </div>
@@ -162,26 +173,96 @@ export default function ContactPage() {
       {/* FAQ Wrap */}
       <section className="py-14 sm:py-20 lg:py-24 bg-white relative z-10 -mt-3 sm:-mt-10">
         <div className="w-full max-w-[1000px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-14">
-          <h2 className="text-[26px] sm:text-[32px] font-semibold text-[#1C1C1D] text-center mb-8 sm:mb-12">
-            Frequently Asked Questions
-          </h2>
+          
+       
+          <div className="flex flex-col items-center mb-8 sm:mb-12">
+            <h2 className="text-[26px] sm:text-[32px] font-semibold text-[#1C1C1D] text-center mb-3">
+              Everything You Need to Know Before You Reach Out
+            </h2>
+            <p className="text-[15px] sm:text-[16px] text-[#65656D] leading-relaxed text-center max-w-[650px]">
+              Most questions our team receives fall into a handful of clear categories document submission, order tracking, payments, security, and certifications. We've answered all of them here so you can get answers instantly, without waiting on a reply.
+            </p>
+          </div>
           
           <div className="space-y-0">
-            {[1, 2, 3, 4, 5, 6].map((num) => (
-              <div key={num} className="border-b border-[#F0F0F0] last:border-0 group">
-                <button className="w-full flex items-center justify-between py-5 sm:py-6 text-left hover:text-[#00A0E3] transition-colors gap-4">
+            {[
+              {
+                id: 1,
+                question: "How do I submit my document on Submit Right?",
+                answer: "Create a free account, go to your dashboard, and click New Order. Upload your PDF or Word file, enter your document details   word count, subject area, and target journal if applicable   then select your service and turnaround time. The system generates an instant price estimate and you proceed to secure checkout. Once payment is confirmed, your manuscript is assigned to a subject-matched expert within hours. You can track every update live from your dashboard from that point forward."
+              },
+              {
+                id: 2,
+                question: "What file formats does Submit Right accept?",
+                answer: "We accept PDF and Microsoft Word (.doc / .docx) files. LaTeX files can be submitted in PDF format for editing, with the original LaTeX source uploaded as a supporting file. If you are unsure whether your file format is compatible, contact us before uploading and our team will confirm within a few hours."
+              },
+              {
+                id: 3,
+                question: "How do I track my order after submission?",
+                answer: "Every order has a live progress tracker inside your dashboard. The stages you will see are: Received → Assigned → In Progress → QA Review → Delivered. You also receive real-time notifications via email and   if enabled   SMS or WhatsApp at each key stage. You never have to chase an update. It comes to you automatically."
+              },
+              {
+                id: 4,
+                question: "How can I contact my assigned editor directly?",
+                answer: "Submit Right includes a built-in secure messaging system inside every order. Once an editor is assigned to your manuscript, a chat thread opens within that order. You can ask questions, share additional instructions, upload reference files, and communicate directly   all without leaving the platform. Every conversation is stored securely for the full duration of the order and beyond."
+              },
+              {
+                id: 5,
+                question: "What payment methods are accepted and are transactions secure?",
+                answer: "Submit Right accepts payments via Razorpay and Stripe   supporting UPI, credit and debit cards, net banking, and international card payments. All transactions are processed over encrypted, PCI-compliant payment gateways. Your card details are never stored on our servers. An invoice is automatically generated and available for download from your dashboard immediately after every successful payment."
+              },
+              {
+                id: 6,
+                question: "What happens if I am not satisfied with the editing output?",
+                answer: "Every plan on Submit Right includes a built-in re-editing entitlement. Language Clarity includes one free re-edit within 12 months. Publication-Ready and High-Impact plans include unlimited re-editing for 365 days from the date of first delivery. If you have completed re-editing and are still genuinely unsatisfied with the output, Submit Right's 100% Satisfaction Guarantee entitles you to a full refund. Refund requests are reviewed by our team and processed within 5 to 7 business days."
+              },
+              {
+                id: 7,
+                question: "Does Submit Right provide an editing certificate with completed orders?",
+                answer: "Yes. An official Submit Right Editing Certificate is issued with every completed editing order. The certificate confirms that your manuscript has been professionally edited and reviewed by a qualified expert on our platform. Many journals and supervisors request this documentation as part of the submission or approval process. Your certificate is available for download directly from the Files tab inside your order dashboard."
+              },
+              {
+                id: 8,
+                question: "How does Submit Right protect my manuscript and research data?",
+                answer: "All files uploaded to Submit Right are encrypted end-to-end during transfer and storage using TLS 1.3 protocol. Your documents are stored on ISO-certified compliant servers and are permanently and automatically deleted from our systems 90 days after order completion. No editor, team member, or third party has access to your files beyond what is strictly required to complete your order. Submit Right is fully compliant with GDPR and India's Digital Personal Data Protection Act (DPDPB)."
+              },
+              {
+                id: 9,
+                question: "Does Submit Right work with institutions and universities for bulk or ongoing orders?",
+                answer: "Yes. Submit Right offers institutional partnership arrangements for universities, research departments, medical colleges, publishing houses, and funding organisations. Institutional partners receive a dedicated branded submission portal, centralised order tracking and billing, and periodic usage and performance reports. If you represent an institution and want to explore a partnership, use the contact form above and select Partnership from the query type dropdown. Our partnerships team will respond within one business day."
+              },
+              {
+                id: 10,
+                question: "I submitted a query or support request   how long will it take to get a response?",
+                answer: "General enquiries submitted via the contact form are responded to within 4 to 6 business hours during standard working hours. For active order issues   such as delivery delays, payment errors, or editor communication problems  use the live chat or WhatsApp support line for a faster response. Our support team is available 24 hours a day, 7 days a week, across chat, WhatsApp, and callback channels. No enquiry goes unanswered."
+              }
+            ].map((item) => (
+              <div key={item.id} className="border-b border-[#F0F0F0] last:border-0 group">
+                <button 
+                  onClick={() => setExpandedFAQ(expandedFAQ === item.id ? null : item.id)}
+                  className="w-full flex items-center justify-between py-5 sm:py-6 text-left hover:text-[#00A0E3] transition-colors gap-4"
+                >
                   <div className="flex items-start sm:items-center gap-3 sm:gap-4 pr-3">
                     <span className="text-[13px] sm:text-[14px] font-bold text-[#1C1C1D] shrink-0 mt-0.5 sm:mt-0">
-                      {num.toString().padStart(2, '0')}
+                      {item.id.toString().padStart(2, '0')}
                     </span>
                     <span className="text-[14px] sm:text-[15px] font-medium text-[#65656D] group-hover:text-[#00A0E3] leading-relaxed">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.
+                      {item.question}
                     </span>
                   </div>
-                  <span className="text-[20px] text-[#00A0E3] font-light shrink-0">
+                  <span className={`text-[20px] text-[#00A0E3] font-light shrink-0 transition-transform duration-300 ${expandedFAQ === item.id ? "rotate-45" : ""}`}>
                     +
                   </span>
                 </button>
+                
+                {/* Expanded Answer */}
+                {expandedFAQ === item.id && (
+                  <div className="pb-5 sm:pb-6 pl-11 pr-3">
+                    <p className="text-[14px] sm:text-[15px] leading-[1.6] text-[#65656D]">
+                      {item.answer}
+                    </p>
+                  </div>
+                )}
               </div>
             ))}
           </div>

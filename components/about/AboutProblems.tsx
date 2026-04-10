@@ -16,8 +16,8 @@ export function AboutProblems() {
           <path d="m15 10 4-4" />
         </svg>
       ), // gavel placeholder
-      title: "Academic work judged unfairly",
-      description: "Groundbreaking research is often rejected by top-tier journals not due to poor science, but due to nuanced linguistic barriers."
+      title: "Academic Expertise at Scale",
+      description: "Our network spans 1,600+ subject areas. Every manuscript is matched to a qualified PhD or MD editor who understands your exact field, methodology, and publication landscape."
     },
     {
       icon: (
@@ -28,8 +28,8 @@ export function AboutProblems() {
           <line x1="2" x2="22" y1="2" y2="22" />
         </svg>
       ), // eye-off placeholder
-      title: "Editing process unclear",
-      description: "Many services operate in black boxes, making it difficult for authors to track changes or understand the rationale behind edits."
+      title: "Industry-Compliant Standards",
+      description: "Submit Right operates in full alignment with GDPR, DPDPB, and ISO-certified confidentiality protocols. So your research, your data, and your identity are protected at every stage of the process."
     },
     {
       icon: (
@@ -41,8 +41,8 @@ export function AboutProblems() {
           <path d="M2 16h20" />
         </svg>
       ), // grid placeholder
-      title: "Services lack transparency",
-      description: "Hidden fees and automated rewriting tools have eroded trust in the professional academic editing ecosystem."
+      title: "End-to-End Transparency",
+      description: "From the moment you upload your document to the moment it lands back in your dashboard, every step is tracked, timestamped, and visible. No black boxes. No guesswork. No hidden fees."
     }
   ];
 
@@ -57,14 +57,14 @@ export function AboutProblems() {
               <path d="M4 6h16M4 12h16M4 18h16" />
             </svg>
             <span className="text-[12px] font-medium text-[#4B5563] tracking-widest uppercase">
-              LOREM IPSUM
+              What We Stand For
             </span>
           </div>
           <h2 className="text-[26px] sm:text-[32px] lg:text-[36px] font-medium text-[#1C1C1D] leading-[1.2] mb-4">
-            Academic Support Should Be Clear, Ethical, and Transparent
+            A Platform Built on Expertise, Compliance, and Complete Transparency
           </h2>
           <p className="text-[14px] sm:text-[16px] text-[#65656D]">
-            Academic Support Should Be Clear, Ethical, and Transparent
+            Every service, every editor, and every process at Submit Right is held to the highest professional and ethical standards in academic publishing.
           </p>
         </div>
 

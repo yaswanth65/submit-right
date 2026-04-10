@@ -113,10 +113,10 @@ function statusBadge(status: SubmissionStatus) {
   }
 
   if (status === "closed") {
-    return "bg-[#F3F4F6] text-[#374151] border-[#E5E7EB]";
+    return "bg-[#F3F4F6] text-[#525866] border-[#EAECF0]";
   }
 
-  return "bg-[#FFF7ED] text-[#B45309] border-[#FDBA74]";
+  return "bg-[#EFF7F9] text-[#056789] border-[#A4D4E5]";
 }
 
 function statusLabel(status: SubmissionStatus) {
@@ -145,13 +145,13 @@ function SubmissionDetailsModal({
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 font-dm-sans">
       <div className="absolute inset-0 bg-[#171717]/45" onClick={onClose}></div>
 
-      <div className="relative z-10 w-full max-w-[900px] bg-white rounded-[16px] border border-[#EAECF0] shadow-[0_16px_40px_rgba(0,0,0,0.18)] overflow-hidden">
+      <div className="relative z-10 w-full max-w-[900px] bg-white rounded-[16px] border border-[#EAECF0] shadow-[0_14px_40px_rgba(0,0,0,0.18)] overflow-hidden">
         <div className="px-6 py-5 border-b border-[#EAECF0] flex items-start justify-between">
           <div>
-            <div className="text-[28px] leading-none font-semibold text-[#171717] font-inter">
+            <div className="text-[20px] leading-tight font-semibold text-[#171717] font-inter">
               {isContact ? "Contact Query Details" : "Post Publication Support Details"}
             </div>
-            <div className="text-[16px] text-[#171717] mt-2">
+            <div className="text-[14px] text-[#525866] mt-2">
               {isContact
                 ? `${submission.firstName} ${submission.lastName} - ${submission.email}`
                 : `${submission.fullName} - ${submission.email}`}
@@ -160,7 +160,7 @@ function SubmissionDetailsModal({
 
           <button
             onClick={onClose}
-            className="w-[32px] h-[32px] rounded-[8px] border border-transparent hover:border-[#EAECF0] hover:bg-[#F9FAFB] inline-flex items-center justify-center text-[#525866]"
+            className="w-[30px] h-[30px] rounded-[8px] border border-transparent hover:border-[#EAECF0] hover:bg-[#F9FAFB] text-[#525866] inline-flex items-center justify-center transition-colors"
           >
             <X className="w-4 h-4" />
           </button>
@@ -168,56 +168,56 @@ function SubmissionDetailsModal({
 
         <div className="px-6 py-5 space-y-4 max-h-[72vh] overflow-y-auto custom-scrollbar">
           <div className="grid grid-cols-2 gap-4">
-            <div className="rounded-[12px] border border-[#C7D2E5] px-4 py-3">
-              <div className="text-[13px] uppercase tracking-wide text-[#334155]">Inquiry Type</div>
-              <div className="text-[30px] leading-none font-semibold text-[#171717] mt-1">{submission.inquiryType}</div>
+            <div className="rounded-[12px] border border-[#EAECF0] px-4 py-3 bg-[#F9FAFB]">
+              <div className="text-[12px] font-bold text-[#525866] uppercase tracking-wide">Inquiry Type</div>
+              <div className="text-[16px] leading-tight font-semibold text-[#171717] mt-2">{submission.inquiryType}</div>
             </div>
-            <div className="rounded-[12px] border border-[#C7D2E5] px-4 py-3">
-              <div className="text-[13px] uppercase tracking-wide text-[#334155]">Submitted</div>
-              <div className="text-[30px] leading-none font-semibold text-[#171717] mt-1">{submission.submittedAt}</div>
+            <div className="rounded-[12px] border border-[#EAECF0] px-4 py-3 bg-[#F9FAFB]">
+              <div className="text-[12px] font-bold text-[#525866] uppercase tracking-wide">Submitted</div>
+              <div className="text-[16px] leading-tight font-semibold text-[#171717] mt-2">{submission.submittedAt}</div>
             </div>
           </div>
 
           {isContact ? (
             <div className="grid grid-cols-3 gap-4">
-              <div className="rounded-[10px] border border-[#EAECF0] px-4 py-3">
-                <div className="text-[13px] text-[#525866]">Phone</div>
-                <div className="text-[14px] font-medium text-[#171717] mt-1">{submission.phone || "-"}</div>
+              <div className="rounded-[10px] border border-[#EAECF0] px-4 py-3 bg-[#FAFBFC]">
+                <div className="text-[12px] font-medium text-[#525866]">Phone</div>
+                <div className="text-[14px] font-medium text-[#171717] mt-2">{submission.phone || "-"}</div>
               </div>
-              <div className="rounded-[10px] border border-[#EAECF0] px-4 py-3 col-span-2">
-                <div className="text-[13px] text-[#525866]">Institution</div>
-                <div className="text-[14px] font-medium text-[#171717] mt-1">{submission.institution || "-"}</div>
+              <div className="rounded-[10px] border border-[#EAECF0] px-4 py-3 bg-[#FAFBFC] col-span-2">
+                <div className="text-[12px] font-medium text-[#525866]">Institution</div>
+                <div className="text-[14px] font-medium text-[#171717] mt-2">{submission.institution || "-"}</div>
               </div>
             </div>
           ) : (
             <div className="grid grid-cols-2 gap-4">
-              <div className="rounded-[10px] border border-[#EAECF0] px-4 py-3">
-                <div className="text-[13px] text-[#525866]">Manuscript Stage</div>
-                <div className="text-[14px] font-medium text-[#171717] mt-1">{submission.manuscriptStage}</div>
+              <div className="rounded-[10px] border border-[#EAECF0] px-4 py-3 bg-[#FAFBFC]">
+                <div className="text-[12px] font-medium text-[#525866]">Manuscript Stage</div>
+                <div className="text-[14px] font-medium text-[#171717] mt-2">{submission.manuscriptStage}</div>
               </div>
-              <div className="rounded-[10px] border border-[#EAECF0] px-4 py-3">
-                <div className="text-[13px] text-[#525866]">Target Timeline</div>
-                <div className="text-[14px] font-medium text-[#171717] mt-1">{submission.targetTimeline}</div>
+              <div className="rounded-[10px] border border-[#EAECF0] px-4 py-3 bg-[#FAFBFC]">
+                <div className="text-[12px] font-medium text-[#525866]">Target Timeline</div>
+                <div className="text-[14px] font-medium text-[#171717] mt-2">{submission.targetTimeline}</div>
               </div>
-              <div className="rounded-[10px] border border-[#EAECF0] px-4 py-3 col-span-2">
-                <div className="text-[13px] text-[#525866]">Manuscript</div>
-                <div className="text-[14px] font-medium text-[#171717] mt-1">{submission.manuscriptTitle}</div>
-                <div className="text-[13px] text-[#525866] mt-1">Journal: {submission.journalName}</div>
-                <div className="text-[13px] text-[#525866] mt-1">Support Needed: {submission.supportNeeded}</div>
+              <div className="rounded-[10px] border border-[#EAECF0] px-4 py-3 bg-[#FAFBFC] col-span-2">
+                <div className="text-[12px] font-medium text-[#525866]">Manuscript</div>
+                <div className="text-[14px] font-medium text-[#171717] mt-2">{submission.manuscriptTitle}</div>
+                <div className="text-[12px] text-[#525866] mt-2">Journal: {submission.journalName}</div>
+                <div className="text-[12px] text-[#525866] mt-1">Support Needed: {submission.supportNeeded}</div>
               </div>
             </div>
           )}
 
-          <div className="rounded-[12px] border border-[#C7D2E5] px-4 py-3">
-            <div className="text-[13px] uppercase tracking-wide text-[#334155]">Message</div>
-            <div className="text-[16px] leading-relaxed font-medium text-[#171717] mt-2">{submission.message}</div>
+          <div className="rounded-[12px] border border-[#EAECF0] px-4 py-3 bg-[#F9FAFB]">
+            <div className="text-[12px] font-bold text-[#525866] uppercase tracking-wide">Message</div>
+            <div className="text-[14px] leading-relaxed text-[#525866] mt-3">{submission.message}</div>
           </div>
 
           <div>
-            <div className="text-[28px] leading-none font-semibold text-[#171717] font-inter">Reply Through Mail</div>
+            <div className="text-[18px] leading-tight font-semibold text-[#171717] font-inter">Reply Through Mail</div>
 
-            <div className="mt-3">
-              <div className="text-[13px] font-medium text-[#171717] mb-1.5">Template</div>
+            <div className="mt-4">
+              <div className="text-[13px] font-bold text-[#171717] mb-2">Template</div>
               <div className="grid grid-cols-[1fr_auto] gap-3 items-center">
                 <select
                   value={isContact ? contactTemplate : publicationTemplate}
@@ -228,7 +228,7 @@ function SubmissionDetailsModal({
                       setPublicationTemplate(event.target.value as PublicationTemplate);
                     }
                   }}
-                  className="h-[44px] rounded-[10px] border border-[#C7D2E5] px-4 text-[15px] font-medium text-[#171717] bg-white outline-none focus:border-[#00A0E3] focus:ring-1 focus:ring-[#00A0E3]"
+                  className="h-[40px] rounded-[8px] border border-[#EAECF0] px-3 text-[14px] font-medium text-[#171717] bg-white outline-none focus:border-[#00A0E3] focus:ring-1 focus:ring-[#00A0E3]"
                 >
                   {isContact ? (
                     <>
@@ -245,26 +245,26 @@ function SubmissionDetailsModal({
                   )}
                 </select>
 
-                <label className="inline-flex items-center gap-2 text-[15px] text-[#171717]">
+                <label className="inline-flex items-center gap-2 text-[14px] text-[#171717] font-medium">
                   <input
                     type="checkbox"
                     checked={markResolvedAfterSending}
                     onChange={(event) => setMarkResolvedAfterSending(event.target.checked)}
-                    className="w-4 h-4 rounded border-[#CBD5E1]"
+                    className="w-4 h-4 rounded border-[#EAECF0]"
                   />
-                  Mark as resolved after sending
+                  Mark as resolved
                 </label>
               </div>
 
-              <div className="text-[14px] text-[#334155] mt-2">
+              <div className="text-[13px] text-[#525866] mt-2">
                 {isContact
                   ? "Confirms receipt and follow-up."
                   : "Sends a clear plan and next steps for publication support."}
               </div>
             </div>
 
-            <div className="mt-3">
-              <div className="text-[13px] font-medium text-[#171717] mb-1.5">Additional Notes</div>
+            <div className="mt-4">
+              <div className="text-[13px] font-bold text-[#171717] mb-2">Additional Notes</div>
               <textarea
                 value={notes}
                 onChange={(event) => setNotes(event.target.value)}
@@ -273,7 +273,7 @@ function SubmissionDetailsModal({
                     ? "Add optional context before sending the template response"
                     : "Add publication-specific guidance before sending"
                 }
-                className="w-full min-h-[130px] rounded-[12px] border border-[#8FA6C9] px-4 py-3 text-[15px] leading-relaxed text-[#1E3354] placeholder-[#4A638A] outline-none focus:border-[#00A0E3] focus:ring-1 focus:ring-[#00A0E3]"
+                className="w-full min-h-[120px] rounded-[8px] border border-[#EAECF0] px-3 py-2.5 text-[14px] leading-relaxed text-[#171717] placeholder-[#A0AAB5] outline-none focus:border-[#00A0E3] focus:ring-1 focus:ring-[#00A0E3] resize-y"
               />
             </div>
           </div>
@@ -282,11 +282,11 @@ function SubmissionDetailsModal({
         <div className="px-6 py-5 border-t border-[#EAECF0] flex justify-end items-center gap-3 bg-white">
           <button
             onClick={onClose}
-            className="h-[42px] px-6 rounded-[12px] border border-[#8FA6C9] text-[15px] text-[#1E3354] hover:bg-[#F8FBFF]"
+            className="h-[40px] px-6 rounded-[8px] border border-[#EAECF0] text-[14px] font-medium text-[#525866] hover:bg-[#F9FAFB] transition-colors"
           >
             Close
           </button>
-          <button className="h-[42px] px-6 rounded-[12px] bg-[#FF7A00] hover:bg-[#E86F00] text-white text-[15px] font-medium inline-flex items-center gap-2">
+          <button className="h-[40px] px-6 rounded-[8px] bg-[#00A0E3] hover:bg-[#0189C2] text-white text-[14px] font-medium inline-flex items-center gap-2 transition-colors">
             <Mail className="w-4 h-4" />
             Send Reply
           </button>
@@ -319,15 +319,19 @@ export default function AdminFormSubmissionsPage() {
     const query = search.trim().toLowerCase();
 
     const base = data.filter((item) => {
-      const matchesSearch =
-        !query ||
-        (selectedType === "contact"
-          ? `${item.firstName} ${item.lastName} ${item.email} ${item.phone} ${item.institution} ${item.message}`
-              .toLowerCase()
-              .includes(query)
-          : `${item.fullName} ${item.email} ${item.phone} ${item.manuscriptTitle} ${item.journalName} ${item.message}`
-              .toLowerCase()
-              .includes(query));
+      const matchesSearch = !query || (() => {
+        if (selectedType === "contact") {
+          const contact = item as ContactSubmission;
+          return `${contact.firstName} ${contact.lastName} ${contact.email} ${contact.phone} ${contact.institution} ${contact.message}`
+            .toLowerCase()
+            .includes(query);
+        } else {
+          const publication = item as PublicationSubmission;
+          return `${publication.fullName} ${publication.email} ${publication.phone} ${publication.manuscriptTitle} ${publication.journalName} ${publication.message}`
+            .toLowerCase()
+            .includes(query);
+        }
+      })();
 
       const matchesStatus = statusFilter === "all" || item.status === statusFilter;
       const matchesInquiry = inquiryFilter === "all" || item.inquiryType === inquiryFilter;
@@ -362,20 +366,20 @@ export default function AdminFormSubmissionsPage() {
   return (
     <div className="w-full font-dm-sans">
       <div className="flex items-center text-[13px] text-[#A0AAB5] mb-6">
-        <Link href="/admin/dashboard" className="hover:text-[#171717] transition-colors">Home</Link>
-        <span className="mx-2">&gt;</span>
+        <Link href="/admin/dashboard" className="hover:text-[#171717] transition-colors">Dashboard</Link>
+        <span className="mx-2">/</span>
         <span className="text-[#171717] font-medium">Form Submissions</span>
       </div>
 
       <div className="mb-6 flex items-start justify-between gap-4">
         <div>
-          <div className="text-[24px] font-medium text-[#1C1C1D] mb-1 font-inter">Contact Queries</div>
-          <p className="text-[14px] text-[#78788D]">Review and reply to all user-submitted requests from contact and post publication support forms.</p>
+          <div className="text-[24px] font-semibold text-[#171717] mb-1 font-inter">Form Submissions</div>
+          <p className="text-[14px] text-[#525866]">Review and reply to all user-submitted requests from contact and post publication support forms.</p>
         </div>
 
         <button
           onClick={resetFilters}
-          className="h-[40px] px-4 rounded-[10px] border border-[#EAECF0] bg-white text-[#171717] text-[14px] font-medium inline-flex items-center gap-2 hover:bg-[#F9FAFB]"
+          className="h-[40px] px-4 rounded-[8px] border border-[#EAECF0] bg-white text-[#525866] text-[14px] font-medium inline-flex items-center gap-2 hover:bg-[#F9FAFB] transition-colors"
         >
           <RefreshCw className="w-4 h-4" />
           Refresh
@@ -384,14 +388,14 @@ export default function AdminFormSubmissionsPage() {
 
       <div className="bg-white rounded-[12px] border border-[#EAECF0] shadow-sm overflow-hidden">
         <div className="px-4 pt-4">
-          <div className="inline-flex rounded-[10px] border border-[#EAECF0] p-1 bg-[#F8FAFC]">
+          <div className="inline-flex rounded-[8px] border border-[#EAECF0] p-1 bg-[#F9FAFB]">
             <button
               onClick={() => {
                 setSelectedType("contact");
                 setInquiryFilter("all");
               }}
-              className={`h-[36px] px-4 rounded-[8px] text-[13px] font-medium transition-colors ${
-                selectedType === "contact" ? "bg-white text-[#171717] shadow-sm" : "text-[#525866]"
+              className={`h-[36px] px-4 rounded-[6px] text-[13px] font-medium transition-colors ${
+                selectedType === "contact" ? "bg-white text-[#171717] shadow-sm border border-[#EAECF0]" : "text-[#525866] hover:text-[#171717]"
               }`}
             >
               Contact
@@ -401,8 +405,8 @@ export default function AdminFormSubmissionsPage() {
                 setSelectedType("post_publication_support");
                 setInquiryFilter("all");
               }}
-              className={`h-[36px] px-4 rounded-[8px] text-[13px] font-medium transition-colors ${
-                selectedType === "post_publication_support" ? "bg-white text-[#171717] shadow-sm" : "text-[#525866]"
+              className={`h-[36px] px-4 rounded-[6px] text-[13px] font-medium transition-colors ${
+                selectedType === "post_publication_support" ? "bg-white text-[#171717] shadow-sm border border-[#EAECF0]" : "text-[#525866] hover:text-[#171717]"
               }`}
             >
               Post Publication Support
@@ -415,7 +419,7 @@ export default function AdminFormSubmissionsPage() {
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-[18px] h-[18px] text-[#A0AAB5]" />
             <input
               type="text"
-              placeholder="Search name, email, phone, institution..."
+              placeholder="Search name, email, phone..."
               value={search}
               onChange={(event) => setSearch(event.target.value)}
               className="w-full h-[40px] rounded-[8px] border border-[#EAECF0] pl-9 pr-3 text-[14px] text-[#171717] placeholder-[#A0AAB5] outline-none focus:border-[#00A0E3] focus:ring-1 focus:ring-[#00A0E3]"
@@ -452,16 +456,12 @@ export default function AdminFormSubmissionsPage() {
             <option value="newest">Newest First</option>
             <option value="oldest">Oldest First</option>
           </select>
-
-          <button className="h-[40px] px-4 rounded-[12px] border border-[#FDBA74] text-[#B45309] text-[14px] font-medium bg-[#FFF7ED]">
-            Apply
-          </button>
         </div>
 
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="bg-[#F3F6FA] border-b border-[#EAECF0]">
+              <tr className="bg-[#F9FAFB] border-b border-[#EAECF0]">
                 <th className="px-5 py-3 text-[13px] font-bold text-[#171717]">Submitted</th>
                 <th className="px-5 py-3 text-[13px] font-bold text-[#171717]">User</th>
                 <th className="px-5 py-3 text-[13px] font-bold text-[#171717]">{selectedType === "contact" ? "Inquiry" : "Support Need"}</th>
@@ -479,31 +479,31 @@ export default function AdminFormSubmissionsPage() {
                 </tr>
               ) : (
                 filteredRows.map((row) => (
-                  <tr key={row.id} className="hover:bg-[#F9FAFB]/70 transition-colors">
-                    <td className="px-5 py-4 text-[14px] leading-tight text-[#171717] whitespace-nowrap">{row.submittedAt}</td>
-                    <td className="px-5 py-4 text-[14px] leading-tight text-[#171717]">
+                  <tr key={row.id} className="hover:bg-[#F9FAFB]/50 transition-colors">
+                    <td className="px-5 py-4 text-[14px] text-[#171717] whitespace-nowrap">{row.submittedAt}</td>
+                    <td className="px-5 py-4 text-[14px]">
                       <div className="font-semibold text-[#171717]">
                         {row.formType === "contact" ? `${row.firstName} ${row.lastName}` : row.fullName}
                       </div>
-                      <div className="text-[#525866]">{row.email}</div>
-                      <div className="text-[#525866]">{row.phone}</div>
-                      {row.formType === "contact" ? <div className="text-[#525866]">{row.institution}</div> : null}
+                      <div className="text-[13px] text-[#525866]">{row.email}</div>
+                      <div className="text-[13px] text-[#525866]">{row.phone}</div>
+                      {row.formType === "contact" ? <div className="text-[13px] text-[#525866]">{row.institution}</div> : null}
                     </td>
-                    <td className="px-5 py-4 text-[14px] leading-tight text-[#171717]">
+                    <td className="px-5 py-4 text-[14px] text-[#171717]">
                       {row.formType === "contact" ? row.inquiryType : row.supportNeeded}
                     </td>
-                    <td className="px-5 py-4 text-[14px] leading-tight text-[#171717]">
+                    <td className="px-5 py-4 text-[14px] text-[#171717] max-w-[200px] truncate">
                       {row.formType === "contact" ? row.message : row.manuscriptTitle}
                     </td>
                     <td className="px-5 py-4">
-                      <div className={`inline-flex items-center px-3 py-0.5 rounded-[10px] border text-[12px] font-medium uppercase tracking-wide ${statusBadge(row.status)}`}>
+                      <div className={`inline-flex items-center px-3 py-0.5 rounded-[8px] border text-[12px] font-bold uppercase tracking-wide ${statusBadge(row.status)}`}>
                         {statusLabel(row.status)}
                       </div>
                       <div className="mt-2">
                         <select
                           value={row.status}
                           onChange={(event) => updateStatus(row.id, event.target.value as SubmissionStatus)}
-                          className="h-[42px] min-w-[160px] rounded-[8px] border border-[#D9E1EC] px-3 text-[14px] text-[#171717] bg-white outline-none focus:border-[#00A0E3] focus:ring-1 focus:ring-[#00A0E3]"
+                          className="h-[40px] min-w-[140px] rounded-[8px] border border-[#EAECF0] px-3 text-[13px] text-[#171717] bg-white outline-none focus:border-[#00A0E3] focus:ring-1 focus:ring-[#00A0E3]"
                         >
                           <option value="pending">Pending</option>
                           <option value="resolved">Resolved</option>
@@ -514,7 +514,7 @@ export default function AdminFormSubmissionsPage() {
                     <td className="px-5 py-4">
                       <button
                         onClick={() => setSelectedSubmission(row)}
-                        className="h-[42px] px-4 rounded-[10px] border border-[#FDBA74] text-[#B45309] text-[14px] font-medium bg-[#FFF7ED] inline-flex items-center gap-2 hover:bg-[#FFEDD5]"
+                        className="h-[40px] px-4 rounded-[8px] border border-[#EAECF0] text-[#00A0E3] text-[14px] font-medium bg-white hover:bg-[#F9FAFB] inline-flex items-center gap-2 transition-colors"
                       >
                         <Eye className="w-4 h-4" />
                         View

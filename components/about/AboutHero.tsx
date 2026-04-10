@@ -13,22 +13,19 @@ export function AboutHero() {
             <circle cx="12" cy="7" r="4" />
           </svg>
           <span className="text-[12px] sm:text-sm font-medium text-[#00A0E3]">
-            About SubmitRight
+            About Submit Right
           </span>
         </div>
 
         {/* Heading */}
         <h1 className="text-[30px] sm:text-[44px] lg:text-[48px] leading-[1.12] sm:leading-[1.1] font-medium text-[#1C1C1D] mb-5 sm:mb-6 max-w-[800px]">
-          Academic Editing With Clarity, Ethics, and Accountability
+          Built for Researchers Who Refuse to Let Language Stand Between Their Work and the World
         </h1>
 
         {/* Description */}
         <div className="text-[14px] lg:text-[16px] text-[#65656D] leading-[140%] text-center flex flex-col gap-4 max-w-[800px]">
           <p>
-            We believe that the dissemination of knowledge should be unhindered by language barriers or structural inconsistencies. Our mission is to refine the presentation of your research while preserving the absolute integrity of your original voice.
-          </p>
-          <p>
-            Through a transparent, expert-led process, we provide the rigorous editorial oversight required for elite international journals without ever compromising ethical standards.
+            Submit Right is a professional academic services platform where researchers, doctoral students, and authors submit manuscripts and receive expert-level editing, translation, and publication support through a transparent, trackable, and fully secure workflow. We don't just edit papers.
           </p>
         </div>
 

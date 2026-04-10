@@ -2,23 +2,28 @@ export function AboutIntegrity() {
   const standards = [
     {
       num: "01",
-      title: "No Plagiarism",
-      description: "We do not write content from scratch. We only edit what the researcher has authored."
+      title: "Zero Plagiarism Tolerance",
+      description: "We flag, report, and refuse to conceal any form of plagiarism detected during editing. Every eligible order is screened using iThenticate and we will never help a researcher pass off duplicated content as original work."
     },
     {
       num: "02",
-      title: "Author's Voice",
-      description: "Our goal is to refine, not replace. The scientific logic and findings remain the author's alone."
+      title: "No Ghostwriting Services",
+      description: "Submit Right edits and improves your writing. We do not write your research for you. We will never author, ghostwrite, or fabricate sections of a manuscript. Academic work must represent the researcher's own intellectual contribution."
     },
     {
       num: "03",
-      title: "Journal Compliant",
-      description: "Our editing practices align with the submission requirements of Nature, Lancet, and Cell groups."
+      title: "Data Confidentiality Always",
+      description: "Your manuscript, your data, and your personal information are yours. No editor, no admin, no third party has access beyond what the service strictly requires."
     },
     {
       num: "04",
-      title: "QA Checks",
-      description: "A secondary senior editor reviews every document to ensure no ethical boundaries were crossed."
+      title: "Ethical Editorial Practice",
+      description: "Our editors improve language, structure, and clarity. They never alter findings, misrepresent methodology, or change conclusions. The science stays exactly as the researcher intended. We enhance how it's communicated, never what it says."
+    },
+    {
+      num: "05",
+      title: "Honest Pricing, Always",
+      description: "No hidden fees. The price you see in the Quote Calculator is the price you pay. We believe transparency in pricing is as important as transparency in research."
     }
   ];
 
@@ -34,17 +39,16 @@ export function AboutIntegrity() {
                 <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
               </svg>
               <span className="text-[12px] font-medium text-[#4B5563] tracking-widest uppercase">
-                ACADEMIC INTEGRITY
+                Our Standards
               </span>
             </div>
             
             <h2 className="text-[26px] sm:text-[32px] lg:text-[40px] font-medium text-[#1C1C1D] leading-[1.2] mb-5 sm:mb-6">
-              We Do Not Support Plagiarism, Ghostwriting, or Misconduct
+              We Do Not Support Plagiarism, Ghostwriting, or Academic Misconduct. Ever.
             </h2>
             
             <p className="text-[14px] sm:text-[16px] text-[#65656D] leading-relaxed">
-              Lorem ipsum dolor sit amet consectetur. Sagittis eu vel habitant cursus. 
-              Elementum suscipit donec viverra posuere at lorem nullam.
+              Submit Right exists to improve and clarify research. Not to write it, fabricate it, or misrepresent it. Every service we provide is in full compliance with international academic integrity guidelines.
             </p>
           </div>
 

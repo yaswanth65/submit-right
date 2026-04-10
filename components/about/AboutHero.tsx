@@ -1,7 +1,7 @@
 export function AboutHero() {
   return (
     <section
-      className="relative hero-svg-bg overflow-hidden min-h-0 sm:min-h-[calc(100vh-80px)]"
+      className="relative hero-svg-bg overflow-hidden pt-20 min-h-0 sm:min-h-[calc(100vh-80px)]"
     >
 
       <div className="w-full max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-14 flex flex-col items-center justify-center text-center pt-20 sm:pt-20 pb-16 sm:pb-24 h-auto sm:h-full relative z-10">

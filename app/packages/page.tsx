@@ -13,7 +13,7 @@ export default function PackagesPage() {
   return (
     <div className="flex flex-col min-h-screen font-sans bg-white text-[#1C1C1D]">
       <Navbar />
-      <section className="relative overflow-hidden pt-12 lg:pt-24 pb-20 lg:pb-32 bg-gradient-to-b from-[#F2F8FC] to-white hero-svg-bg">
+      <section className="relative overflow-hidden pt-12 lg:pt-24 pb-20 lg:pb-32 bg-[linear-gradient(180deg,#CFE7F7_0%,#EAF5FC_52%,#FFFFFF_100%)]">
         {/* 1. Hero Section */}
         <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-14 mt-16 lg:mt-24">
           <div className="grid lg:grid-cols-2 gap-10 items-center">
@@ -56,45 +56,45 @@ export default function PackagesPage() {
               </button>
             </div>
 
-            <div className="relative h-[320px] sm:h-[400px] lg:h-[460px] flex items-center justify-center lg:justify-end w-full perspective-[1000px]">
+            <div className="relative h-[320px] sm:h-[400px] lg:h-[460px] flex items-center justify-center lg:justify-end w-full perspective-[1000px] [filter:saturate(1.12)_contrast(1.06)]">
               {/* Illustrated Stack of Papers */}
                <div className="relative w-full max-w-[500px] h-[340px]">
                 {/* Back Right Document */}
-                <div className="absolute right-0 top-[40px] w-[320px] h-[240px] bg-white rounded-2xl shadow-[0_15px_40px_rgba(0,0,0,0.06)] border border-[#Eef4F8] p-6 z-10 transform translate-x-4 rotate-[4deg]">
+                <div className="absolute right-0 top-[40px] w-[320px] h-[240px] bg-white rounded-2xl shadow-[0_15px_40px_rgba(0,0,0,0.08)] border border-[#D7E7F3] p-6 z-10 transform translate-x-4 rotate-[4deg]">
                   <div className="flex gap-4 mb-6">
-                    <div className="w-16 h-16 bg-[#F3F8FB] rounded-lg"></div>
+                    <div className="w-16 h-16 bg-[#E4EFF7] rounded-lg"></div>
                     <div className="flex-1 space-y-3">
-                      <div className="w-full h-3 bg-[#F3F8FB] rounded-full"></div>
-                      <div className="w-2/3 h-3 bg-[#F3F8FB] rounded-full"></div>
-                      <div className="w-4/5 h-3 bg-[#F3F8FB] rounded-full"></div>
+                      <div className="w-full h-3 bg-[#E4EFF7] rounded-full"></div>
+                      <div className="w-2/3 h-3 bg-[#E4EFF7] rounded-full"></div>
+                      <div className="w-4/5 h-3 bg-[#E4EFF7] rounded-full"></div>
                     </div>
                   </div>
                   <div className="space-y-3">
-                    <div className="w-full h-2.5 bg-[#F3F8FB] rounded-full"></div>
-                    <div className="w-full h-2.5 bg-[#F3F8FB] rounded-full"></div>
-                    <div className="w-3/4 h-2.5 bg-[#F3F8FB] rounded-full"></div>
+                    <div className="w-full h-2.5 bg-[#E4EFF7] rounded-full"></div>
+                    <div className="w-full h-2.5 bg-[#E4EFF7] rounded-full"></div>
+                    <div className="w-3/4 h-2.5 bg-[#E4EFF7] rounded-full"></div>
                   </div>
                 </div>
 
                 {/* Back Left Document */}
-                <div className="absolute left-[30px] top-[60px] w-[320px] h-[240px] bg-white text-left rounded-2xl shadow-[0_15px_40px_rgba(0,0,0,0.06)] border border-[#Eef4F8] p-6 z-20 transform -translate-x-6 -rotate-[4deg]">
+                <div className="absolute left-[30px] top-[60px] w-[320px] h-[240px] bg-white text-left rounded-2xl shadow-[0_15px_40px_rgba(0,0,0,0.08)] border border-[#D7E7F3] p-6 z-20 transform -translate-x-6 -rotate-[4deg]">
                   <div className="flex gap-4 mb-6">
                     <div className="flex-1 space-y-3">
-                      <div className="w-full h-3 bg-[#F3F8FB] rounded-full"></div>
-                      <div className="w-2/3 h-3 bg-[#F3F8FB] rounded-full"></div>
-                      <div className="w-4/5 h-3 bg-[#F3F8FB] rounded-full"></div>
+                      <div className="w-full h-3 bg-[#E4EFF7] rounded-full"></div>
+                      <div className="w-2/3 h-3 bg-[#E4EFF7] rounded-full"></div>
+                      <div className="w-4/5 h-3 bg-[#E4EFF7] rounded-full"></div>
                     </div>
-                    <div className="w-16 h-16 bg-[#F3F8FB] rounded-lg"></div>
+                    <div className="w-16 h-16 bg-[#E4EFF7] rounded-lg"></div>
                   </div>
                   <div className="space-y-3">
-                    <div className="w-full h-2.5 bg-[#F3F8FB] rounded-full"></div>
-                    <div className="w-full h-2.5 bg-[#F3F8FB] rounded-full"></div>
-                    <div className="w-1/2 h-2.5 bg-[#F3F8FB] rounded-full"></div>
+                    <div className="w-full h-2.5 bg-[#E4EFF7] rounded-full"></div>
+                    <div className="w-full h-2.5 bg-[#E4EFF7] rounded-full"></div>
+                    <div className="w-1/2 h-2.5 bg-[#E4EFF7] rounded-full"></div>
                   </div>
                 </div>
 
                 {/* Front Main Document */}
-                <div className="absolute left-1/2 top-[10px] -translate-x-1/2 w-[280px] h-[340px] bg-white rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.1)] border border-[#Eef4F8] p-7 z-30 flex flex-col">
+                <div className="absolute left-1/2 top-[10px] -translate-x-1/2 w-[280px] h-[340px] bg-white rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.12)] border border-[#D7E7F3] p-7 z-30 flex flex-col">
                   {/* Blue Bookmark */}
                   <div className="absolute top-0 left-6 w-[36px] h-[52px] bg-[#00A0E3] rounded-b-md shadow-sm flex items-center justify-center">
                     <div className="w-3 h-3 bg-white rounded-full mt-[-10px]"></div>
@@ -102,22 +102,22 @@ export default function PackagesPage() {
                   </div>
 
                   <div className="flex gap-4 mt-6 mb-6">
-                     <div className="w-[84px] h-[72px] bg-[#EEF5FB] rounded-xl flex items-center justify-center shrink-0"></div>
+                     <div className="w-[84px] h-[72px] bg-[#DCEBF6] rounded-xl flex items-center justify-center shrink-0"></div>
                      <div className="flex-1 space-y-3 mt-1">
-                      <div className="w-full h-[10px] bg-[#EEF5FB] rounded-full"></div>
-                      <div className="w-full h-[10px] bg-[#EEF5FB] rounded-full"></div>
-                      <div className="w-2/3 h-[10px] bg-[#EEF5FB] rounded-full"></div>
+                      <div className="w-full h-[10px] bg-[#DCEBF6] rounded-full"></div>
+                      <div className="w-full h-[10px] bg-[#DCEBF6] rounded-full"></div>
+                      <div className="w-2/3 h-[10px] bg-[#DCEBF6] rounded-full"></div>
                     </div>
                   </div>
 
                   <div className="space-y-3.5 flex-1">
-                    <div className="w-full h-[8px] bg-[#EEF5FB] rounded-full"></div>
-                    <div className="w-full h-[8px] bg-[#EEF5FB] rounded-full"></div>
-                    <div className="w-[90%] h-[8px] bg-[#EEF5FB] rounded-full"></div>
-                    <div className="w-full h-[8px] bg-[#EEF5FB] rounded-full"></div>
-                    <div className="w-[80%] h-[8px] bg-[#EEF5FB] rounded-full"></div>
-                    <div className="w-full h-[8px] bg-[#EEF5FB] rounded-full mt-6"></div>
-                    <div className="w-[70%] h-[8px] bg-[#EEF5FB] rounded-full"></div>
+                    <div className="w-full h-[8px] bg-[#DCEBF6] rounded-full"></div>
+                    <div className="w-full h-[8px] bg-[#DCEBF6] rounded-full"></div>
+                    <div className="w-[90%] h-[8px] bg-[#DCEBF6] rounded-full"></div>
+                    <div className="w-full h-[8px] bg-[#DCEBF6] rounded-full"></div>
+                    <div className="w-[80%] h-[8px] bg-[#DCEBF6] rounded-full"></div>
+                    <div className="w-full h-[8px] bg-[#DCEBF6] rounded-full mt-6"></div>
+                    <div className="w-[70%] h-[8px] bg-[#DCEBF6] rounded-full"></div>
                   </div>
                 </div>
               </div>
@@ -147,7 +147,7 @@ export default function PackagesPage() {
             Lorem ipsum dolor sit amet consectetur. Sagittis eu vel habitant cursus.
           </p>
 
-          <div className="flex flex-col md:flex-row justify-center gap-6 sm:gap-8 mx-auto max-w-[800px] text-left">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 w-full text-left">
             
             {/* Affordable Card (Yellow) */}
             <div className="flex-1 rounded-[24px] bg-[#FFFBF2] border border-[#F2E4BE] p-8 sm:p-10 relative flex flex-col pt-12 overflow-hidden hover:shadow-lg transition-all duration-300">
@@ -251,7 +251,7 @@ export default function PackagesPage() {
             </button>
           </div>
 
-          <div className="w-full max-w-[1000px] mx-auto h-[350px] sm:h-[450px] bg-[#D4DCE2] rounded-[32px] overflow-hidden mb-12 flex items-center justify-center relative">
+          <div className="w-full mx-auto h-[350px] sm:h-[450px] bg-[#D4DCE2] rounded-[32px] overflow-hidden mb-12 flex items-center justify-center relative">
             {/* SVG Placeholder for Image */}
             <svg className="absolute inset-0 w-full h-full text-[#B5C2CD]" preserveAspectRatio="none" viewBox="0 0 1000 450" fill="currentColor">
               <path d="M0,450 L1000,450 L1000,0 L0,0 Z M0,450 L350,150 L600,350 L850,200 L1000,450 Z" opacity="0.3"></path>
@@ -285,7 +285,7 @@ export default function PackagesPage() {
             Lorem ipsum dolor sit amet consectetur. Sagittis eu vel habitant cursus. Elementum suscipit donec viverra posuere at lorem nullam.
           </p>
 
-          <div className="flex flex-wrap justify-center gap-6 max-w-[900px] mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5 sm:gap-6 w-full">
              {[
                { title: "Scientific Expertise", desc: "Expertise in specialized scientific illustration." },
                { title: "Journal Customization", desc: "Abstracts as per your target journal's requirements." },
@@ -293,7 +293,7 @@ export default function PackagesPage() {
                { title: "Satisfaction Guarantee", desc: "Complete customer satisfaction guaranteed." },
                { title: "Copyright Retention", desc: "You retain full copyright of your graphical abstract." }
              ].map((item, idx) => (
-                <div key={idx} className="w-[260px] bg-white border border-gray-100 rounded-2xl p-6 text-center shadow-[0_8px_30px_rgba(0,0,0,0.03)] hover:-translate-y-1 transition-transform">
+                <div key={idx} className="w-full bg-white border border-gray-100 rounded-2xl p-6 text-center shadow-[0_8px_30px_rgba(0,0,0,0.03)] hover:-translate-y-1 transition-transform">
                   <div className="w-10 h-10 mx-auto bg-gray-50 rounded-lg flex items-center justify-center mb-4 border border-gray-100">
                     <svg className="w-5 h-5 text-[#1C1C1D]" fill="currentColor" viewBox="0 0 24 24">
                       <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
@@ -331,7 +331,7 @@ export default function PackagesPage() {
             </p>
           </div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-[1100px] mx-auto">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 w-full">
             {Array(4).fill(0).map((_, i) => (
                <div key={i} className="border border-gray-100 rounded-2xl p-6 bg-white hover:border-[#00A0E3]/30 hover:shadow-lg transition-all text-left">
                   <h4 className="font-medium text-[#1C1C1D] text-[15px] mb-3">Lorem ipsum dolor sit</h4>

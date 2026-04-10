@@ -1,153 +1,230 @@
 "use client";
 
+import { useState, useMemo } from "react";
+
 export function QuoteCalculator() {
+  const [words, setWords] = useState(520);
+  const [documentType, setDocumentType] = useState("Essay");
+  const [service, setService] = useState("Editing");
+
+  // Pricing configuration
+  const pricingConfig: Record<string, number> = {
+    Editing: 0.02,
+    Proofreading: 0.015,
+    Writing: 0.04,
+  };
+
+  const documentMultiplier: Record<string, number> = {
+    Essay: 1,
+    "Research Paper": 1.2,
+    Report: 1.1,
+    Dissertation: 1.4,
+  };
+
+  // Calculate price and time
+  const { price, days, chartData } = useMemo(() => {
+    const baseRate = pricingConfig[service] || 0.02;
+    const multiplier = documentMultiplier[documentType] || 1;
+
+    const calculatedPrice = words * baseRate * multiplier;
+    const calculatedDays = Math.max(1, Math.ceil(words / 1000 * 5));
+
+    // Generate chart data
+    const data = [2, 4, 6, 8, 10].map((day) => ({
+      day,
+      price: Math.min(
+        calculatedPrice * (day / calculatedDays),
+        calculatedPrice
+      ),
+    }));
+
+    return {
+      price: calculatedPrice,
+      days: calculatedDays,
+      chartData: data,
+    };
+  }, [words, documentType, service]);
+
+  // SVG Path Generator
+  const generatePath = (data: any[]) => {
+    const maxPrice = Math.max(...data.map((d) => d.price), 1);
+    const width = 400;
+    const height = 240;
+
+    return data
+      .map((point, index) => {
+        const x = (index / (data.length - 1)) * width;
+        const y = height - (point.price / maxPrice) * height;
+        return `${index === 0 ? "M" : "L"} ${x},${y}`;
+      })
+      .join(" ");
+  };
+
   return (
     <section className="py-12 sm:py-16 lg:py-24 bg-[#F3F9FC]">
       <div className="w-full max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-14">
-        
-        {/* Header Section */}
-        <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-12">
-          {/* Badge */}
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-white border border-[#E5E5E5] rounded-full mb-5">
-             <svg className="w-3.5 h-3.5 text-[#1C1C1D]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-             </svg>
-            <span className="text-[11px] font-normal text-[#1C1C1D] uppercase tracking-wider">
-              LOREM IPSUM DOLOR
+
+        {/* Header */}
+        <div className="text-center max-w-2xl mx-auto mb-12">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-white border border-gray-200 rounded-full mb-5">
+            <span className="text-[11px] uppercase tracking-wider">
+              Instant Pricing
             </span>
           </div>
-
-          {/* Heading */}
-          <h2 className="text-[26px] sm:text-[32px] font-normal text-[#1C1C1D] leading-tight mb-4">
+          <h2 className="text-[28px] sm:text-[34px] font-semibold text-[#1C1C1D]">
             Quote Calculator
           </h2>
-
-          {/* Description */}
-          <p className="text-[13px] sm:text-[15px] text-[#65656D] leading-relaxed">
-            Lorem ipsum dolor sit amet consectetur. Sagittis eu vel habitant cursus. 
-            Elementum suscipit donec viverra posuere at lorem nullam.
+          <p className="text-sm text-gray-500 mt-2">
+            Enter your word count and select your service to get an instant estimate.
           </p>
         </div>
 
-        {/* Calculator Content */}
-        <div className="grid lg:grid-cols-2 gap-5 sm:gap-6 lg:gap-8 items-stretch max-w-[1040px] mx-auto">
-          {/* Left Side - Form */}
-          <div className="bg-white rounded-2xl sm:rounded-[24px] p-4 sm:p-6 lg:p-8 shadow-[0_4px_20px_rgb(0,0,0,0.03)] flex flex-col justify-between">
-            <div className="space-y-6 sm:space-y-7">
-              {/* Input Words */}
-              <div>
-                <label className="block text-[13px] font-semibold text-[#1C1C1D] mb-2.5">
-                  No.of Words Input
-                </label>
+        {/* Main Container */}
+        <div className="bg-transparent p-4 sm:p-6 rounded-[28px]">
+          <div className="grid lg:grid-cols-2 gap-6">
+
+            {/* LEFT PANEL */}
+            <div className="bg-white rounded-[22px] p-6 flex flex-col justify-between shadow-[0_0_12px_rgba(28,28,29,0.05)]">
+              <div className="space-y-6">
                 
-                <div className="flex items-center justify-between h-[46px] px-4 border border-[#F0F0F0] rounded-xl mb-6 bg-[#FAFAFA]">
-                  <span className="text-[15px] font-medium text-[#1C1C1D]">520</span>
-                  <div className="flex flex-col gap-0.5 items-center justify-center">
-                    <svg className="w-3.5 h-3.5 text-[#1C1C1D] cursor-pointer" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" /></svg>
-                    <svg className="w-3.5 h-3.5 text-[#1C1C1D] cursor-pointer" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" transform="rotate(180 12 12)" /></svg>
-                  </div>
+                {/* Word Input */}
+                <div className="bg-[#F8F8F8] p-4 rounded-[14px] border border-[#ECECEC]">
+                  <label className="block text-[14px] font-medium mb-2 text-[#0E121B]">
+                    No. of Words Input
+                  </label>
+                  <input
+                    type="number"
+                    value={words}
+                    onChange={(e) => setWords(Number(e.target.value))}
+                    className="w-full h-[40px] px-4 border border-[#E7E7E9] text-[#171717] text-[14px] rounded-lg bg-white focus:outline-none focus:border-[#00A0E3]"
+                  />
+                  <input
+                    type="range"
+                    min="100"
+                    max="5000"
+                    step="50"
+                    value={words}
+                    onChange={(e) => setWords(Number(e.target.value))}
+                    className="w-full mt-4 h-2 bg-[#E2F1F8] rounded-lg appearance-none cursor-pointer accent-[#00A0E3]"
+                  />
                 </div>
-                
-                {/* Range Slider */}
-                <div className="relative w-full h-2 bg-[#E1F3FB] rounded-full">
-                  <div className="absolute top-0 left-0 h-full bg-[#00A0E3] rounded-full" style={{ width: '30%' }}></div>
-                  <div className="absolute top-1/2 left-[30%] -translate-y-1/2 -translate-x-1/2 w-5 h-5 bg-[#00A0E3] rounded-full border-[3px] border-white shadow-[0_2px_8px_rgba(0,160,227,0.3)] cursor-pointer"></div>
+
+                {/* Dropdowns */}
+                <div className="bg-[#F8F8F8] p-4 rounded-[14px] border border-[#ECECEC] grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-[14px] font-medium mb-2 text-[#0E121B]">
+                      Document Type
+                    </label>
+                    <select
+                      value={documentType}
+                      onChange={(e) => setDocumentType(e.target.value)}
+                      className="w-full h-[40px] px-4 border border-[#E7E7E9] text-[#78788D] text-[14px] rounded-lg bg-white focus:outline-none focus:border-[#00A0E3]"
+                    >
+                      <option>Essay</option>
+                      <option>Research Paper</option>
+                      <option>Report</option>
+                      <option>Dissertation</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="block text-[14px] font-medium mb-2 text-[#0E121B]">
+                      Service
+                    </label>
+                    <select
+                      value={service}
+                      onChange={(e) => setService(e.target.value)}
+                      className="w-full h-[40px] px-4 border border-[#E7E7E9] text-[#78788D] text-[14px] rounded-lg bg-white focus:outline-none focus:border-[#00A0E3]"
+                    >
+                      <option>Editing</option>
+                      <option>Proofreading</option>
+                      <option>Writing</option>
+                    </select>
+                  </div>
                 </div>
               </div>
 
-              {/* Document Type & Service grid */}
-              <div className="grid grid-cols-2 gap-3 sm:gap-5">
-                {/* Document Type */}
-                <div>
-                  <label className="block text-[13px] font-semibold text-[#1C1C1D] mb-2.5">
-                    Document Type
-                  </label>
-                  <div className="flex items-center justify-between h-[46px] px-3 sm:px-4 border border-[#F0F0F0] rounded-xl cursor-pointer bg-[#FAFAFA]">
-                    <span className="text-[13px] sm:text-[14px] text-[#65656D] truncate">Select</span>
-                    <svg className="w-4 h-4 text-[#1C1C1D] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" /></svg>
-                  </div>
+              {/* Result Cards */}
+              <div className="grid grid-cols-2 gap-4 mt-8">
+                <div className="bg-[#0189C2] text-white p-6 rounded-xl min-h-[150px] flex flex-col justify-between">
+                  <p className="text-sm">Estimated Pricing</p>
+                  <h3 className="text-2xl font-bold">
+                    ${price.toFixed(2)}
+                  </h3>
                 </div>
-
-                {/* Service */}
-                <div>
-                  <label className="block text-[13px] font-semibold text-[#1C1C1D] mb-2.5">
-                    Service
-                  </label>
-                  <div className="flex items-center justify-between h-[46px] px-3 sm:px-4 border border-[#F0F0F0] rounded-xl cursor-pointer bg-[#FAFAFA]">
-                    <span className="text-[13px] sm:text-[14px] text-[#65656D] truncate">Select</span>
-                    <svg className="w-4 h-4 text-[#1C1C1D] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" /></svg>
-                  </div>
+                <div className="bg-[#015375] text-white p-6 rounded-xl min-h-[150px] flex flex-col justify-between">
+                  <p className="text-sm">Estimated Time Period</p>
+                  <h3 className="text-2xl font-bold">
+                    {days} days
+                  </h3>
                 </div>
               </div>
             </div>
 
-            {/* Price Cards */}
-            <div className="grid grid-cols-2 gap-3 sm:gap-4 mt-7 sm:mt-8 lg:mt-10">
-              <div className="bg-[#008CC9] rounded-[14px] sm:rounded-[16px] p-4 sm:p-5 text-white shadow-[0_8px_20px_rgba(0,140,201,0.15)] flex flex-col justify-center">
-                <div className="text-[11px] sm:text-[13px] font-medium mb-1">Estimated Pricing</div>
-                <div className="text-[20px] sm:text-[28px] lg:text-[32px] font-semibold tracking-tight leading-none">$160.00</div>
-              </div>
-              <div className="bg-[#01405B] rounded-[14px] sm:rounded-[16px] p-4 sm:p-5 text-white shadow-[0_8px_20px_rgba(1,64,91,0.15)] flex flex-col justify-center">
-                <div className="text-[11px] sm:text-[13px] font-medium mb-1">Estimated Time Period</div>
-                <div className="text-[20px] sm:text-[28px] lg:text-[32px] font-semibold tracking-tight leading-none">5 days</div>
-              </div>
-            </div>
-          </div>
+            {/* RIGHT PANEL */}
+            <div className="bg-white rounded-[22px] p-4 sm:p-6 shadow-[0_0_12px_rgba(28,28,29,0.05)]">
+              <h3 className="text-[18px] text-[#1C1C1D] font-semibold mb-6">
+                Pricing Trend
+              </h3>
 
-          {/* Right Side - Chart */}
-          <div className="bg-white rounded-2xl sm:rounded-[24px] p-4 sm:p-6 lg:p-8 shadow-[0_4px_20px_rgb(0,0,0,0.03)] flex flex-col">
-            <h3 className="text-[17px] font-semibold text-[#1C1C1D] mb-8">Lorem ipsum dolor</h3>
-
-            {/* Chart Area */}
-            <div className="relative flex-1 flex flex-col justify-end min-h-[240px] sm:min-h-[300px]">
-              <div className="absolute inset-0 flex">
-                {/* Y Axis */}
-                <div className="flex flex-col justify-between text-[12px] text-[#65656D] h-full pr-4 pb-[36px] w-[50px] text-right">
-                  <span>$500</span>
-                  <span>$400</span>
-                  <span>$300</span>
-                  <span>$200</span>
-                  <span>$100</span>
-                  <span>$0</span>
-                </div>
-                
-                <div className="relative flex-1 h-[calc(100%-36px)]">
-                  {/* Horizontal Grid lines */}
-                  <div className="absolute inset-0 flex flex-col justify-between z-0">
-                     <div className="w-full h-px border-t border-dashed border-[#E5E5E5]"></div>
-                     <div className="w-full h-px border-t border-dashed border-[#E5E5E5]"></div>
-                     <div className="w-full h-px border-t border-dashed border-[#E5E5E5]"></div>
-                     <div className="w-full h-px border-t border-dashed border-[#E5E5E5]"></div>
-                     <div className="w-full h-px border-t border-dashed border-[#E5E5E5]"></div>
-                     <div className="w-full h-px border-t border-[#E5E5E5]"></div>
+              <div className="bg-[#F8F8F8] rounded-[14px] p-3 sm:p-6">
+                <div className="relative h-[220px] sm:h-[260px]">
+                  {/* Y-axis labels */}
+                  <div className="absolute left-0 top-0 h-full flex flex-col justify-between text-[10px] sm:text-[12px] text-[#0E121B]">
+                    <span>$500</span>
+                    <span>$400</span>
+                    <span>$300</span>
+                    <span>$200</span>
+                    <span>$100</span>
+                    <span>$0</span>
                   </div>
 
-                  {/* Line Chart SVG */}
-                  <svg className="absolute inset-0 w-full h-full z-10 overflow-visible" viewBox="0 0 400 252" preserveAspectRatio="none">
+                  {/* Chart */}
+                  <svg
+                    viewBox="0 0 400 240"
+                    className="absolute left-7 sm:left-10 top-0 w-[calc(100%-28px)] sm:w-[calc(100%-40px)] h-full"
+                    preserveAspectRatio="none"
+                  >
+                    {/* Grid Lines */}
+                    {[0, 1, 2, 3, 4].map((i) => (
+                      <line
+                        key={i}
+                        x1="0"
+                        y1={(240 / 5) * i}
+                        x2="400"
+                        y2={(240 / 5) * i}
+                        stroke="#ECECEC"
+                        strokeDasharray="4 4"
+                      />
+                    ))}
+                    <line
+                      x1="0"
+                      y1="240"
+                      x2="400"
+                      y2="240"
+                      stroke="#ECECEC"
+                    />
+
+                    {/* Line Path */}
                     <path
-                      d="M 0,252 Q 150,210 230,130"
-                      stroke="#00A0E3"
-                      strokeWidth="2.5"
+                      d={generatePath(chartData)}
                       fill="none"
+                      stroke="#00A0E3"
+                      strokeWidth="2"
                       strokeLinecap="round"
                     />
                   </svg>
                 </div>
-              </div>
 
-              {/* X Axis Labels */}
-              <div className="flex justify-between text-[11px] sm:text-[12px] text-[#65656D] pl-[50px] relative z-20">
-                <span className="w-10 text-center -ml-5 mt-2">2 days</span>
-                <span className="w-10 text-center -ml-5 mt-2">4 days</span>
-                <span className="w-10 text-center -ml-5 mt-2">6 days</span>
-                <span className="w-10 text-center -ml-5 mt-2">8 days</span>
-                <div className="w-10 text-center -ml-5 flex flex-col items-center mt-2 leading-tight">
-                  <span>10</span>
-                  <span>days</span>
+                {/* X-axis labels */}
+                <div className="flex justify-between text-[10px] sm:text-[12px] text-[#0E121B] mt-2 ml-[56px] sm:ml-[80px] [&>span]:whitespace-nowrap">
+                  {[2, 4, 6, 8, 10].map((d) => (
+                    <span key={d}>{d} days</span>
+                  ))}
                 </div>
               </div>
             </div>
-            
+
           </div>
         </div>
       </div>

@@ -1,11 +1,20 @@
 import Link from "next/link";
 
 export function Packages() {
-  const rowLabels = Array(8).fill("Lorem ipsum dolor sit amet");
+  const rowLabels = [
+    "Grammar & Language Editing",
+    "Structural & Scientific Editing",
+    "Plagiarism Check",
+    "Re-Editing Entitlement",
+    "Pre-Submission Peer Review",
+    "Cover Letter + Reviewer Support",
+    "Editorial Team Size",
+    "Submission-Readiness Report"
+  ];
   
-  const col1 = [true, true, true, true, true, true, true, true];
-  const col2 = [true, true, false, true, false, true, false, true];
-  const col3 = [true, false, true, false, true, false, true, false];
+  const col1 = [true, false, false, true, false, false, true, false];
+  const col2 = [true, true, true, true, false, true, true, false];
+  const col3 = [true, true, true, true, true, true, true, true];
 
   return (
     <section className="py-12 sm:py-16 lg:py-24 bg-[#F3F9FC]">
@@ -19,16 +28,15 @@ export function Packages() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h16M4 18h16" />
              </svg>
             <span className="text-[11px] font-normal text-[#1C1C1D] uppercase tracking-wider">
-              LOREM IPSUM
+              SERVICE PACKAGES
             </span>
           </div>
 
           <h2 className="text-[26px] sm:text-[32px] font-medium text-[#1C1C1D] leading-[1.15] sm:leading-[1.1] mb-4">
-            Our Packages
+            Simple Plans. Serious Publication Results.
           </h2>
           <p className="text-[13px] sm:text-[15px] text-[#65656D] leading-relaxed">
-            Lorem ipsum dolor sit amet consectetur. Sagittis eu vel habitant cursus. 
-            Elementum suscipit donec viverra posuere at lorem nullam.
+            Every plan includes expert editing, real-time order tracking, and secure file handling. Pick the level of support your research stage needs.
           </p>
         </div>
 
@@ -49,7 +57,7 @@ export function Packages() {
 
           {/* Package 1 (Blue Highlight) */}
           <div className="w-[85vw] sm:w-[240px] sm:flex-1 shrink-0 bg-[#E8F6FC] p-6 sm:p-8 relative snap-center border-r sm:border-r-0 border-[#F0F0F0]">
-            <h3 className="text-[17px] sm:text-[18px] font-semibold text-[#1C1C1D] mb-6 sm:mb-8 whitespace-nowrap text-center sm:text-left">Premium Package</h3>
+            <h3 className="text-[17px] sm:text-[18px] font-semibold text-[#1C1C1D] mb-6 sm:mb-8 whitespace-nowrap text-center sm:text-left">Language Clarity</h3>
             {col1.map((val, idx) => (
               <div key={idx} className="flex items-center justify-start gap-3 h-[42px] mb-3">
                 <div className="w-5 h-5 rounded-full bg-[#00A0E3]/10 flex items-center justify-center shrink-0">
@@ -75,7 +83,7 @@ export function Packages() {
 
           {/* Package 2 */}
           <div className="w-[85vw] sm:w-[240px] sm:flex-1 shrink-0 p-6 sm:p-8 border-r sm:border-l border-[#F0F0F0] bg-white snap-center">
-            <h3 className="text-[17px] sm:text-[18px] font-semibold text-[#65656D] mb-6 sm:mb-8 whitespace-nowrap text-center sm:text-left">Standard Package</h3>
+            <h3 className="text-[17px] sm:text-[18px] font-semibold text-[#65656D] mb-6 sm:mb-8 whitespace-nowrap text-center sm:text-left">Publication-Ready</h3>
             {col2.map((val, idx) => (
               <div key={idx} className="flex items-center justify-start gap-3 h-[42px] mb-3">
                 {val ? (
@@ -106,7 +114,7 @@ export function Packages() {
 
           {/* Package 3 */}
           <div className="w-[85vw] sm:w-[240px] sm:flex-1 shrink-0 p-6 sm:p-8 sm:border-l border-[#F0F0F0] bg-white snap-center">
-            <h3 className="text-[17px] sm:text-[18px] font-semibold text-[#65656D] mb-6 sm:mb-8 whitespace-nowrap text-center sm:text-left">Basic Package</h3>
+            <h3 className="text-[17px] sm:text-[18px] font-semibold text-[#65656D] mb-6 sm:mb-8 whitespace-nowrap text-center sm:text-left">High-Impact</h3>
             {col3.map((val, idx) => (
               <div key={idx} className="flex items-center justify-start gap-3 h-[42px] mb-3">
                 {val ? (

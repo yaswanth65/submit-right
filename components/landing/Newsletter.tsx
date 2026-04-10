@@ -8,11 +8,10 @@ export function Newsletter() {
           
           <div className="max-w-2xl text-center md:text-left">
             <h2 className="text-[26px] sm:text-[32px] font-medium text-[#1C1C1D] leading-[1.15] sm:leading-[1.1] mb-2">
-              Lorem ipsum dolor sit amet consectetur
+              Stay Updated on Publishing Trends
             </h2>
             <p className="text-[13px] sm:text-[14px] text-[#65656D] leading-relaxed">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
-              tempor, consectetur adipiscing elit
+              Get tips, research insights, and exclusive updates on academic publishing delivered to your inbox every week.
             </p>
           </div>
 
@@ -21,13 +20,13 @@ export function Newsletter() {
               href="#"
               className="inline-flex w-full sm:w-auto items-center justify-center px-6 py-2.5 border border-[#00A0E3] text-[#00A0E3] text-[14px] font-medium rounded-full hover:bg-[#F3F9FC] transition-colors"
             >
-              Log In
+              Explore
             </Link>
             <Link
               href="#"
               className="inline-flex w-full sm:w-auto items-center justify-center px-6 py-2.5 bg-[#00A0E3] text-white text-[14px] font-medium rounded-full hover:bg-[#0189C2] transition-colors"
             >
-              Create Account
+              Subscribe Now
             </Link>
           </div>
           

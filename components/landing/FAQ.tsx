@@ -48,7 +48,7 @@ export function FAQ({ items, tag = "FAQ", title = "Got Questions We've Got Answe
 
   return (
     <section className="py-12 sm:py-20 lg:py-24 bg-white">
-      <div className="w-full max-w-[900px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-14">
+      <div className="w-full max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-14">
         {/* Header */}
         <div className="text-center mb-10 sm:mb-12">
           <div className="inline-flex items-center gap-1.5 mb-4">

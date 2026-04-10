@@ -21,7 +21,7 @@ export function TrustedLogos() {
         {/* Title */}
         <div className="text-center mb-6 sm:mb-8">
           <h2 className="text-[16px] sm:text-[18px] font-medium text-[#78788D] leading-[1.2]">
-            Lorem ipsum dolor sit amet
+            Trusted by Researchers at Leading Institutions
           </h2>
         </div>
 

@@ -34,19 +34,18 @@ export function Hero() {
       <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#00A0E34D] bg-[#00A0E314] mb-6">
         <span className="w-2 h-2 bg-[#00A0E3] rounded-full" />
         <span className="text-[13px] md:text-[14px] font-medium leading-[1.4] tracking-normal text-[#00A0E3]">
-          LOREM IPSUM DOLOR
+          ACADEMIC EDITING & PUBLICATION SERVICES
         </span>
       </div>
 
       {/* Heading */}
       <h1 className="text-[32px] sm:text-[38px] md:text-[54px] leading-[1.15] md:leading-[1.1] font-medium tracking-normal text-[#1C1C1D] mb-5 md:mb-6">
-        Lorem ipsum dolor sit amet consectetur
+        Your Research Is Brilliant. Don't Let Poor English Bury It.
       </h1>
 
       {/* Description */}
       <p className="text-[16px] md:text-[18px] text-[#78788D] leading-[1.5] md:leading-[1.4] mb-8 md:mb-10 lg:pr-6 px-2 lg:px-0">
-        Lorem ipsum dolor sit amet consectetur. Sagittis eu vel habitant cursus.
-        Elementum suscipit donec viverra posuere at lorem nullam. Porttitor mauris morbi tincidunt enim nascetur sed. Eu neque sagittis in gravida elementum.
+        Submit Right is the platform where researchers upload manuscripts, get expert editing, and track every step from submission to delivery.
       </p>
 
       {/* Buttons */}
@@ -55,13 +54,13 @@ export function Hero() {
           href="#"
           className="flex items-center justify-center sm:flex-none text-center px-2 sm:px-8 py-3 sm:py-3.5 rounded-full bg-[#00A0E3] text-white whitespace-nowrap text-[14px] sm:text-[16px] font-medium leading-[1.2] shadow-[0_8px_20px_rgba(0,160,227,0.25)] hover:shadow-[0_10px_25px_rgba(0,160,227,0.35)] hover:bg-[#028ac7] transition-all"
         >
-          Create Account
+          Get Instant Quote →
         </Link>
         <Link
           href="#"
           className="flex items-center justify-center sm:flex-none text-center px-2 sm:px-10 py-3 sm:py-3.5 rounded-full border border-[#00A0E3] text-[#00A0E3] whitespace-nowrap text-[14px] sm:text-[16px] font-medium leading-[1.2] bg-white hover:bg-[#EAF5FB] transition-all"
         >
-          Log in
+          Explore Services
         </Link>
       </div>
 
@@ -74,8 +73,8 @@ export function Hero() {
             </svg>
           </div>
           <div className="flex flex-col">
-            <span className="font-medium text-[16px] text-[#1C1C1D]">10,000+</span>
-            <span className="text-[14px] leading-[1.4] text-[#78788D]">Lorem ipsum</span>
+            <span className="font-medium text-[16px] text-[#1C1C1D]">50,000+</span>
+            <span className="text-[14px] leading-[1.4] text-[#78788D]">Manuscripts Delivered</span>
           </div>
         </div>
 
@@ -86,8 +85,8 @@ export function Hero() {
             </svg>
           </div>
           <div className="flex flex-col">
-            <span className="font-medium text-[16px] text-[#1C1C1D]">4.8/5</span>
-            <span className="text-[14px] leading-[1.4] text-[#78788D]">Lorem ipsum</span>
+            <span className="font-medium text-[16px] text-[#1C1C1D]">4.9/5</span>
+            <span className="text-[14px] leading-[1.4] text-[#78788D]">Researcher Satisfaction</span>
           </div>
         </div>
       </div>
@@ -138,8 +137,8 @@ function Slide1Right() {
   const gaugeProgress = 84;
 
   return (
-    <div className="relative w-full h-[390px] sm:h-[450px] lg:h-[500px] flex items-center justify-center overflow-visible sm:overflow-hidden">
-      <div className="relative w-[340px] sm:w-[540px] h-[390px] sm:h-[500px] transform scale-[0.9] sm:scale-[0.82] md:scale-[0.92] lg:scale-100 origin-center mt-4 sm:mt-0">
+    <div className="relative w-full h-[390px] sm:h-[450px] lg:h-[500px] flex items-center justify-center overflow-visible">
+      <div className="relative w-[340px] sm:w-[540px] lg:w-[600px] h-[390px] sm:h-[500px] transform scale-[0.9] sm:scale-[0.82] md:scale-[0.92] lg:scale-100 origin-center mt-4 sm:mt-0">
       {/* Top Right Card (Back, "124") */}
       <motion.div
         animate={{ y: [0, -6, 0], scale: [0.95, 0.96, 0.95] }}
@@ -147,8 +146,8 @@ function Slide1Right() {
         className="absolute top-0 right-2 sm:top-2 sm:right-0 w-[180px] sm:w-[230px] rounded-[22px] bg-[#EEF3F8] p-2 sm:p-[10px] shadow-[0_12px_35px_rgba(28,43,64,0.09),inset_0_1px_0_rgba(255,255,255,0.85)] z-10 border border-[#D4E0EA]"
       >
         <div className="rounded-[14px] bg-white px-4 sm:px-5 pt-4 sm:pt-5 pb-3 sm:pb-4 border border-[#E4EBF2]">
-          <p className="text-[13px] sm:text-[15px] font-normal text-[#404040] mb-2 sm:mb-3.5">Lorem ipsum dolor</p>
-          <div className="text-[36px] sm:text-[43px] leading-none font-normal text-[#1C1C1D]">124</div>
+          <p className="text-[13px] sm:text-[15px] font-normal text-[#404040] mb-2 sm:mb-3.5">Editing Progress</p>
+          <div className="text-[36px] sm:text-[43px] leading-none font-normal text-[#1C1C1D]">87</div>
         </div>
         <div className="w-full h-[1px] bg-[#E9EEF4] my-2 sm:my-3.5" />
         <p className="text-[11px] sm:text-[13px] text-[#5E6673] leading-relaxed font-medium px-1 pb-1">
@@ -163,7 +162,7 @@ function Slide1Right() {
         className="absolute top-[118px] sm:top-[70px] left-0 sm:-left-4 w-[180px] sm:w-[240px] rounded-[22px] bg-[#EEF3F8] p-2 sm:p-[10px] shadow-[0_20px_50px_rgba(28,43,64,0.1),inset_0_1px_0_rgba(255,255,255,0.85)] z-20 border border-[#D4E0EA]"
       >
         <div className="rounded-[14px] bg-white px-3 sm:px-4 pt-3 sm:pt-4 pb-4 sm:pb-5 border border-[#E4EBF2]">
-          <p className="text-[13px] sm:text-[15px] font-normal text-[#1C1C1D] mb-4 sm:mb-5">Lorem ipsum dolor</p>
+          <p className="text-[13px] sm:text-[15px] font-normal text-[#1C1C1D] mb-4 sm:mb-5">Manuscripts Delivered Today</p>
 
           {/* Semi-circle Gauge */}
           <div className="relative w-[130px] sm:w-[166px] h-[68px] sm:h-[86px] mx-auto mb-1 overflow-hidden">
@@ -197,7 +196,7 @@ function Slide1Right() {
 
         <div className="w-full h-[1px] bg-[#E9EEF4] my-2 sm:my-3.5" />
         <p className="text-[11px] sm:text-[13px] text-[#5E6673] font-medium leading-snug px-1 pb-1">
-          Lorem ipsum dolor sit amet consectetur
+          Your paper is in expert hands
         </p>
       </motion.div>
 
@@ -210,10 +209,10 @@ function Slide1Right() {
         <div className="rounded-[14px] bg-white px-4 sm:px-5 pt-4 sm:pt-5 pb-3 sm:pb-4 border border-[#E4EBF2]">
           <div className="flex justify-between items-center mb-4 sm:mb-5">
             <div>
-              <p className="text-[13px] sm:text-[15px] font-normal text-[#1C1C1D] tracking-tight">Lorem ipsum dolor</p>
+              <p className="text-[13px] sm:text-[15px] font-normal text-[#1C1C1D] tracking-tight">Order #SR-2847</p>
               <div className="flex items-baseline gap-1.5 sm:gap-2 mt-1 sm:mt-2">
                 <span className="text-[22px] sm:text-[28px] font-normal text-[#1C1C1D] leading-none">124</span>
-                <span className="text-[11px] sm:text-[13px] text-gray-500 font-medium font-sans">Lorem</span>
+                <span className="text-[11px] sm:text-[13px] text-gray-500 font-medium font-sans">Words Reviewed</span>
               </div>
             </div>
           </div>
@@ -234,7 +233,7 @@ function Slide1Right() {
 
         <div className="w-full h-[1px] bg-[#E9EEF4] my-2 sm:my-3.5" />
         <p className="text-[10px] sm:text-[12px] text-[#5E6673] text-center font-medium leading-relaxed px-2 sm:px-4 pb-1">
-          Lorem ipsum dolor sit amet consectetur Sagittis habitant cursus.
+          Publication-Ready Editing On Track for Delivery
         </p>
       </motion.div>
       </div>
@@ -298,7 +297,7 @@ function Slide2Right() {
                   Editing
                 </h3>
                 <p className={`text-[13px] font-medium ${isActive ? "text-gray-400" : "text-gray-400"}`}>
-                  Lorem ipsum dolor
+                  Manuscript & Language Editing
                 </p>
               </div>
 
@@ -320,8 +319,8 @@ function Slide2Right() {
 // Slide 3: Yellow background aligned right, Blue foreground aligned left
 function Slide3Right() {
   return (
-    <div className="relative w-full h-[390px] sm:h-[450px] lg:h-[500px] flex items-center justify-center overflow-visible sm:overflow-hidden">
-      <div className="relative w-[340px] sm:w-[560px] h-[390px] sm:h-[480px] mx-auto flex items-center justify-center transform scale-[0.94] sm:scale-[0.78] md:scale-[0.9] lg:scale-100 origin-center mt-4 sm:mt-0">
+    <div className="relative w-full h-[390px] sm:h-[450px] lg:h-[500px] flex items-center justify-center overflow-visible">
+      <div className="relative w-[340px] sm:w-[560px] lg:w-[620px] h-[390px] sm:h-[480px] mx-auto flex items-center justify-center transform scale-[0.94] sm:scale-[0.78] md:scale-[0.9] lg:scale-100 origin-center mt-4 sm:mt-0">
       {/* Background Yellow Card (Left) */}
       <motion.div
         animate={{ y: [0, -4, 0], scale: [0.96, 0.98, 0.96] }}

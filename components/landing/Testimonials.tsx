@@ -5,12 +5,42 @@ import { useEffect, useRef, useState } from "react";
 
 export default function Testimonials() {
   const testimonials = [
-    { name: "Sarah Williams", role: "Editing", col: 1 },
-    { name: "Sarah Williams", role: "Editing", col: 1 },
-    { name: "Sarah Williams", role: "Editing", col: 2 },
-    { name: "Sarah Williams", role: "Editing", col: 2 },
-    { name: "Sarah Williams", role: "Editing", col: 3 },
-    { name: "Sarah Williams", role: "Editing", col: 3 },
+    { 
+      name: "Dr. Priya Sharma", 
+      role: "Publication-Ready Editing", 
+      quote: "I had submitted to three journals and been rejected each time. After Submit Right's editing, my paper was accepted on the first attempt. The structural feedback alone was worth it.",
+      col: 1 
+    },
+    { 
+      name: "Sneha Patil", 
+      role: "Language Clarity Editing", 
+      quote: "I had a 48-hour deadline and was panicking. They delivered clean, precise editing within 24 hours. No shortcuts, no errors  exactly what I needed before submitting.",
+      col: 1 
+    },
+    { 
+      name: "Ahmed Al-Rashid", 
+      role: "High-Impact Editing", 
+      quote: "English is not my first language and I was worried my research wouldn't be taken seriously. Submit Right completely transformed my manuscript. My supervisor was genuinely surprised.",
+      col: 2 
+    },
+    { 
+      name: "Prof. James Okonkwo", 
+      role: "Scientific Writing Package", 
+      quote: "We use Submit Right for our entire research lab. The systematic review package is outstanding  PRISMA-compliant, structured, and publication-ready every single time.",
+      col: 2 
+    },
+    { 
+      name: "Dr. Liu Wei", 
+      role: "Translation + Editing", 
+      quote: "Fast, professional, and thorough. My paper went from translated draft to journal-ready in under a week. The real-time tracking gave me complete peace of mind throughout the process.",
+      col: 3 
+    },
+    { 
+      name: "Dr. Ayesha Noor", 
+      role: "Thesis Excellence Editing", 
+      quote: "Every revision request from my committee was handled during re-editing at no extra cost. The attention to detail was remarkable. My thesis defense went without a single language-related question.",
+      col: 3 
+    },
   ];
 
   // Split columns
@@ -25,13 +55,16 @@ export default function Testimonials() {
     useRef<HTMLDivElement>(null),
     useRef<HTMLDivElement>(null),
   ];
+  const mobileRef = useRef<HTMLDivElement>(null);
 
   const [heights, setHeights] = useState([0, 0, 0]);
+  const [mobileHeight, setMobileHeight] = useState(0);
 
   useEffect(() => {
     const measure = () => {
       const h = refs.map((r) => r.current?.offsetHeight || 0);
       setHeights(h);
+      setMobileHeight(mobileRef.current?.offsetHeight || 0);
     };
 
     measure();
@@ -54,8 +87,7 @@ export default function Testimonials() {
       </div>
 
       <p className="text-[12px] sm:text-[13px] text-[#65656D] leading-relaxed">
-        Lorem ipsum dolor sit amet consectetur. Sagittis eu vel habitant cursus.
-        Elementum suscipit donec viverra posuere at lorem nullam.
+        {t.quote}
       </p>
     </div>
   );
@@ -69,17 +101,16 @@ export default function Testimonials() {
           <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-white border border-[#E5E5E5] rounded-full mb-5">
             <span className="text-[14px]">❝</span>
             <span className="text-[11px] font-normal text-[#1C1C1D] uppercase tracking-wider">
-              TESTIMONIALS
+              REAL RESULTS
             </span>
           </div>
 
           <h2 className="text-[26px] sm:text-[32px] font-medium text-[#1C1C1D] leading-[1.15] sm:leading-[1.1] mb-4">
-            Customer Real Experiences That Inspire Everybody
+            Researchers Who Got Published Are Talking
           </h2>
 
           <p className="text-[13px] sm:text-[15px] text-[#65656D] leading-relaxed max-w-xl mx-auto">
-            Lorem ipsum dolor sit amet consectetur. Sagittis eu vel habitant
-            cursus. Elementum suscipit donec viverra posuere at lorem nullam.
+            Over 50,000 manuscripts edited and delivered. Here's what the researchers who trust Submit Right have to say.
           </p>
         </div>
 
@@ -139,11 +170,34 @@ export default function Testimonials() {
 
         </div>
 
-        {/* Mobile (simple scroll) */}
-        <div className="md:hidden space-y-4 sm:space-y-6">
-          {testimonials.map((t, i) => (
-            <Card key={i} t={t} />
-          ))}
+        {/* Mobile (single-column infinite scroll) */}
+        <div className="md:hidden max-w-[430px] mx-auto">
+          <div className="relative h-[520px] overflow-hidden">
+            <div className="absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-[#FAFAFA] via-[#FAFAFA]/80 to-transparent z-10" />
+            <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-[#FAFAFA] via-[#FAFAFA]/80 to-transparent z-10" />
+
+            <motion.div
+              animate={{ y: [0, -(mobileHeight || 1)] }}
+              transition={{
+                duration: 75,
+                ease: "linear",
+                repeat: Infinity,
+              }}
+              className="flex flex-col gap-4 sm:gap-6"
+            >
+              <div ref={mobileRef} className="flex flex-col gap-4 sm:gap-6">
+                {testimonials.map((t, i) => (
+                  <Card key={`m-${i}`} t={t} />
+                ))}
+              </div>
+
+              <div className="flex flex-col gap-4 sm:gap-6">
+                {testimonials.map((t, i) => (
+                  <Card key={`m-dup-${i}`} t={t} />
+                ))}
+              </div>
+            </motion.div>
+          </div>
         </div>
 
       </div>

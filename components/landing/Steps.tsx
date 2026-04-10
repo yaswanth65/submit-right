@@ -5,27 +5,27 @@ export function Steps() {
     {
       icon: FileText,
       title: "Document Details",
-      description: "Lorem ipsum dolor sit amet consectetur Sagittis.",
+      description: "Tell us your subject, word count, and target journal  we handle the match",
     },
     {
       icon: Upload,
-      title: "Upload Document",
-      description: "Lorem ipsum dolor sit amet consectetur Sagittis.",
+      title: "Upload Your Document",
+      description: "Securely upload your PDF or Word file in seconds from your device",
     },
     {
       icon: Settings,
-      title: "Choose Service",
-      description: "Lorem ipsum dolor sit amet consectetur Sagittis.",
+      title: "Choose Your Service",
+      description: "Pick editing, translation, or publication support  compare packages instantly",
     },
     {
       icon: Eye,
-      title: "Review",
-      description: "Lorem ipsum dolor sit amet consectetur Sagittis.",
+      title: "Review Your Quote",
+      description: "See the exact price and timeline before committing  no surprises",
     },
     {
       icon: Send,
-      title: "Submit Document",
-      description: "Lorem ipsum dolor sit amet consectetur Sagittis.",
+      title: "Submit & Track Live",
+      description: "Pay securely, your expert is assigned, and you track every update in real time",
     },
   ];
 
@@ -40,17 +40,16 @@ export function Steps() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h16M4 18h16" />
              </svg>
             <span className="text-[11px] font-normal text-[#1C1C1D] uppercase tracking-wider">
-              HOW IT WORKS
+              THE PROCESS
             </span>
           </div>
 
           <h2 className="text-[26px] sm:text-[32px] font-medium text-[#1C1C1D] leading-[1.15] sm:leading-[1.1] mb-4">
-            Five Simple Steps
+            From Upload to Delivered  In 5 Simple Steps
           </h2>
 
           <p className="text-[13px] sm:text-[15px] text-[#65656D] leading-relaxed max-w-xl mx-auto">
-            Lorem ipsum dolor sit amet consectetur. Sagittis eu vel habitant cursus. 
-            Elementum suscipit donec viverra posuere at lorem nullam.
+            No back-and-forth emails. No confusing forms. Just upload your document and let Submit Right's workflow handle everything  automatically.
           </p>
         </div>
 

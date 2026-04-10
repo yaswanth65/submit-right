@@ -32,16 +32,22 @@ export function AboutIntegrity() {
       <div className="w-full max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-14">
         <div className="grid lg:grid-cols-2 gap-10 sm:gap-16 lg:gap-20 items-start">
           
-          {/* Left Column */}
-          <div className="lg:sticky lg:top-24">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded bg-[#F3F4F6] border border-[#E5E7EB] mb-6">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#65656D" strokeWidth="2">
-                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-              </svg>
-              <span className="text-[12px] font-medium text-[#4B5563] tracking-widest uppercase">
-                Our Standards
-              </span>
-            </div>
+      <div className="lg:sticky lg:top-24 text-center lg:text-left">
+  <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded bg-[#F3F4F6] border border-[#E5E7EB] mb-6 mx-auto lg:mx-0">
+    <svg
+      width="14"
+      height="14"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="#65656D"
+      strokeWidth="2"
+    >
+      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+    </svg>
+    <span className="text-[12px] font-medium text-[#4B5563] tracking-widest uppercase">
+      Our Standards
+    </span>
+  </div>
             
             <h2 className="text-[26px] sm:text-[32px] lg:text-[40px] font-medium text-[#1C1C1D] leading-[1.2] mb-5 sm:mb-6">
               We Do Not Support Plagiarism, Ghostwriting, or Academic Misconduct. Ever.

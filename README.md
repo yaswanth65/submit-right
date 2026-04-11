@@ -50,9 +50,11 @@ cp .env.example .env.local
 
 4. Run `supabase/schema.sql` in your Supabase SQL editor.
 
-5. Create a public or signed storage bucket matching `SUPABASE_STORAGE_BUCKET`.
+5. Run `supabase/seed.sql` to load demo catalog, discount, and workflow data.
 
-6. Start the app:
+6. Create a public or signed storage bucket matching `SUPABASE_STORAGE_BUCKET`.
+
+7. Start the app:
 
 ```bash
 npm run dev

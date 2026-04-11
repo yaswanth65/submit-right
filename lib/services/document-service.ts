@@ -86,12 +86,21 @@ export async function selectDocumentService(input: {
     throw fail("Service not found", 404, serviceError);
   }
 
+  if (service.kind !== "service" && service.kind !== "package") {
+    throw fail("Only service or package items can be selected for a document", 400);
+  }
+
+  const estimatedTotal =
+    service.kind === "package"
+      ? Number(service.base_price ?? service.rate_per_word ?? 0)
+      : Number(service.rate_per_word ?? 0) * 1;
+
   const { data: document, error } = await supabaseAdmin
     .from("documents")
     .update({
       service_id: service.id,
       rate_per_word: service.rate_per_word,
-      estimated_total: service.rate_per_word,
+      estimated_total: estimatedTotal,
       last_activity_at: new Date().toISOString()
     })
     .eq("id", input.documentId)
@@ -103,12 +112,14 @@ export async function selectDocumentService(input: {
     throw fail("Unable to select service", 500, error);
   }
 
-  const estimatedTotal =
-    Number(document.word_count ?? 0) * Number(service.rate_per_word ?? 0);
+  const finalEstimatedTotal =
+    service.kind === "package"
+      ? Number(service.base_price ?? service.rate_per_word ?? 0)
+      : Number(document.word_count ?? 0) * Number(service.rate_per_word ?? 0);
 
   const { data: finalDocument, error: finalError } = await supabaseAdmin
     .from("documents")
-    .update({ estimated_total: estimatedTotal })
+    .update({ estimated_total: finalEstimatedTotal })
     .eq("id", input.documentId)
     .select("*, services(*)")
     .single();

@@ -56,6 +56,111 @@ export const serviceSelectionSchema = z.object({
   serviceId: z.string().uuid()
 });
 
+export const catalogItemKindSchema = z.enum(["service", "package", "domain"]);
+
+export const catalogItemUpsertSchema = z.object({
+  slug: z.string().min(2).max(120).optional(),
+  title: z.string().min(2).max(160),
+  description: z.string().max(2000).optional().nullable(),
+  imageUrl: z.string().url().optional().nullable(),
+  kind: catalogItemKindSchema,
+  category: z.string().min(2).max(120).optional().nullable(),
+  domainType: z.string().min(2).max(120).optional().nullable(),
+  basePrice: z.number().nonnegative().optional().nullable(),
+  ratePerWord: z.number().nonnegative().optional().nullable(),
+  isBest: z.boolean().optional(),
+  isActive: z.boolean().optional(),
+  sortOrder: z.number().int().min(0).optional()
+});
+
+export const catalogItemsQuerySchema = z.object({
+  kind: catalogItemKindSchema.optional(),
+  search: z.string().optional()
+});
+
+export const discountCampaignTypeSchema = z.enum(["discount", "sale_price", "buy_x_get_y"]);
+
+export const discountCampaignApplyToSchema = z.enum([
+  "all_services",
+  "all_packages",
+  "all_domains",
+  "specific_service",
+  "specific_package",
+  "specific_domain"
+]);
+
+const discountCampaignBaseSchema = z.object({
+  couponCode: z.string().min(2).max(80),
+  couponName: z.string().min(2).max(160),
+  couponType: discountCampaignTypeSchema,
+  applyTo: discountCampaignApplyToSchema,
+  targetItemId: z.string().uuid().optional().nullable(),
+  discountValue: z.number().nonnegative().optional().nullable(),
+  salePrice: z.number().nonnegative().optional().nullable(),
+  buyQuantity: z.number().int().min(1).optional().nullable(),
+  getQuantity: z.number().int().min(1).optional().nullable(),
+  startDate: z.string().datetime(),
+  endDate: z.string().datetime().optional().nullable(),
+  limitTotalUses: z.number().int().min(1).optional().nullable(),
+  limitPerCustomer: z.number().int().min(1).optional().nullable(),
+  isActive: z.boolean().optional(),
+  description: z.string().max(1000).optional().nullable()
+});
+
+export const discountCampaignSchema = discountCampaignBaseSchema
+  .refine((data) => data.applyTo.startsWith("specific_") ? !!data.targetItemId : true, {
+    path: ["targetItemId"],
+    message: "Target item is required for specific discounts"
+  })
+  .refine((data) => data.couponType === "discount" ? data.discountValue != null : true, {
+    path: ["discountValue"],
+    message: "Discount value is required for discount coupons"
+  })
+  .refine((data) => data.couponType === "sale_price" ? data.salePrice != null : true, {
+    path: ["salePrice"],
+    message: "Sale price is required for sale price coupons"
+  })
+  .refine((data) => data.couponType === "buy_x_get_y" ? data.buyQuantity != null && data.getQuantity != null : true, {
+    path: ["buyQuantity"],
+    message: "Buy/Get quantities are required for BOGO coupons"
+  });
+
+export const discountCampaignUpdateSchema = discountCampaignBaseSchema
+  .partial()
+  .superRefine((data, ctx) => {
+    if (data.applyTo?.startsWith("specific_") && !data.targetItemId) {
+      ctx.addIssue({
+        code: "custom",
+        path: ["targetItemId"],
+        message: "Target item is required for specific discounts"
+      });
+    }
+
+    if (data.couponType === "discount" && data.discountValue == null) {
+      ctx.addIssue({
+        code: "custom",
+        path: ["discountValue"],
+        message: "Discount value is required for discount coupons"
+      });
+    }
+
+    if (data.couponType === "sale_price" && data.salePrice == null) {
+      ctx.addIssue({
+        code: "custom",
+        path: ["salePrice"],
+        message: "Sale price is required for sale price coupons"
+      });
+    }
+
+    if (data.couponType === "buy_x_get_y" && (data.buyQuantity == null || data.getQuantity == null)) {
+      ctx.addIssue({
+        code: "custom",
+        path: ["buyQuantity"],
+        message: "Buy/Get quantities are required for BOGO coupons"
+      });
+    }
+  });
+
 export const documentListQuerySchema = z.object({
   search: z.string().optional(),
   status: z.string().optional(),

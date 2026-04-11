@@ -42,7 +42,7 @@ export default function BlogPostPage() {
 
       {/* Hero Section */}
       <section className="relative hero-svg-bg pt-28 sm:pt-32 lg:pt-36 pb-16 sm:pb-20 overflow-hidden">
-        <div className="w-full max-w-[900px] mx-auto px-4 sm:px-6 lg:px-10 relative z-10">
+        <div className="landing-shell max-w-[900px] relative z-10">
           
           <Link href="/blogs" className="inline-flex items-center gap-2 text-[14px] font-medium text-[#65656D] hover:text-[#00A0E3] transition-colors mb-8">
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -71,7 +71,7 @@ export default function BlogPostPage() {
 
       {/* Main Content Area */}
       <section className="pb-16 sm:pb-24 lg:pb-32 bg-white">
-        <div className="w-full max-w-[900px] mx-auto px-4 sm:px-6 lg:px-10">
+        <div className="landing-shell max-w-[900px]">
           
           {/* Cover Image */}
           {mockBlogPost.coverImageUrl && (

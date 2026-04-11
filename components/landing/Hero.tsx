@@ -24,11 +24,11 @@ export function Hero() {
       className="relative hero-svg-bg w-full overflow-x-clip flex flex-col justify-center pt-[112px] sm:pt-[128px] lg:pt-[88px] pb-14 sm:pb-20 min-h-[calc(100vh-80px)] lg:min-h-[calc(100vh-65px)]" 
     >
 
-      <div className="w-full max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-14 relative z-10 flex-1 flex flex-col justify-center">
+      <div className="landing-shell relative z-10 flex-1 flex flex-col justify-center">
   <div className="grid lg:grid-cols-2 gap-10 sm:gap-12 items-center w-full mt-3 lg:mt-8">
     
     {/* ===== LEFT (Static Content) ===== */}
-    <div className="max-w-[580px] relative z-20 flex flex-col items-center text-center lg:items-start lg:text-left mx-auto lg:mx-0">
+    <div className="w-full relative z-20 flex flex-col items-center text-center lg:items-start lg:text-left">
       
       {/* Badge */}
       <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#00A0E34D] bg-[#00A0E314] mb-6">
@@ -43,7 +43,7 @@ export function Hero() {
       </h1>
 
       {/* Description */}
-      <p className="text-[16px] md:text-[18px] text-[#78788D] leading-[1.5] md:leading-[1.4] mb-8 md:mb-10 lg:pr-6 px-2 lg:px-0">
+      <p className="text-[16px] md:text-[18px] text-[#78788D] leading-[1.5] md:leading-[1.4] mb-8 md:mb-10 lg:pr-6">
         Submit Right is the platform where researchers upload manuscripts, get expert editing, and track every step from submission to delivery.
       </p>
 
@@ -64,7 +64,7 @@ export function Hero() {
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-2 gap-4 sm:gap-6 lg:flex lg:gap-14 w-full mt-10 lg:w-auto max-w-[420px] lg:max-w-none">
+      <div className="grid grid-cols-2 gap-4 sm:gap-6 lg:flex lg:gap-14 w-full mt-10 lg:w-auto">
         <div className="flex items-center gap-4">
           <div className="w-11 h-11 rounded-xl bg-[#EAF5FB] flex items-center justify-center text-[#00A0E3]">
             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
@@ -146,83 +146,91 @@ function Slide1Right() {
         className="absolute top-0 right-2 sm:top-2 sm:right-0 w-[180px] sm:w-[230px] rounded-[22px] bg-[#EEF3F8] p-2 sm:p-[10px] shadow-[0_12px_35px_rgba(28,43,64,0.09),inset_0_1px_0_rgba(255,255,255,0.85)] z-10 border border-[#D4E0EA]"
       >
         <div className="rounded-[14px] bg-white px-4 sm:px-5 pt-4 sm:pt-5 pb-3 sm:pb-4 border border-[#E4EBF2]">
-          <p className="text-[13px] sm:text-[15px] font-normal text-[#404040] mb-2 sm:mb-3.5">Editing Progress</p>
+          <p className="text-[13px] sm:text-[15px] font-semibold text-[#404040] mb-2 sm:mb-3.5">Editing Progress</p>
           <div className="text-[36px] sm:text-[43px] leading-none font-normal text-[#1C1C1D]">87</div>
-        </div>
-        <div className="w-full h-[1px] bg-[#E9EEF4] my-2 sm:my-3.5" />
-        <p className="text-[11px] sm:text-[13px] text-[#5E6673] leading-relaxed font-medium px-1 pb-1">
+              <div className="w-full h-[2px] bg-[#E9EEF4] my-2 sm:my-3" />
+
+          <p className="text-[11px] sm:text-[13px] text-[#5E6673] leading-relaxed font-medium px-1 pb-1">
           Lorem ipsum dolor sit
-        </p>
+        </p></div>
+       
+       
       </motion.div>
 
       {/* Middle Left Card (Semi-circle Gauge, middle) */}
   <motion.div
   animate={{ y: [0, 8, 0], scale: [1, 1.01, 1] }}
   transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut", delay: 0.3 }}
-  className="absolute top-[118px] sm:top-[70px] left-0 sm:-left-4 w-[180px] sm:w-[240px] rounded-[22px] bg-white p-4 sm:p-5 shadow-[0_10px_40px_rgba(0,0,0,0.08)] z-20 flex flex-col items-center border border-[#E4EBF2]"
+  className="absolute top-[118px] sm:top-[70px] left-0 sm:-left-4 w-[180px] sm:w-[240px] rounded-[22px] bg-[#EEF3F8] p-2 sm:p-[10px] shadow-[0_10px_40px_rgba(0,0,0,0.08)] z-20 border border-[#D4E0EA]"
 >
-  <p className="text-[13px] sm:text-[15px] font-normal text-[#1C1C1D] mb-4 sm:mb-5 text-center w-full">
-    Lorem ipsum dolor
-  </p>
+  <div className="rounded-[14px] bg-white px-4 sm:px-5 pt-4 sm:pt-5 pb-3 sm:pb-4 border border-[#E4EBF2]">
+    <p className="text-[13px] sm:text-[15px] font-semibold text-[#1C1C1D] mb-4 sm:mb-5 text-center w-full">
+      Lorem ipsum dolor
+    </p>
 
-  <div className="relative w-[130px] sm:w-[166px] h-[68px] sm:h-[86px] mx-auto mb-1 overflow-hidden">
-    <svg viewBox="0 0 100 54" className="w-full h-full">
-      <path
-        d="M 10 50 A 40 40 0 0 1 90 50"
-        fill="none"
-        stroke="#E8F1F8"
-        strokeWidth="12"
-        strokeLinecap="butt"
-        pathLength={100}
-      />
-      <path
-        d="M 10 50 A 40 40 0 0 1 90 50"
-        fill="none"
-        stroke="#009AEE"
-        strokeWidth="12"
-        strokeLinecap="butt"
-        pathLength={100}
-        strokeDasharray="84 100"
-      />
-    </svg>
-    <div className="absolute inset-x-0 bottom-1 sm:bottom-[4px] flex flex-col items-center justify-end">
-      <span className="text-[26px] sm:text-[33px] leading-[0.95] font-normal tracking-[-0.01em] text-[#1C1C1D]">
-        84%
-      </span>
-      <span className="text-[10px] sm:text-[12px] text-gray-400 font-medium mt-0.5">
-        Lorem
-      </span>
-    </div>
+    <div className="relative w-[130px] sm:w-[166px] h-[78px] sm:h-[96px] mx-auto mb-1 overflow-hidden">
+  <svg viewBox="0 0 100 60" className="w-full h-full">
+    {/* Background Arc */}
+    <path
+      d="M 10 55 A 40 40 0 0 1 90 55"
+      fill="none"
+      stroke="#C7D4DC"
+      strokeWidth="6"
+      strokeLinecap="butt"  // Sharp edges
+      pathLength="100"
+    />
+
+    {/* Progress Arc */}
+    <path
+      d="M 10 55 A 40 40 0 0 1 90 55"
+      fill="none"
+      stroke="#1C8ED6"
+      strokeWidth="6"
+      strokeLinecap="butt"  // Sharp edges
+      pathLength="100"
+      strokeDasharray="84 100"
+    />
+  </svg>
+
+  {/* Percentage Text */}
+  <div className="absolute inset-0 flex flex-col items-center justify-end pb-[10px] sm:pb-[12px]">
+    <span className="text-[26px] sm:text-[24px] leading-[1] font-medium mt-2 tracking-[-0.01em] text-[#1C1C1D]">
+      84%
+    </span>
+    <span className="text-[10px] sm:text-[12px] text-[#8A94A6] font-medium mt-0.5">
+      Lorem
+    </span>
   </div>
+</div>
+    <div className="w-full h-[2px] bg-[#E9EEF4] my-2 sm:my-3" />
 
-  <div className="w-full h-[1px] bg-[#E9EEF4] my-3 sm:my-4" />
-  
-  <p className="text-[11px] sm:text-[13px] text-[#5E6673] font-medium leading-snug px-1 pb-1 text-center w-full">
+    
+    <p className="text-[11px] sm:text-[13px] text-[#5E6673] font-medium leading-snug px-1 pb-1 text-center w-full">
     Lorem ipsum dolor sit amet consectetur
   </p>
+  </div>
 </motion.div>
       {/* Bottom Right Card (Progress Bar, Front Layer) */}
       <motion.div
-        animate={{ y: [0, -10, 0], scale: [1.02, 1.04, 1.02] }}
+        animate={{ y: [0, -10, 3], scale: [1.02, 1.04, 1.02] }}
         transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut", delay: 0.6 }}
-        className="absolute bottom-0 sm:bottom-4 right-1 sm:right-0 w-[240px] sm:w-[334px] rounded-[22px] bg-[#EEF3F8] p-2 sm:p-[10px] shadow-[0_25px_65px_rgba(28,43,64,0.12),inset_0_1px_0_rgba(255,255,255,0.85)] z-30 border border-[#D4E0EA]"
+        className="absolute bottom-0 sm:bottom-4 right-12 sm:right-8 w-[240px] sm:w-[334px] rounded-[22px] bg-[#EEF3F8] p-2 sm:p-[10px] shadow-[0_25px_65px_rgba(28,43,64,0.12),inset_0_1px_0_rgba(255,255,255,0.85)] z-30 border border-[#D4E0EA]"
       >
         <div className="rounded-[14px] bg-white px-4 sm:px-5 pt-4 sm:pt-5 pb-3 sm:pb-4 border border-[#E4EBF2]">
           <div className="flex justify-between items-center mb-4 sm:mb-5">
             <div>
-              <p className="text-[13px] sm:text-[15px] font-normal text-[#1C1C1D] tracking-tight">Order #SR-2847</p>
+              <p className="text-[13px] sm:text-[15px] font-semibold text-[#1C1C1D] tracking-tight">Order #SR-2847</p>
               <div className="flex items-baseline gap-1.5 sm:gap-2 mt-1 sm:mt-2">
-                <span className="text-[22px] sm:text-[28px] font-normal text-[#1C1C1D] leading-none">124</span>
-                <span className="text-[11px] sm:text-[13px] text-gray-500 font-medium font-sans">Words Reviewed</span>
+                <span className="text-[22px] sm:text-[28px] font-semibold text-[#1C1C1D] leading-none">124</span>
+                <span className="text-[11px] sm:text-[13px] text-gray-500 font-semibold  font-sans">Words Reviewed</span>
               </div>
             </div>
           </div>
 
           {/* Updated Stacked Bar Chart */}
-          <div className="flex w-full h-[10px] sm:h-[14px] bg-white rounded-full overflow-hidden mb-3 sm:mb-4 mt-4 sm:mt-6 gap-1 sm:gap-[4px]">
-            <div className="bg-[#22C55E] w-[78%] h-full rounded-full"></div>
-            <div className="bg-[#FBBF24] w-[15%] h-full rounded-full"></div>
-            <div className="bg-[#F97316] w-[7%] h-full rounded-full"></div>
+          <div className="flex flex-row items-start w-[282px] h-[23px] bg-[#FA7319] rounded-[6px] overflow-visible mb-3 sm:mb-4 mt-4 sm:mt-6 p-0 isolate">
+            <div className="w-[180px] h-[23px] bg-[#1CB061] border-2 border-white rounded-[6px] -mx-[8px] z-10"></div>
+            <div className="w-[77px] h-[23px] bg-[#F4C252] border-2 border-white rounded-[6px] z-0"></div>
           </div>
 
           <div className="flex justify-between text-[10px] sm:text-xs px-0.5 sm:px-1">
@@ -230,12 +238,14 @@ function Slide1Right() {
             <div className="text-center"><p className="text-[#FBBF24] font-normal text-[12px] sm:text-[14px] mb-0.5 sm:mb-1">15%</p><p className="text-[#9CA3AF] text-[10px] sm:text-[12px] font-medium">Pending</p></div>
             <div className="text-center"><p className="text-[#F97316] font-normal text-[12px] sm:text-[14px] mb-0.5 sm:mb-1">02%</p><p className="text-[#9CA3AF] text-[10px] sm:text-[12px] font-medium">Failed</p></div>
           </div>
+              <div className="w-full h-[2px] bg-[#E9EEF4] my-2 sm:my-3" />
+
+           <p className="text-[10px] sm:text-[12px] text-[#5E6673] text-center font-medium leading-relaxed px-2 sm:px-4 mt-3 pb-1">
+          Publication-Ready Editing On Track for Delivery with experts 
+        </p>
         </div>
 
-        <div className="w-full h-[1px] bg-[#E9EEF4] my-2 sm:my-3.5" />
-        <p className="text-[10px] sm:text-[12px] text-[#5E6673] text-center font-medium leading-relaxed px-2 sm:px-4 pb-1">
-          Publication-Ready Editing On Track for Delivery
-        </p>
+       
       </motion.div>
       </div>
     </div>
@@ -416,6 +426,7 @@ function Slide3Right() {
         transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
         className="absolute left-0 sm:-left-6 top-0 sm:top-[30px] w-[210px] sm:w-[290px] bg-[#F6E9C8] border border-[#DEB860]/40 rounded-2xl p-4 sm:p-6 shadow-xl z-10"
       >
+        
         <div className="absolute top-0 right-0 bg-[#D4A33B] text-white text-[10px] sm:text-[12px] font-normal px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-bl-[14px] sm:rounded-bl-[16px] rounded-tr-[14px] sm:rounded-tr-[16px]">
           You Save: $328
         </div>

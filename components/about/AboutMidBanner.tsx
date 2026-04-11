@@ -3,7 +3,7 @@ import Link from "next/link";
 export function AboutMidBanner() {
   return (
     <section className="py-10 sm:py-12 lg:py-16 bg-white relative">
-      <div className="w-full max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-14">
+      <div className="landing-shell">
         
         <div className="relative bg-gradient-to-r from-[#0B8FCD] via-[#0A78B3] to-[#06547F] rounded-2xl sm:rounded-[32px] p-6 sm:p-10 lg:p-16 flex flex-col lg:flex-row items-center justify-between gap-8 sm:gap-12 overflow-hidden shadow-xl">
           

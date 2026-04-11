@@ -62,26 +62,26 @@ export function QuoteCalculator() {
 
   return (
     <section className="py-12 sm:py-16 lg:py-24 bg-[#F3F9FC]">
-      <div className="w-full max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-14">
+      <div className="landing-shell">
 
         {/* Header */}
-        <div className="text-center max-w-2xl mx-auto mb-12">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-white border border-gray-200 rounded-full mb-5">
+        <div className="text-center max-w-[720px] mx-auto mb-12">
+          <div className="landing-section-badge">
               <img src="/grid.svg" alt="icon" className="w-4 h-4" />
-            <span className="text-[11px] uppercase tracking-wider">
+            <span className="landing-section-badge-text">
               Instant Pricing
             </span>
           </div>
-          <h2 className="text-[28px] sm:text-[34px] font-semibold text-[#1C1C1D]">
+          <h2 className="landing-section-title">
             Quote Calculator
           </h2>
-          <p className="text-sm text-gray-500 mt-2">
+          <p className="landing-section-description mt-2">
             Enter your word count and select your service to get an instant estimate.
           </p>
         </div>
 
         {/* Main Container */}
-        <div className="bg-transparent p-4 sm:p-6 rounded-[28px]">
+        <div className="bg-transparent rounded-[28px]">
           <div className="grid lg:grid-cols-2 gap-6">
 
             {/* LEFT PANEL */}

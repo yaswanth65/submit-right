@@ -29,7 +29,7 @@ export function AboutIntegrity() {
 
   return (
     <section className="py-14 sm:py-20 lg:py-24 bg-white relative">
-      <div className="w-full max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-14">
+      <div className="landing-shell">
         <div className="grid lg:grid-cols-2 gap-10 sm:gap-16 lg:gap-20 items-start">
           
       <div className="lg:sticky lg:top-24 text-center lg:text-left">

@@ -49,7 +49,7 @@ export function AboutExperts() {
 
   return (
     <section className="py-14 sm:py-20 lg:py-24 bg-[#F3F9FC] relative">
-      <div className="w-full max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-14">
+      <div className="landing-shell">
         
         <div className="grid lg:grid-cols-2 gap-10 sm:gap-16 lg:gap-24 items-start">
           

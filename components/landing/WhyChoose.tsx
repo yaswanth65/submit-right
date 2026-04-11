@@ -46,45 +46,62 @@ export function WhyChoose() {
 
   return (
     <section className="py-12 sm:py-16 lg:py-24 bg-[#FAFAFA]">
-      <div className="w-full max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-14">
+      <div className="landing-shell">
         {/* Header */}
         <div className="text-center mb-10 sm:mb-16">
           {/* Badge */}
-          <div className="inline-flex items-center gap-1.5 px-3 py-2 bg-white border border-[#E5E5E5] rounded-full mb-5">
+          <div className="landing-section-badge">
              <img src="/q.svg" alt="icon" className="w-4 h-4" />
-            <span className="text-[11px] font-normal text-[#1C1C1D] uppercase tracking-wider">
+            <span className="landing-section-badge-text">
               WHY SUBMIT RIGHT
             </span>
           </div>
 
-          <h2 className="text-[26px] sm:text-[32px] font-medium text-[#1C1C1D] leading-[1.15] sm:leading-[1.1] mb-4">
+          <h2 className="landing-section-title">
             The Platform Serious Researchers Choose
           </h2>
 
-          <p className="text-[13px] sm:text-[15px] text-[#65656D] leading-relaxed max-w-xl mx-auto">
+          <p className="landing-section-description">
             Every feature on Submit Right is built for one outcome: your research gets published, on time, with your data fully protected.
           </p>
         </div>
 
         {/* Features Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-8 lg:gap-x-12 lg:gap-y-12 max-w-5xl mx-auto">
-          {features.map((feature, idx) => (
-            <div
-              key={idx}
-              className="text-center flex flex-col items-center"
-            >
-              <div className="w-11 h-11 sm:w-12 sm:h-12 mb-3 sm:mb-4 bg-white rounded-xl flex items-center justify-center shadow-sm border border-[#F0F0F0]">
-                <feature.icon className="w-4 h-4 sm:w-5 sm:h-5 text-[#1C1C1D]" strokeWidth={2.5} />
-              </div>
-              <h3 className="text-[14px] sm:text-[15px] font-normal text-[#1C1C1D] mb-1.5 sm:mb-2">
-                {feature.title}
-              </h3>
-              <p className="text-[12px] sm:text-[13px] text-[#65656D] leading-relaxed px-1 sm:px-4">
-                {feature.description}
-              </p>
-            </div>
-          ))}
-        </div>
+      <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 
+          gap-x-6 gap-y-10 lg:gap-x-12 lg:gap-y-12 w-full">
+
+  {features.map((feature, idx) => (
+    <div
+      key={idx}
+      className="flex flex-col items-center text-center gap-8 w-full"
+    >
+      {/* Icon Container */}
+      <div className="relative flex items-center justify-center
+                      w-14 h-14 rounded-full
+                      bg-white/60 backdrop-blur-sm
+                      border border-[#ECECEC]
+                      shadow-[0px_7px_17px_-12px_rgba(28,28,29,0.1)]">
+        <feature.icon
+          className="w-7 h-7 text-[#1C1C1D]"
+          strokeWidth={2}
+        />
+      </div>
+
+      {/* Text Content */}
+      <div className="flex flex-col items-center gap-2 w-full">
+        {/* Title */}
+        <h3 className="font-inter font-medium text-[20px] leading-[110%] text-[#1C1C1D]">
+          {feature.title}
+        </h3>
+
+        {/* Description */}
+        <p className="font-inter font-normal text-[14px] leading-[120%] text-center text-[#78788D] max-w-[274px]">
+          {feature.description}
+        </p>
+      </div>
+    </div>
+  ))}
+</div>
       </div>
     </section>
   );

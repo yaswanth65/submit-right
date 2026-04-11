@@ -23,30 +23,30 @@ export function WhatWeSolve() {
 
   return (
     <section className="py-12 sm:py-16 lg:py-24 bg-white">
-      <div className="w-full max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-14">
+      <div className="landing-shell">
         {/* Header */}
         <div className="text-center mb-10 sm:mb-12">
           {/* Badge */}
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-white border border-[#E5E5E5] rounded-full mb-5">
+          <div className="landing-section-badge">
              <svg className="w-3.5 h-3.5 text-[#1C1C1D]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h16M4 18h16" />
              </svg>
-            <span className="text-[11px] font-normal text-[#1C1C1D] uppercase tracking-wider">
+            <span className="landing-section-badge-text">
               PROBLEMS WE SOLVE
             </span>
           </div>
 
-          <h2 className="text-[26px] sm:text-[32px] font-medium text-[#1C1C1D] leading-[1.15] sm:leading-[1.1] mb-4">
+          <h2 className="landing-section-title">
             One Platform. Every Academic Headache Solved.
           </h2>
 
-          <p className="text-[13px] sm:text-[15px] text-[#65656D] leading-[1.6] max-w-xl mx-auto">
+          <p className="landing-section-description">
             Language barriers. Journal rejections. Missed deadlines. Unclear pricing. If it's slowing down your research, Submit Right has already solved it.
           </p>
         </div>
 
         {/* Tags Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-4 max-w-6xl mx-auto">
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-4 w-full">
           {tags.map((tag, idx) => (
             <div
               key={idx}

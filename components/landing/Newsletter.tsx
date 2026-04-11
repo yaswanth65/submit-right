@@ -3,7 +3,7 @@ import Link from "next/link";
 export function Newsletter() {
   return (
     <section className="relative z-20 bg-transparent pt-4 sm:pt-6 lg:pt-8 -mb-6 sm:-mb-16 lg:-mb-24">
-      <div className="w-full max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-14">
+      <div className="landing-shell">
         <div className="bg-white border border-[#E5E5E5] rounded-2xl sm:rounded-3xl p-5 sm:p-8 lg:p-10 flex flex-col md:flex-row items-center justify-between gap-5 sm:gap-6 shadow-[0_10px_30px_rgba(0,0,0,0.10)]">
           
           <div className="max-w-2xl text-center md:text-left">

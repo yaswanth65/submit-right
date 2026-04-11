@@ -54,25 +54,25 @@ export function DomainsServices() {
 
   return (
     <section className="min-h-0 lg:min-h-[calc(100vh-96px)] py-12 sm:py-16 lg:py-20 bg-white flex items-center">
-      <div className="w-full max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-14">
+      <div className="landing-shell">
         
         {/* Header Section */}
         <div className="text-center max-w-[720px] mx-auto mb-8 sm:mb-10 lg:mb-12">
           {/* Badge */}
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-white border border-[#E5E5E5] rounded-full mb-4 shadow-[0_1px_2px_rgba(0,0,0,0.03)]">
+          <div className="landing-section-badge">
 <img src="/vector2.svg" alt="icon" className="w-4 h-4" />               
-            <span className="text-[11px] font-normal text-[#1C1C1D] uppercase tracking-[0.12em]">
+            <span className="landing-section-badge-text">
               CORE SERVICE DOMAINS
             </span>
           </div>
 
           {/* Heading */}
-          <h2 className="text-[26px] sm:text-[32px] font-medium text-[#1C1C1D] leading-[1.15] sm:leading-[1.1] mb-3">
+          <h2 className="landing-section-title">
             Every Step of Your Academic Journey. Covered.
           </h2>
 
           {/* Description */}
-          <p className="text-[13px] sm:text-[14px] lg:text-[15px] text-[#65656D] leading-relaxed max-w-[560px] mx-auto">
+          <p className="landing-section-description max-w-[560px]">
             From fixing language errors to getting your paper accepted  Submit Right handles every stage with expert-led services, real-time tracking, and zero hidden fees.
           </p>
         </div>
@@ -102,7 +102,7 @@ export function DomainsServices() {
         </div>
 
         {/* Content Box */}
-        <div className="grid lg:grid-cols-[1.02fr_0.98fr] gap-8 sm:gap-10 lg:gap-12 items-center max-w-5xl mx-auto">
+        <div className="grid lg:grid-cols-[1.02fr_0.98fr] gap-8 sm:gap-10 lg:gap-12 items-center w-full">
           {/* Left Content */}
           <div className="pr-0 lg:pr-6 text-center lg:text-left">
             <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#F5F5F5] rounded-md mb-5">
@@ -110,15 +110,15 @@ export function DomainsServices() {
               <span className="text-[11px] font-medium text-[#5E6472] tracking-wide">Start Today</span>
             </div>
 
-            <h3 className="text-[26px] sm:text-[32px] font-medium text-[#1C1C1D] leading-[1.15] sm:leading-[1.1] mb-4 max-w-none lg:max-w-[360px]">
+            <h3 className="text-[26px] sm:text-[32px] font-medium text-[#1C1C1D] leading-[1.15] sm:leading-[1.1] mb-4">
               {currentContent.title}
             </h3>
 
-            <p className="text-[13px] sm:text-[14px] text-[#65656D] leading-relaxed mb-6  pb-6 max-w-none lg:max-w-[420px]">
+            <p className="text-[13px] sm:text-[14px] text-[#65656D] leading-relaxed mb-6  pb-6">
               {currentContent.description}
             </p>
 
-            <ul className="space-y-3.5 mb-8 max-w-none lg:max-w-[420px]">
+            <ul className="space-y-3.5 mb-8">
               {currentContent.bullets.map((bullet, index) => (
                 <li key={index} className="flex items-start gap-3">
                   <div className="mt-1">

@@ -52,7 +52,7 @@ export function TeamSection() {
 
   return (
     <section className="py-14 sm:py-20 lg:py-24 bg-white relative">
-      <div className="w-full max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-14">
+      <div className="landing-shell">
         
         {/* Header */}
         <div className="text-center mb-10 sm:mb-16">

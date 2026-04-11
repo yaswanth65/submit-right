@@ -94,28 +94,28 @@ export default function Testimonials() {
 
   return (
     <section className="py-12 sm:py-20 lg:py-24 bg-[#FAFAFA] overflow-hidden">
-      <div className="w-full max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-14">
+      <div className="landing-shell">
 
         {/* Header */}
         <div className="text-center mb-10 sm:mb-16">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-white border border-[#E5E5E5] rounded-full mb-5">
+          <div className="landing-section-badge">
             <span className="text-[14px]">❝</span>
-            <span className="text-[11px] font-normal text-[#1C1C1D] uppercase tracking-wider">
+            <span className="landing-section-badge-text">
               REAL RESULTS
             </span>
           </div>
 
-          <h2 className="text-[26px] sm:text-[32px] font-medium text-[#1C1C1D] leading-[1.15] sm:leading-[1.1] mb-4">
+          <h2 className="landing-section-title">
             Researchers Who Got Published Are Talking
           </h2>
 
-          <p className="text-[13px] sm:text-[15px] text-[#78788D] font-regular  leading-relaxed max-w-xl mx-auto">
+          <p className="landing-section-description">
             Over 50,000 manuscripts edited and delivered. Here's what the researchers who trust Submit Right have to say.
           </p>
         </div>
 
         {/* Animated Columns */}
-        <div className="hidden md:grid grid-cols-3 gap-6 max-w-6xl mx-auto">
+        <div className="hidden md:grid grid-cols-3 gap-6 w-full">
 
           {columns.map((col, i) => {
             const h = heights[i] || 0;

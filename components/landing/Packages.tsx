@@ -18,30 +18,30 @@ export function Packages() {
 
   return (
     <section className="py-12 sm:py-16 lg:py-24 bg-[#F3F9FC]">
-      <div className="w-full max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-14">
+      <div className="landing-shell">
         
         {/* Header Section */}
-        <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-16">
+        <div className="text-center max-w-[720px] mx-auto mb-10 sm:mb-16">
           {/* Badge */}
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-white border border-[#E5E5E5] rounded-full mb-5">
+          <div className="landing-section-badge">
              <svg className="w-3.5 h-3.5 text-[#1C1C1D]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h16M4 18h16" />
              </svg>
-            <span className="text-[11px] font-normal text-[#1C1C1D] uppercase tracking-wider">
+            <span className="landing-section-badge-text">
               SERVICE PACKAGES
             </span>
           </div>
 
-          <h2 className="text-[26px] sm:text-[32px] font-medium text-[#1C1C1D] leading-[1.15] sm:leading-[1.1] mb-4">
+          <h2 className="landing-section-title">
             Simple Plans. Serious Publication Results.
           </h2>
-          <p className="text-[13px] sm:text-[15px] text-[#65656D] leading-relaxed">
+          <p className="landing-section-description">
             Every plan includes expert editing, real-time order tracking, and secure file handling. Pick the level of support your research stage needs.
           </p>
         </div>
 
         {/* Packages Table Container */}
-        <div className="max-w-[1000px] mx-auto bg-white rounded-xl sm:rounded-2xl border border-[#F0F0F0] shadow-[0_4px_20px_rgb(0,0,0,0.03)] overflow-x-auto flex flex-row relative snap-x snap-mandatory custom-scrollbar">
+        <div className="w-full bg-white rounded-xl sm:rounded-2xl border border-[#F0F0F0] shadow-[0_4px_20px_rgb(0,0,0,0.03)] overflow-x-auto flex flex-row relative snap-x snap-mandatory custom-scrollbar">
           
           {/* Main Labels Column (Hidden on mobile to avoid misalignment, we'll show labels inline on mobile) */}
           <div className="hidden sm:block w-[240px] shrink-0 p-8 pt-[84px] sticky left-0 z-20 bg-white border-r border-[#F0F0F0]">

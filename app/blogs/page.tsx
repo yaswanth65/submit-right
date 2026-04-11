@@ -42,7 +42,7 @@ export default function BlogsPage() {
 
       {/* Hero Section */}
       <section className="relative hero-svg-bg pt-28 sm:pt-32 lg:pt-36 pb-16 sm:pb-24 lg:pb-32 overflow-hidden">
-        <div className="w-full max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-14 relative z-10 flex flex-col items-center text-center">
+        <div className="landing-shell relative z-10 flex flex-col items-center text-center">
           
           {/* Badge */}
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#00A0E34D] bg-[#00A0E314] mb-6">
@@ -66,7 +66,7 @@ export default function BlogsPage() {
 
       {/* Blogs Grid Main Section */}
       <section className="py-14 sm:py-20 lg:py-24 bg-[#FAFBFC] border-t border-[#F0F0F0]">
-        <div className="w-full max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-14">
+        <div className="landing-shell">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {mockBlogs.map((blog) => (
               <Link 

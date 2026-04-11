@@ -65,7 +65,7 @@ export function Navbar() {
       {/* Top Announcemen Bar */}
      
       <header className={`fixed  left-0 w-full z-50 transition-all duration-300 ${isScrolled ? "bg-white shadow-sm border-b border-[#E4EDF5]/70" : ""}`}>
-      <div className="w-full max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-14">
+      <div className="landing-shell">
         <div className="flex items-center justify-between h-[64px] md:h-[68px]">
           {/* Logo */}
           <Link href="/" className="flex items-center">

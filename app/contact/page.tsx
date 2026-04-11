@@ -14,7 +14,7 @@ export default function ContactPage() {
       {/* Hero Section */}
       <section className="relative hero-svg-bg pt-24 sm:pt-28 pb-16 sm:pb-20 lg:pt-32 lg:pb-32 overflow-hidden">
 
-        <div className="w-full max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-14 relative z-10">
+        <div className="landing-shell relative z-10">
           <div className="flex flex-col lg:flex-row gap-10 sm:gap-12 lg:gap-24">
             
             {/* Left Content */}
@@ -172,7 +172,7 @@ export default function ContactPage() {
 
       {/* FAQ Wrap */}
       <section className="py-14 sm:py-20 lg:py-24 bg-white relative z-10 -mt-3 sm:-mt-10">
-        <div className="w-full max-w-[1000px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-14">
+        <div className="landing-shell">
           
        
           <div className="flex flex-col items-center mb-8 sm:mb-12">

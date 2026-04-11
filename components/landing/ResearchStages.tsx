@@ -18,21 +18,22 @@ export function ResearchStages() {
 
   return (
     <section className="py-12 sm:py-16 lg:py-20 bg-white max-sm:[&_p]:text-[12px] max-sm:[&_p]:leading-[1.45]">
-      <div className="w-full max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-14">
+      <div className="landing-shell">
         {/* Header */}
         <div className="text-center mb-10 sm:mb-16">
           {/* Badge */}
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-white border border-[#E5E5E5] rounded-full mb-5">
-<img src="/q.svg" alt="icon" className="w-4 h-4" />            <span className="text-[11px] font-normal text-[#1C1C1D] uppercase tracking-wider">
+          <div className="landing-section-badge">
+            <img src="/q.svg" alt="icon" className="w-4 h-4" />
+            <span className="landing-section-badge-text">
               Lorem Ipsum Dolor
             </span>
           </div>
 
-          <h2 className="text-[26px] sm:text-[32px] font-medium text-[#1C1C1D] leading-[1.15] sm:leading-[1.1] mb-4">
+          <h2 className="landing-section-title">
             Solutions for Every Stage of Your Research
           </h2>
 
-          <p className="text-[12px] sm:text-[15px] text-[#65656D] leading-relaxed max-w-xl mx-auto">
+          <p className="landing-section-description">
             Lorem ipsum dolor sit amet consectetur. Sagittis eu vel habitant cursus.
             <br className="hidden sm:block" />
             Elementum suscipit donec viverra posuere at lorem nullam.

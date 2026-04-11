@@ -109,7 +109,7 @@ export default function Testimonials() {
             Researchers Who Got Published Are Talking
           </h2>
 
-          <p className="text-[13px] sm:text-[15px] text-[#65656D] leading-relaxed max-w-xl mx-auto">
+          <p className="text-[13px] sm:text-[15px] text-[#78788D] font-regular  leading-relaxed max-w-xl mx-auto">
             Over 50,000 manuscripts edited and delivered. Here's what the researchers who trust Submit Right have to say.
           </p>
         </div>

@@ -8,6 +8,7 @@ export function Navbar() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [dashboardPath, setDashboardPath] = useState("/user/dashboard");
   const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
     const session = getStoredAuthSession();
@@ -19,6 +20,15 @@ export function Navbar() {
 
     setIsLoggedIn(true);
     setDashboardPath(resolvePostLoginPath(session));
+  }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const cta = useMemo(
@@ -54,7 +64,7 @@ export function Navbar() {
     <>
       {/* Top Announcemen Bar */}
      
-      <header className="w-full sticky top-0 z-50 border-b border-[#E4EDF5]/70" style={{ background: "radial-gradient(circle at 35% 40%, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.6) 25%, rgba(255, 255, 255, 0.2) 45%, transparent 65%), linear-gradient(90deg, #F8FBFF 0%, #EEF5FB 40%, #E3EFF8 65%, #D6E8F5 100%)" }}>
+      <header className={`fixed  left-0 w-full z-50 transition-all duration-300 ${isScrolled ? "bg-white shadow-sm border-b border-[#E4EDF5]/70" : ""}`}>
       <div className="w-full max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-14">
         <div className="flex items-center justify-between h-[64px] md:h-[68px]">
           {/* Logo */}
@@ -219,7 +229,7 @@ export function Navbar() {
           </button>
         </div>
 
-        <div className={`md:hidden fixed top-[68px] left-0 right-0 z-40 transition-all duration-300 ${isMobileOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}>
+        <div className={`md:hidden fixed top-[76px] left-0 right-0 z-40 transition-all duration-300 ${isMobileOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}>
           <nav className="grid gap-1 rounded-2xl border border-[#DDE8F2] bg-white/90 backdrop-blur p-2 shadow-[0_12px_30px_rgba(8,34,56,0.08)] mx-4 mt-2 max-h-[calc(100vh-80px)] overflow-y-auto custom-scrollbar">
             {navLinks.map((item) => {
               if (item.label === "Services") {

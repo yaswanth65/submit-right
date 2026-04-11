@@ -23,8 +23,7 @@ export function ResearchStages() {
         <div className="text-center mb-10 sm:mb-16">
           {/* Badge */}
           <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-white border border-[#E5E5E5] rounded-full mb-5">
-            <HelpCircle className="w-3.5 h-3.5 text-[#1C1C1D]" />
-            <span className="text-[11px] font-normal text-[#1C1C1D] uppercase tracking-wider">
+<img src="/q.svg" alt="icon" className="w-4 h-4" />            <span className="text-[11px] font-normal text-[#1C1C1D] uppercase tracking-wider">
               Lorem Ipsum Dolor
             </span>
           </div>
@@ -115,7 +114,7 @@ function Step1Content() {
           tincidunt enim nascetur sed.
         </p>
         <div>
-          <button className="inline-flex items-center gap-2 bg-[#00A0E3] text-white px-5 py-2 mt-5 rounded-full text-sm font-medium hover:bg-[#0088CC] transition-colors">
+          <button className="inline-flex items-center gap-2 bg-[#00A0E3] text-white px-5 h-[46px] mt-5 rounded-full text-sm font-medium hover:bg-[#0088CC] transition-colors">
             Explore Now <ArrowRight className="w-4 h-4" />
           </button>
         </div>
@@ -136,7 +135,7 @@ function Step1Content() {
           tincidunt enim nascetur sed.
         </p>
         <div>
-          <button className="inline-flex items-center gap-2 bg-[#00A0E3] text-white px-5 py-2 mt-5 rounded-full text-sm font-medium hover:bg-[#0088CC] transition-colors">
+          <button className="inline-flex items-center gap-2 bg-[#00A0E3] text-white px-5 h-[46px] mt-5 rounded-full text-sm font-medium hover:bg-[#0088CC] transition-colors">
             Explore Now <ArrowRight className="w-4 h-4" />
           </button>
         </div>

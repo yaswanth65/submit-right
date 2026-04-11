@@ -41,7 +41,7 @@ export default function BlogsPage() {
       <Navbar />
 
       {/* Hero Section */}
-      <section className="relative hero-svg-bg pt-20 sm:pt-24 lg:pt-32 pb-16 sm:pb-24 lg:pb-32 overflow-hidden">
+      <section className="relative hero-svg-bg pt-28 sm:pt-32 lg:pt-36 pb-16 sm:pb-24 lg:pb-32 overflow-hidden">
         <div className="w-full max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-14 relative z-10 flex flex-col items-center text-center">
           
           {/* Badge */}

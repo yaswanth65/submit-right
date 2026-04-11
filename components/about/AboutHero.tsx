@@ -1,10 +1,10 @@
 export function AboutHero() {
   return (
     <section
-      className="relative hero-svg-bg overflow-hidden pt-20 min-h-0 sm:min-h-[calc(100vh-80px)]"
+      className="relative hero-svg-bg overflow-hidden pt-28 sm:pt-32 min-h-0 sm:min-h-[calc(100vh-80px)]"
     >
 
-      <div className="w-full max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-14 flex flex-col items-center justify-center text-center pt-20 sm:pt-20 pb-16 sm:pb-24 h-auto sm:h-full relative z-10">
+      <div className="w-full max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-14 flex flex-col items-center justify-center text-center pt-12 sm:pt-14 pb-16 sm:pb-24 h-auto sm:h-full relative z-10">
 
         {/* Badge */}
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[rgba(0,160,227,0.3)] bg-[#00A0E3]/10 mb-8">

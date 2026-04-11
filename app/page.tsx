@@ -57,7 +57,7 @@ export default function Home() {
       <Hero />
       <TrustedLogos />
       <DomainsServices />
-      <CTABanner 
+      {/* <CTABanner 
         variant="primary"
         title="Start Your Editing Journey Today"
         description="Transparent pricing. Expert editors. Fast turnaround. No surprises. Submit your manuscript now and get an instant quote."
@@ -65,24 +65,16 @@ export default function Home() {
         primaryButtonHref="/quote-calculator"
         secondaryButtonText="View Services"
         secondaryButtonHref="/services"
-      />
+      /> */}
       <WhyChoose />
       <ResearchStages />
-      <AboutMidBanner />
+    
       <QuoteCalculator />
       <WhatWeSolve />
       <Packages />
       <Steps />
       <Testimonials />
-      <CTABanner 
-        variant="secondary"
-        title="You've Done the Research. We'll Make Sure the World Can Read It."
-        description="Upload your manuscript today. Get a transparent instant quote. And let our network of PhD-qualified editors make your research publication-ready while you track every step live from your dashboard."
-        primaryButtonText="Submit Manuscript"
-        primaryButtonHref="/user/dashboard"
-        secondaryButtonText="View Packages"
-        secondaryButtonHref="/packages"
-      />
+       <AboutMidBanner />
       <FAQ 
         items={homeFaqs}
         tag="FAQs"

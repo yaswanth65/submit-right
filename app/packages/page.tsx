@@ -13,9 +13,9 @@ export default function PackagesPage() {
   return (
     <div className="flex flex-col min-h-screen font-sans bg-white text-[#1C1C1D]">
       <Navbar />
-      <section className="relative overflow-hidden pt-12 lg:pt-24 pb-20 lg:pb-32 bg-[linear-gradient(180deg,#CFE7F7_0%,#EAF5FC_52%,#FFFFFF_100%)]">
+      <section className="relative overflow-hidden pt-24 lg:pt-32 pb-20 lg:pb-32 bg-[linear-gradient(180deg,#CFE7F7_0%,#EAF5FC_52%,#FFFFFF_100%)]">
         {/* 1. Hero Section */}
-        <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-14 mt-16 lg:mt-24">
+        <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-14 mt-8 lg:mt-14">
           <div className="grid lg:grid-cols-2 gap-10 items-center">
             
             <div className="max-w-[560px]">

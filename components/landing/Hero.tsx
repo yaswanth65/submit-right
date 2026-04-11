@@ -21,7 +21,7 @@ export function Hero() {
   return (
     <section 
       // Subtracting an estimated 80px for the navbar.
-      className="relative hero-svg-bg w-full overflow-x-clip flex flex-col justify-center pt-[84px] sm:pt-[96px] lg:pt-0 pb-14 sm:pb-20 min-h-[calc(100vh-80px)] lg:min-h-[calc(100vh-65px)]" 
+      className="relative hero-svg-bg w-full overflow-x-clip flex flex-col justify-center pt-[112px] sm:pt-[128px] lg:pt-[88px] pb-14 sm:pb-20 min-h-[calc(100vh-80px)] lg:min-h-[calc(100vh-65px)]" 
     >
 
       <div className="w-full max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-14 relative z-10 flex-1 flex flex-col justify-center">
@@ -32,8 +32,7 @@ export function Hero() {
       
       {/* Badge */}
       <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#00A0E34D] bg-[#00A0E314] mb-6">
-        <span className="w-2 h-2 bg-[#00A0E3] rounded-full" />
-        <span className="text-[13px] md:text-[14px] font-medium leading-[1.4] tracking-normal text-[#00A0E3]">
+<img src="/v1.svg" alt="icon" className="w-4 h-4" />        <span className="text-[13px] md:text-[14px] font-medium leading-[1.4] tracking-normal text-[#00A0E3]">
           ACADEMIC EDITING & PUBLICATION SERVICES
         </span>
       </div>
@@ -65,7 +64,7 @@ export function Hero() {
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-2 gap-4 sm:gap-6 lg:flex lg:gap-14 w-full lg:w-auto max-w-[420px] lg:max-w-none">
+      <div className="grid grid-cols-2 gap-4 sm:gap-6 lg:flex lg:gap-14 w-full mt-10 lg:w-auto max-w-[420px] lg:max-w-none">
         <div className="flex items-center gap-4">
           <div className="w-11 h-11 rounded-xl bg-[#EAF5FB] flex items-center justify-center text-[#00A0E3]">
             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
@@ -133,6 +132,7 @@ export function Hero() {
 }
 
 // Slide 1: Donut (Middle Left), Progress (Bottom Right), Text Stack (Top Right)
+
 function Slide1Right() {
   const gaugeProgress = 84;
 
@@ -156,50 +156,51 @@ function Slide1Right() {
       </motion.div>
 
       {/* Middle Left Card (Semi-circle Gauge, middle) */}
-      <motion.div
-        animate={{ y: [0, 8, 0], scale: [1, 1.01, 1] }}
-        transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut", delay: 0.3 }}
-        className="absolute top-[118px] sm:top-[70px] left-0 sm:-left-4 w-[180px] sm:w-[240px] rounded-[22px] bg-[#EEF3F8] p-2 sm:p-[10px] shadow-[0_20px_50px_rgba(28,43,64,0.1),inset_0_1px_0_rgba(255,255,255,0.85)] z-20 border border-[#D4E0EA]"
-      >
-        <div className="rounded-[14px] bg-white px-3 sm:px-4 pt-3 sm:pt-4 pb-4 sm:pb-5 border border-[#E4EBF2]">
-          <p className="text-[13px] sm:text-[15px] font-normal text-[#1C1C1D] mb-4 sm:mb-5">Manuscripts Delivered Today</p>
+  <motion.div
+  animate={{ y: [0, 8, 0], scale: [1, 1.01, 1] }}
+  transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut", delay: 0.3 }}
+  className="absolute top-[118px] sm:top-[70px] left-0 sm:-left-4 w-[180px] sm:w-[240px] rounded-[22px] bg-white p-4 sm:p-5 shadow-[0_10px_40px_rgba(0,0,0,0.08)] z-20 flex flex-col items-center border border-[#E4EBF2]"
+>
+  <p className="text-[13px] sm:text-[15px] font-normal text-[#1C1C1D] mb-4 sm:mb-5 text-center w-full">
+    Lorem ipsum dolor
+  </p>
 
-          {/* Semi-circle Gauge */}
-          <div className="relative w-[130px] sm:w-[166px] h-[68px] sm:h-[86px] mx-auto mb-1 overflow-hidden">
-            <svg viewBox="0 0 100 54" className="w-full h-full">
-              <path
-                d="M 10 50 A 40 40 0 0 1 90 50"
-                fill="none"
-                stroke="#D6E7F3"
-                strokeWidth="12"
-                strokeLinecap="butt"
-                pathLength={100}
-              />
-              <path
-                d="M 10 50 A 40 40 0 0 1 90 50"
-                fill="none"
-                stroke="#0FA0E6"
-                strokeWidth="12"
-                strokeLinecap="butt"
-                pathLength={100}
-                strokeDasharray={`${gaugeProgress} 100`}
-              />
-            </svg>
-            <div className="absolute inset-x-0 bottom-1 sm:bottom-[4px] flex flex-col items-center justify-end">
-              <span className="text-[26px] sm:text-[33px] leading-[0.95] font-normal tracking-[-0.01em] text-[#1C1C1D]">
-                {gaugeProgress}%
-              </span>
-              <span className="text-[10px] sm:text-[12px] text-gray-400 font-medium mt-0.5">Lorem</span>
-            </div>
-          </div>
-        </div>
+  <div className="relative w-[130px] sm:w-[166px] h-[68px] sm:h-[86px] mx-auto mb-1 overflow-hidden">
+    <svg viewBox="0 0 100 54" className="w-full h-full">
+      <path
+        d="M 10 50 A 40 40 0 0 1 90 50"
+        fill="none"
+        stroke="#E8F1F8"
+        strokeWidth="12"
+        strokeLinecap="butt"
+        pathLength={100}
+      />
+      <path
+        d="M 10 50 A 40 40 0 0 1 90 50"
+        fill="none"
+        stroke="#009AEE"
+        strokeWidth="12"
+        strokeLinecap="butt"
+        pathLength={100}
+        strokeDasharray="84 100"
+      />
+    </svg>
+    <div className="absolute inset-x-0 bottom-1 sm:bottom-[4px] flex flex-col items-center justify-end">
+      <span className="text-[26px] sm:text-[33px] leading-[0.95] font-normal tracking-[-0.01em] text-[#1C1C1D]">
+        84%
+      </span>
+      <span className="text-[10px] sm:text-[12px] text-gray-400 font-medium mt-0.5">
+        Lorem
+      </span>
+    </div>
+  </div>
 
-        <div className="w-full h-[1px] bg-[#E9EEF4] my-2 sm:my-3.5" />
-        <p className="text-[11px] sm:text-[13px] text-[#5E6673] font-medium leading-snug px-1 pb-1">
-          Your paper is in expert hands
-        </p>
-      </motion.div>
-
+  <div className="w-full h-[1px] bg-[#E9EEF4] my-3 sm:my-4" />
+  
+  <p className="text-[11px] sm:text-[13px] text-[#5E6673] font-medium leading-snug px-1 pb-1 text-center w-full">
+    Lorem ipsum dolor sit amet consectetur
+  </p>
+</motion.div>
       {/* Bottom Right Card (Progress Bar, Front Layer) */}
       <motion.div
         animate={{ y: [0, -10, 0], scale: [1.02, 1.04, 1.02] }}
@@ -241,80 +242,168 @@ function Slide1Right() {
   );
 }
 
+
 // Slide 2: Dynamic Highlight Cycle Sequence (Exact visual positioning)
+
 function Slide2Right() {
-  const [activeIndex, setActiveIndex] = useState(0);
-
-  useEffect(() => {
-    const idx = setInterval(() => {
-      setActiveIndex((prev) => (prev + 1) % 3);
-    }, 1800);
-    return () => clearInterval(idx);
-  }, []);
-
-  const items = [
-    { color: "bg-[#00A0E3]", iconBg: "bg-[#EAF5FB]", iconColor: "text-[#00A0E3]" },
-    { color: "bg-[#F59E0B]", iconBg: "bg-[#FEF3C7]", iconColor: "text-[#F59E0B]" },
-    { color: "bg-[#6EE7B7]", iconBg: "bg-[#ECFDF5]", iconColor: "text-[#10B981]" }, // Using greenish teal as per screenshot
+  const data = [
+    {
+      title: "Editing",
+      subtitle: "Manuscript & Language Editing",
+      color: "bg-[#00A0E3]",
+      iconBg: "bg-[#EAF5FB]",
+      iconColor: "text-[#00A0E3]",
+    },
+    {
+      title: "Proofreading",
+      subtitle: "Error-Free Content Review",
+      color: "bg-[#F59E0B]",
+      iconBg: "bg-[#FEF3C7]",
+      iconColor: "text-[#F59E0B]",
+    },
+    {
+      title: "Formatting",
+      subtitle: "Journal & Thesis Formatting",
+      color: "bg-[#6EE7B7]",
+      iconBg: "bg-[#ECFDF5]",
+      iconColor: "text-[#10B981]",
+    },
   ];
 
+  const [rotation, setRotation] = useState(0);
+
+  // Smooth clockwise rotation
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setRotation((prev) => (prev + 1) % data.length);
+    }, 1200); // Faster and smoother
+
+    return () => clearInterval(interval);
+  }, []);
+
+  // Rotate array clockwise
+  const items = data.map((_, index) => {
+    return data[(index - rotation + data.length) % data.length];
+  });
+
   return (
-    <div className="relative w-full h-[380px] sm:h-[400px] lg:h-[500px] flex items-center justify-center overflow-visible sm:overflow-hidden py-2 sm:py-0">
-      <div className="relative w-full max-w-[480px] flex flex-col justify-center gap-4 sm:gap-8 z-10 mx-auto px-2 sm:px-4 transform scale-100 origin-center">
-      {items.map((item, idx) => {
-        const isActive = activeIndex === idx;
-        return (
-          <div key={idx} className="flex items-center gap-4 sm:gap-6 relative">
-            {/* Card Content */}
+    <div className="relative w-full flex items-center justify-center py-6">
+      <div className="relative w-full max-w-[760px] flex flex-col items-center gap-[20px]">
+        {items.map((item, idx) => {
+          const isActive = idx === 1; // Middle card highlighted
+
+          return (
             <motion.div
+              key={item.title}
               layout
+              initial={false}
               animate={{
-                width: isActive ? "108%" : "92%",
-                scale: isActive ? 1.02 : 1,
-                opacity: 1, // Full opacity on all as cards are clearly visible in screenshot
+                scale: isActive ? 1 : 0.94,
+                opacity: isActive ? 1 : 0.85,
               }}
-              transition={{ duration: 0.4, ease: [0.25, 1, 0.5, 1] }} 
-              className={`flex-1 flex items-center p-4 sm:p-[18px] rounded-[20px] bg-white cursor-default origin-left transition-all ${
-                isActive 
-                  ? "shadow-[0_20px_40px_rgba(0,0,0,0.06)] z-20 border border-[#00A0E3]/10" 
-                  : "shadow-[0_8px_20px_rgba(0,0,0,0.03)] z-10 border border-[#F0F0F0]/50"
-              }`}
+              transition={{
+                type: "spring",
+                stiffness: 180,
+                damping: 22,
+              }}
+              className={`
+                flex items-center bg-white border transition-all duration-300
+                ${isActive
+                  ? `
+                    w-full 
+                    2xl:w-[699px] 
+                    h-[96px] 
+                    p-4 
+                    gap-[18px] 
+                    rounded-[18px] 
+                    border-[#00A0E3]/10
+                    shadow-[0_20px_40px_rgba(0,0,0,0.06)]
+                    z-20
+                  `
+                  : `
+                    w-[92%] 
+                    lg:w-[560px] 
+                    h-[96px] 
+                    p-4 
+                    gap-4 
+                    rounded-[16px] 
+                    border-gray-200
+                    shadow-[0_8px_20px_rgba(0,0,0,0.03)]
+                    z-10
+                  `
+                }
+              `}
             >
               {/* Colored Dot */}
-              <div className={`w-[10px] h-[10px] rounded-full shrink-0 mr-3 ${item.color} transition-transform duration-300 ${isActive ? "scale-150" : "scale-100 opacity-60"}`} />
+              <div
+                className={`w-[10px] h-[10px] rounded-full shrink-0 ${item.color} ${
+                  isActive ? "scale-125" : "opacity-60"
+                }`}
+              />
 
-              {/* Box Icon */}
-              <div className={`w-[52px] h-[52px] rounded-xl flex items-center justify-center shrink-0 mr-5 transition-colors duration-300 ${item.iconBg}`}>
-                <svg className={`w-[22px] h-[22px] ${item.iconColor}`} fill="currentColor" viewBox="0 0 24 24">
-                  {/* File icon rough shape */}
+              {/* Icon */}
+              <div
+                className={`flex items-center justify-center rounded-xl shrink-0
+                  ${isActive ? "w-[52px] h-[52px]" : "w-[44px] h-[44px]"}
+                  ${item.iconBg}`}
+              >
+                <svg
+                  className={`${
+                    isActive ? "w-[22px] h-[22px]" : "w-[18px] h-[18px]"
+                  } ${item.iconColor}`}
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
                   <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zM13 3.5L18.5 9H13V3.5zM8 12h8v2H8v-2zm0 4h8v2H8v-2z" />
                 </svg>
               </div>
 
-              {/* Texts */}
+              {/* Text Content */}
               <div className="flex-1">
-                <h3 className={`font-normal text-[15px] mb-0.5 tracking-tight ${isActive ? "text-[#1C1C1D]" : "text-[#1C1C1D]"}`}>
-                  Editing
+                <h3
+                  className={`font-medium tracking-tight ${
+                    isActive
+                      ? "text-[16px] text-[#1C1C1D]"
+                      : "text-[14px] text-[#1C1C1D]"
+                  }`}
+                >
+                  {item.title}
                 </h3>
-                <p className={`text-[13px] font-medium ${isActive ? "text-gray-400" : "text-gray-400"}`}>
-                  Manuscript & Language Editing
+                <p
+                  className={`font-medium ${
+                    isActive
+                      ? "text-[14px] text-gray-400"
+                      : "text-[12px] text-gray-400"
+                  }`}
+                >
+                  {item.subtitle}
                 </p>
               </div>
 
-              {/* Chevron Badge */}
-              <div className="w-[36px] h-[36px] rounded-full border border-gray-100 flex items-center justify-center shrink-0 mr-1 bg-white shadow-sm">
-                <svg className="w-[14px] h-[14px] text-[#4B5563]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
+              {/* Chevron */}
+              <div className="w-[36px] h-[36px] rounded-full border border-gray-100 flex items-center justify-center bg-white shadow-sm">
+                <svg
+                  className="w-[14px] h-[14px] text-[#4B5563]"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2.5}
+                    d="M9 5l7 7-7 7"
+                  />
                 </svg>
               </div>
             </motion.div>
-          </div>
-        );
-      })}
+          );
+        })}
       </div>
     </div>
   );
 }
+
 
 // Slide 3: Yellow background aligned right, Blue foreground aligned left
 function Slide3Right() {
@@ -401,5 +490,6 @@ function Slide3Right() {
       </div>
     </div>
   );
+
 }
 

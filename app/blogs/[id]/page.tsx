@@ -41,7 +41,7 @@ export default function BlogPostPage() {
       <Navbar />
 
       {/* Hero Section */}
-      <section className="relative hero-svg-bg pt-20 sm:pt-24 lg:pt-32 pb-16 sm:pb-20 overflow-hidden">
+      <section className="relative hero-svg-bg pt-28 sm:pt-32 lg:pt-36 pb-16 sm:pb-20 overflow-hidden">
         <div className="w-full max-w-[900px] mx-auto px-4 sm:px-6 lg:px-10 relative z-10">
           
           <Link href="/blogs" className="inline-flex items-center gap-2 text-[14px] font-medium text-[#65656D] hover:text-[#00A0E3] transition-colors mb-8">

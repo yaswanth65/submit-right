@@ -31,7 +31,7 @@ export function Steps() {
 
   return (
     <section className="py-12 sm:py-16 lg:py-24 bg-white">
-      <div className="w-full max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-14">
+      <div className="w-full max-w-[1280px] mx-auto px-4 sm:px-[14px] lg:px-[14px] xl:px-[14px]">
         {/* Header */}
         <div className="text-center mb-10 sm:mb-16">
           {/* Badge */}
@@ -56,7 +56,7 @@ export function Steps() {
         {/* Steps Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4 max-w-6xl mx-auto">
           {steps.map((step, idx) => (
-            <div key={idx} className="bg-[#F9F9F9] rounded-xl sm:rounded-2xl p-4 sm:p-5 relative border border-[#F0F0F0]">
+            <div key={idx} className="bg-[#F9F9F9] rounded-xl sm:rounded-2xl p-[14px] sm:p-5 relative border border-[#F0F0F0]">
               <div className="absolute top-3.5 sm:top-4 right-3.5 sm:right-4 text-[22px] sm:text-[24px] font-normal text-[#E5E5E5]">
                 0{idx + 1}
               </div>
@@ -65,7 +65,7 @@ export function Steps() {
                 <step.icon className="w-4.5 h-4.5 sm:w-5 sm:h-5 text-[#00A0E3]" />
               </div>
               
-              <h3 className="text-[14px] sm:text-[15px] font-normal text-[#1C1C1D] mb-2 leading-tight">
+              <h3 className="text-[14px] sm:text-[15px] font-medium text-[#1C1C1D] mb-2 leading-tight">
                 {step.title}
               </h3>
               

@@ -14,7 +14,7 @@ export function Packages() {
   
   const col1 = [true, false, false, true, false, false, true, false];
   const col2 = [true, true, true, true, false, true, true, false];
-  const col3 = [true, true, true, true, true, true, true, true];
+  const col3 = [true, false, true, true, true, false, true, true];
 
   return (
     <section className="py-12 sm:py-16 lg:py-24 bg-[#F3F9FC]">
@@ -60,11 +60,9 @@ export function Packages() {
             <h3 className="text-[17px] sm:text-[18px] font-semibold text-[#1C1C1D] mb-6 sm:mb-8 whitespace-nowrap text-center sm:text-left">Language Clarity</h3>
             {col1.map((val, idx) => (
               <div key={idx} className="flex items-center justify-start gap-3 h-[42px] mb-3">
-                <div className="w-5 h-5 rounded-full bg-[#00A0E3]/10 flex items-center justify-center shrink-0">
-                  <svg className="w-3.5 h-3.5 text-[#00A0E3]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                  </svg>
-                </div>
+                <div className="w-5 h-5">
+                    <img src="/doubletick.svg" alt="icon" className="w-4 h-4" />
+                  </div>
                 <span className="text-[14px] text-[#1C1C1D] sm:hidden font-medium">{rowLabels[idx]}</span>
               </div>
             ))}
@@ -87,14 +85,12 @@ export function Packages() {
             {col2.map((val, idx) => (
               <div key={idx} className="flex items-center justify-start gap-3 h-[42px] mb-3">
                 {val ? (
-                  <div className="w-5 h-5 rounded-full bg-gray-100 flex items-center justify-center shrink-0">
-                    <svg className="w-3.5 h-3.5 text-[#65656D]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                    </svg>
+                  <div className="w-5 h-5">
+                    <img src="/doubletick.svg" alt="icon" className="w-4 h-4" />
                   </div>
                 ) : (
                   <div className="w-5 h-5 flex items-center justify-center shrink-0">
-                    <svg className="w-4 h-4 text-[#D0D0D0]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-4 h-4 text-[#65656D]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
                     </svg>
                   </div>
@@ -118,14 +114,12 @@ export function Packages() {
             {col3.map((val, idx) => (
               <div key={idx} className="flex items-center justify-start gap-3 h-[42px] mb-3">
                 {val ? (
-                  <div className="w-5 h-5 rounded-full bg-gray-100 flex items-center justify-center shrink-0">
-                    <svg className="w-3.5 h-3.5 text-[#65656D]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                    </svg>
+                  <div className="w-5 h-5">
+                    <img src="/doubletick.svg" alt="icon" className="w-4 h-4" />
                   </div>
                 ) : (
                   <div className="w-5 h-5 flex items-center justify-center shrink-0">
-                    <svg className="w-4 h-4 text-[#D0D0D0]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-4 h-4 text-[#65656D]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
                     </svg>
                   </div>

@@ -3,6 +3,7 @@
 import { Footer } from "@/components/landing/Footer";
 import { Navbar } from "@/components/landing/Navbar";
 import { CTABanner } from "@/components/landing/CTABanner";
+import { Newsletter } from "@/components/landing/Newsletter";
 
 export default function PrivacyPolicyPage() {
   return (
@@ -135,9 +136,8 @@ export default function PrivacyPolicyPage() {
         </div>
       </section>
 
-      <div className="relative z-20">
-        <CTABanner variant="secondary" />
-      </div>
+           <Newsletter />
+     
 
       <Footer />
     </div>

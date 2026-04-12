@@ -6,6 +6,7 @@ import Link from "next/link";
 import { Navbar } from "@/components/landing/Navbar";
 import { Footer } from "@/components/landing/Footer";
 import { CTABanner } from "@/components/landing/CTABanner";
+import { Newsletter } from "@/components/landing/Newsletter";
 
 // Mock data matching the admin blog structure
 const mockBlogs = [
@@ -113,9 +114,8 @@ export default function BlogsPage() {
         </div>
       </section>
 
-      <div className="relative z-20">
-        <CTABanner variant="secondary" />
-      </div>
+               <Newsletter />
+
 
       <Footer />
     </div>

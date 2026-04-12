@@ -16,6 +16,8 @@
     { "key": "adminPassword", "value": "Password@123" },
     { "key": "documentId", "value": "" },
     { "key": "serviceId", "value": "" },
+    { "key": "catalogItemId", "value": "" },
+    { "key": "discountId", "value": "" },
     { "key": "clientId", "value": "" },
     { "key": "editorId", "value": "" },
     { "key": "paymentId", "value": "" },
@@ -380,6 +382,84 @@
     {
       "name": "Admin",
       "item": [
+        {
+          "name": "Catalog Options",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }],
+            "url": { "raw": "{{baseUrl}}/api/admin/catalog/options", "host": ["{{baseUrl}}"], "path": ["api", "admin", "catalog", "options"] }
+          }
+        },
+        {
+          "name": "Catalog Items",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }],
+            "url": { "raw": "{{baseUrl}}/api/admin/catalog/items?kind=&search=", "host": ["{{baseUrl}}"], "path": ["api", "admin", "catalog", "items"], "query": [{ "key": "kind", "value": "" }, { "key": "search", "value": "" }] }
+          }
+        },
+        {
+          "name": "Create Catalog Item",
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["const json = pm.response.json();", "if (json.data?.id) pm.collectionVariables.set('catalogItemId', json.data.id);"] } }],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }, { "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"slug\": \"premium-editing\",\n  \"title\": \"Premium Editing\",\n  \"description\": \"Premium editing support with deeper review.\",\n  \"kind\": \"service\",\n  \"category\": \"best\",\n  \"domainType\": \"Editing\",\n  \"ratePerWord\": 4.25,\n  \"basePrice\": null,\n  \"isBest\": true,\n  \"isActive\": true,\n  \"sortOrder\": 40\n}" },
+            "url": { "raw": "{{baseUrl}}/api/admin/catalog/items", "host": ["{{baseUrl}}"], "path": ["api", "admin", "catalog", "items"] }
+          }
+        },
+        {
+          "name": "Update Catalog Item",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }, { "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"title\": \"Premium Editing Updated\",\n  \"basePrice\": 27500,\n  \"ratePerWord\": 4.5,\n  \"isBest\": true,\n  \"sortOrder\": 41\n}" },
+            "url": { "raw": "{{baseUrl}}/api/admin/catalog/items/{{catalogItemId}}", "host": ["{{baseUrl}}"], "path": ["api", "admin", "catalog", "items", "{{catalogItemId}}"] }
+          }
+        },
+        {
+          "name": "Deactivate Catalog Item",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }],
+            "url": { "raw": "{{baseUrl}}/api/admin/catalog/items/{{catalogItemId}}", "host": ["{{baseUrl}}"], "path": ["api", "admin", "catalog", "items", "{{catalogItemId}}"] }
+          }
+        },
+        {
+          "name": "Discounts",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }],
+            "url": { "raw": "{{baseUrl}}/api/admin/discounts", "host": ["{{baseUrl}}"], "path": ["api", "admin", "discounts"] }
+          }
+        },
+        {
+          "name": "Create Discount",
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["const json = pm.response.json();", "if (json.data?.id) pm.collectionVariables.set('discountId', json.data.id);"] } }],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }, { "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"couponCode\": \"SUMMER15\",\n  \"couponName\": \"Summer Promotion\",\n  \"couponType\": \"discount\",\n  \"applyTo\": \"all_services\",\n  \"discountValue\": 15,\n  \"startDate\": \"2026-04-11T00:00:00.000Z\",\n  \"endDate\": \"2026-05-11T00:00:00.000Z\",\n  \"limitTotalUses\": 100,\n  \"limitPerCustomer\": 1,\n  \"isActive\": true,\n  \"description\": \"Seasonal discount for all service items\"\n}" },
+            "url": { "raw": "{{baseUrl}}/api/admin/discounts", "host": ["{{baseUrl}}"], "path": ["api", "admin", "discounts"] }
+          }
+        },
+        {
+          "name": "Update Discount",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }, { "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"couponName\": \"Summer Promotion Updated\",\n  \"isActive\": false\n}" },
+            "url": { "raw": "{{baseUrl}}/api/admin/discounts/{{discountId}}", "host": ["{{baseUrl}}"], "path": ["api", "admin", "discounts", "{{discountId}}"] }
+          }
+        },
+        {
+          "name": "Delete Discount",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }],
+            "url": { "raw": "{{baseUrl}}/api/admin/discounts/{{discountId}}", "host": ["{{baseUrl}}"], "path": ["api", "admin", "discounts", "{{discountId}}"] }
+          }
+        },
         {
           "name": "Dashboard",
           "request": {

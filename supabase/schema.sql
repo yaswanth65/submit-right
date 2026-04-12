@@ -14,6 +14,22 @@ begin
   if not exists (select 1 from pg_type where typname = 'availability_status') then
     create type availability_status as enum ('available', 'busy', 'at_capacity', 'vacation');
   end if;
+  if not exists (select 1 from pg_type where typname = 'catalog_item_kind') then
+    create type catalog_item_kind as enum ('service', 'package', 'domain');
+  end if;
+  if not exists (select 1 from pg_type where typname = 'discount_campaign_type') then
+    create type discount_campaign_type as enum ('discount', 'sale_price', 'buy_x_get_y');
+  end if;
+  if not exists (select 1 from pg_type where typname = 'discount_apply_to') then
+    create type discount_apply_to as enum (
+      'all_services',
+      'all_packages',
+      'all_domains',
+      'specific_service',
+      'specific_package',
+      'specific_domain'
+    );
+  end if;
 end$$;
 
 create table if not exists profiles (
@@ -43,11 +59,31 @@ create table if not exists services (
   description text,
   image_url text,
   category text not null,
+  kind catalog_item_kind not null default 'service',
+  domain_type text,
   rate_per_word numeric(10, 4) not null,
+  base_price numeric(12, 2),
   is_best boolean not null default false,
   is_active boolean not null default true,
-  created_at timestamptz not null default now()
+  sort_order integer not null default 0,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
 );
+
+alter table if exists services
+  add column if not exists kind catalog_item_kind not null default 'service';
+
+alter table if exists services
+  add column if not exists domain_type text;
+
+alter table if exists services
+  add column if not exists base_price numeric(12, 2);
+
+alter table if exists services
+  add column if not exists sort_order integer not null default 0;
+
+alter table if exists services
+  add column if not exists updated_at timestamptz not null default now();
 
 create table if not exists documents (
   id uuid primary key default gen_random_uuid(),
@@ -155,6 +191,40 @@ create table if not exists payment_transactions (
   updated_at timestamptz not null default now()
 );
 
+create table if not exists discount_campaigns (
+  id uuid primary key default gen_random_uuid(),
+  coupon_code text not null unique,
+  coupon_name text not null,
+  coupon_type discount_campaign_type not null,
+  apply_to discount_apply_to not null,
+  target_item_id uuid references services(id),
+  discount_value numeric(12, 2),
+  sale_price numeric(12, 2),
+  buy_quantity integer,
+  get_quantity integer,
+  start_date timestamptz not null,
+  end_date timestamptz,
+  limit_total_uses integer,
+  limit_per_customer integer,
+  current_usage_count integer not null default 0,
+  is_active boolean not null default true,
+  description text,
+  created_by uuid references profiles(id),
+  updated_by uuid references profiles(id),
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+
+create table if not exists discount_redemptions (
+  id uuid primary key default gen_random_uuid(),
+  discount_campaign_id uuid not null references discount_campaigns(id) on delete cascade,
+  document_id uuid not null references documents(id) on delete cascade,
+  client_id uuid not null references profiles(id) on delete cascade,
+  discount_amount numeric(12, 2) not null default 0,
+  redeemed_at timestamptz not null default now(),
+  unique (discount_campaign_id, document_id)
+);
+
 create table if not exists password_reset_tokens (
   id uuid primary key default gen_random_uuid(),
   profile_id uuid not null references profiles(id) on delete cascade,
@@ -200,9 +270,31 @@ insert into app_settings (support_email, default_timezone, default_currency)
 select 'support@submitright.com', 'Asia/Kolkata', 'INR'
 where not exists (select 1 from app_settings);
 
-insert into services (slug, title, description, category, rate_per_word, is_best)
+insert into services (slug, title, description, category, kind, domain_type, rate_per_word, base_price, is_best, sort_order)
 values
-  ('editing-basic', 'Basic Editing', 'Grammar and clarity improvements', 'best', 2.50, true),
-  ('journal-formatting', 'Journal Formatting', 'Publication-ready formatting package', 'publication_support_packages', 3.20, false),
-  ('plagiarism-check', 'Plagiarism Check', 'Similarity screening with report', 'other', 1.25, false)
+  ('editing-domain', 'Editing', 'Editing domain for document refinement workflows', 'best', 'domain', 'Editing', 0.00, null, true, 1),
+  ('proofreading-domain', 'Proofreading', 'Proofreading domain for language-level quality checks', 'other', 'domain', 'Proofreading', 0.00, null, false, 2),
+  ('translation-domain', 'Translation', 'Translation domain for multilingual content support', 'other', 'domain', 'Translation', 0.00, null, false, 3),
+  ('publication-support-domain', 'Publication Support', 'Publication support domain for journal-ready services', 'publication_support_packages', 'domain', 'Publication Support', 0.00, null, false, 4),
+  ('editing-basic', 'Basic Editing', 'Grammar and clarity improvements', 'best', 'service', 'Editing', 2.50, null, true, 10),
+  ('advanced-editing', 'Advanced Editing', 'Structure, tone, and clarity improvements', 'best', 'service', 'Editing', 3.25, null, false, 11),
+  ('proofreading-basic', 'Basic Proofreading', 'Spelling, grammar, and punctuation correction', 'other', 'service', 'Proofreading', 1.85, null, false, 12),
+  ('translation-en-es', 'Translation EN -> ES', 'Professional English to Spanish translation', 'other', 'service', 'Translation', 4.20, null, false, 13),
+  ('essential-support', 'Essential Support', 'Publication-ready support bundle', 'publication_support_packages', 'package', 'Editing', 0.00, 25800.00, false, 20),
+  ('advanced-support', 'Advanced Support', 'Expanded support bundle with added review steps', 'publication_support_packages', 'package', 'Editing', 0.00, 35800.00, false, 21),
+  ('comprehensive-support', 'Comprehensive Support', 'Premium bundle with the widest coverage', 'publication_support_packages', 'package', 'Editing', 0.00, 45800.00, false, 22),
+  ('plagiarism-check', 'Plagiarism Check', 'Similarity screening with report', 'other', 'service', 'Publication Support', 1.25, null, false, 30)
 on conflict (slug) do nothing;
+
+update services set kind = 'domain', domain_type = 'Editing', rate_per_word = 0.00, base_price = null, sort_order = 1 where slug = 'editing-domain';
+update services set kind = 'domain', domain_type = 'Proofreading', rate_per_word = 0.00, base_price = null, sort_order = 2 where slug = 'proofreading-domain';
+update services set kind = 'domain', domain_type = 'Translation', rate_per_word = 0.00, base_price = null, sort_order = 3 where slug = 'translation-domain';
+update services set kind = 'domain', domain_type = 'Publication Support', rate_per_word = 0.00, base_price = null, sort_order = 4 where slug = 'publication-support-domain';
+update services set kind = 'service', domain_type = 'Editing', rate_per_word = 2.50, base_price = null, sort_order = 10 where slug = 'editing-basic';
+update services set kind = 'service', domain_type = 'Editing', rate_per_word = 3.25, base_price = null, sort_order = 11 where slug = 'advanced-editing';
+update services set kind = 'service', domain_type = 'Proofreading', rate_per_word = 1.85, base_price = null, sort_order = 12 where slug = 'proofreading-basic';
+update services set kind = 'service', domain_type = 'Translation', rate_per_word = 4.20, base_price = null, sort_order = 13 where slug = 'translation-en-es';
+update services set kind = 'package', domain_type = 'Editing', rate_per_word = 0.00, base_price = 25800.00, sort_order = 20 where slug = 'essential-support';
+update services set kind = 'package', domain_type = 'Editing', rate_per_word = 0.00, base_price = 35800.00, sort_order = 21 where slug = 'advanced-support';
+update services set kind = 'package', domain_type = 'Editing', rate_per_word = 0.00, base_price = 45800.00, sort_order = 22 where slug = 'comprehensive-support';
+update services set kind = 'service', domain_type = 'Publication Support', rate_per_word = 1.25, base_price = null, sort_order = 30 where slug = 'plagiarism-check';

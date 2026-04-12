@@ -5,11 +5,12 @@ import { requireRole } from "@/lib/auth";
 import { discountCampaignUpdateSchema } from "@/lib/validators";
 import { deleteDiscountCampaign, listDiscountCampaigns, updateDiscountCampaign } from "@/lib/services/discount-service";
 
-export async function GET(_req: NextRequest, { params }: { params: { id: string } }) {
+export async function GET(_req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     await requireRole("admin");
+    const { id } = await params;
     const campaigns = await listDiscountCampaigns();
-    const campaign = campaigns.cards.find((item) => item.id === params.id);
+    const campaign = campaigns.cards.find((item) => item.id === id);
     if (!campaign) return fail("Discount campaign not found", 404);
     return ok(campaign);
   } catch (error) {
@@ -17,20 +18,22 @@ export async function GET(_req: NextRequest, { params }: { params: { id: string 
   }
 }
 
-export async function PATCH(req: NextRequest, { params }: { params: { id: string } }) {
+export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     await requireRole("admin");
+    const { id } = await params;
     const body = await parseJson(req, discountCampaignUpdateSchema);
-    return ok(await updateDiscountCampaign(params.id, body));
+    return ok(await updateDiscountCampaign(id, body));
   } catch (error) {
     return asResponse(error);
   }
 }
 
-export async function DELETE(_req: NextRequest, { params }: { params: { id: string } }) {
+export async function DELETE(_req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     await requireRole("admin");
-    return ok(await deleteDiscountCampaign(params.id));
+    const { id } = await params;
+    return ok(await deleteDiscountCampaign(id));
   } catch (error) {
     return asResponse(error);
   }

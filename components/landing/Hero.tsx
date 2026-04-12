@@ -90,7 +90,7 @@ export function Hero() {
       >
         {slides.map((slide, idx) => (
           <div key={slide.id} className="w-full shrink-0">
-            <div className="landing-shell relative z-20 min-h-[100svh] sm:h-full pt-[96px] sm:pt-[128px] lg:pt-[88px] pb-12 sm:pb-20 flex flex-col justify-start sm:justify-center">
+            <div className="landing-shell relative z-20 min-h-[100svh] sm:h-full pt-[46px] sm:pt-[128px] lg:pt-[88px] pb-12 sm:pb-20 flex flex-col justify-start sm:justify-center">
               <div className="grid lg:grid-cols-2 gap-6 sm:gap-10 lg:gap-12 items-start sm:items-center w-full mt-1 sm:mt-3 lg:mt-8">
                 <HeroSlideLeft slide={slide} />
 
@@ -140,7 +140,7 @@ function HeroSlideLeft({ slide }: { slide: HeroSlide }) {
         </span>
       </div>
 
-      <p className="text-[21px] min-[420px]:text-[28px] sm:text-[38px] md:text-[54px] leading-[1.15] md:leading-[1.1] font-medium tracking-normal text-[#1C1C1D] mb-4 sm:mb-5 md:mb-6">
+      <p className="text-[32px] min-[420px]:text-[28px] sm:text-[38px] md:text-[54px] leading-[1.15] md:leading-[1.1] font-medium tracking-normal text-[#1C1C1D] mb-4 sm:mb-5 md:mb-6">
         {slide.headline}
       </p>
 
@@ -148,21 +148,21 @@ function HeroSlideLeft({ slide }: { slide: HeroSlide }) {
         {slide.description}
       </p>
 
-      <div className="grid grid-cols-1 min-[420px]:grid-cols-2 sm:flex sm:flex-row justify-center lg:justify-start gap-3 sm:gap-4 mb-6 sm:mb-10 w-full sm:w-auto px-1 sm:px-0">
-        <Link
-          href="#"
-          className="flex items-center justify-center sm:flex-none text-center px-2 sm:px-8 py-3 sm:py-3.5 rounded-full bg-[#00A0E3] text-white whitespace-nowrap text-[14px] sm:text-[16px] font-medium leading-[1.2] shadow-[0_8px_20px_rgba(0,160,227,0.25)] hover:shadow-[0_10px_25px_rgba(0,160,227,0.35)] hover:bg-[#028ac7] transition-all"
-        >
-          {slide.primaryCta}
-        </Link>
-        <Link
-          href="#"
-          className="flex items-center justify-center sm:flex-none text-center px-2 sm:px-10 py-3 sm:py-3.5 rounded-full border border-[#00A0E3] text-[#00A0E3] whitespace-nowrap text-[14px] sm:text-[16px] font-medium leading-[1.2] bg-white hover:bg-[#EAF5FB] transition-all"
-        >
-          {slide.secondaryCta}
-        </Link>
-      </div>
+     <div className="grid grid-cols-2 sm:flex sm:flex-row justify-center lg:justify-start gap-3 sm:gap-4 mb-6 sm:mb-10 w-full sm:w-auto px-1 sm:px-0">
+  <Link
+    href="#"
+    className="flex items-center justify-center w-full sm:w-auto text-center px-4 sm:px-8 py-3 sm:py-3.5 rounded-full bg-[#00A0E3] text-white whitespace-nowrap text-[14px] sm:text-[16px] font-medium leading-[1.2] shadow-[0_8px_20px_rgba(0,160,227,0.25)] hover:shadow-[0_10px_25px_rgba(0,160,227,0.35)] hover:bg-[#028ac7] transition-all duration-300"
+  >
+    {slide.primaryCta}
+  </Link>
 
+  <Link
+    href="#"
+    className="flex items-center justify-center w-full sm:w-auto text-center px-4 sm:px-10 py-3 sm:py-3.5 rounded-full border border-[#00A0E3] text-[#00A0E3] whitespace-nowrap text-[14px] sm:text-[16px] font-medium leading-[1.2] bg-white hover:bg-[#EAF5FB] transition-all duration-300"
+  >
+    {slide.secondaryCta}
+  </Link>
+</div>
       {slide.metrics && slide.metrics.length > 0 && (
         <div className="hidden sm:grid sm:grid-cols-2 sm:gap-6 lg:flex lg:gap-14 w-full sm:mt-10 lg:w-auto">
           {slide.metrics.map((metric) => (

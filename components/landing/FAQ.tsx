@@ -47,7 +47,7 @@ export function FAQ({ items, tag = "FAQ", title = "Got Questions We've Got Answe
   const faqs = items || defaultFaqs;
 
   return (
-    <section className="py-12 sm:py-20 lg:py-24 bg-white">
+    <section className="py-12 sm:py-16 lg:py-20 bg-white">
       <div className="landing-shell">
         {/* Header */}
         <div className="text-center mb-10 sm:mb-12">

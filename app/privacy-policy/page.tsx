@@ -47,7 +47,8 @@ export default function PrivacyPolicyPage() {
         </div>
       </section>
 
-      {/* Content Section */}<section className="py-16 lg:py-24 flex items-center justify-center">
+      {/* Content Section */}
+      <section className="py-12 sm:py-16 lg:py-20 flex items-center justify-center">
   <div className="landing-shell">
     <div className="max-w-[1000px] mx-auto space-y-12">
             {/* 1 */}

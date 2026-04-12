@@ -48,7 +48,7 @@ export function AboutExperts() {
   ];
 
   return (
-    <section className="py-14 sm:py-20 lg:py-24 bg-[#F3F9FC] relative">
+    <section className="py-12 sm:py-16 lg:py-20 bg-[#F3F9FC] relative">
       <div className="landing-shell">
         
         <div className="grid lg:grid-cols-2 gap-10 sm:gap-16 lg:gap-24 items-start">
@@ -119,7 +119,7 @@ export function AboutExperts() {
           {/* Right Content (UNCHANGED) */}
           <div>
             <div className="text-center lg:text-left">
-  <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded bg-[#F3F4F6] border border-[#E5E7EB] mb-6 mx-auto lg:mx-0">
+  <div className="landing-section-badge mb-6 mx-auto lg:mx-0">
     <svg
       width="14"
       height="14"
@@ -131,17 +131,17 @@ export function AboutExperts() {
       <circle cx="12" cy="12" r="10" />
       <path d="m9 12 2 2 4-4" />
     </svg>
-    <span className="text-[12px] font-medium text-[#4B5563] tracking-widest uppercase">
+    <span className="landing-section-badge-text">
       Our Expert Network
     </span>
   </div>
 </div>
             
-          <h2 className="text-[26px] sm:text-[32px] lg:text-[40px] font-medium text-[#1C1C1D] leading-[1.2] mb-5 sm:mb-6 text-center lg:text-left">
+          <h2 className="landing-section-title mb-5 sm:mb-6 text-center lg:text-left">
   The Specialists Behind Every Manuscript We Deliver
 </h2>
             
-            <div className="flex flex-col gap-4 sm:gap-5 text-[14px] sm:text-[16px] text-[#65656D] leading-relaxed lg:max-w-[90%]">
+            <div className="landing-section-description flex flex-col gap-4 sm:gap-5 text-center lg:text-left lg:max-w-[90%]">
               <p>
                 Submit Right's quality doesn't come from software. It comes from a hand-selected, subject-verified network of academic professionals. Each assigned to manuscripts based on expertise, not availability.
               </p>

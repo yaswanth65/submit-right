@@ -171,15 +171,15 @@ export default function ContactPage() {
       </section>
 
       {/* FAQ Wrap */}
-      <section className="py-14 sm:py-20 lg:py-24 bg-white relative z-10 -mt-3 sm:-mt-10">
+      <section className="py-12 sm:py-16 lg:py-20 bg-white relative z-10 -mt-3 sm:-mt-10">
         <div className="landing-shell">
           
        
           <div className="flex flex-col items-center mb-8 sm:mb-12">
-            <h2 className="text-[26px] sm:text-[32px] font-semibold text-[#1C1C1D] text-center mb-3">
+            <h2 className="landing-section-title mb-3">
               Everything You Need to Know Before You Reach Out
             </h2>
-            <p className="text-[15px] sm:text-[16px] text-[#65656D] leading-relaxed text-center max-w-[650px]">
+            <p className="landing-section-description max-w-[650px]">
               Most questions our team receives fall into a handful of clear categories document submission, order tracking, payments, security, and certifications. We've answered all of them here so you can get answers instantly, without waiting on a reply.
             </p>
           </div>

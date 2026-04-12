@@ -73,27 +73,31 @@ export default function Testimonials() {
   }, []);
 
   const Card = ({ t }: any) => (
-    <div className="bg-white rounded-xl sm:rounded-2xl p-5 sm:p-8 border border-[#F0F0F0] shadow-sm">
-      <div className="flex items-center gap-3 mb-4">
-        <div className="w-10 h-10 rounded-full bg-[#F3F9FC] overflow-hidden">
-          <div className="w-full h-full bg-[#E5E5E5]" />
-        </div>
-        <div>
-          <div className="text-[13px] sm:text-[14px] font-normal text-[#1C1C1D]">
+    <div className="box-border flex flex-col items-start p-6 gap-5 lg:gap-[33px] w-[361px] max-w-full h-[178px] lg:w-[413.33px] lg:h-[200px] bg-white border border-[#ECECEC] rounded-[14px]">
+      <div className="flex items-center gap-3 w-[313px] max-w-full h-[50px] lg:w-[365.33px]">
+      <div className="w-[50px] h-[50px] rounded-full bg-[#F3F9FC] overflow-hidden shrink-0">
+  <img
+    src="/avatar.jpg" // Replace with your image path
+    alt="Sarah Williams"
+    className="w-full h-full object-cover"
+  />
+</div>
+        <div className="flex flex-col items-start gap-2 flex-1 w-[251px] lg:w-[303.33px]">
+          <div className="font-inter font-medium text-[16px] leading-[110%] text-[#1C1C1D]">
             {t.name}
           </div>
-          <div className="text-[12px] text-[#A0A0A0]">{t.role}</div>
+          <div className="font-inter font-normal text-[14px] leading-[120%] text-[#78788D] w-full">{t.role}</div>
         </div>
       </div>
 
-      <p className="text-[12px] sm:text-[13px] text-[#65656D] leading-relaxed">
+      <p className="font-inter font-normal text-[14px] leading-[140%] text-[#78788D] w-[313px] max-w-full lg:w-[365.33px]">
         {t.quote}
       </p>
     </div>
   );
 
   return (
-    <section className="py-12 sm:py-20 lg:py-24 bg-[#FAFAFA] overflow-hidden">
+    <section className="py-12 sm:py-16 lg:py-20 bg-[#FAFAFA] overflow-hidden">
       <div className="landing-shell">
 
         {/* Header */}

@@ -51,29 +51,29 @@ export function TeamSection() {
   ];
 
   return (
-    <section className="py-14 sm:py-20 lg:py-24 bg-white relative">
+    <section className="py-12 sm:py-16 lg:py-20 bg-white relative">
       <div className="landing-shell">
         
         {/* Header */}
         <div className="text-center mb-10 sm:mb-16">
           {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#00A0E34D] bg-[#00A0E314] mb-6">
+          <div className="landing-section-badge mb-6">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00A0E3" strokeWidth="2">
               <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
               <circle cx="12" cy="7" r="4" />
             </svg>
-            <span className="text-[13px] font-semibold tracking-wider text-[#00A0E3] uppercase">
+            <span className="landing-section-badge-text text-[#00A0E3]">
               The People Behind Submit Right
             </span>
           </div>
 
           {/* Heading */}
-          <h2 className="text-[28px] sm:text-[36px] lg:text-[44px] font-semibold text-[#1C1C1D] leading-[1.15] mb-4 max-w-[700px] mx-auto">
+          <h2 className="landing-section-title mb-4 max-w-[700px] mx-auto">
             Your Manuscript Is in the Hands of People Who've Published in Your Field
           </h2>
 
           {/* Description */}
-          <p className="text-[14px] sm:text-[15px] text-[#65656D] leading-relaxed max-w-[600px] mx-auto">
+          <p className="landing-section-description max-w-[600px] mx-auto">
             Every editor, reviewer, and subject expert on Submit Right has been vetted, tested, and approved through a rigorous onboarding process.
           </p>
         </div>

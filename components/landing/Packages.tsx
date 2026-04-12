@@ -50,7 +50,7 @@ export function Packages() {
   ];
 
   return (
-    <section className="py-12 sm:py-16 lg:py-24 bg-[#F3F9FC]">
+    <section className="py-12 sm:py-16 lg:py-20 bg-[#F3F9FC]">
       <div className="landing-shell">
         
         {/* Header Section */}
@@ -77,7 +77,7 @@ export function Packages() {
         <div className="w-full bg-white rounded-xl sm:rounded-2xl border border-[#F0F0F0] shadow-[0_4px_20px_rgb(0,0,0,0.03)] overflow-x-auto flex flex-row relative snap-x snap-mandatory custom-scrollbar">
           
           {/* Main Labels Column */}
-          <div className="w-[160px] sm:w-[240px] lg:w-[280px] shrink-0 p-3 sm:p-6 lg:p-8 pt-[72px] sm:pt-[84px] bg-white border-r border-[#F0F0F0]">
+          <div className="w-[160px] sm:w-[25%] lg:w-[25%] shrink-0 p-3 sm:p-6 lg:p-8 bg-white border-r border-[#F0F0F0]">
             {rowLabels.map((label, idx) => (
               <div key={idx} className="flex items-center gap-3 h-[42px] mb-3">
                 <svg className="w-4 h-4 sm:w-[18px] sm:h-[18px] text-[#1C1C1D] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -89,8 +89,8 @@ export function Packages() {
           </div>
 
           {/* Package 1 (Blue Highlight) */}
-          <div className="w-[80vw] sm:w-[240px] lg:w-[260px] shrink-0 bg-[#E8F6FC] p-3 sm:p-6 lg:p-8 relative snap-center border-r sm:border-r-0 border-[#F0F0F0]">
-            <h3 className="text-[13px] sm:text-[16px] lg:text-[18px] font-semibold text-[#1C1C1D] mb-3 sm:mb-6 lg:mb-8 whitespace-nowrap text-center sm:text-left">Language Clarity</h3>
+          <div className="w-[50vw] sm:w-[25%] lg:w-[25%] shrink-0 bg-[#E8F6FC] p-3 sm:p-6 lg:p-8 relative snap-center border-r sm:border-r-0 border-[#F0F0F0]">
+            <h3 className="text-[13px] sm:text-[16px] lg:text-[18px] font-semibold text-black mb-3 sm:mb-6 lg:mb-8 whitespace-nowrap text-center sm:text-left">Language Clarity</h3>
             {col1.map((item, idx) => (
               <div key={idx} className="flex items-center justify-start gap-3 min-h-[42px] mb-3">
                 {item.ok ? (
@@ -121,8 +121,8 @@ export function Packages() {
           </div>
 
           {/* Package 2 */}
-          <div className="w-[80vw] sm:w-[240px] lg:w-[260px] shrink-0 p-3 sm:p-6 lg:p-8 border-r sm:border-l border-[#F0F0F0] bg-white snap-center">
-            <h3 className="text-[13px] sm:text-[16px] lg:text-[18px] font-semibold text-[#65656D] mb-3 sm:mb-6 lg:mb-8 whitespace-nowrap text-center sm:text-left">Publication-Ready</h3>
+          <div className="w-[50vw] sm:w-[25%] lg:w-[25%] shrink-0 p-3 sm:p-6 lg:p-8 border-r sm:border-l border-[#F0F0F0] bg-white snap-center">
+            <h3 className="text-[13px] sm:text-[16px] lg:text-[18px] font-semibold text-black mb-3 sm:mb-6 lg:mb-8 whitespace-nowrap text-center sm:text-left">Publication-Ready</h3>
             {col2.map((item, idx) => (
               <div key={idx} className="flex items-center justify-start gap-3 min-h-[42px] mb-3">
                 {item.ok ? (
@@ -150,8 +150,8 @@ export function Packages() {
           </div>
 
           {/* Package 3 */}
-          <div className="w-[80vw] sm:w-[240px] lg:w-[260px] shrink-0 p-3 sm:p-6 lg:p-8 sm:border-l border-[#F0F0F0] bg-white snap-center">
-            <h3 className="text-[13px] sm:text-[16px] lg:text-[18px] font-semibold text-[#65656D] mb-3 sm:mb-6 lg:mb-8 whitespace-nowrap text-center sm:text-left">High-Impact</h3>
+          <div className="w-[50vw] sm:w-[25%] lg:w-[25%] shrink-0 p-3 sm:p-6 lg:p-8 sm:border-l border-[#F0F0F0] bg-white snap-center">
+            <h3 className="text-[13px] sm:text-[16px] lg:text-[18px] font-semibold text-black mb-3 sm:mb-6 lg:mb-8 whitespace-nowrap text-center sm:text-left">High-Impact</h3>
             {col3.map((item, idx) => (
               <div key={idx} className="flex items-center justify-start gap-3 min-h-[42px] mb-3">
                 {item.ok ? (

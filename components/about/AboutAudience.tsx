@@ -12,25 +12,25 @@ export function AboutAudience() {
   ];
 
   return (
-    <section className="py-14 sm:py-20 lg:py-24 bg-white relative">
+    <section className="py-12 sm:py-16 lg:py-20 bg-white relative">
       <div className="landing-shell">
         
         {/* Header */}
         <div className="flex flex-col items-center text-center mb-10 sm:mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded bg-[#F3F4F6] border border-[#E5E7EB] mb-6">
+          <div className="landing-section-badge mb-6">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#65656D" strokeWidth="2">
               <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
             </svg>
-            <span className="text-[12px] font-medium text-[#4B5563] tracking-widest uppercase">
+            <span className="landing-section-badge-text">
               Right Fit
             </span>
           </div>
           
-          <h2 className="text-[26px] sm:text-[32px] lg:text-[36px] font-medium text-[#1C1C1D] leading-[1.2] mb-4 max-w-[700px]">
+          <h2 className="landing-section-title mb-4 max-w-[700px]">
             Submit Right Is Built for Serious Researchers. And We Mean That.
           </h2>
           
-          <p className="text-[14px] sm:text-[16px] text-[#65656D] leading-relaxed max-w-[600px]">
+          <p className="landing-section-description max-w-[600px]">
             We built Submit Right for a specific kind of person. Someone who takes their research seriously and wants professional support to communicate it better.
           </p>
         </div>

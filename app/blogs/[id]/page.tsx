@@ -70,7 +70,7 @@ export default function BlogPostPage() {
       </section>
 
       {/* Main Content Area */}
-      <section className="pb-16 sm:pb-24 lg:pb-32 bg-white">
+      <section className="py-12 sm:py-16 lg:py-20 bg-white">
         <div className="landing-shell max-w-[900px]">
           
           {/* Cover Image */}

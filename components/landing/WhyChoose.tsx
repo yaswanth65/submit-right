@@ -45,7 +45,7 @@ export function WhyChoose() {
   ];
 
   return (
-    <section className="py-12 sm:py-16 lg:py-24 bg-[#FAFAFA]">
+    <section className="py-12 sm:py-16 lg:py-20 bg-[#FAFAFA]">
       <div className="landing-shell">
         {/* Header */}
         <div className="text-center mb-10 sm:mb-16">

@@ -47,23 +47,23 @@ export function AboutProblems() {
   ];
 
   return (
-    <section className="py-14 sm:py-20 lg:py-24 bg-white relative">
+    <section className="py-12 sm:py-16 lg:py-20 bg-white relative">
       <div className="landing-shell">
         
         {/* Header */}
         <div className="flex flex-col items-center text-center max-w-[800px] mx-auto mb-10 sm:mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded bg-[#F3F4F6] border border-[#E5E7EB] mb-6">
+          <div className="landing-section-badge mb-6">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#65656D" strokeWidth="2">
               <path d="M4 6h16M4 12h16M4 18h16" />
             </svg>
-            <span className="text-[12px] font-medium text-[#4B5563] tracking-widest uppercase">
+            <span className="landing-section-badge-text">
               What We Stand For
             </span>
           </div>
-          <h2 className="text-[26px] sm:text-[32px] lg:text-[36px] font-medium text-[#1C1C1D] leading-[1.2] mb-4">
+          <h2 className="landing-section-title mb-4">
             A Platform Built on Expertise, Compliance, and Complete Transparency
           </h2>
-          <p className="text-[14px] sm:text-[16px] text-[#65656D]">
+          <p className="landing-section-description">
             Every service, every editor, and every process at Submit Right is held to the highest professional and ethical standards in academic publishing.
           </p>
         </div>

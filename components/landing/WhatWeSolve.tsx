@@ -62,7 +62,7 @@ export function WhatWeSolve() {
   ];
 
   return (
-    <section className="py-12 sm:py-16 lg:py-24 bg-white overflow-hidden">
+    <section className="py-12 sm:py-16 lg:py-20 bg-white overflow-hidden">
       <div className="landing-shell">
         {/* Header */}
         <div className="text-center mb-10 sm:mb-12 lg:mb-14 max-w-[676px] mx-auto">

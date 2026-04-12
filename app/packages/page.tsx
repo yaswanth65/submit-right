@@ -13,9 +13,9 @@ export default function PackagesPage() {
   return (
     <div className="flex flex-col min-h-screen font-sans bg-white text-[#1C1C1D]">
       <Navbar />
-      <section className="relative overflow-hidden pt-24 lg:pt-32 pb-20 lg:pb-32 bg-[linear-gradient(180deg,#CFE7F7_0%,#EAF5FC_52%,#FFFFFF_100%)]">
+      <section className="relative overflow-hidden pt-12 lg:pt-24 pb-20 lg:pb-32 bg-[linear-gradient(180deg,#CFE7F7_0%,#EAF5FC_52%,#FFFFFF_100%)]">
         {/* 1. Hero Section */}
-        <div className="landing-shell mt-8 lg:mt-14">
+        <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-14 mt-16 lg:mt-24">
           <div className="grid lg:grid-cols-2 gap-10 items-center">
             
             <div className="max-w-[560px]">
@@ -129,7 +129,7 @@ export default function PackagesPage() {
 
       {/* 2. Packages Pricing Section */}
       <section className="py-20 lg:py-28 bg-white">
-        <div className="landing-shell text-center">
+        <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-14 text-center">
           
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-gray-200 bg-white mb-6">
             <svg className="w-3.5 h-3.5 text-[#1C1C1D]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -221,7 +221,7 @@ export default function PackagesPage() {
 
       {/* 3. Examples Section */}
       <section className="py-20 lg:py-28 bg-[#F8F9FA]">
-        <div className="landing-shell text-center">
+        <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-14 text-center">
           
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-gray-200 bg-white mb-6">
             <svg className="w-3.5 h-3.5 text-[#1C1C1D]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -267,7 +267,7 @@ export default function PackagesPage() {
 
       {/* 4. Included Features */}
       <section className="py-20 lg:py-28 bg-white overflow-hidden relative">
-        <div className="landing-shell text-center">
+        <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-14 text-center">
             
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-gray-200 bg-white mb-6">
             <svg className="w-3.5 h-3.5 text-[#1C1C1D]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -312,7 +312,7 @@ export default function PackagesPage() {
 
       {/* 6. How does it help */}
       <section className="py-20 lg:py-28 bg-white">
-        <div className="landing-shell">
+        <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-14">
           <div className="text-center mb-16">
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-gray-200 bg-white mb-6">
               <svg className="w-3.5 h-3.5 text-[#1C1C1D]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -346,7 +346,7 @@ export default function PackagesPage() {
 
       {/* 7. Turnaround & Deliverables Grid */}
       <section className="py-20 bg-[#F8F9FA] border-t border-gray-100">
-        <div className="landing-shell">
+        <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-14">
           <div className="grid lg:grid-cols-[1fr_2fr] gap-12 lg:gap-20 items-center">
             
             <div className="max-w-[400px]">

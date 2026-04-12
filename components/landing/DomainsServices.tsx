@@ -144,7 +144,7 @@ export function DomainsServices() {
 
           {/* Right Image Placeholder */}
           <div className="relative bg-[#FAFAFA] rounded-xl sm:rounded-2xl p-5 sm:p-8 aspect-[5/4] sm:aspect-[4/3] flex items-center justify-center overflow-hidden border border-[#F0F0F0] shadow-[0_10px_30px_rgba(0,0,0,0.04)]">
-<img src="/domain.png" alt="icon" className="w-[900px] h-[350px]" />              
+<img src="/domain.png" alt="icon" className="w-full h-auto max-w-[900px] object-contain" />              
           </div>
         </div>
 

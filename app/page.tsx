@@ -52,7 +52,7 @@ export default function Home() {
   ];
 
   return (
-    <main className="min-h-screen w-full bg-white font-inter">
+    <main className="min-h-screen w-full bg-white font-inter home-mobile-spacing">
       <Navbar />
       <Hero />
       <TrustedLogos />

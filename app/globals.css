@@ -27,6 +27,12 @@ body {
   padding-inline: var(--landing-gutter-mobile);
 }
 
+@media (max-width: 639px) {
+  .landing-shell {
+    padding-inline: 16px;
+  }
+}
+
 @media (min-width: 1024px) {
   .landing-shell {
     padding-inline: var(--landing-gutter-laptop);
@@ -120,6 +126,17 @@ body {
   flex-shrink: 0;
 }
 
+@media (max-width: 639px) {
+  .carousel-scroll {
+    gap: 8px;
+    padding: 12px 0;
+  }
+
+  .carousel-item {
+    min-width: calc(50% - 8px);
+  }
+}
+
 @keyframes scroll {
   0% {
     transform: translateX(0);
@@ -162,6 +179,37 @@ body {
 /* Smooth gradient overlay to blend the SVGs */
 .hero-svg-bg {
   position: relative;
+}
+
+@media (max-width: 639px) {
+  .hero-svg-bg::before {
+    width: 100%;
+    left: 0;
+    top: 0;
+    background-position: left top;
+    background-size: cover;
+    opacity: 0.55;
+  }
+
+  .hero-svg-bg::after {
+    width: 100%;
+    left: 0;
+    top: 0;
+    background-position: right bottom;
+    background-size: cover;
+    opacity: 0.5;
+  }
+}
+
+@media (max-width: 639px) {
+  .home-mobile-spacing > section {
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+
+  .home-mobile-spacing > section:first-of-type {
+    padding-top: 112px;
+  }
 }
 
 .breadcrumbs {

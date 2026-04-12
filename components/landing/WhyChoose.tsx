@@ -1,44 +1,44 @@
-import { Shield, Settings, BarChart2, Users, Puzzle, Star, Lock, HeadphonesIcon } from "lucide-react";
+import Image from "next/image";
 
 export function WhyChoose() {
   const features = [
     {
-      icon: Shield,
+      icon: "/why/Frame 2147237022 (2).svg",
       title: "ISO-Certified Security",
       description: "Files encrypted and auto-deleted after 90 days  your research stays yours",
     },
     {
-      icon: Settings,
+      icon: "/why/Frame 2147237022 (3).svg",
       title: "Express Delivery",
       description: "Turnaround as fast as 8 hours for urgent pre-submission editing",
     },
     {
-      icon: BarChart2,
+      icon: "/why/Frame 2147237022 (4).svg",
       title: "Unlimited Re-Editing",
       description: "Revise as many times as needed on Publication-Ready and High-Impact plans",
     },
     {
-      icon: Users,
+      icon: "/why/Frame 2147237022 (5).svg",
       title: "1,600+ Subject Areas",
       description: "Manuscripts matched to editors who specialize in your exact field",
     },
     {
-      icon: Puzzle,
+      icon: "/why/Frame 2147237022 (6).svg",
       title: "Dual-Expert Review",
       description: "Every paper passes through two independent expert reviewers before delivery",
     },
     {
-      icon: Star,
+      icon: "/why/Frame 2147237022 (7).svg",
       title: "Real-Time Order Tracking",
       description: "Watch your manuscript move from submitted to delivered  live on your dashboard",
     },
     {
-      icon: Lock,
+      icon: "/why/Frame 2147237022 (8).svg",
       title: "24/7 Multilingual Support",
       description: "Chat, WhatsApp, or callback  support available around the clock",
     },
     {
-      icon: HeadphonesIcon,
+      icon: "/why/Frame 2147237022 (9).svg",
       title: "100% Satisfaction Guarantee",
       description: "Not satisfied with the output? We re-edit it or refund you in full",
     },
@@ -67,35 +67,31 @@ export function WhyChoose() {
         </div>
 
         {/* Features Grid */}
-      <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 
-          gap-x-6 gap-y-10 lg:gap-x-12 lg:gap-y-12 w-full">
+        <div className="grid grid-cols-1 min-[520px]:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-10 lg:gap-x-12 lg:gap-y-12 w-full justify-items-center">
 
   {features.map((feature, idx) => (
     <div
       key={idx}
-      className="flex flex-col items-center text-center gap-8 w-full"
+      className="flex flex-col items-center text-center gap-8 w-full max-w-[281px] min-h-[154px] lg:h-[154px]"
     >
       {/* Icon Container */}
-      <div className="relative flex items-center justify-center
-                      w-14 h-14 rounded-full
-                      bg-white/60 backdrop-blur-sm
-                      border border-[#ECECEC]
-                      shadow-[0px_7px_17px_-12px_rgba(28,28,29,0.1)]">
-        <feature.icon
-          className="w-7 h-7 text-[#1C1C1D]"
-          strokeWidth={2}
-        />
-      </div>
+      <Image
+        src={feature.icon}
+        alt=""
+        width={66}
+        height={68}
+        className="w-[56px] h-[56px] object-contain shrink-0"
+      />
 
       {/* Text Content */}
-      <div className="flex flex-col items-center gap-2 w-full">
+      <div className="flex flex-col items-center gap-[10px] w-full max-w-[281px]">
         {/* Title */}
-        <h3 className="font-inter font-medium text-[20px] leading-[110%] text-[#1C1C1D]">
+        <h3 className="font-inter font-medium text-[18px] sm:text-[20px] leading-[110%] text-[#1C1C1D] w-full text-center">
           {feature.title}
         </h3>
 
         {/* Description */}
-        <p className="font-inter font-normal text-[14px] leading-[120%] text-center text-[#78788D] max-w-[274px]">
+        <p className="font-inter font-normal text-[14px] leading-[120%] text-center text-[#78788D] w-full max-w-[274px]">
           {feature.description}
         </p>
       </div>

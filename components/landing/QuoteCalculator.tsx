@@ -146,7 +146,7 @@ export function QuoteCalculator() {
               </div>
 
               {/* Result Cards */}
-              <div className="grid grid-cols-2 gap-4 mt-8">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8">
                 <div className="bg-[#0189C2] text-white p-6 rounded-xl min-h-[150px] flex flex-col justify-between">
                   <p className="text-sm">Estimated Pricing</p>
                   <h3 className="text-2xl font-bold">
@@ -218,7 +218,7 @@ export function QuoteCalculator() {
                 </div>
 
                 {/* X-axis labels */}
-                <div className="flex justify-between text-[10px] sm:text-[12px] text-[#0E121B] mt-2 ml-[56px] sm:ml-[80px] [&>span]:whitespace-nowrap">
+                <div className="flex justify-between text-[9px] min-[420px]:text-[10px] sm:text-[12px] text-[#0E121B] mt-2 ml-[46px] sm:ml-[80px] pr-1 [&>span]:whitespace-nowrap">
                   {[2, 4, 6, 8, 10].map((d) => (
                     <span key={d}>{d} days</span>
                   ))}

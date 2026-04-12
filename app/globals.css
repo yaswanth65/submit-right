@@ -143,13 +143,13 @@ body {
 /* Carousel Scroll Animation */
 .carousel-scroll {
   display: flex;
-  gap: 10px;
+  gap: 116px;
   animation: scroll 15s linear infinite;
   padding: 20px 0;
 }
 
 .carousel-item {
-  min-width: calc(25% - 22.5px);
+  min-width: fit-content;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -158,12 +158,13 @@ body {
 
 @media (max-width: 639px) {
   .carousel-scroll {
-    gap: 8px;
+    gap: 4px;
     padding: 12px 0;
+    animation: scroll 8s linear infinite;
   }
 
   .carousel-item {
-    min-width: calc(50% - 8px);
+    min-width: fit-content;
   }
 }
 

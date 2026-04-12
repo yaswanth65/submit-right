@@ -47,10 +47,17 @@ export function QuoteCalculator() {
     };
   }, [words, documentType, service]);
 
+  // Calculate max price for Y-axis
+  const maxPrice = Math.max(price * 1.1, 100); // 10% buffer above max, min $100
+
+  // Generate Y-axis labels dynamically
+  const generateYAxisLabels = () => {
+    const step = Math.ceil(maxPrice / 5 / 10) * 10; // Round to nearest 10
+    return [5, 4, 3, 2, 1, 0].map((i) => `$${i * step}`);
+  };
+
   // SVG Path Generator
   const generatePath = (data: any[]) => {
-    const maxPrice = Math.max(...data.map((d) => d.price), 1);
-
     return data
       .map((point, index) => {
         const x = (index / (data.length - 1)) * chartWidth;
@@ -111,8 +118,8 @@ export function QuoteCalculator() {
                 </div>
 
                 {/* Dropdowns */}
-                <div className="bg-[#F8F8F8] p-4 rounded-[14px] border border-[#ECECEC] grid grid-cols-1 sm:grid-cols-2 gap-4 lg:h-[89px] lg:items-center">
-                  <div className="lg:h-[61px]">
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                  <div className="rounded-[14px] border border-[#ECECEC] bg-[#F8F8F8] p-4 lg:h-[89px] lg:flex lg:flex-col lg:justify-center sm:pl-4">
                     <label className="block text-[14px] font-medium mb-2 text-[#0E121B]">
                       Document Type
                     </label>
@@ -128,7 +135,7 @@ export function QuoteCalculator() {
                     </select>
                   </div>
 
-                  <div className="lg:h-[61px]">
+                  <div className="rounded-[14px] border border-[#ECECEC] bg-[#F8F8F8] p-4 lg:h-[89px] lg:flex lg:flex-col lg:justify-center sm:pl-4">
                     <label className="block text-[14px] font-medium mb-2 text-[#0E121B]">
                       Service
                     </label>
@@ -176,12 +183,9 @@ export function QuoteCalculator() {
                 <div className="relative h-[220px] sm:h-[260px] lg:h-[358px]">
                   {/* Y-axis labels */}
                   <div className="absolute left-0 top-0 flex h-full flex-col justify-between text-[10px] text-[#0E121B] sm:text-[12px]">
-                    <span>$500</span>
-                    <span>$400</span>
-                    <span>$300</span>
-                    <span>$200</span>
-                    <span>$100</span>
-                    <span>$0</span>
+                    {generateYAxisLabels().map((label, idx) => (
+                      <span key={idx}>{label}</span>
+                    ))}
                   </div>
 
                   {/* Chart */}

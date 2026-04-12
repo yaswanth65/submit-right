@@ -75,6 +75,14 @@ export default function Home() {
       <Packages />
       <Steps />
       <Testimonials />
+ <CTABanner 
+        title="You've Done the Research. We'll Make Sure the World Can Read It."
+        description="Upload your manuscript today. Get a transparent instant quote. And let our network of PhD-qualified editors make your research publication-ready while you track every step live from your dashboard."
+        primaryButtonText="Submit Manuscript"
+        primaryButtonHref="/user/dashboard"
+        secondaryButtonText="View Packages"
+        secondaryButtonHref="/packages"
+      />
       <FAQ 
         items={homeFaqs}
         tag="FAQs"

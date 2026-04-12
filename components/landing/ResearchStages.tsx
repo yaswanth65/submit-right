@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { ArrowRight, Check, HelpCircle } from 'lucide-react';
 import Image from 'next/image';
 
@@ -15,6 +15,41 @@ const steps = [
 
 export function ResearchStages() {
   const [activeStep, setActiveStep] = useState(1);
+  const [syncedPanelHeight, setSyncedPanelHeight] = useState<number | null>(null);
+  const stepsColumnRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const updateHeight = () => {
+      // Keep natural flow on mobile/tablet; lock to left column height on desktop.
+      if (window.innerWidth < 1024) {
+        setSyncedPanelHeight(null);
+        return;
+      }
+
+      const nextHeight = stepsColumnRef.current?.offsetHeight ?? null;
+      setSyncedPanelHeight(nextHeight);
+    };
+
+    updateHeight();
+
+    const observer =
+      typeof ResizeObserver !== 'undefined'
+        ? new ResizeObserver(() => updateHeight())
+        : null;
+
+    if (observer && stepsColumnRef.current) {
+      observer.observe(stepsColumnRef.current);
+    }
+
+    window.addEventListener('resize', updateHeight);
+
+    return () => {
+      observer?.disconnect();
+      window.removeEventListener('resize', updateHeight);
+    };
+  }, [activeStep]);
 
   return (
     <section className="py-12 sm:py-16 lg:py-20 bg-white max-sm:[&_p]:text-[12px] max-sm:[&_p]:leading-[1.45]">
@@ -43,7 +78,7 @@ export function ResearchStages() {
         {/* Main Content Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-5 sm:gap-8 mb-5 sm:mb-8 items-stretch">
           {/* Sidebar Steps */}
-          <div className="lg:col-span-1 flex lg:flex-col max-sm:gap-3 sm:gap-2.5 lg:gap-3 overflow-x-auto snap-x lg:overflow-visible lg:snap-none pb-2 lg:pb-0 custom-scrollbar max-sm:items-start">
+          <div ref={stepsColumnRef} className="lg:col-span-1 flex lg:flex-col max-sm:gap-3 sm:gap-2.5 lg:gap-3 overflow-x-auto snap-x lg:overflow-visible lg:snap-none pb-2 lg:pb-0 custom-scrollbar max-sm:items-start">
             {steps.map((step) => (
               <button
                 key={step.id}
@@ -73,7 +108,10 @@ export function ResearchStages() {
           </div>
 
           {/* Right Content Area */}
-          <div className="lg:col-span-3 min-h-0 h-full">
+          <div
+            className="lg:col-span-3 min-h-0 h-full lg:self-stretch lg:overflow-hidden"
+            style={syncedPanelHeight ? { height: `${syncedPanelHeight}px` } : undefined}
+          >
             {activeStep === 1 && <Step1Content />}
             {activeStep === 2 && <Step2Content />}
             {activeStep === 3 && <Step3Content />}
@@ -99,8 +137,8 @@ export function ResearchStages() {
 
 function Step1Content() {
   return (
-    <div className="flex flex-col gap-4 h-full">
-      <div className="bg-[#F8F8F8] rounded-[14px] p-6 border border-[#ECECEC] flex-1 flex flex-col justify-center">
+    <div className="flex flex-col gap-4 h-full lg:min-h-full min-h-0 overflow-hidden">
+      <div className="bg-[#F8F8F8] rounded-[14px] p-6 border border-[#ECECEC] flex-1 min-h-0 flex flex-col justify-center overflow-hidden">
         <div className="flex justify-between items-start mb-4">
           <div className="text-[14px] font-medium text-[#00A0E3] uppercase tracking-wider leading-[110%]">Our Tool</div>
           <div className="flex items-center gap-2">
@@ -121,7 +159,7 @@ function Step1Content() {
         </div>
       </div>
 
-      <div className="bg-[#F8F8F8] rounded-[14px] p-6 border border-[#ECECEC] flex-1 flex flex-col justify-center">
+      <div className="bg-[#F8F8F8] rounded-[14px] p-6 border border-[#ECECEC] flex-1 min-h-0 flex flex-col justify-center overflow-hidden">
         <div className="flex justify-between items-start mb-4">
           <div className="text-[14px] font-medium text-[#00A0E3] uppercase tracking-wider leading-[110%]">Our Tool</div>
           <div className="flex items-center gap-2">
@@ -147,43 +185,64 @@ function Step1Content() {
 
 function Step2Content() {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 h-full">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 h-full lg:min-h-full items-stretch md:auto-rows-fr overflow-hidden">
       {[1, 2].map((i) => (
-        <div key={i} className="bg-[#F8F9FA] rounded-2xl p-6 border border-gray-100 flex flex-col h-full overflow-hidden">
-          <h3 className="text-lg font-normal text-[#1C1C1D] mb-1">Lorem ipsum dolor sit</h3>
-          <p className="text-[#65656D] text-xs mb-4 pb-4 border-b border-gray-200 border-b">
-            amet, consectetur adipiscing elit, sed do eiusmod tempor.
-          </p>
-          
-          <div className="flex items-center justify-between mb-4 pb-4 border-b border-gray-200 border-b">
-            <div>
-              <div className="text-xs text-[#65656D]">Starts from</div>
-              <div className="text-xl font-normal text-[#1C1C1D]">
-                $0.0425 <span className="text-xs text-[#65656D] font-normal">/per word</span>
-              </div>
+        <div key={i} className="border border-[#ECECEC] rounded-[14px] flex flex-col overflow-hidden h-full min-h-0">
+          {/* Top Section */}
+          <div className="flex flex-col gap-4 p-4 sm:p-6 flex-1 min-h-0 bg-[#F8F8F8]">
+            {/* Title */}
+            <div className="flex flex-col gap-2">
+              <h3 className="text-base sm:text-[20px] font-semibold leading-[120%] text-[#1C1C1D]">Lorem ipsum dolor sit</h3>
+              <p className="text-sm sm:text-[16px] font-normal leading-[120%] text-[#78788D]">
+                amet, consectetur adipiscing elit, sed do eiusmod tempor.
+              </p>
             </div>
-            <button className="inline-flex items-center gap-1.5 bg-[#00A0E3] text-white px-4 py-3 rounded-full text-xs font-medium hover:bg-[#0088CC] whitespace-nowrap">
-              Submit Enquiry <ArrowRight className="w-3.5 h-3.5" />
-            </button>
-          </div>
 
-          <div className="space-y-2.5 mb-4 pb-4 border-b border-gray-200 border-b">
-            {['Lorem ipsum consectetur adipiscing', 'sed do eiusmod tempor', 'amet, consectetur adipiscing elit.', 'Lorem ipsum dolor sit'].map((feat, idx) => (
-              <div key={idx} className="flex items-center gap-1.5 text-xs text-[#65656D]">
-                <Check className="w-3.5 h-3.5 text-gray-400 shrink-0" /> <span className="truncate">{feat}</span>
+            {/* Price & Button Section */}
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-0 items-start sm:items-end sm:justify-between w-full">
+              {/* Price Column */}
+              <div className="flex flex-col gap-1.5">
+                <div className="text-sm sm:text-[16px] font-normal leading-[120%] text-[#78788D]">Starts from</div>
+                <div className="flex flex-row gap-0.5 items-end">
+                  <span className="text-lg sm:text-[19px] font-semibold leading-[120%] text-[#1C1C1D]">$0.0425</span>
+                  <span className="text-xs sm:text-[14px] font-normal leading-[120%] text-[#78788D]">/per word</span>
+                </div>
               </div>
-            ))}
-            <a href="#" className="inline-block text-xs font-medium text-[#00A0E3] hover:underline mt-1">Learn more</a>
+              {/* Button */}
+              <button className="flex flex-row justify-center items-center px-3 sm:px-3.5 gap-1.5 py-2 sm:py-3 h-10 sm:h-12 sm:ml-2 bg-[#00A0E3] rounded-full whitespace-nowrap">
+                <span className="text-xs sm:text-[16px] font-medium leading-[120%] text-white">Submit Enquiry</span>
+                <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
+              </button>
+            </div>
+
+            {/* Divider */}
+            <div className="h-px bg-[#E7E7E9] w-full" />
+
+            {/* Features List */}
+            <div className="flex flex-col gap-2 sm:gap-3 min-h-0 overflow-hidden">
+              {['Lorem ipsum consectetur adipiscing', 'sed do eiusmod tempor', 'amet, consectetur adipiscing elit.', 'Lorem ipsum dolor sit'].map((feat, idx) => (
+                <div key={idx} className="flex flex-row gap-1.5 items-center">
+                  <Check className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#78788D] shrink-0" />
+                  <span className="text-xs sm:text-[14px] font-normal leading-[120%] text-[#78788D] truncate">{feat}</span>
+                </div>
+              ))}
+              <a href="#" className="text-xs sm:text-[14px] font-semibold leading-[120%] text-[#00A0E3] hover:underline">Learn more</a>
+            </div>
           </div>
 
-          <div className="mt-auto">
-            <h4 className="text-xs font-normal text-[#1C1C1D] mb-2">Lorem ipsum dolor sit</h4>
-            <ul className="space-y-1.5 text-xs text-[#65656D]">
-              <li className="flex items-start gap-1.5 before:content-['•'] before:text-gray-400 before:mr-0.5 truncate">Lorem ipsum consectetur adipiscing</li>
-              <li className="flex items-start gap-1.5 before:content-['•'] before:text-gray-400 before:mr-0.5 truncate">sed do eiusmod tempor</li>
-              <li className="flex items-start gap-1.5 before:content-['•'] before:text-gray-400 before:mr-0.5 truncate">amet, consectetur adipiscing elit.</li>
-              <li className="flex items-start gap-1.5 before:content-['•'] before:text-gray-400 before:mr-0.5 truncate">Lorem ipsum dolor sit</li>
-            </ul>
+          {/* Divider */}
+          <div className="w-full border-t-2 border-dashed border-[#E7E7E9]" />
+
+          {/* Bottom Section */}
+          <div className="flex flex-col gap-3 sm:gap-4 p-4 sm:p-6 bg-[#F8F8F8] shrink-0">
+            <h4 className="text-sm sm:text-[16px] font-semibold leading-[120%] text-[#1C1C1D]">Lorem ipsum dolor sit</h4>
+            <div className="flex flex-col gap-2 sm:gap-3">
+              {['Lorem ipsum consectetur adipiscing', 'sed do eiusmod tempor', 'amet, consectetur adipiscing elit.', 'Lorem ipsum dolor sit'].map((item, idx) => (
+                <div key={idx} className="text-xs sm:text-[14px] font-normal leading-[120%] text-[#78788D]">
+                  {item}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       ))}
@@ -193,7 +252,7 @@ function Step2Content() {
 
 function Step3Content() {
   return (
-    <div className="bg-[#F8F9FA] rounded-2xl p-6 border border-gray-100 h-full flex flex-col">
+    <div className="bg-[#F8F9FA] rounded-2xl p-6 border border-gray-100 h-full lg:min-h-full min-h-0 overflow-hidden flex flex-col">
       <div className="inline-flex items-center justify-center text-[#00A0E3] font-normal mb-3 self-start">
         <HomeIcon className="w-5 h-5 mr-1" /> Beentu <ArrowRight className="w-4 h-4 ml-1" />
       </div>
@@ -202,10 +261,10 @@ function Step3Content() {
         Elementum suscipit donec viverra posuere at lorem nullam.
       </p>
       
-      {/* Placeholder for dashboard image - using a div that visually resembles a dashboard UI skeleton */}
-        {/* Placeholder for dashboard screenshot */}
+      {/* Image container with flex-1 to fill available space without expanding parent */}
+      <div className="flex-1 min-h-0 overflow-hidden rounded-xl">
         <img src="/d.png" alt="icon" className="w-full h-full object-cover" />
-      
+      </div>
     </div>
   );
 }
@@ -335,7 +394,7 @@ function Step6Content() {
       {[1, 2].map((i) => (
         <div
           key={i}
-          className="box-border flex h-full min-h-[538px] flex-col items-start gap-[18px] rounded-[14px] border border-[#ECECEC] bg-[#F8F8F8] p-6"
+          className="box-border flex h-full flex-col items-start gap-[18px] rounded-[14px] border border-[#ECECEC] bg-[#F8F8F8] p-6"
         >
           <div className="flex w-full flex-col items-start gap-3 self-stretch">
             <h3 className="text-[24px] font-medium leading-[110%] text-[#1C1C1D]">

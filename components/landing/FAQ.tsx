@@ -81,9 +81,18 @@ export function FAQ({ items, tag = "FAQ", title = "Got Questions We've Got Answe
                 <span className="text-[14px] sm:text-[15px] font-medium text-[#1C1C1D] group-hover:text-[#00A0E3] pr-4 sm:pr-6 leading-relaxed">
                   {faq.question}
                 </span>
-                <span className="text-[18px] sm:text-[20px] text-[#1C1C1D] group-hover:text-[#00A0E3] font-light">
-                  {openIndex === idx ? '−' : '+'}
+                <span className="flex items-center justify-center w-8 h-8 sm:w-9 sm:h-9 rounded-full border border-[#ECECEC] text-[18px] sm:text-[20px] text-[#1C1C1D] group-hover:text-[#00A0E3] font-light">
+                  {openIndex === idx ? (
+                    <svg aria-hidden="true" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 12h14" />
+                    </svg>
+                  ) : (
+                    <svg aria-hidden="true" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 5v14M5 12h14" />
+                    </svg>
+                  )}
                 </span>
+              
               </button>
               {openIndex === idx && (
                 <div className="pb-5 sm:pb-6 pr-2 sm:pr-10">

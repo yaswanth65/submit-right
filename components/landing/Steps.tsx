@@ -54,24 +54,30 @@ export function Steps() {
         </div>
 
         {/* Steps Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4 w-full">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4 lg:gap-4 w-full">
           {steps.map((step, idx) => (
-            <div key={idx} className="bg-[#F9F9F9] rounded-xl sm:rounded-2xl p-[14px] sm:p-5 relative border border-[#F0F0F0]">
-              <div className="absolute top-3.5 sm:top-4 right-3.5 sm:right-4 text-[22px] sm:text-[24px] font-normal text-[#E5E5E5]">
-                0{idx + 1}
+            <div key={idx} className="h-auto lg:h-[180px] bg-[#F8F8F8] rounded-lg lg:rounded-[14px] p-4 sm:p-5 lg:p-[14px] border border-[#ECECEC] flex flex-col gap-4 lg:gap-[20px] justify-start">
+              {/* Icon + Number Row */}
+              <div className="flex items-center justify-between w-full gap-3 lg:gap-[32px]">
+                <div className="w-10 h-10 lg:w-[44px] lg:h-[44px] bg-[#DAEDF6] rounded-lg lg:rounded-[8px] flex items-center justify-center flex-shrink-0">
+                  <step.icon className="w-5 h-5 lg:w-6 lg:h-6 text-[#00A0E3]" />
+                </div>
+                
+                <span className="text-lg lg:text-[24px] font-bold text-[#1C1C1D] opacity-[0.08] flex-shrink-0">
+                  0{idx + 1}
+                </span>
               </div>
               
-              <div className="w-10 h-10 bg-[#E8F6FC] rounded-lg flex items-center justify-center mb-3 sm:mb-4">
-                <step.icon className="w-4.5 h-4.5 sm:w-5 sm:h-5 text-[#00A0E3]" />
+              {/* Content */}
+              <div className="flex flex-col gap-2 lg:gap-[8px]">
+                <h3 className="text-sm sm:text-base lg:text-[18px] font-semibold lg:font-[500] text-[#1C1C1D] leading-snug lg:leading-[110%]">
+                  {step.title}
+                </h3>
+                
+                <p className="text-xs sm:text-sm lg:text-[14px] font-normal text-[#78788D] leading-relaxed lg:leading-[120%]">
+                  {step.description}
+                </p>
               </div>
-              
-              <h3 className="text-[14px] sm:text-[15px] font-medium text-[#1C1C1D] mb-2 leading-tight">
-                {step.title}
-              </h3>
-              
-              <p className="text-[12px] text-[#65656D] leading-relaxed pr-1 sm:pr-2">
-                {step.description}
-              </p>
             </div>
           ))}
         </div>

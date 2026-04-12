@@ -10,13 +10,12 @@ export function TrustedLogos() {
     { id: 6, src: "/images/logo6.svg" },
   ];
 
-  // Create an extended list for seamless infinite scroll
+  // Extended list for seamless infinite scroll
   const extendedLogos = [...logos, ...logos, ...logos];
 
   return (
     <section className="py-10 sm:py-12 bg-white">
       <div className="landing-shell">
-       
 
         {/* Title */}
         <div className="text-center mb-6 sm:mb-8">
@@ -29,19 +28,24 @@ export function TrustedLogos() {
         <div className="relative overflow-hidden">
           {/* Fade Overlay Left */}
           <div className="absolute left-0 top-0 bottom-0 w-[10%] bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
-          
+
           {/* Fade Overlay Right */}
           <div className="absolute right-0 top-0 bottom-0 w-[10%] bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
-          
+
           {/* Scrolling Container */}
-          <div className="carousel-scroll">
+          <div className="carousel-scroll flex items-center">
             {extendedLogos.map((logo, index) => (
-              <div key={`${logo.id}-${index}`} className="carousel-item flex items-center justify-center flex-shrink-0">
-                <div className="relative w-[108px] h-[88px] sm:w-[120px] sm:h-[100px]  flex items-center justify-center">
-                  <img 
-                    src={logo.src} 
+              <div
+                key={`${logo.id}-${index}`}
+                className="carousel-item flex items-center justify-center flex-shrink-0"
+              >
+                <div className="relative w-[90px] h-[70px] sm:w-[110px] sm:h-[90px] flex items-center justify-center">
+                  <Image
+                    src={logo.src}
                     alt={`Logo ${logo.id}`}
-                    className="max-w-[90px] max-h-[70px] sm:max-w-[130px] sm:max-h-[100px] object-contain opacity-80  transition-all"
+                    width={110}
+                    height={90}
+                    className="object-contain opacity-80 hover:opacity-100 transition-opacity duration-300"
                   />
                 </div>
               </div>

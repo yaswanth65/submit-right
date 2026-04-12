@@ -8,10 +8,7 @@ export function AboutHero() {
 
         {/* Badge */}
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[rgba(0,160,227,0.3)] bg-[#00A0E3]/10 mb-8">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#00A0E3" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-            <circle cx="12" cy="7" r="4" />
-          </svg>
+          <img src="/about/hero.svg" alt="icon" className="w-4 h-4" />
           <span className="text-[12px] sm:text-sm font-medium text-[#00A0E3]">
             About Submit Right
           </span>

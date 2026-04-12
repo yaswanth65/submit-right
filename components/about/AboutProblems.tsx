@@ -1,46 +1,17 @@
 export function AboutProblems() {
   const problems = [
     {
-      icon: (
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#00A0E3" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <path d="m14 13-3-3" />
-          <path d="M19 14.5 14.5 19" />
-          <path d="M21.5 12.5 19 10" />
-          <path d="m5 16 3-3" />
-          <path d="M7.5 18 10 15.5" />
-          <path d="m14.5 19 3 3" />
-          <path d="m19 14.5 3 3" />
-          <path d="M2.5 21.5 5 19" />
-          <path d="m3 9 7 7" />
-          <path d="m10 5 4-4" />
-          <path d="m15 10 4-4" />
-        </svg>
-      ), // gavel placeholder
+      icon: "/about/Frame (7).svg",
       title: "Academic Expertise at Scale",
       description: "Our network spans 1,600+ subject areas. Every manuscript is matched to a qualified PhD or MD editor who understands your exact field, methodology, and publication landscape."
     },
     {
-      icon: (
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#00A0E3" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M9.88 9.88a3 3 0 1 0 4.24 4.24" />
-          <path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68" />
-          <path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61" />
-          <line x1="2" x2="22" y1="2" y2="22" />
-        </svg>
-      ), // eye-off placeholder
+      icon: "/about/Frame (8).svg",
       title: "Industry-Compliant Standards",
       description: "Submit Right operates in full alignment with GDPR, DPDPB, and ISO-certified confidentiality protocols. So your research, your data, and your identity are protected at every stage of the process."
     },
     {
-      icon: (
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#00A0E3" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <rect width="20" height="20" x="2" y="2" rx="2" />
-          <path d="M8 2v20" />
-          <path d="M16 2v20" />
-          <path d="M2 8h20" />
-          <path d="M2 16h20" />
-        </svg>
-      ), // grid placeholder
+      icon: "/about/Frame (9).svg",
       title: "End-to-End Transparency",
       description: "From the moment you upload your document to the moment it lands back in your dashboard, every step is tracked, timestamped, and visible. No black boxes. No guesswork. No hidden fees."
     }
@@ -53,9 +24,7 @@ export function AboutProblems() {
         {/* Header */}
         <div className="flex flex-col items-center text-center max-w-[800px] mx-auto mb-10 sm:mb-16">
           <div className="landing-section-badge mb-6">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#65656D" strokeWidth="2">
-              <path d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
+           <img src="/vector2.svg" alt="icon" className="w-4 h-4" />
             <span className="landing-section-badge-text">
               What We Stand For
             </span>
@@ -69,25 +38,37 @@ export function AboutProblems() {
         </div>
 
         {/* Cards */}
-        <div className="grid md:grid-cols-3 gap-4 sm:gap-6">
-          {problems.map((problem, idx) => (
-            <div 
-              key={idx} 
-              className="bg-[#F8F8F8] rounded-2xl p-6 sm:p-8 lg:p-10 flex flex-col items-start border border-[#F1F5F9] transition-all hover:shadow-lg"
-            >
-              <div className="w-12 h-12 bg-white rounded-lg shadow-sm flex items-center justify-center mb-6">
-                {problem.icon}
-              </div>
-              <h3 className="text-[16px] sm:text-[18px] font-medium text-[#1C1C1D] mb-3 sm:mb-4">
-                {problem.title}
-              </h3>
-              <p className="text-[14px] sm:text-[15px] text-[#65656D] leading-relaxed">
-                {problem.description}
-              </p>
-            </div>
-          ))}
-        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+  {problems.map((problem, idx) => (
+    <div
+      key={idx}
+      className="
+        bg-[#F8F8F8]
+        border border-[#ECECEC]
+        rounded-2xl
+        px-8 py-6
+        flex flex-col items-start
+        gap-6
+        min-h-[240px] lg:min-h-[260px]
+      "
+    >
+      {/* Icon */}
+      <div className="w-9 h-9 flex items-center justify-center">
+        <img src={problem.icon} alt={problem.title} className="w-9 h-9" />
+      </div>
 
+      {/* Text Content */}
+      <div className="flex flex-col gap-4">
+        <h3 className="text-[18px] sm:text-[20px] font-medium text-[#1C1C1D] leading-[110%]">
+          {problem.title}
+        </h3>
+        <p className="text-[14px] text-[#78788D] leading-[120%]">
+          {problem.description}
+        </p>
+      </div>
+    </div>
+  ))}
+</div>
       </div>
     </section>
   );

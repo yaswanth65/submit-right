@@ -72,7 +72,10 @@ export function DomainsServices() {
           </h2>
 
           {/* Description */}
-          <p className="landing-section-description max-w-[560px]">
+          <p
+            className="landing-section-description max-w-[660px] line-clamp-2"
+            style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}
+          >
             From fixing language errors to getting your paper accepted  Submit Right handles every stage with expert-led services, real-time tracking, and zero hidden fees.
           </p>
         </div>
@@ -106,10 +109,13 @@ export function DomainsServices() {
         <div className="grid lg:grid-cols-[1.02fr_0.98fr] gap-8 sm:gap-10 lg:gap-12 items-center w-full">
           {/* Left Content */}
           <div className="pr-0 lg:pr-6 text-center lg:text-left">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#F5F5F5] rounded-md mb-5">
-             <img src="/f1.svg" alt="icon" className="w-4 h-4" />
-              <span className="text-[11px] font-medium text-[#5E6472] tracking-wide">Start Today</span>
-            </div>
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 mb-5
+                bg-white border border-[#E3E5E8] rounded-full">
+  <img src="/f1.svg" alt="icon" className="w-4 h-4" />
+  <span className="text-[11px] font-medium text-[#5E6472] tracking-wide">
+    Start Today
+  </span>
+</div>
 
             <h3 className="text-[26px] sm:text-[32px] font-medium text-[#1C1C1D] leading-[1.15] sm:leading-[1.1] mb-4">
               {currentContent.title}

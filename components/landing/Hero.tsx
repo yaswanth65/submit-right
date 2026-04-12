@@ -47,6 +47,10 @@ const slides: HeroSlide[] = [
       "Editing. Proofreading. Translation. Publication Support. Every domain. One platform. Built for researchers who can't afford to compromise.",
     primaryCta: "Browse All Services",
     secondaryCta: "Get Started",
+    metrics: [
+      { value: "120+", label: "Services Offered" },
+      { value: "50,000+", label: "Manuscripts Delivered" },
+    ],
   },
   {
     id: 3,
@@ -164,10 +168,10 @@ function HeroSlideLeft({ slide }: { slide: HeroSlide }) {
   </Link>
 </div>
       {slide.metrics && slide.metrics.length > 0 && (
-        <div className="hidden sm:grid sm:grid-cols-2 sm:gap-6 lg:flex lg:gap-14 w-full sm:mt-10 lg:w-auto">
+        <div className="hidden lg:flex lg:gap-14 w-full lg:mt-10 lg:w-auto">
           {slide.metrics.map((metric) => (
             <div key={metric.label} className="flex items-center gap-4">
-              <div className="w-11 h-11 rounded-xl bg-[#EAF5FB] flex items-center justify-center text-[#00A0E3]">
+              <div className="w-11 h-11 rounded-full bg-[#EAF5FB] flex items-center justify-center text-[#00A0E3]">
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                   <path
                     strokeLinecap="round"

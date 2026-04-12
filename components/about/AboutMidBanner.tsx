@@ -4,7 +4,7 @@ import Image from "next/image";
 export function AboutMidBanner() {
   return (
     <section className="bg-white py-12 sm:py-16">
-      <div className="mx-auto max-w-[1350px] px-4 sm:px-6 lg:px-10">
+      <div className="landing-shell">
         <div className="relative isolate overflow-hidden rounded-[20px] bg-gradient-to-r from-[#0089C2] to-[#005375] px-4 py-8 sm:px-8 sm:py-10 lg:flex lg:flex-row lg:items-center lg:justify-between lg:gap-6 lg:px-[68px] lg:py-[68px]">
 
           {/* Left Content */}
@@ -52,7 +52,7 @@ export function AboutMidBanner() {
               href="/services"
               className="flex h-[42px] w-full items-center justify-center gap-[6px] rounded-full px-3 text-[14px] font-medium text-white transition hover:bg-white/8 sm:h-[48px] sm:text-[16px] lg:w-[190px]"
             >
-              Explore Our Services
+               Our Services
               <svg
                 width="20"
                 height="20"
@@ -78,7 +78,7 @@ export function AboutMidBanner() {
             className="pointer-events-none absolute hidden opacity-80 lg:block"
             style={{
               left: "653px",
-              top: "113px",
+              top: "160px",
               transform: "rotate(2.78deg)",
             }}
           />

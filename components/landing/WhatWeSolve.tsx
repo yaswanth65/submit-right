@@ -30,35 +30,11 @@ export function WhatWeSolve() {
   ];
 
   const desktopRows = [
-    [
-      { label: tags[0], width: 314 },
-      { label: tags[1], width: 254 },
-      { label: tags[2], width: 357 },
-      { label: tags[3], width: 227 },
-    ],
-    [
-      { label: tags[4], width: 248 },
-      { label: tags[5], width: 264 },
-      { label: tags[6], width: 274 },
-      { label: tags[7], width: 312 },
-    ],
-    [
-      { label: tags[8], width: 270 },
-      { label: tags[9], width: 250 },
-      { label: tags[10], width: 274 },
-      { label: tags[11], width: 312 },
-    ],
-    [
-      { label: tags[12], width: 296 },
-      { label: tags[13], width: 232 },
-      { label: tags[14], width: 310 },
-      { label: tags[15], width: 312 },
-    ],
-    [
-      { label: tags[16], width: 312 },
-      { label: tags[17], width: 310 },
-      { label: tags[18], width: 300 },
-    ],
+    [tags[0], tags[1], tags[2], tags[3]],
+    [tags[4], tags[5], tags[6], tags[7]],
+    [tags[8], tags[9], tags[10], tags[11]],
+    [tags[12], tags[13], tags[14], tags[15]],
+    [tags[16], tags[17], tags[18]],
   ];
 
   return (
@@ -77,7 +53,7 @@ export function WhatWeSolve() {
           </div>
 
           <h2 className="landing-section-title">
-            One Platform. Every Academic Headache Solved.
+            What Submit Right Solves
           </h2>
 
           <p className="landing-section-description">
@@ -90,7 +66,7 @@ export function WhatWeSolve() {
           {desktopRows.map((row, rowIndex) => (
             <div key={rowIndex} className="flex items-center justify-center gap-4 w-full flex-nowrap">
               {row.map((tag, idx) => (
-                <ProblemChip key={`${rowIndex}-${idx}-${tag.label}`} label={tag.label} variant="desktop" width={tag.width} />
+                <ProblemChip key={`${rowIndex}-${idx}-${tag}`} label={tag} variant="desktop" />
               ))}
             </div>
           ))}
@@ -149,17 +125,16 @@ export function WhatWeSolve() {
   );
 }
 
-function ProblemChip({ label, mobile = false, variant = "mobile", width }: { label: string; mobile?: boolean; variant?: "mobile" | "desktop"; width?: number }) {
+function ProblemChip({ label, mobile = false, variant = "mobile" }: { label: string; mobile?: boolean; variant?: "mobile" | "desktop" }) {
   const isDesktop = variant === "desktop";
 
   return (
     <div
       className={`flex items-center gap-2 sm:gap-3 shrink-0 whitespace-nowrap transition-colors hover:border-[#00A0E3] ${
         isDesktop
-          ? "h-[51px] px-5 py-4 bg-[#F8F8F8] border border-dashed border-[#ECECEC] rounded-[12px] shadow-none"
-          : "px-3.5 sm:px-4 py-2.5 sm:py-3 bg-[#FAFAFA] border border-[#F0F0F0] rounded-xl shadow-[0_1px_0_rgba(255,255,255,0.8)]"
+          ? "h-[51px] w-fit px-5 py-4 bg-[#F8F8F8] border border-dashed border-[#ECECEC] rounded-[12px] shadow-none"
+          : "px-4 py-2.5 sm:py-3 bg-[#FAFAFA] border border-[#F0F0F0] rounded-xl shadow-[0_1px_0_rgba(255,255,255,0.8)]"
       }`}
-      style={isDesktop && width ? { width: `${width}px` } : undefined}
     >
       <svg className="w-4.5 h-4.5 sm:w-5 sm:h-5 text-[#1C1C1D] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <circle cx="12" cy="12" r="9" />

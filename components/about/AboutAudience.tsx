@@ -18,9 +18,7 @@ export function AboutAudience() {
         {/* Header */}
         <div className="flex flex-col items-center text-center mb-10 sm:mb-16">
           <div className="landing-section-badge mb-6">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#65656D" strokeWidth="2">
-              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-            </svg>
+            <img src="/grid.svg" alt="icon" className="w-4 h-4" />
             <span className="landing-section-badge-text">
               Right Fit
             </span>

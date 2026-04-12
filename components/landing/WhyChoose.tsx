@@ -67,12 +67,12 @@ export function WhyChoose() {
         </div>
 
         {/* Features Grid */}
-        <div className="grid grid-cols-1 min-[520px]:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-10 lg:gap-x-12 lg:gap-y-12 w-full justify-items-center">
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-6 lg:gap-x-12 lg:gap-y-12 w-full justify-items-center">
 
   {features.map((feature, idx) => (
     <div
       key={idx}
-      className="flex flex-col items-center text-center gap-8 w-full max-w-[281px] min-h-[154px] lg:h-[154px]"
+      className="flex flex-col items-center text-center gap-6 w-full max-w-[220px] sm:max-w-[281px] min-h-[140px] lg:h-[154px]"
     >
       {/* Icon Container */}
       <Image

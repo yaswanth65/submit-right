@@ -68,13 +68,13 @@ export default function Home() {
       /> */}
       <WhyChoose />
       <ResearchStages />
-    
+           <AboutMidBanner />
+
       <QuoteCalculator />
       <WhatWeSolve />
       <Packages />
       <Steps />
       <Testimonials />
-       <AboutMidBanner />
       <FAQ 
         items={homeFaqs}
         tag="FAQs"

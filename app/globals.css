@@ -146,11 +146,6 @@ body {
   }
 }
 
-/* Pause animation on hover */
-.carousel-scroll:hover {
-  animation-play-state: paused;
-}
-
 /* Hero background SVG styling */
 .hero-svg-bg::before {
   content: '';

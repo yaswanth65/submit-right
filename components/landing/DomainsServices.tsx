@@ -46,7 +46,7 @@ export function DomainsServices() {
         "iThenticate plagiarism check included",
         "Reviewer response and cover letter support"
       ],
-      cta: "Start Publication Support →"
+      cta: "Start Publication Support "
     }
   };
 
@@ -78,8 +78,9 @@ export function DomainsServices() {
         </div>
 
         {/* Tabs */}
-        <div className="flex justify-center mb-6 sm:mb-12 lg:mb-14 overflow-hidden">
-          <div className="inline-flex flex-nowrap items-center w-full max-w-[560px] max-sm:max-w-[360px] overflow-x-auto custom-scrollbar rounded-full border border-[#E5E5E5] bg-[#F7F8FA] p-1 sm:p-1 gap-0.5 sm:gap-1 shadow-[0_1px_2px_rgba(0,0,0,0.03)] snap-x snap-mandatory">
+        <div className="flex justify-center mb-6 sm:mb-12  lg:mb-14 overflow-hidden">
+          <div className="inline-flex flex-nowrap items-center  w-full max-w-[560px] max-sm:max-w-[360px] overflow-x-auto custom-scrollbar rounded-full border border-[#E5E5E5] bg-[#F7F8FA]   py-1 sm:py-1 gap-0.5 sm:gap-1 shadow-[0_1px_2px_rgba(0,0,0,0.03)] snap-x snap-mandatory">
+            <div className="w-4 sm:w-0 shrink-0" />
             {tabs.map((tab) => {
               const isActive = activeTab === tab;
 

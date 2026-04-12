@@ -58,10 +58,7 @@ export function TeamSection() {
         <div className="text-center mb-10 sm:mb-16">
           {/* Badge */}
           <div className="landing-section-badge mb-6">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00A0E3" strokeWidth="2">
-              <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
-              <circle cx="12" cy="7" r="4" />
-            </svg>
+           <img src="/about/team.svg" alt="icon" className="w-4 h-4" />
             <span className="landing-section-badge-text text-[#00A0E3]">
               The People Behind Submit Right
             </span>

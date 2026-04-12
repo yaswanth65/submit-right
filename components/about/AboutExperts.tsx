@@ -60,7 +60,7 @@ export function AboutExperts() {
             <div className="flex flex-col gap-6 sm:gap-12 flex-1">
               {/* Card 1 - Editors */}
               <div className="bg-white border border-[#F3F4F6] rounded-2xl p-5 sm:p-6 w-full shadow-[0_4px_20px_rgb(0,0,0,0.03)]">
-                <div className="w-10 h-10 bg-[#F3F9FC] rounded-lg flex items-center justify-center mb-5">
+                <div className="w-10 h-10 bg-[#F3F9FC] rounded-3xl flex items-center justify-center mb-5">
                   {experts[0].icon}
                 </div>
                 <h3 className="text-[16px] font-medium text-[#1C1C1D] mb-2">
@@ -73,7 +73,7 @@ export function AboutExperts() {
 
               {/* Card 3 - Subject Experts */}
               <div className="bg-white border border-[#F3F4F6] rounded-2xl p-5 sm:p-6 w-full shadow-[0_4px_20px_rgb(0,0,0,0.03)]">
-                <div className="w-10 h-10 bg-[#F3F9FC] rounded-lg flex items-center justify-center mb-5">
+                <div className="w-10 h-10 bg-[#F3F9FC] rounded-3xl flex items-center justify-center mb-5">
                   {experts[2].icon}
                 </div>
                 <h3 className="text-[16px] font-medium text-[#1C1C1D] mb-2">
@@ -89,7 +89,7 @@ export function AboutExperts() {
             <div className="flex flex-col gap-6 sm:gap-12 flex-1 pt-0 sm:pt-12">
               {/* Card 2 - Translators */}
               <div className="bg-white border border-[#F3F4F6] rounded-2xl p-5 sm:p-6 w-full shadow-[0_4px_20px_rgb(0,0,0,0.03)]">
-                <div className="w-10 h-10 bg-[#F3F9FC] rounded-lg flex items-center justify-center mb-5">
+                <div className="w-10 h-10 bg-[#F3F9FC] rounded-3xl flex items-center justify-center mb-5">
                   {experts[1].icon}
                 </div>
                 <h3 className="text-[16px] font-medium text-[#1C1C1D] mb-2">
@@ -102,7 +102,7 @@ export function AboutExperts() {
 
               {/* Car 4 - QA */}
               <div className="bg-white border border-[#F3F4F6] rounded-2xl p-5 sm:p-6 w-full shadow-[0_4px_20px_rgb(0,0,0,0.03)]">
-                <div className="w-10 h-10 bg-[#F3F9FC] rounded-lg flex items-center justify-center mb-5">
+                <div className="w-10 h-10 bg-[#F3F9FC] rounded-3xl flex items-center justify-center mb-5">
                   {experts[3].icon}
                 </div>
                 <h3 className="text-[16px] font-medium text-[#1C1C1D] mb-2">
@@ -120,17 +120,7 @@ export function AboutExperts() {
           <div>
             <div className="text-center lg:text-left">
   <div className="landing-section-badge mb-6 mx-auto lg:mx-0">
-    <svg
-      width="14"
-      height="14"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="#65656D"
-      strokeWidth="2"
-    >
-      <circle cx="12" cy="12" r="10" />
-      <path d="m9 12 2 2 4-4" />
-    </svg>
+   <img src="/vector2.svg" alt="icon" className="w-4 h-4" />
     <span className="landing-section-badge-text">
       Our Expert Network
     </span>
@@ -141,7 +131,7 @@ export function AboutExperts() {
   The Specialists Behind Every Manuscript We Deliver
 </h2>
             
-            <div className="landing-section-description flex flex-col gap-4 sm:gap-5 text-center lg:text-left lg:max-w-[90%]">
+            <div className="landing-section-description flex flex-col gap-4 sm:gap-5 text-center pt-8 lg:text-left lg:max-w-[90%]">
               <p>
                 Submit Right's quality doesn't come from software. It comes from a hand-selected, subject-verified network of academic professionals. Each assigned to manuscripts based on expertise, not availability.
               </p>

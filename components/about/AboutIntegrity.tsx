@@ -32,31 +32,22 @@ export function AboutIntegrity() {
       <div className="landing-shell">
         <div className="grid lg:grid-cols-2 gap-10 sm:gap-16 lg:gap-20 items-start">
           
-      <div className="lg:sticky lg:top-24 text-center lg:text-left">
+    <div className="lg:sticky lg:top-24 text-left">
   <div className="landing-section-badge mb-6 mx-auto lg:mx-0">
-    <svg
-      width="14"
-      height="14"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="#65656D"
-      strokeWidth="2"
-    >
-      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-    </svg>
+    <img src="/vector2.svg" alt="icon" className="w-4 h-4" />
     <span className="landing-section-badge-text">
       Our Standards
     </span>
   </div>
-            
-            <h2 className="landing-section-title mb-5 sm:mb-6">
-              We Do Not Support Plagiarism, Ghostwriting, or Academic Misconduct. Ever.
-            </h2>
-            
-            <p className="landing-section-description text-center lg:text-left">
-              Submit Right exists to improve and clarify research. Not to write it, fabricate it, or misrepresent it. Every service we provide is in full compliance with international academic integrity guidelines.
-            </p>
-          </div>
+
+  <h2 className="landing-section-title mb-5 sm:mb-6">
+    We Do Not Support Plagiarism, Ghostwriting, or Academic Misconduct. Ever.
+  </h2>
+
+  <p className="landing-section-description text-left mx-0 max-w-none">
+    Submit Right exists to improve and clarify research. Not to write it, fabricate it, or misrepresent it. Every service we provide is in full compliance with international academic integrity guidelines.
+  </p>
+</div>
 
           {/* Right Column */}
           <div className="flex flex-col gap-6 sm:gap-12 pb-0 sm:pb-10">

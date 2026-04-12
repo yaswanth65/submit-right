@@ -10,9 +10,9 @@ export default function PrivacyPolicyPage() {
       <Navbar />
 
       {/* Hero Section */}
-      <section className="relative hero-svg-bg pt-16 pb-20 lg:pt-24 lg:pb-32 border-b border-[#F3F4F6] overflow-hidden">
+      <section className="relative hero-svg-bg pt-24 sm:pt-28 pb-20 lg:pt-32 lg:pb-32 border-b border-[#F3F4F6] overflow-hidden">
 
-        <div className="w-full max-w-[1280px] mx-auto px-6 lg:px-10 xl:px-14 relative z-10">
+        <div className="landing-shell relative z-10">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-10">
             {/* Left Content */}
             <div className="flex-1 max-w-[500px]">
@@ -47,8 +47,9 @@ export default function PrivacyPolicyPage() {
         </div>
       </section>
 
-      {/* Content Section */}<section className="py-16 lg:py-24 flex items-center justify-center">
-  <div className="w-full max-w-[1280px] mx-auto">
+      {/* Content Section */}
+      <section className="py-12 sm:py-16 lg:py-20 flex items-center justify-center">
+  <div className="landing-shell">
     <div className="max-w-[1000px] mx-auto space-y-12">
             {/* 1 */}
             <div className="space-y-6">

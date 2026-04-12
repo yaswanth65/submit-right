@@ -18,22 +18,22 @@ export function ResearchStages() {
 
   return (
     <section className="py-12 sm:py-16 lg:py-20 bg-white max-sm:[&_p]:text-[12px] max-sm:[&_p]:leading-[1.45]">
-      <div className="w-full max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-14">
+      <div className="landing-shell">
         {/* Header */}
         <div className="text-center mb-10 sm:mb-16">
           {/* Badge */}
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-white border border-[#E5E5E5] rounded-full mb-5">
-            <HelpCircle className="w-3.5 h-3.5 text-[#1C1C1D]" />
-            <span className="text-[11px] font-normal text-[#1C1C1D] uppercase tracking-wider">
+          <div className="landing-section-badge">
+            <img src="/q.svg" alt="icon" className="w-4 h-4" />
+            <span className="landing-section-badge-text">
               Lorem Ipsum Dolor
             </span>
           </div>
 
-          <h2 className="text-[26px] sm:text-[32px] font-medium text-[#1C1C1D] leading-[1.15] sm:leading-[1.1] mb-4">
+          <h2 className="landing-section-title">
             Solutions for Every Stage of Your Research
           </h2>
 
-          <p className="text-[12px] sm:text-[15px] text-[#65656D] leading-relaxed max-w-xl mx-auto">
+          <p className="landing-section-description">
             Lorem ipsum dolor sit amet consectetur. Sagittis eu vel habitant cursus.
             <br className="hidden sm:block" />
             Elementum suscipit donec viverra posuere at lorem nullam.
@@ -48,7 +48,7 @@ export function ResearchStages() {
               <button
                 key={step.id}
                 onClick={() => setActiveStep(step.id)}
-                className={`flex-none text-left max-sm:p-3 sm:p-3.5 lg:p-4 max-sm:rounded-lg sm:rounded-xl max-sm:border-0 sm:border transition-all duration-200 snap-center max-sm:min-w-[100px] sm:min-w-[200px] lg:min-w-0 max-sm:min-h-[90px] ${
+                className={`flex-none text-left max-sm:p-3 sm:p-3.5 lg:p-4 max-sm:rounded-lg sm:rounded-xl max-sm:border-0 sm:border transition-all duration-200 snap-center max-sm:min-w-[126px] sm:min-w-[200px] lg:min-w-0 max-sm:min-h-[90px] ${
                   activeStep === step.id
                     ? 'max-sm:bg-transparent sm:border-[#00A0E3] sm:bg-[#F8FCFF] sm:shadow-sm'
                     : 'max-sm:bg-transparent sm:border-[#ECECEC] sm:bg-white sm:hover:border-[#00A0E3]/50'
@@ -62,7 +62,7 @@ export function ResearchStages() {
                   STEP {step.id}
                 </div>
                 <div
-                  className={`text-[12px] sm:text-[15px] font-medium leading-snug max-sm:max-w-[70px] ${
+                  className={`text-[12px] sm:text-[15px] font-medium leading-snug max-sm:max-w-[96px] ${
                     activeStep === step.id ? 'text-[#1C1C1D]' : 'text-[#65656D]'
                   }`}
                 >
@@ -115,7 +115,7 @@ function Step1Content() {
           tincidunt enim nascetur sed.
         </p>
         <div>
-          <button className="inline-flex items-center gap-2 bg-[#00A0E3] text-white px-5 py-2 mt-5 rounded-full text-sm font-medium hover:bg-[#0088CC] transition-colors">
+          <button className="inline-flex items-center gap-2 bg-[#00A0E3] text-white px-5 h-[46px] mt-5 rounded-full text-sm font-medium hover:bg-[#0088CC] transition-colors">
             Explore Now <ArrowRight className="w-4 h-4" />
           </button>
         </div>
@@ -136,7 +136,7 @@ function Step1Content() {
           tincidunt enim nascetur sed.
         </p>
         <div>
-          <button className="inline-flex items-center gap-2 bg-[#00A0E3] text-white px-5 py-2 mt-5 rounded-full text-sm font-medium hover:bg-[#0088CC] transition-colors">
+          <button className="inline-flex items-center gap-2 bg-[#00A0E3] text-white px-5 h-[46px] mt-5 rounded-full text-sm font-medium hover:bg-[#0088CC] transition-colors">
             Explore Now <ArrowRight className="w-4 h-4" />
           </button>
         </div>
@@ -365,74 +365,124 @@ function Step7Content() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-auto">
         {/* Yellow Card */}
-        <div className="rounded-2xl border border-[#F4C252] bg-[#FFFBF3] p-5 relative overflow-hidden flex flex-col">
-          <div className="absolute top-0 right-0 bg-[#F4C252] text-white text-[10px] font-normal px-3 py-1 rounded-bl-lg">
-            You Save: $328
-          </div>
-          <h4 className="text-lg font-normal text-[#F4C252] mb-1">Lorem ipsum dolor</h4>
-          <p className="text-xs text-[#65656D] mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing.</p>
-          
-          <div className="space-y-2 mb-6">
-             {['Lorem ipsum dolor', 'consectetur adipiscing', 'Lorem ipsum dolor sit amet'].map((feat, idx) => (
-                <div key={idx} className="flex items-center gap-2 text-xs text-[#1C1C1D] font-medium">
-                  <div className="w-4 h-4 rounded-full bg-[#F4C252] text-white flex items-center justify-center shrink-0">
-                    <Check className="w-3 h-3" />
-                  </div> {feat}
-                </div>
-              ))}
-          </div>
+        <div className="rounded-[14px] border border-[#CEA02D] bg-[#F4E9CD] p-6 relative overflow-hidden flex flex-col">
+  
+  {/* Badge */}
+  <div className="absolute top-0 right-0 bg-[#CEA02D] text-white text-xs font-semibold px-4 py-1.5 rounded-bl-[24px]">
+    You Save: $328
+  </div>
 
-          <div className="mt-auto">
-            <div className="flex items-end justify-between border-t border-[#F4C252]/20 pt-4 mb-4">
-              <div className="text-xs text-[#65656D]">
-                Get 8 services worth<br/>
-                For only:
-              </div>
-              <div className="text-right">
-                <div className="text-xs text-gray-400 line-through font-medium">$1240</div>
-                <div className="text-xl font-normal text-[#F4C252]">$912</div>
-              </div>
-            </div>
-            <button className="w-full bg-[#1C1C1D] text-white py-2 rounded-full text-sm font-medium hover:bg-black transition-colors">
-              Buy Now
-            </button>
-          </div>
+  {/* Title & Description */}
+  <h4 className="text-[18px] font-semibold text-[#CEA02D] leading-[120%]">
+    Lorem ipsum dolor
+  </h4>
+  <p className="text-[14px] font-normal text-[#78788D] leading-[120%] mb-4">
+    Lorem ipsum dolor sit amet, consectetur adipiscing.
+  </p>
+
+  {/* Features */}
+  <div className="space-y-2.5 mb-6">
+    {[
+      "Lorem ipsum dolor",
+      "consectetur adipiscing",
+      "Lorem ipsum dolor sit amet",
+    ].map((feat, idx) => (
+      <div
+        key={idx}
+        className="flex items-center gap-2 text-[14px] text-[#1C1C1D] font-medium leading-[120%]"
+      >
+        <div className="w-[18px] h-[18px] rounded-full bg-[#CEA02D] text-white flex items-center justify-center shrink-0">
+          <Check className="w-3 h-3" />
         </div>
+        {feat}
+      </div>
+    ))}
+  </div>
+
+  {/* Pricing & CTA */}
+  <div className="mt-auto">
+    <div className="flex items-end justify-between border-t border-[#CEA02D]/50 pt-4 mb-4">
+      <div className="text-[14px] text-[#525866] leading-[120%]">
+        Get 8 services worth<br />
+        For only:
+      </div>
+
+      <div className="text-right">
+        <div className="text-[14px] text-[#171717] line-through font-medium">
+          $1240
+        </div>
+        <div className="text-[20px] font-bold text-[#CEA02D]">
+          $912
+        </div>
+      </div>
+    </div>
+
+    {/* Button */}
+    <button className="w-full bg-[#0A0A0A] text-white py-[6px] rounded-full text-[14px] font-medium hover:bg-black transition-colors">
+      Buy Now
+    </button>
+  </div>
+</div>
 
         {/* Blue Card */}
-        <div className="rounded-2xl border border-[#00A0E3] bg-[#F1F9FF] p-5 relative overflow-hidden flex flex-col">
-          <div className="absolute top-0 right-0 bg-[#00A0E3] text-white text-[10px] font-normal px-3 py-1 rounded-bl-lg">
-            You Save: $328
-          </div>
-          <h4 className="text-lg font-normal text-[#00A0E3] mb-1">Lorem ipsum dolor</h4>
-          <p className="text-xs text-[#65656D] mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing.</p>
-          
-          <div className="space-y-2 mb-6">
-             {['Lorem ipsum dolor', 'consectetur adipiscing', 'Lorem ipsum dolor sit amet'].map((feat, idx) => (
-                <div key={idx} className="flex items-center gap-2 text-xs text-[#1C1C1D] font-medium">
-                  <div className="w-4 h-4 rounded-full bg-[#00A0E3] text-white flex items-center justify-center shrink-0">
-                    <Check className="w-3 h-3" />
-                  </div> {feat}
-                </div>
-              ))}
-          </div>
+    <div className="rounded-[14px] border border-[#00A0E3] bg-[#EFF7FB] p-6 relative overflow-hidden flex flex-col">
+  
+  {/* Badge */}
+  <div className="absolute top-0 right-0 bg-[#00A0E3] text-white text-[12px] font-semibold px-[14px] py-[6px] rounded-bl-[24px]">
+    You Save: $328
+  </div>
 
-          <div className="mt-auto">
-             <div className="flex items-end justify-between border-t border-[#00A0E3]/20 pt-4 mb-4">
-              <div className="text-xs text-[#65656D]">
-                Get 8 services worth<br/>
-                For only:
-              </div>
-              <div className="text-right">
-                <div className="text-xs text-gray-400 line-through font-medium">$1240</div>
-                <div className="text-xl font-normal text-[#00A0E3]">$912</div>
-              </div>
-            </div>
-            <button className="w-full bg-[#00A0E3] text-white py-2 rounded-full text-sm font-medium hover:bg-[#0088CC] transition-colors">
-              Buy Now
-            </button>
-          </div>
+  {/* Title & Description */}
+  <h4 className="text-[18px] font-semibold text-[#00A0E3] leading-[120%]">
+    Lorem ipsum dolor
+  </h4>
+  <p className="text-[14px] font-normal text-[#78788D] leading-[120%] mb-4">
+    Lorem ipsum dolor sit amet, consectetur adipiscing.
+  </p>
+
+  {/* Features */}
+  <div className="space-y-[10px] mb-6">
+    {[
+      "Lorem ipsum dolor",
+      "consectetur adipiscing",
+      "Lorem ipsum dolor sit amet",
+    ].map((feat, idx) => (
+      <div
+        key={idx}
+        className="flex items-center gap-2 text-[14px] text-[#1C1C1D] font-medium leading-[120%]"
+      >
+        <div className="w-[18px] h-[18px] rounded-full bg-[#00A0E3] text-white flex items-center justify-center shrink-0">
+          <Check className="w-3 h-3" />
         </div>
+        {feat}
+      </div>
+    ))}
+  </div>
+
+  {/* Pricing Section */}
+  <div className="mt-auto">
+    <div className="flex items-end justify-between border-t border-[#00A0E3]/50 pt-4 mb-4">
+      <div className="text-[14px] text-[#525866] leading-[120%]">
+        Get 8 services worth<br />
+        For only:
+      </div>
+
+      <div className="text-right">
+        <div className="text-[14px] text-[#171717] line-through font-medium">
+          $1240
+        </div>
+        <div className="text-[20px] font-bold text-[#00A0E3]">
+          $912
+        </div>
+      </div>
+    </div>
+
+    {/* Button */}
+    <button className="w-full bg-[#00A0E3] text-white py-[6px] rounded-full text-[14px] font-medium hover:bg-[#0088CC] transition-colors">
+      Buy Now
+    </button>
+  </div>
+</div>
       </div>
     </div>
   );
@@ -449,25 +499,25 @@ function Step8Content() {
       </p>
 
       <form className="space-y-4 mt-auto">
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label className="block text-xs font-medium text-[#1C1C1D] mb-1.5">First Name</label>
-            <input type="text" placeholder="First name" className="w-full border border-[#E7E7E9] rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#00A0E3]" />
+            <input type="text" placeholder="First name" className="w-full border border-[#E7E7E9] rounded-lg bg-white px-3 py-2 text-sm focus:outline-none focus:border-[#00A0E3]" />
           </div>
           <div>
             <label className="block text-xs font-medium text-[#1C1C1D] mb-1.5">Last Name</label>
-            <input type="text" placeholder="Last name" className="w-full border border-[#E7E7E9] rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#00A0E3]" />
+            <input type="text" placeholder="Last name" className="w-full border border-[#E7E7E9] rounded-lg bg-white   px-3 py-2 text-sm focus:outline-none focus:border-[#00A0E3]" />
           </div>
         </div>
         
         <div>
           <label className="block text-xs font-medium text-[#1C1C1D] mb-1.5">Email</label>
-          <input type="email" placeholder="Enter your email" className="w-full border border-[#E7E7E9] rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#00A0E3]" />
+          <input type="email" placeholder="Enter your email" className="w-full border border-[#E7E7E9] rounded-lg bg-white px-3 py-2 text-sm focus:outline-none focus:border-[#00A0E3]" />
         </div>
 
         <div>
           <label className="block text-xs font-medium text-[#1C1C1D] mb-1.5">Message</label>
-          <textarea rows={3} placeholder="Type your message" className="w-full border border-[#E7E7E9] rounded-lg px-3 py-2 text-sm resize-none focus:outline-none focus:border-[#00A0E3]"></textarea>
+          <textarea rows={3} placeholder="Type your message" className="w-full border border-[#E7E7E9] rounded-lg bg-white px-3 py-2 text-sm resize-none focus:outline-none focus:border-[#00A0E3]"></textarea>
         </div>
 
         <button type="button" className="w-full bg-[#00A0E3] text-white py-2.5 rounded-full text-sm font-medium hover:bg-[#0088CC] transition-colors mt-2">

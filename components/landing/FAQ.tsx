@@ -47,22 +47,22 @@ export function FAQ({ items, tag = "FAQ", title = "Got Questions We've Got Answe
   const faqs = items || defaultFaqs;
 
   return (
-    <section className="py-12 sm:py-20 lg:py-24 bg-white">
-      <div className="w-full max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-14">
+    <section className="py-12 sm:py-16 lg:py-20 bg-white">
+      <div className="landing-shell">
         {/* Header */}
         <div className="text-center mb-10 sm:mb-12">
-          <div className="inline-flex items-center gap-1.5 mb-4">
+          <div className="landing-section-badge">
              <div className="w-5 h-5 bg-[#1C1C1D] text-white rounded-full flex items-center justify-center font-normal text-[10px]">?</div>
-            <span className="text-[12px] font-normal text-[#1C1C1D] uppercase tracking-wider">
+            <span className="landing-section-badge-text">
               {tag}
             </span>
           </div>
 
-          <h2 className="text-[26px] sm:text-[32px] font-medium text-[#1C1C1D] leading-[1.15] sm:leading-[1.1] mb-4">
+          <h2 className="landing-section-title">
             {title}
           </h2>
 
-          <p className="text-[13px] sm:text-[15px] text-[#65656D] leading-relaxed max-w-xl mx-auto">
+          <p className="landing-section-description">
             {description}
           </p>
         </div>

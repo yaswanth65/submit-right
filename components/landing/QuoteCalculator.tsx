@@ -6,6 +6,8 @@ export function QuoteCalculator() {
   const [words, setWords] = useState(520);
   const [documentType, setDocumentType] = useState("Essay");
   const [service, setService] = useState("Editing");
+  const chartWidth = 470;
+  const chartHeight = 358;
 
   // Pricing configuration
   const pricingConfig: Record<string, number> = {
@@ -48,47 +50,46 @@ export function QuoteCalculator() {
   // SVG Path Generator
   const generatePath = (data: any[]) => {
     const maxPrice = Math.max(...data.map((d) => d.price), 1);
-    const width = 400;
-    const height = 240;
 
     return data
       .map((point, index) => {
-        const x = (index / (data.length - 1)) * width;
-        const y = height - (point.price / maxPrice) * height;
+        const x = (index / (data.length - 1)) * chartWidth;
+        const y = chartHeight - (point.price / maxPrice) * chartHeight;
         return `${index === 0 ? "M" : "L"} ${x},${y}`;
       })
       .join(" ");
   };
 
   return (
-    <section className="py-12 sm:py-16 lg:py-24 bg-[#F3F9FC]">
-      <div className="w-full max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-14">
+    <section className="py-12 sm:py-16 lg:py-20 bg-[#F3F9FC]">
+      <div className="landing-shell">
 
         {/* Header */}
-        <div className="text-center max-w-2xl mx-auto mb-12">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-white border border-gray-200 rounded-full mb-5">
-            <span className="text-[11px] uppercase tracking-wider">
+        <div className="text-center max-w-[720px] mx-auto mb-12">
+          <div className="landing-section-badge">
+              <img src="/grid.svg" alt="icon" className="w-4 h-4" />
+            <span className="landing-section-badge-text">
               Instant Pricing
             </span>
           </div>
-          <h2 className="text-[28px] sm:text-[34px] font-semibold text-[#1C1C1D]">
+          <h2 className="landing-section-title">
             Quote Calculator
           </h2>
-          <p className="text-sm text-gray-500 mt-2">
+          <p className="landing-section-description mt-2">
             Enter your word count and select your service to get an instant estimate.
           </p>
         </div>
 
         {/* Main Container */}
-        <div className="bg-transparent p-4 sm:p-6 rounded-[28px]">
-          <div className="grid lg:grid-cols-2 gap-6">
+        <div className="bg-transparent rounded-[28px]">
+          <div className="grid gap-6 lg:grid-cols-2 lg:gap-10 lg:h-[538px]">
 
             {/* LEFT PANEL */}
-            <div className="bg-white rounded-[22px] p-6 flex flex-col justify-between shadow-[0_0_12px_rgba(28,28,29,0.05)]">
-              <div className="space-y-6">
+            <div className="bg-white rounded-[20px] p-4 sm:p-6 lg:p-7 flex flex-col justify-between shadow-[0_0_12px_rgba(28,28,29,0.05)] lg:h-full">
+              <div className="flex flex-col gap-4">
                 
                 {/* Word Input */}
-                <div className="bg-[#F8F8F8] p-4 rounded-[14px] border border-[#ECECEC]">
+                <div className="bg-[#F8F8F8] p-4 rounded-[14px] border border-[#ECECEC] lg:h-[119px] lg:justify-center lg:flex lg:flex-col">
                   <label className="block text-[14px] font-medium mb-2 text-[#0E121B]">
                     No. of Words Input
                   </label>
@@ -110,8 +111,8 @@ export function QuoteCalculator() {
                 </div>
 
                 {/* Dropdowns */}
-                <div className="bg-[#F8F8F8] p-4 rounded-[14px] border border-[#ECECEC] grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
+                <div className="bg-[#F8F8F8] p-4 rounded-[14px] border border-[#ECECEC] grid grid-cols-1 sm:grid-cols-2 gap-4 lg:h-[89px] lg:items-center">
+                  <div className="lg:h-[61px]">
                     <label className="block text-[14px] font-medium mb-2 text-[#0E121B]">
                       Document Type
                     </label>
@@ -127,7 +128,7 @@ export function QuoteCalculator() {
                     </select>
                   </div>
 
-                  <div>
+                  <div className="lg:h-[61px]">
                     <label className="block text-[14px] font-medium mb-2 text-[#0E121B]">
                       Service
                     </label>
@@ -145,16 +146,20 @@ export function QuoteCalculator() {
               </div>
 
               {/* Result Cards */}
-              <div className="grid grid-cols-2 gap-4 mt-8">
-                <div className="bg-[#0189C2] text-white p-6 rounded-xl min-h-[150px] flex flex-col justify-between">
-                  <p className="text-sm">Estimated Pricing</p>
-                  <h3 className="text-2xl font-bold">
+              <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:mt-0 lg:h-[242px]">
+                <div className="flex h-full min-h-[150px] flex-col rounded-[12px] bg-[#0189C2] p-4 text-white lg:min-h-0 lg:p-4">
+                  <p className="text-[16px] font-medium leading-[140%]">
+                    Estimated Pricing
+                  </p>
+                  <h3 className="mt-2 text-[26px] font-semibold leading-[120%]">
                     ${price.toFixed(2)}
                   </h3>
                 </div>
-                <div className="bg-[#015375] text-white p-6 rounded-xl min-h-[150px] flex flex-col justify-between">
-                  <p className="text-sm">Estimated Time Period</p>
-                  <h3 className="text-2xl font-bold">
+                <div className="mt-2 flex h-full min-h-[150px] flex-col rounded-[12px] bg-[#015375] p-4 text-white sm:mt-0 lg:min-h-0 lg:p-4">
+                  <p className="text-[16px] font-medium leading-[140%]">
+                    Estimated Time Period
+                  </p>
+                  <h3 className="mt-2 text-[26px] font-semibold leading-[120%]">
                     {days} days
                   </h3>
                 </div>
@@ -162,15 +167,15 @@ export function QuoteCalculator() {
             </div>
 
             {/* RIGHT PANEL */}
-            <div className="bg-white rounded-[22px] p-4 sm:p-6 shadow-[0_0_12px_rgba(28,28,29,0.05)]">
-              <h3 className="text-[18px] text-[#1C1C1D] font-semibold mb-6">
+            <div className="bg-white rounded-[20px] p-4 sm:p-6 lg:p-7 shadow-[0_0_12px_rgba(28,28,29,0.05)] lg:h-full">
+              <h3 className="text-[18px] font-semibold text-[#1C1C1D] lg:mb-7">
                 Pricing Trend
               </h3>
 
-              <div className="bg-[#F8F8F8] rounded-[14px] p-3 sm:p-6">
-                <div className="relative h-[220px] sm:h-[260px]">
+              <div className="mt-4 flex flex-col rounded-[14px] bg-[#F8F8F8] p-4 sm:p-6 lg:mt-0 lg:p-6">
+                <div className="relative h-[220px] sm:h-[260px] lg:h-[358px]">
                   {/* Y-axis labels */}
-                  <div className="absolute left-0 top-0 h-full flex flex-col justify-between text-[10px] sm:text-[12px] text-[#0E121B]">
+                  <div className="absolute left-0 top-0 flex h-full flex-col justify-between text-[10px] text-[#0E121B] sm:text-[12px]">
                     <span>$500</span>
                     <span>$400</span>
                     <span>$300</span>
@@ -181,8 +186,8 @@ export function QuoteCalculator() {
 
                   {/* Chart */}
                   <svg
-                    viewBox="0 0 400 240"
-                    className="absolute left-7 sm:left-10 top-0 w-[calc(100%-28px)] sm:w-[calc(100%-40px)] h-full"
+                    viewBox={`0 0 ${chartWidth} ${chartHeight}`}
+                    className="absolute left-7 top-0 h-full w-[calc(100%-28px)] sm:left-10 sm:w-[calc(100%-40px)]"
                     preserveAspectRatio="none"
                   >
                     {/* Grid Lines */}
@@ -190,18 +195,18 @@ export function QuoteCalculator() {
                       <line
                         key={i}
                         x1="0"
-                        y1={(240 / 5) * i}
-                        x2="400"
-                        y2={(240 / 5) * i}
+                        y1={(chartHeight / 5) * i}
+                        x2={chartWidth}
+                        y2={(chartHeight / 5) * i}
                         stroke="#ECECEC"
                         strokeDasharray="4 4"
                       />
                     ))}
                     <line
                       x1="0"
-                      y1="240"
-                      x2="400"
-                      y2="240"
+                      y1={chartHeight}
+                      x2={chartWidth}
+                      y2={chartHeight}
                       stroke="#ECECEC"
                     />
 
@@ -217,7 +222,7 @@ export function QuoteCalculator() {
                 </div>
 
                 {/* X-axis labels */}
-                <div className="flex justify-between text-[10px] sm:text-[12px] text-[#0E121B] mt-2 ml-[56px] sm:ml-[80px] [&>span]:whitespace-nowrap">
+                <div className="mt-2 flex justify-between pr-1 text-[9px] text-[#0E121B] min-[420px]:text-[10px] sm:text-[12px] lg:mt-3 ml-[46px] sm:ml-[80px] [&>span]:whitespace-nowrap">
                   {[2, 4, 6, 8, 10].map((d) => (
                     <span key={d}>{d} days</span>
                   ))}

@@ -10,9 +10,9 @@ export function Footer() {
 
   return (
     <footer className="bg-[#1C1C1D] pt-16 sm:pt-24 pb-6 mt-[-2px] relative z-10">
-      <div className="w-full max-w-[1280px] mx-auto px-4 sm:px-6 pt-8 sm:pt-10 lg:px-10 xl:px-14">
+      <div className="landing-shell pt-8 sm:pt-10">
         {/* Top Section */}
-        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-5 gap-6 lg:gap-8 pb-8 sm:pb-10 border-b border-[#3A3A3A]">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-6 lg:gap-8 pb-8 sm:pb-10 border-b border-[#3A3A3A]">
           {/* Logo Column */}
           <div className="col-span-1 sm:col-span-2 md:col-span-1">
             <img src="/logo.svg" alt="Submit Right" className="h-8 color-white w-auto mb-4" />

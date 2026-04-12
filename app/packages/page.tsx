@@ -128,22 +128,22 @@ export default function PackagesPage() {
       </section>
 
       {/* 2. Packages Pricing Section */}
-      <section className="py-20 lg:py-28 bg-white">
+      <section className="py-12 sm:py-16 lg:py-20 bg-white">
         <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-14 text-center">
           
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-gray-200 bg-white mb-6">
+          <div className="landing-section-badge mb-6">
             <svg className="w-3.5 h-3.5 text-[#1C1C1D]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
             </svg>
-            <span className="text-[11px] md:text-[12px] font-medium uppercase tracking-wider text-[#1C1C1D]">
+            <span className="landing-section-badge-text">
               LOREM IPSUM
             </span>
           </div>
 
-          <h2 className="text-[30px] sm:text-[36px] font-medium text-[#1C1C1D] mb-4">
+          <h2 className="landing-section-title mb-4">
             Manuscript Formatting Plans to Meet Your Needs
           </h2>
-          <p className="text-[15px] sm:text-[16px] text-[#65656D] mb-16">
+          <p className="landing-section-description mb-16">
             Lorem ipsum dolor sit amet consectetur. Sagittis eu vel habitant cursus.
           </p>
 
@@ -220,22 +220,22 @@ export default function PackagesPage() {
       </section>
 
       {/* 3. Examples Section */}
-      <section className="py-20 lg:py-28 bg-[#F8F9FA]">
+      <section className="py-12 sm:py-16 lg:py-20 bg-[#F8F9FA]">
         <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-14 text-center">
           
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-gray-200 bg-white mb-6">
+          <div className="landing-section-badge mb-6">
             <svg className="w-3.5 h-3.5 text-[#1C1C1D]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
             </svg>
-            <span className="text-[11px] md:text-[12px] font-medium uppercase tracking-wider text-[#1C1C1D]">
+            <span className="landing-section-badge-text">
               LOREM IPSUM DOLOR
             </span>
           </div>
 
-          <h2 className="text-[30px] sm:text-[36px] font-medium text-[#1C1C1D] mb-4">
+          <h2 className="landing-section-title mb-4">
             Essential Support Examples by Submit Right
           </h2>
-          <p className="text-[15px] sm:text-[16px] text-[#65656D] mb-10 max-w-[600px] mx-auto">
+          <p className="landing-section-description mb-10 max-w-[600px] mx-auto">
             Lorem ipsum dolor sit amet consectetur. Sagittis eu vel habitant cursus. Elementum suscipit donec viverra posuere at lorem nullam.
           </p>
 
@@ -266,22 +266,22 @@ export default function PackagesPage() {
       </section>
 
       {/* 4. Included Features */}
-      <section className="py-20 lg:py-28 bg-white overflow-hidden relative">
+      <section className="py-12 sm:py-16 lg:py-20 bg-white overflow-hidden relative">
         <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-14 text-center">
             
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-gray-200 bg-white mb-6">
+          <div className="landing-section-badge mb-6">
             <svg className="w-3.5 h-3.5 text-[#1C1C1D]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
-            <span className="text-[11px] md:text-[12px] font-medium uppercase tracking-wider text-[#1C1C1D]">
+            <span className="landing-section-badge-text">
               LOREM IPSUM DOLOR
             </span>
           </div>
 
-          <h2 className="text-[30px] sm:text-[36px] font-medium text-[#1C1C1D] mb-4">
+          <h2 className="landing-section-title mb-4">
             What is Included in the Service
           </h2>
-          <p className="text-[15px] sm:text-[16px] text-[#65656D] mb-16 max-w-[600px] mx-auto">
+          <p className="landing-section-description mb-16 max-w-[600px] mx-auto">
             Lorem ipsum dolor sit amet consectetur. Sagittis eu vel habitant cursus. Elementum suscipit donec viverra posuere at lorem nullam.
           </p>
 
@@ -311,22 +311,22 @@ export default function PackagesPage() {
       <TrustedLogos />
 
       {/* 6. How does it help */}
-      <section className="py-20 lg:py-28 bg-white">
+      <section className="py-12 sm:py-16 lg:py-20 bg-white">
         <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-14">
           <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-gray-200 bg-white mb-6">
+            <div className="landing-section-badge mb-6">
               <svg className="w-3.5 h-3.5 text-[#1C1C1D]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
-              <span className="text-[11px] md:text-[12px] font-medium uppercase tracking-wider text-[#1C1C1D]">
+              <span className="landing-section-badge-text">
                 LOREM IPSUM DOLOR
               </span>
             </div>
 
-            <h2 className="text-[30px] sm:text-[36px] font-medium text-[#1C1C1D] mb-4">
+            <h2 className="landing-section-title mb-4">
               How does a essential support help my article?
             </h2>
-            <p className="text-[15px] sm:text-[16px] text-[#65656D] max-w-[600px] mx-auto">
+            <p className="landing-section-description max-w-[600px] mx-auto">
               Lorem ipsum dolor sit amet consectetur. Sagittis eu vel habitant cursus. Elementum suscipit donec viverra posuere at lorem nullam.
             </p>
           </div>
@@ -345,7 +345,7 @@ export default function PackagesPage() {
       </section>
 
       {/* 7. Turnaround & Deliverables Grid */}
-      <section className="py-20 bg-[#F8F9FA] border-t border-gray-100">
+      <section className="py-12 sm:py-16 lg:py-20 bg-[#F8F9FA] border-t border-gray-100">
         <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-14">
           <div className="grid lg:grid-cols-[1fr_2fr] gap-12 lg:gap-20 items-center">
             

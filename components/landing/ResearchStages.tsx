@@ -43,27 +43,27 @@ export function ResearchStages() {
         {/* Main Content Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-5 sm:gap-8 mb-5 sm:mb-8 items-stretch">
           {/* Sidebar Steps */}
-          <div className="lg:col-span-1 flex lg:flex-col max-sm:gap-2 sm:gap-2.5 lg:gap-3 overflow-x-auto snap-x lg:overflow-visible lg:snap-none pb-2 lg:pb-0 custom-scrollbar">
+          <div className="lg:col-span-1 flex lg:flex-col max-sm:gap-3 sm:gap-2.5 lg:gap-3 overflow-x-auto snap-x lg:overflow-visible lg:snap-none pb-2 lg:pb-0 custom-scrollbar max-sm:items-start">
             {steps.map((step) => (
               <button
                 key={step.id}
                 onClick={() => setActiveStep(step.id)}
-                className={`flex-none text-left max-sm:p-3 sm:p-3.5 lg:p-4 max-sm:rounded-lg sm:rounded-xl max-sm:border-0 sm:border transition-all duration-200 snap-center max-sm:min-w-[126px] sm:min-w-[200px] lg:min-w-0 max-sm:min-h-[90px] ${
+                className={`flex-none text-left max-sm:box-border max-sm:w-[130px] max-sm:h-[79px] max-sm:p-3 sm:p-3.5 lg:p-4 max-sm:rounded-[10px] sm:rounded-xl max-sm:border transition-all duration-200 snap-center max-sm:min-w-[130px] sm:min-w-[200px] lg:min-w-0 ${
                   activeStep === step.id
-                    ? 'max-sm:bg-transparent sm:border-[#00A0E3] sm:bg-[#F8FCFF] sm:shadow-sm'
-                    : 'max-sm:bg-transparent sm:border-[#ECECEC] sm:bg-white sm:hover:border-[#00A0E3]/50'
+                    ? 'max-sm:bg-[#F3F9FC] max-sm:border-[#00A0E3] sm:border-[#00A0E3] sm:bg-[#F8FCFF] sm:shadow-sm'
+                    : 'max-sm:bg-white max-sm:border-[#ECECEC] sm:border-[#ECECEC] sm:bg-white sm:hover:border-[#00A0E3]/50'
                 }`}
               >
                 <div
-                  className={`text-[10px] sm:text-xs font-normal mb-1.5 ${
-                    activeStep === step.id ? 'text-[#00A0E3]' : 'text-gray-400'
+                  className={`text-[12px] sm:text-xs font-medium leading-[110%] mb-2 ${
+                    activeStep === step.id ? 'text-[#1C1C1D]' : 'text-[#78788D]'
                   }`}
                 >
                   STEP {step.id}
                 </div>
                 <div
-                  className={`text-[12px] sm:text-[15px] font-medium leading-snug max-sm:max-w-[96px] ${
-                    activeStep === step.id ? 'text-[#1C1C1D]' : 'text-[#65656D]'
+                  className={`text-[14px] sm:text-[15px] font-medium leading-[120%] max-sm:max-w-[106px] ${
+                    activeStep === step.id ? 'text-[#00A0E3]' : 'text-[#1C1C1D]'
                   }`}
                 >
                   {step.title}
@@ -151,23 +151,23 @@ function Step2Content() {
       {[1, 2].map((i) => (
         <div key={i} className="bg-[#F8F9FA] rounded-2xl p-6 border border-gray-100 flex flex-col h-full overflow-hidden">
           <h3 className="text-lg font-normal text-[#1C1C1D] mb-1">Lorem ipsum dolor sit</h3>
-          <p className="text-[#65656D] text-xs mb-4 pb-4 border-b border-gray-200 border-dashed">
+          <p className="text-[#65656D] text-xs mb-4 pb-4 border-b border-gray-200 border-b">
             amet, consectetur adipiscing elit, sed do eiusmod tempor.
           </p>
           
-          <div className="flex items-center justify-between mb-4 pb-4 border-b border-gray-200 border-dashed">
+          <div className="flex items-center justify-between mb-4 pb-4 border-b border-gray-200 border-b">
             <div>
               <div className="text-xs text-[#65656D]">Starts from</div>
               <div className="text-xl font-normal text-[#1C1C1D]">
                 $0.0425 <span className="text-xs text-[#65656D] font-normal">/per word</span>
               </div>
             </div>
-            <button className="inline-flex items-center gap-1.5 bg-[#00A0E3] text-white px-4 py-2 rounded-full text-xs font-medium hover:bg-[#0088CC] whitespace-nowrap">
+            <button className="inline-flex items-center gap-1.5 bg-[#00A0E3] text-white px-4 py-3 rounded-full text-xs font-medium hover:bg-[#0088CC] whitespace-nowrap">
               Submit Enquiry <ArrowRight className="w-3.5 h-3.5" />
             </button>
           </div>
 
-          <div className="space-y-2.5 mb-4 pb-4 border-b border-gray-200 border-dashed">
+          <div className="space-y-2.5 mb-4 pb-4 border-b border-gray-200 border-b">
             {['Lorem ipsum consectetur adipiscing', 'sed do eiusmod tempor', 'amet, consectetur adipiscing elit.', 'Lorem ipsum dolor sit'].map((feat, idx) => (
               <div key={idx} className="flex items-center gap-1.5 text-xs text-[#65656D]">
                 <Check className="w-3.5 h-3.5 text-gray-400 shrink-0" /> <span className="truncate">{feat}</span>
@@ -203,120 +203,127 @@ function Step3Content() {
       </p>
       
       {/* Placeholder for dashboard image - using a div that visually resembles a dashboard UI skeleton */}
-      <div className="w-full bg-white rounded-lg border border-gray-200 overflow-hidden shadow-sm flex-1 flex relative min-h-[200px]">
         {/* Placeholder for dashboard screenshot */}
-        <div className="absolute inset-0 bg-gray-50 flex items-center justify-center text-gray-300">
-          Dashboard Image
-        </div>
-      </div>
+        <img src="/d.png" alt="icon" className="w-full h-full object-cover" />
+      
     </div>
   );
 }
 
-function Step4Content() {
-  return (
-    <div className="grid grid-cols-1 md:grid-cols-2 grid-rows-2 gap-4 h-full">
-      {/* Top Left */}
-      <div className="bg-[#F8F9FA] rounded-2xl p-6 border border-gray-100 flex flex-col justify-center">
-        <h3 className="text-lg font-normal text-[#1C1C1D] mb-2">Lorem ipsum dolor</h3>
-        <p className="text-[#65656D] mb-4 text-xs leading-relaxed">
-          Lorem ipsum dolor sit amet consectetur. Sagittis eu vel habitant cursus. 
-          Elementum suscipit donec viverra posuere at lorem nullam. Porttitor mauris morbi 
-          tincidunt enim nascetur sed.
-        </p>
-        <div>
-          <button className="inline-flex items-center gap-2 bg-[#00A0E3] text-white px-4 py-2 rounded-full text-xs font-medium hover:bg-[#0088CC] transition-colors">
-            Explore Now <ArrowRight className="w-3.5 h-3.5" />
-          </button>
-        </div>
+  function Step4Content() {
+    return (
+        <div className="grid grid-cols-1 md:grid-cols-2 grid-rows-2 gap-4 h-full">
+        {/* Top Left */}
+          <div className="box-border flex h-full flex-col items-start justify-between gap-[18px] rounded-[14px] border border-[#ECECEC] bg-[#F8F8F8] p-6">
+            <div className="flex flex-col items-start gap-3 self-stretch">
+              <h3 className="text-[24px] font-medium leading-[110%] text-[#1C1C1D]">
+                Lorem ipsum dolor
+              </h3>
+              <p className="text-[16px] font-normal leading-[120%] text-[#78788D]">
+                Lorem ipsum dolor sit amet consectetur. Sagittis eu vel habitant cursus.
+                Elementum suscipit donec viverra posuere at lorem nullam. Porttitor mauris morbi
+                tincidunt enim nascetur sed.
+              </p>
+            </div>
+            <button className="inline-flex h-12 w-[162px] items-center justify-center gap-1.5 rounded-full bg-[#00A0E3] px-3 text-[16px] font-medium leading-[120%] text-white transition-colors hover:bg-[#0088CC]">
+              <span className="text-center">Explore Now</span>
+              <ArrowRight className="h-5 w-5 shrink-0 text-white" />
+            </button>
+          </div>
+        {/* Top Right */}
+          <div className="box-border flex h-full flex-col items-start justify-between gap-[18px] rounded-[14px] border border-[#ECECEC] bg-[#F8F8F8] p-6">
+            <div className="flex flex-col items-start gap-3 self-stretch">
+              <h3 className="text-[24px] font-medium leading-[110%] text-[#1C1C1D]">
+                Lorem ipsum dolor
+              </h3>
+              <p className="text-[16px] font-normal leading-[120%] text-[#78788D]">
+                Lorem ipsum dolor sit amet consectetur. Sagittis eu vel habitant cursus.
+                Elementum suscipit donec viverra posuere at lorem nullam. Porttitor mauris morbi
+                tincidunt enim nascetur sed.
+              </p>
+            </div>
+            <button className="inline-flex h-12 w-[162px] items-center justify-center gap-1.5 rounded-full bg-[#00A0E3] px-3 text-[16px] font-medium leading-[120%] text-white transition-colors hover:bg-[#0088CC]">
+              <span className="text-center">Explore Now</span>
+              <ArrowRight className="h-5 w-5 shrink-0 text-white" />
+            </button>
+          </div>
+        {/* Bottom Left */}
+          <div className="box-border flex h-full flex-col items-start justify-between gap-[18px] rounded-[14px] border border-[#ECECEC] bg-[#F8F8F8] p-6">
+            <div className="flex flex-col items-start gap-3 self-stretch">
+              <h3 className="text-[24px] font-medium leading-[110%] text-[#1C1C1D]">
+                Lorem ipsum dolor
+              </h3>
+              <p className="text-[16px] font-normal leading-[120%] text-[#78788D]">
+                Lorem ipsum dolor sit amet consectetur. Sagittis eu vel habitant cursus.
+                Elementum suscipit donec viverra posuere at lorem nullam. Porttitor mauris morbi
+                tincidunt enim nascetur sed.
+              </p>
+            </div>
+            <button className="inline-flex h-12 w-[162px] items-center justify-center gap-1.5 rounded-full bg-[#00A0E3] px-3 text-[16px] font-medium leading-[120%] text-white transition-colors hover:bg-[#0088CC]">
+              <span className="text-center">Explore Now</span>
+              <ArrowRight className="h-5 w-5 shrink-0 text-white" />
+            </button>
+          </div>
+        {/* Bottom Right */}
+          <div className="box-border flex h-full flex-col items-start justify-between gap-[18px] rounded-[14px] border border-[#ECECEC] bg-[#F8F8F8] p-6">
+            <div className="flex flex-col items-start gap-3 self-stretch">
+              <h3 className="text-[24px] font-medium leading-[110%] text-[#1C1C1D]">
+                Lorem ipsum dolor
+              </h3>
+              <p className="text-[16px] font-normal leading-[120%] text-[#78788D]">
+                Lorem ipsum dolor sit amet consectetur. Sagittis eu vel habitant cursus.
+                Elementum suscipit donec viverra posuere at lorem nullam. Porttitor mauris morbi
+                tincidunt enim nascetur sed.
+              </p>
+            </div>
+            <button className="inline-flex h-12 w-[162px] items-center justify-center gap-1.5 rounded-full bg-[#00A0E3] px-3 text-[16px] font-medium leading-[120%] text-white transition-colors hover:bg-[#0088CC]">
+              <span className="text-center">Explore Now</span>
+              <ArrowRight className="h-5 w-5 shrink-0 text-white" />
+            </button>
+          </div>
       </div>
-      {/* Top Right */}
-      <div className="bg-[#F8F9FA] rounded-2xl p-6 border border-gray-100 flex flex-col justify-center">
-        <h3 className="text-lg font-normal text-[#1C1C1D] mb-2">Lorem ipsum dolor</h3>
-        <p className="text-[#65656D] mb-4 text-xs leading-relaxed">
-          Lorem ipsum dolor sit amet consectetur. Sagittis eu vel habitant cursus. 
-          Elementum suscipit donec viverra posuere at lorem nullam. Porttitor mauris morbi 
-          tincidunt enim nascetur sed.
-        </p>
-        <div>
-          <button className="inline-flex items-center gap-2 bg-[#00A0E3] text-white px-4 py-2 rounded-full text-xs font-medium hover:bg-[#0088CC] transition-colors">
-            Explore Now <ArrowRight className="w-3.5 h-3.5" />
-          </button>
-        </div>
-      </div>
-      {/* Bottom Left */}
-      <div className="bg-[#F8F9FA] rounded-2xl p-6 border border-gray-100 flex flex-col justify-between">
-        <div>
-          <h3 className="text-lg font-normal text-[#1C1C1D] mb-2">Lorem ipsum dolor</h3>
-          <p className="text-[#65656D] text-xs leading-relaxed">
-            Lorem ipsum dolor sit amet consectetur. Sagittis eu vel habitant cursus. 
-            Elementum suscipit donec viverra posuere at lorem nullam. Porttitor mauris morbi 
-            tincidunt enim nascetur sed.
-          </p>
-        </div>
-        <div>
-          <button className="inline-flex items-center gap-2 bg-[#00A0E3] text-white px-4 py-2 rounded-full text-xs font-medium hover:bg-[#0088CC] transition-colors">
-            Explore Now <ArrowRight className="w-3.5 h-3.5" />
-          </button>
-        </div>
-      </div>
-      {/* Bottom Right */}
-      <div className="bg-[#F8F9FA] rounded-2xl p-6 border border-gray-100 flex flex-col justify-between">
-        <div>
-          <h3 className="text-lg font-normal text-[#1C1C1D] mb-2">Lorem ipsum dolor</h3>
-          <p className="text-[#65656D] text-xs leading-relaxed">
-            Lorem ipsum dolor sit amet consectetur. Sagittis eu vel habitant cursus. 
-            Elementum suscipit donec viverra posuere at lorem nullam. Porttitor mauris morbi 
-            tincidunt enim nascetur sed.
-          </p>
-        </div>
-        <div>
-          <button className="inline-flex items-center gap-2 bg-[#00A0E3] text-white px-4 py-2 rounded-full text-xs font-medium hover:bg-[#0088CC] transition-colors">
-            Explore Now <ArrowRight className="w-3.5 h-3.5" />
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-}
+    );
+  }
 
 function Step5Content() {
   return (
     <div className="flex flex-col gap-4 h-full">
       {/* Top Card */}
-      <div className="bg-[#F8F9FA] rounded-2xl p-6 border border-gray-100 flex flex-col justify-between flex-1">
-        <div>
-          <h3 className="text-lg font-normal text-[#1C1C1D] mb-3">Lorem ipsum dolor</h3>
-          <p className="text-[#65656D] text-xs leading-relaxed">
-            Lorem ipsum dolor sit amet consectetur. Sagittis eu vel habitant cursus. 
-            Elementum suscipit donec viverra posuere at lorem nullam. Porttitor mauris morbi 
-            tincidunt enim nascetur sed. Eu neque sagittis in gravida elementum. Semper tempor 
+      <div className="box-border flex h-full flex-col items-start justify-between gap-[18px] rounded-[14px] border border-[#ECECEC] bg-[#F8F8F8] p-6">
+        <div className="flex flex-col items-start gap-3 self-stretch">
+          <h3 className="text-[24px] font-medium leading-[110%] text-[#1C1C1D]">
+            Lorem ipsum dolor
+          </h3>
+          <p className="text-[16px] font-normal leading-[120%] text-[#78788D]">
+            Lorem ipsum dolor sit amet consectetur. Sagittis eu vel habitant cursus.
+            Elementum suscipit donec viverra posuere at lorem nullam. Porttitor mauris morbi
+            tincidunt enim nascetur sed. Eu neque sagittis in gravida elementum. Semper tempor
             viverra senectus eget enim purus enim congue.
           </p>
         </div>
-        <div className="mt-6">
-          <button className="inline-flex items-center gap-2 bg-[#00A0E3] text-white px-4 py-2 rounded-full text-xs font-medium hover:bg-[#0088CC] transition-colors">
-            Explore Now <ArrowRight className="w-3.5 h-3.5" />
-          </button>
-        </div>
+        <button className="inline-flex h-12 w-[162px] items-center justify-center gap-1.5 rounded-full bg-[#00A0E3] px-3 text-[16px] font-medium leading-[120%] text-white transition-colors hover:bg-[#0088CC]">
+          <span className="text-center">Explore Now</span>
+          <ArrowRight className="h-5 w-5 shrink-0 text-white" />
+        </button>
       </div>
       
       {/* Bottom Card */}
-      <div className="bg-[#F8F9FA] rounded-2xl p-6 border border-gray-100 flex flex-col justify-between flex-1">
-        <div>
-          <h3 className="text-lg font-normal text-[#1C1C1D] mb-3">Lorem ipsum dolor</h3>
-          <p className="text-[#65656D] text-xs leading-relaxed">
-            Lorem ipsum dolor sit amet consectetur. Sagittis eu vel habitant cursus. 
-            Elementum suscipit donec viverra posuere at lorem nullam. Porttitor mauris morbi 
-            tincidunt enim nascetur sed. Eu neque sagittis in gravida elementum. Semper tempor 
+      <div className="box-border flex h-full flex-col items-start justify-between gap-[18px] rounded-[14px] border border-[#ECECEC] bg-[#F8F8F8] p-6">
+        <div className="flex flex-col items-start gap-3 self-stretch">
+          <h3 className="text-[24px] font-medium leading-[110%] text-[#1C1C1D]">
+            Lorem ipsum dolor
+          </h3>
+          <p className="text-[16px] font-normal leading-[120%] text-[#78788D]">
+            Lorem ipsum dolor sit amet consectetur. Sagittis eu vel habitant cursus.
+            Elementum suscipit donec viverra posuere at lorem nullam. Porttitor mauris morbi
+            tincidunt enim nascetur sed. Eu neque sagittis in gravida elementum. Semper tempor
             viverra senectus eget enim purus enim congue.
           </p>
         </div>
-        <div className="mt-6">
-          <button className="inline-flex items-center gap-2 bg-[#00A0E3] text-white px-4 py-2 rounded-full text-xs font-medium hover:bg-[#0088CC] transition-colors">
-            Explore Now <ArrowRight className="w-3.5 h-3.5" />
-          </button>
-        </div>
+        <button className="inline-flex h-12 w-[162px] items-center justify-center gap-1.5 rounded-full bg-[#00A0E3] px-3 text-[16px] font-medium leading-[120%] text-white transition-colors hover:bg-[#0088CC]">
+          <span className="text-center">Explore Now</span>
+          <ArrowRight className="h-5 w-5 shrink-0 text-white" />
+        </button>
       </div>
     </div>
   );
@@ -326,27 +333,43 @@ function Step6Content() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 h-full">
       {[1, 2].map((i) => (
-        <div key={i} className="bg-[#F8F9FA] rounded-2xl p-6 border border-gray-100 flex flex-col justify-between h-full">
-          <div>
-            <h3 className="text-lg font-normal text-[#1C1C1D] mb-2">Lorem ipsum dolor</h3>
-            <p className="text-[#65656D] mb-4 text-xs leading-relaxed">
-              Lorem ipsum dolor sit amet consectetur. Sagittis eu vel habitant cursus. 
-              Elementum suscipit donec viverra posuere at lorem nullam. Porttitor mauris morbi 
+        <div
+          key={i}
+          className="box-border flex h-full min-h-[538px] flex-col items-start gap-[18px] rounded-[14px] border border-[#ECECEC] bg-[#F8F8F8] p-6"
+        >
+          <div className="flex w-full flex-col items-start gap-3 self-stretch">
+            <h3 className="text-[24px] font-medium leading-[110%] text-[#1C1C1D]">
+              Lorem ipsum dolor
+            </h3>
+            <p className="text-[16px] font-normal leading-[120%] text-[#78788D]">
+              Lorem ipsum dolor sit amet consectetur. Sagittis eu vel habitant cursus.
+              Elementum suscipit donec viverra posuere at lorem nullam. Porttitor mauris morbi
               tincidunt enim nascetur sed.
             </p>
-            <div className="space-y-1.5">
-               {['Lorem ipsum consectetur adipiscing', 'sed do eiusmod tempor', 'amet, consectetur adipiscing elit.', 'Lorem ipsum dolor sit'].map((feat, idx) => (
-                  <div key={idx} className="flex items-center gap-1.5 text-xs text-[#65656D]">
-                    <Check className="w-3 h-3 text-gray-400 shrink-0" /> <span className="truncate">{feat}</span>
-                  </div>
-                ))}
-            </div>
           </div>
-          <div className="mt-5">
-            <button className="inline-flex items-center gap-2 bg-[#00A0E3] text-white px-4 py-2 rounded-full text-xs font-medium hover:bg-[#0088CC] transition-colors">
-              Explore Now <ArrowRight className="w-3.5 h-3.5" />
-            </button>
+
+          <div className="h-px w-full bg-[#E7E7E9]" />
+
+          <div className="flex w-full flex-1 flex-col items-start gap-3 self-stretch">
+            {[
+              'Lorem ipsum consectetur adipiscing',
+              'sed do eiusmod tempor',
+              'amet, consectetur adipiscing elit.',
+              'Lorem ipsum dolor sit',
+            ].map((feat, idx) => (
+              <div key={idx} className="flex w-full items-center gap-1.5">
+                <Check className="h-[18px] w-[18px] shrink-0 text-[#78788D]" />
+                <span className="text-[16px] font-normal leading-[120%] text-[#78788D]">
+                  {feat}
+                </span>
+              </div>
+            ))}
           </div>
+
+          <button className="inline-flex h-12 w-[162px] items-center justify-center gap-1.5 rounded-full bg-[#00A0E3] px-3 text-[16px] font-medium leading-[120%] text-white transition-colors hover:bg-[#0088CC]">
+            <span className="text-center">Explore Now</span>
+            <ArrowRight className="h-5 w-5 shrink-0 text-white" />
+          </button>
         </div>
       ))}
     </div>

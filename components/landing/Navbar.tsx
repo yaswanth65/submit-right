@@ -53,12 +53,25 @@ export function Navbar() {
     const handleResize = () => {
       if (window.innerWidth >= 768) {
         setIsMobileOpen(false);
+        setIsMobileServicesOpen(false);
       }
     };
 
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  useEffect(() => {
+    if (!isMobileOpen) {
+      document.body.style.overflow = "";
+      return;
+    }
+
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isMobileOpen]);
 
   return (
     <>
@@ -229,101 +242,127 @@ export function Navbar() {
           </button>
         </div>
 
-        <div className={`md:hidden fixed top-[76px] left-0 right-0 z-40 transition-all duration-300 ${isMobileOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}>
-          <nav className="grid gap-1 rounded-2xl border border-[#DDE8F2] bg-white/90 backdrop-blur p-2 shadow-[0_12px_30px_rgba(8,34,56,0.08)] mx-4 mt-2 max-h-[calc(100vh-80px)] overflow-y-auto custom-scrollbar">
-            {navLinks.map((item) => {
-              if (item.label === "Services") {
-                return (
-                  <div key={item.href} className="grid">
-                    <button
-                      onClick={() => setIsMobileServicesOpen(!isMobileServicesOpen)}
-                      className="w-full flex items-center justify-between text-[14px] font-medium text-[#1C1C1D] px-3 py-2.5 rounded-xl hover:bg-[#F2F8FC] hover:text-[#00A0E3] transition-colors"
-                    >
-                      {item.label}
-                      <svg className={`w-4 h-4 transition-transform duration-300 ${isMobileServicesOpen ? "rotate-180 text-[#00A0E3]" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
-                    </button>
-                    {/* Mobile Services Accordion */}
-                    <div className={`overflow-hidden transition-all duration-300 ${isMobileServicesOpen ? "max-h-[700px] mt-1" : "max-h-0"}`}>
-                      <div className="pl-6 pr-2 py-2 flex flex-col gap-5 border-l-2 border-[#DDE8F2] ml-4 bg-[#F8FBFF] rounded-r-xl">
-                        
-                        <div>
-                          <h4 className="text-[13px] font-medium text-[#1C1C1D] mb-2 uppercase tracking-wide">English Editing</h4>
-                          <div className="flex flex-col gap-2">
-                            <Link href="/services/language-clarity" onClick={() => setIsMobileOpen(false)} className="text-[12px] text-[#78788D] hover:text-[#00A0E3]">Language Clarity</Link>
-                            <Link href="/services/publication-ready" onClick={() => setIsMobileOpen(false)} className="text-[12px] text-[#78788D] hover:text-[#00A0E3]">Publication-Ready</Link>
-                            <Link href="/services/high-impact" onClick={() => setIsMobileOpen(false)} className="text-[12px] text-[#78788D] hover:text-[#00A0E3]">High-Impact</Link>
-                          </div>
+        {isMobileOpen && <div className="md:hidden fixed inset-0 top-[64px] bg-black/45 z-40" onClick={() => { setIsMobileOpen(false); setIsMobileServicesOpen(false); }} />}
+
+        <div className={`md:hidden fixed top-[64px] right-0 z-50 h-[calc(100dvh-64px)] w-[min(86vw,420px)] bg-white shadow-[0_20px_60px_rgba(0,0,0,0.16)] border-l border-[#EAECEF] transition-transform duration-300 ease-out overflow-y-auto ${isMobileOpen ? "translate-x-0" : "translate-x-full pointer-events-none"}`}>
+          <nav className="px-5 py-5">
+            <div className="space-y-0">
+              {navLinks.map((item) => {
+                if (item.label === "Services") {
+                  return (
+                    <div key={item.href} className="py-4 border-b border-[#EEF2F6]">
+                      <button
+                        onClick={() => setIsMobileServicesOpen((prev) => !prev)}
+                        className="w-full flex items-center justify-between text-left text-[18px] font-semibold text-[#1C1C1D]"
+                      >
+                        <span>Services</span>
+                        <svg className={`w-5 h-5 transition-transform duration-300 ${isMobileServicesOpen ? "rotate-180" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                        </svg>
+                      </button>
+
+                      <div className={`overflow-hidden transition-[max-height,opacity] duration-300 ${isMobileServicesOpen ? "max-h-[1200px] opacity-100 mt-4" : "max-h-0 opacity-0"}`}>
+                        <div className="rounded-[24px] bg-gradient-to-br from-[#0A8BC2] to-[#005F87] p-6 text-white">
+                          <h3 className="text-[28px] leading-[1.1] font-medium tracking-[-0.02em] max-w-[250px]">
+                            Lorem ipsum dolor sit amet
+                          </h3>
+                          <p className="mt-4 text-[15px] leading-[1.45] text-white/70 max-w-[250px]">
+                            Lorem ipsum dolor sit amet consectetur. Sagittis eu vel habitant cursus Elementum suscipit donec viverra posuere
+                          </p>
+                          <Link
+                            href="/services"
+                            onClick={() => { setIsMobileOpen(false); setIsMobileServicesOpen(false); }}
+                            className="mt-8 inline-flex h-14 w-full items-center justify-center rounded-full bg-white text-[18px] font-medium text-[#0A4361]"
+                          >
+                            Create Account
+                          </Link>
                         </div>
 
-                        <div>
-                          <h4 className="text-[13px] font-medium text-[#1C1C1D] mb-2 uppercase tracking-wide">Academic</h4>
-                          <div className="flex flex-col gap-2">
-                            <Link href="/services/thesis-excellence" onClick={() => setIsMobileOpen(false)} className="text-[12px] text-[#78788D] hover:text-[#00A0E3]">Thesis Excellence</Link>
-                            <Link href="/services/abstract-precision" onClick={() => setIsMobileOpen(false)} className="text-[12px] text-[#78788D] hover:text-[#00A0E3]">Abstract Precision</Link>
-                            <Link href="/services/conference-ready" onClick={() => setIsMobileOpen(false)} className="text-[12px] text-[#78788D] hover:text-[#00A0E3]">Conference-Ready</Link>
-                            <Link href="/services/case-report" onClick={() => setIsMobileOpen(false)} className="text-[12px] text-[#78788D] hover:text-[#00A0E3]">Case Report</Link>
+                        <div className="mt-5 space-y-4">
+                          <div>
+                            <h4 className="text-[16px] font-medium text-[#1C1C1D] mb-2">English Editing Services</h4>
+                            <div className="space-y-2 text-[16px] leading-[1.45] text-[#78788D]">
+                              <Link href="/services/language-clarity" onClick={() => { setIsMobileOpen(false); setIsMobileServicesOpen(false); }} className="block">Language Clarity Editing</Link>
+                              <Link href="/services/publication-ready" onClick={() => { setIsMobileOpen(false); setIsMobileServicesOpen(false); }} className="block">Publication-Ready Editing</Link>
+                              <Link href="/services/high-impact" onClick={() => { setIsMobileOpen(false); setIsMobileServicesOpen(false); }} className="block">High-Impact Editing</Link>
+                            </div>
                           </div>
-                        </div>
 
-                        <div>
-                          <h4 className="text-[13px] font-medium text-[#1C1C1D] mb-2 uppercase tracking-wide">Visual & Research</h4>
-                          <div className="flex flex-col gap-2">
-                            <Link href="/services/graphical-abstract" onClick={() => setIsMobileOpen(false)} className="text-[12px] text-[#78788D] hover:text-[#00A0E3]">Graphical Abstract</Link>
-                            <Link href="/services/artwork-preparation" onClick={() => setIsMobileOpen(false)} className="text-[12px] text-[#78788D] hover:text-[#00A0E3]">Artwork Preparation</Link>
-                            <Link href="/services/research-promotion" onClick={() => setIsMobileOpen(false)} className="text-[12px] text-[#78788D] hover:text-[#00A0E3]">Research Promotion</Link>
+                          <div>
+                            <h4 className="text-[16px] font-medium text-[#1C1C1D] mb-2">Visual & Research Services</h4>
+                            <div className="space-y-2 text-[16px] leading-[1.45] text-[#78788D]">
+                              <Link href="/services/graphical-abstract" onClick={() => { setIsMobileOpen(false); setIsMobileServicesOpen(false); }} className="block">Graphical Abstract Design</Link>
+                              <Link href="/services/artwork-preparation" onClick={() => { setIsMobileOpen(false); setIsMobileServicesOpen(false); }} className="block">Artwork Preparation</Link>
+                              <Link href="/services/research-promotion" onClick={() => { setIsMobileOpen(false); setIsMobileServicesOpen(false); }} className="block">Research Promotion</Link>
+                            </div>
                           </div>
-                        </div>
 
-                        <div>
-                          <h4 className="text-[13px] font-medium text-[#1C1C1D] mb-2 uppercase tracking-wide">Scientific Writing</h4>
-                          <div className="flex flex-col gap-2">
-                            <Link href="/services/scientific-writing" onClick={() => setIsMobileOpen(false)} className="text-[12px] text-[#78788D] hover:text-[#00A0E3]">Scientific Writing Package</Link>
-                            <Link href="/services/systematic-review" onClick={() => setIsMobileOpen(false)} className="text-[12px] text-[#78788D] hover:text-[#00A0E3]">Systematic Review Package</Link>
-                            <Link href="/services/meta-analysis" onClick={() => setIsMobileOpen(false)} className="text-[12px] text-[#78788D] hover:text-[#00A0E3]">Meta-Analysis Package</Link>
-                            <Link href="/services/full-review-writing" onClick={() => setIsMobileOpen(false)} className="text-[12px] text-[#78788D] hover:text-[#00A0E3]">Full Review + Writing</Link>
+                          <div>
+                            <h4 className="text-[16px] font-medium text-[#1C1C1D] mb-2">Scientific Writing & Reviews</h4>
+                            <div className="space-y-2 text-[16px] leading-[1.45] text-[#78788D]">
+                              <Link href="/services/scientific-writing" onClick={() => { setIsMobileOpen(false); setIsMobileServicesOpen(false); }} className="block">Scientific Writing Package</Link>
+                              <Link href="/services/systematic-review" onClick={() => { setIsMobileOpen(false); setIsMobileServicesOpen(false); }} className="block">Systematic Review Package</Link>
+                              <Link href="/services/meta-analysis" onClick={() => { setIsMobileOpen(false); setIsMobileServicesOpen(false); }} className="block">Meta-Analysis Package</Link>
+                              <Link href="/services/full-review-writing" onClick={() => { setIsMobileOpen(false); setIsMobileServicesOpen(false); }} className="block">Full Review + Writing</Link>
+                            </div>
+                          </div>
+
+                          <div>
+                            <h4 className="text-[16px] font-medium text-[#1C1C1D] mb-2">Other Academic Services</h4>
+                            <div className="space-y-2 text-[16px] leading-[1.45] text-[#78788D]">
+                              <Link href="/services/thesis-excellence" onClick={() => { setIsMobileOpen(false); setIsMobileServicesOpen(false); }} className="block">Thesis Excellence Editing</Link>
+                              <Link href="/services/abstract-precision" onClick={() => { setIsMobileOpen(false); setIsMobileServicesOpen(false); }} className="block">Abstract Precision Editing</Link>
+                              <Link href="/services/conference-ready" onClick={() => { setIsMobileOpen(false); setIsMobileServicesOpen(false); }} className="block">Conference-Ready Support</Link>
+                              <Link href="/services/case-report" onClick={() => { setIsMobileOpen(false); setIsMobileServicesOpen(false); }} className="block">Case Report Enhancement</Link>
+                              <Link href="/services/peer-review" onClick={() => { setIsMobileOpen(false); setIsMobileServicesOpen(false); }} className="block">Pre-Submission Peer Review</Link>
+                              <Link href="/services/literature-search" onClick={() => { setIsMobileOpen(false); setIsMobileServicesOpen(false); }} className="block">Literature Search Support</Link>
+                              <Link href="/services/plagiarism-check" onClick={() => { setIsMobileOpen(false); setIsMobileServicesOpen(false); }} className="block">Plagiarism Check & Report</Link>
+                              <Link href="/services/professional-proofreading" onClick={() => { setIsMobileOpen(false); setIsMobileServicesOpen(false); }} className="block">Professional Proofreading</Link>
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
+                  );
+                }
+
+                return (
+                  <div key={item.href} className="py-4 border-b border-[#EEF2F6] last:border-b-0">
+                    <Link
+                      href={item.href}
+                      onClick={() => { setIsMobileOpen(false); setIsMobileServicesOpen(false); }}
+                      className="block text-[18px] font-medium text-[#6F7078] hover:text-[#1C1C1D] transition-colors"
+                    >
+                      {item.label}
+                    </Link>
                   </div>
                 );
-              }
-
-              return (
-              <Link
-                key={item.href}
-                href={item.href}
-                onClick={() => setIsMobileOpen(false)}
-                className="text-[14px] font-medium text-[#1C1C1D] px-3 py-2.5 rounded-xl hover:bg-[#F2F8FC] hover:text-[#00A0E3] transition-colors"
-              >
-                {item.label}
-              </Link>
-              );
-            })}
+              })}
+            </div>
           </nav>
 
-          <div className="mt-3">
+          <div className="px-5 pb-6 pt-2">
             {cta.isLoggedIn ? (
               <Link
                 href={cta.dashboardPath}
-                onClick={() => setIsMobileOpen(false)}
-                className="inline-flex w-full items-center justify-center px-6 py-2.5 bg-[#00A0E3] text-white text-[14px] font-medium rounded-full hover:bg-[#0189C2] transition-colors"
+                onClick={() => { setIsMobileOpen(false); setIsMobileServicesOpen(false); }}
+                className="inline-flex w-full items-center justify-center h-12 rounded-full bg-[#00A0E3] text-white text-[14px] font-medium"
               >
                 Dashboard
               </Link>
             ) : (
-              <div className="grid grid-cols-2 gap-2">
+              <div className="grid grid-cols-2 gap-3">
                 <Link
                   href="/signin"
-                  onClick={() => setIsMobileOpen(false)}
-                  className="inline-flex items-center justify-center px-4 py-2.5 border border-[#00A0E3] text-[#00A0E3] text-[14px] font-medium rounded-full hover:bg-[#EFF7FB] transition-colors"
+                  onClick={() => { setIsMobileOpen(false); setIsMobileServicesOpen(false); }}
+                  className="inline-flex items-center justify-center h-12 border border-[#00A0E3] text-[#00A0E3] text-[14px] font-medium rounded-full"
                 >
                   Log In
                 </Link>
                 <Link
                   href="/signup"
-                  onClick={() => setIsMobileOpen(false)}
-                  className="inline-flex items-center justify-center px-4 py-2.5 bg-[#00A0E3] text-white text-[14px] font-medium rounded-full hover:bg-[#0189C2] transition-colors"
+                  onClick={() => { setIsMobileOpen(false); setIsMobileServicesOpen(false); }}
+                  className="inline-flex items-center justify-center h-12 bg-[#00A0E3] text-white text-[14px] font-medium rounded-full"
                 >
                   Create Account
                 </Link>

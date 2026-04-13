@@ -302,7 +302,7 @@ export default function DocumentDetailsPage() {
 
   return (
     <div className="space-y-5 animate-in fade-in duration-500 w-full font-dm-sans pb-10">
-      <div className="flex items-center justify-between mt-2">
+      <div className="-mx-6 lg:-mx-8 px-6 lg:px-8 py-3 border-b border-[#EAECF0] bg-white flex items-center justify-between gap-4 flex-wrap">
         <div className="flex items-center space-x-4">
           <Link href="/admin/documents" className="text-[#A0AAB5] hover:text-[#525866] transition-colors p-1.5 -ml-1.5 rounded-lg hover:bg-[#F9FAFB]"><ArrowLeft strokeWidth={2.5} className="w-[18px] h-[18px]" /></Link>
           <div className="text-[20px] font-bold text-[#171717]">Document Details</div>

@@ -163,7 +163,7 @@ export default function AdminTicketDetailPage() {
 
   return (
     <div className="space-y-6 animate-in fade-in duration-500 w-full font-dm-sans">
-      <div className="flex items-center justify-between gap-4 flex-wrap mt-2">
+      <div className="-mx-6 lg:-mx-8 px-6 lg:px-8 py-3 border-b border-[#EAECF0] bg-white flex items-center justify-between gap-4 flex-wrap">
         <div>
           <div className="text-[20px] font-bold text-[#171717] leading-tight">Ticket Details</div>
           <p className="text-[14px] text-[#525866] mt-1">Review and resolve this support request.</p>
@@ -172,8 +172,6 @@ export default function AdminTicketDetailPage() {
           <ArrowLeft className="w-4 h-4" /> Back to Tickets
         </Link>
       </div>
-
-      <div className="mx-auto w-[98%] h-px bg-[#EAECF0]" />
 
       {error ? (
         <div className="rounded-[10px] border border-[#FECACA] bg-[#FEF2F2] px-4 py-3 text-[13px] text-[#B91C1C]">{error}</div>

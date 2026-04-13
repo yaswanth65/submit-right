@@ -21,7 +21,7 @@ export function Footer() {
   ];
 
   return (
-    <footer className="bg-[#1C1C1D] mt-[-2px] relative z-10">
+    <footer className="bg-[#1C1C1D]  relative z-10">
       <div className="landing-shell">
         {/* Main Footer Container - Figma: flex column, gap 78px, padding-top 200px, padding-bottom 34px */}
         <div className="flex flex-col gap-[78px] py-20 lg:py-[200px] lg:pb-[34px]">

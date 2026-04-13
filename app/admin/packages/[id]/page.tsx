@@ -1,95 +1,24 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
-import { ArrowLeft, Pencil, X } from "lucide-react";
+import { ArrowLeft, Pencil } from "lucide-react";
+import { useParams } from "next/navigation";
+import { apiGet } from "@/lib/client-api";
+import { CatalogItemModal, type CatalogItemCard } from "../../catalog/components/CatalogItemModal";
 
-// Form modal component
-function EditModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
-  if (!isOpen) return null;
-
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
-      <div className="bg-white rounded-[16px] shadow-xl w-full max-w-[600px] overflow-hidden flex flex-col max-h-[90vh]">
-        <div className="px-6 py-4 border-b border-[#EAECF0] flex items-center justify-between">
-          <h2 className="text-[18px] font-medium text-[#1C1C1D] font-inter">Edit Package Details</h2>
-          <button onClick={onClose} className="p-1.5 text-[#A0AAB5] hover:text-[#525866] hover:bg-[#F9FAFB] rounded-md transition-colors">
-            <X className="w-5 h-5" />
-          </button>
-        </div>
-        
-        <div className="p-6 overflow-y-auto flex-1 font-dm-sans">
-          <div className="mb-6">
-            <label className="block text-[14px] font-medium text-[#171717] mb-2">Thumbnail</label>
-            <div className="relative rounded-[12px] overflow-hidden border border-[#EAECF0] bg-[#F9FAFB] shrink-0 inline-block">
-              <img 
-                src="https://images.unsplash.com/photo-1499750310107-5fef28a66643?q=80&w=2670&auto=format&fit=crop" 
-                alt="Package thumbnail" 
-                className="w-full max-w-[400px] h-[240px] object-cover"
-              />
-              <button className="absolute top-3 right-3 bg-red-500 text-white rounded-full p-1 shadow-sm hover:bg-red-600 transition-colors">
-                <X className="w-4 h-4" />
-              </button>
-            </div>
-          </div>
-          
-          <div className="space-y-5">
-            <div>
-              <label className="block text-[14px] font-medium text-[#171717] mb-1.5">Package Name</label>
-              <input 
-                type="text" 
-                defaultValue="Essential Support"
-                className="w-full px-3 py-2.5 border border-[#EAECF0] rounded-[8px] text-[14px] text-[#171717] focus:outline-none focus:ring-1 focus:ring-[#00A0E3] focus:border-[#00A0E3]" 
-              />
-            </div>
-            
-            <div>
-              <label className="block text-[14px] font-medium text-[#171717] mb-1.5">Package Price</label>
-              <input 
-                type="text" 
-                defaultValue="₹5,800"
-                className="w-full px-3 py-2.5 border border-[#EAECF0] rounded-[8px] text-[14px] text-[#171717] focus:outline-none focus:ring-1 focus:ring-[#00A0E3] focus:border-[#00A0E3]" 
-              />
-            </div>
-            
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className="block text-[14px] font-medium text-[#171717] mb-1.5">Domain Type</label>
-                <select className="w-full px-3 py-2.5 border border-[#EAECF0] rounded-[8px] text-[14px] text-[#171717] focus:outline-none focus:ring-1 focus:ring-[#00A0E3] focus:border-[#00A0E3] bg-white appearance-none">
-                  <option value="Editing" selected>Editing</option>
-                  <option value="Translation">Translation</option>
-                  <option value="Proofreading">Proofreading</option>
-                </select>
-              </div>
-              
-              <div>
-                <label className="block text-[14px] font-medium text-[#171717] mb-1.5">Availability Status</label>
-                <select className="w-full px-3 py-2.5 border border-[#EAECF0] rounded-[8px] text-[14px] text-[#171717] focus:outline-none focus:ring-1 focus:ring-[#00A0E3] focus:border-[#00A0E3] bg-white appearance-none">
-                  <option value="Active" selected>Active</option>
-                  <option value="Unactive">Unactive</option>
-                </select>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <div className="px-6 py-4 border-t border-[#EAECF0] flex justify-between items-center bg-white">
-          <button 
-            onClick={onClose}
-            className="px-5 py-2.5 border border-[#EAECF0] rounded-[8px] text-[14px] font-medium text-[#525866] hover:bg-[#F9FAFB] transition-colors"
-          >
-            Cancel
-          </button>
-          <button className="px-5 py-2.5 bg-[#00A0E3] hover:bg-[#008CC7] text-white rounded-[8px] text-[14px] font-medium shadow-sm transition-colors">
-            Save Changes
-          </button>
-        </div>
-      </div>
-    </div>
-  );
+function formatCurrency(value: number | null) {
+  if (value == null) return "-";
+  return `INR ${value.toFixed(2)}`;
 }
 
 export default function PackageDetailsPage() {
+  const params = useParams<{ id: string }>();
+  const itemId = Array.isArray(params?.id) ? params.id[0] : params?.id;
+
+  const [item, setItem] = useState<CatalogItemCard | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [activeTab, setActiveTab] = useState("Landing Page");
   const [activeSection, setActiveSection] = useState("Hero Section");
@@ -107,104 +36,120 @@ export default function PackageDetailsPage() {
     "CTA Banner"
   ];
 
+  const loadItem = useCallback(async () => {
+    if (!itemId) return;
+
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const data = await apiGet<CatalogItemCard>(`/api/admin/catalog/items/${itemId}`);
+      setItem(data);
+    } catch (loadError) {
+      setError(loadError instanceof Error ? loadError.message : "Unable to load package details");
+    } finally {
+      setIsLoading(false);
+    }
+  }, [itemId]);
+
+  useEffect(() => {
+    loadItem();
+  }, [loadItem]);
+
+  const nameValue = item?.title ?? "-";
+  const domainType = item?.domainType ?? item?.category ?? "-";
+  const basePrice = formatCurrency(item?.basePrice ?? null);
+  const status = item?.isActive ? "Active" : "Inactive";
+  const imageUrl =
+    item?.imageUrl ?? "https://images.unsplash.com/photo-1499750310107-5fef28a66643?q=80&w=2670&auto=format&fit=crop";
+
   return (
     <div className="w-full font-dm-sans">
-      <div className="flex items-center text-[13px] text-[#A0AAB5] mb-6">
-        <Link href="/admin/dashboard" className="hover:text-[#171717] transition-colors">Home</Link>
-        <span className="mx-2">&gt;</span>
-        <Link href="/admin/packages" className="hover:text-[#171717] transition-colors">Packages</Link>
-        <span className="mx-2">&gt;</span>
-        <span className="text-[#171717] font-medium">Essential Support</span>
-      </div>
-
-      <div className="flex items-center gap-3 mb-8">
-        <Link 
-          href="/admin/packages"
-          className="p-1.5 flex items-center justify-center text-[#1C1C1D] hover:bg-gray-100 rounded-md transition-colors"
-        >
-          <ArrowLeft className="w-5 h-5" />
+      <div className="mb-8 flex items-center gap-3">
+        <Link href="/admin/packages" className="flex items-center justify-center rounded-md p-1.5 text-[#1C1C1D] hover:bg-gray-100">
+          <ArrowLeft className="h-5 w-5" />
         </Link>
-        <h1 className="text-[24px] font-medium text-[#1C1C1D] font-inter">Essential Support</h1>
+        <div className="font-inter text-[24px] font-medium text-[#1C1C1D]">{isLoading ? "Loading..." : nameValue}</div>
       </div>
 
-      {/* Detail Card top */}
-      <div className="bg-white rounded-[12px] border border-[#EAECF0] shadow-sm mb-6 p-6">
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-[18px] font-bold text-[#1C1C1D] font-inter">Service Details</h2>
-          <button 
+      <div className="mb-6 rounded-[12px] border border-[#EAECF0] bg-white p-6 shadow-sm">
+        <div className="mb-6 flex items-center justify-between">
+          <div className="font-inter text-[18px] font-bold text-[#1C1C1D]">Package Details</div>
+          <button
             onClick={() => setIsEditModalOpen(true)}
-            className="flex items-center gap-1.5 text-[#00A0E3] hover:text-[#008CC7] font-medium text-[14px] transition-colors"
+            disabled={!item || isLoading}
+            className="flex items-center gap-1.5 text-[14px] font-medium text-[#00A0E3] transition-colors hover:text-[#008CC7] disabled:cursor-not-allowed disabled:opacity-50"
           >
-            <Pencil className="w-[14px] h-[14px]" /> Edit
+            <Pencil className="h-[14px] w-[14px]" /> Edit
           </button>
         </div>
 
-        <div className="flex flex-col md:flex-row gap-8">
-          <div className="shrink-0 w-[400px]">
-            <img 
-              src="https://images.unsplash.com/photo-1499750310107-5fef28a66643?q=80&w=2670&auto=format&fit=crop" 
-              alt="Typing on laptop" 
-              className="w-full h-[220px] object-cover rounded-[8px] border border-[#EAECF0] shadow-sm"
-            />
+        {error ? (
+          <div className="rounded-[8px] border border-[#FECACA] bg-[#FEF2F2] px-3 py-2 text-[13px] text-[#B42318]">{error}</div>
+        ) : (
+          <div className="flex flex-col gap-8 md:flex-row">
+            <div className="w-[400px] shrink-0">
+              <img src={imageUrl} alt={nameValue} className="h-[220px] w-full rounded-[8px] border border-[#EAECF0] object-cover shadow-sm" />
+            </div>
+
+            <div className="grid flex-1 grid-cols-1 items-start gap-y-6 md:grid-cols-2">
+              <div>
+                <p className="mb-1 text-[13px] text-[#78788D]">Package Name:</p>
+                <p className="text-[15px] font-medium text-[#1C1C1D]">{nameValue}</p>
+              </div>
+
+              <div className="md:border-l md:border-[#EAECF0] md:pl-6">
+                <p className="mb-1 text-[13px] text-[#78788D]">Domain Type:</p>
+                <p className="text-[15px] font-medium text-[#1C1C1D]">{domainType}</p>
+              </div>
+
+              <div>
+                <p className="mb-1 text-[13px] text-[#78788D]">Package Price:</p>
+                <p className="text-[15px] font-medium text-[#1C1C1D]">{basePrice}</p>
+              </div>
+
+              <div className="md:border-l md:border-[#EAECF0] md:pl-6">
+                <p className="mb-1 text-[13px] text-[#78788D]">Availability Status:</p>
+                <span
+                  className={`inline-flex items-center rounded-full px-3 py-1 text-[12px] font-medium ${
+                    item?.isActive ? "bg-[#ECFDF3] text-[#027A48]" : "bg-[#FEF2F2] text-[#B42318]"
+                  }`}
+                >
+                  {status}
+                </span>
+              </div>
+            </div>
           </div>
-          
-          <div className="flex-1 grid grid-cols-1 md:grid-cols-2 items-start gap-y-6">
-            <div>
-              <p className="text-[13px] text-[#78788D] mb-1">Package Name:</p>
-              <p className="text-[15px] font-medium text-[#1C1C1D]">Essential Support</p>
-            </div>
-            
-            <div className="md:border-l md:border-[#EAECF0] md:pl-6">
-              <p className="text-[13px] text-[#78788D] mb-1">Domain Type:</p>
-              <p className="text-[15px] font-medium text-[#1C1C1D]">Editing</p>
-            </div>
-            
-            <div>
-              <p className="text-[13px] text-[#78788D] mb-1">Package Price:</p>
-              <p className="text-[15px] font-medium text-[#1C1C1D]">₹5,800</p>
-            </div>
-            
-            <div className="md:border-l md:border-[#EAECF0] md:pl-6">
-              <p className="text-[13px] text-[#78788D] mb-1">Availability Status:</p>
-              <span className="inline-flex items-center px-3 py-1 rounded-full text-[12px] font-medium bg-[#ECFDF3] text-[#027A48]">
-                Active
-              </span>
-            </div>
-          </div>
-        </div>
+        )}
       </div>
 
-      {/* Layout Editor Section */}
-      <div className="flex flex-col lg:flex-row gap-6">
-        {/* Left Sidebar */}
-        <div className="w-full lg:w-[320px] bg-white rounded-[12px] border border-[#EAECF0] shadow-sm p-5 shrink-0 h-fit">
-          <h3 className="text-[16px] font-bold text-[#1C1C1D] mb-5">Page Layout</h3>
-          
-          <div className="flex rounded-[8px] bg-[#F5F7FA] p-1 mb-6 border border-[#EAECF0]">
-            {pageLayoutTabs.map(tab => (
+      <div className="flex flex-col gap-6 lg:flex-row">
+        <div className="h-fit w-full shrink-0 rounded-[12px] border border-[#EAECF0] bg-white p-5 shadow-sm lg:w-[320px]">
+          <div className="mb-5 text-[16px] font-bold text-[#1C1C1D]">Page Layout</div>
+
+          <div className="mb-6 flex rounded-[8px] border border-[#EAECF0] bg-[#F5F7FA] p-1">
+            {pageLayoutTabs.map((tab) => (
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
-                className={`flex-1 py-1.5 px-3 text-[13px] font-medium rounded-[6px] transition-all text-center ${
-                  activeTab === tab 
-                    ? "bg-[#00A0E3] text-white shadow-sm" 
-                    : "text-[#78788D] hover:text-[#171717]"
+                className={`flex-1 rounded-[6px] px-3 py-1.5 text-center text-[13px] font-medium transition-all ${
+                  activeTab === tab ? "bg-[#00A0E3] text-white shadow-sm" : "text-[#78788D] hover:text-[#171717]"
                 }`}
               >
                 {tab}
               </button>
             ))}
           </div>
-          
+
           <div className="space-y-3">
-            {sections.map(section => (
+            {sections.map((section) => (
               <button
                 key={section}
                 onClick={() => setActiveSection(section)}
-                className={`w-full text-left py-3 px-4 rounded-[8px] text-[14px] font-medium transition-all ${
+                className={`w-full rounded-[8px] px-4 py-3 text-left text-[14px] font-medium transition-all ${
                   activeSection === section
-                    ? "border border-[#00A0E3] text-[#1C1C1D] bg-[#F5FBFE] shadow-sm"
-                    : "border border-[#EAECF0] text-[#525866] bg-white hover:bg-[#F9FAFB]"
+                    ? "border border-[#00A0E3] bg-[#F5FBFE] text-[#1C1C1D] shadow-sm"
+                    : "border border-[#EAECF0] bg-white text-[#525866] hover:bg-[#F9FAFB]"
                 }`}
               >
                 {section}
@@ -213,30 +158,35 @@ export default function PackageDetailsPage() {
           </div>
         </div>
 
-        {/* Right Content Area */}
-        <div className="flex-1 bg-white rounded-[12px] border border-[#EAECF0] shadow-sm overflow-hidden flex flex-col min-h-[500px]">
-          <div className="p-6 border-b border-[#EAECF0]">
-            <div className="flex justify-between items-start">
+        <div className="flex min-h-[500px] flex-1 flex-col overflow-hidden rounded-[12px] border border-[#EAECF0] bg-white shadow-sm">
+          <div className="border-b border-[#EAECF0] p-6">
+            <div className="flex items-start justify-between">
               <div>
-                <h3 className="text-[18px] font-bold text-[#1C1C1D] mb-1 font-inter">{activeTab}</h3>
+                <div className="mb-1 font-inter text-[18px] font-bold text-[#1C1C1D]">{activeTab}</div>
                 <p className="text-[14px] text-[#78788D]">Lorem ipsum dolor sit amet consectetur.</p>
               </div>
-              <button className="px-5 py-2.5 bg-[#00A0E3] hover:bg-[#008CC7] text-white rounded-[8px] text-[14px] font-medium shadow-sm transition-colors">
+              <button className="rounded-[8px] bg-[#00A0E3] px-5 py-2.5 text-[14px] font-medium text-white shadow-sm transition-colors hover:bg-[#008CC7]">
                 Save Changes
               </button>
             </div>
           </div>
-          
-          <div className="p-6 flex-1 bg-[#FAFAFA]">
-            <h4 className="text-[16px] font-bold text-[#1C1C1D] mb-4 px-2">{activeSection}</h4>
-            <div className="bg-white rounded-[12px] border border-dashed border-[#D0D5DD] min-h-[300px] flex items-center justify-center m-2 shadow-sm">
-              <span className="text-[#A0AAB5] text-[14px]">Empty placeholder for {activeSection} editor</span>
+
+          <div className="flex-1 bg-[#FAFAFA] p-6">
+            <div className="mb-4 px-2 text-[16px] font-bold text-[#1C1C1D]">{activeSection}</div>
+            <div className="m-2 flex min-h-[300px] items-center justify-center rounded-[12px] border border-dashed border-[#D0D5DD] bg-white shadow-sm">
+              <span className="text-[14px] text-[#A0AAB5]">Empty placeholder for {activeSection} editor</span>
             </div>
           </div>
         </div>
       </div>
 
-      <EditModal isOpen={isEditModalOpen} onClose={() => setIsEditModalOpen(false)} />
+      <CatalogItemModal
+        isOpen={isEditModalOpen && !!item}
+        mode="edit"
+        item={item}
+        onClose={() => setIsEditModalOpen(false)}
+        onSaved={loadItem}
+      />
     </div>
   );
 }

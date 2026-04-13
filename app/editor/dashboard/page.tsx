@@ -162,10 +162,10 @@ export default function EditorDashboard() {
   );
 
   return (
-    <div className="space-y-8 animate-in fade-in duration-500 w-full font-dm-sans">
-      <div>
-        <div className="text-[24px] font-bold text-[#171717] mb-1">Dashboard</div>
-        <div className="text-[14px] text-[#525866]">
+    <div className="space-y-6 animate-in fade-in duration-500 w-full font-dm-sans">
+      <div className="-mx-6 lg:-mx-8 px-6 lg:px-8 py-3 border-b border-[#EAECF0] bg-white">
+        <div className="text-[20px] font-bold text-[#171717] leading-tight">Dashboard</div>
+        <div className="text-[14px] text-[#525866] mt-1">
           Overview of your assigned work{payload?.user?.full_name ? `, ${payload.user.full_name}` : ""}.
         </div>
       </div>

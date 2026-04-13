@@ -168,10 +168,10 @@ export default function EditorProfilePage() {
   };
 
   return (
-    <div className="w-full font-dm-sans">
-      <div className="mb-6">
-        <div className="text-[22px] font-medium text-[#171717]">Profile & Settings</div>
-        <p className="text-[#78788D] text-[13px] mt-1">Manage your editor profile and workspace information.</p>
+    <div className="w-full font-dm-sans space-y-6">
+      <div className="-mx-6 lg:-mx-8 px-6 lg:px-8 py-3 border-b border-[#EAECF0] bg-white">
+        <div className="text-[20px] font-bold text-[#171717] leading-tight">Profile & Settings</div>
+        <p className="text-[14px] text-[#525866] mt-1">Manage your editor profile and workspace information.</p>
       </div>
 
       {error ? <div className="mb-4 rounded-[8px] border border-[#FECACA] bg-[#FEF2F2] px-4 py-3 text-[13px] text-[#B42318]">{error}</div> : null}

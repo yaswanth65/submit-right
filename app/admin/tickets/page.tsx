@@ -167,12 +167,10 @@ export default function AdminTicketsPage() {
 
   return (
     <div className="space-y-6 animate-in fade-in duration-500 w-full font-dm-sans">
-      <div className="mt-2">
+      <div className="-mx-6 lg:-mx-8 px-6 lg:px-8 py-3 border-b border-[#EAECF0] bg-white">
         <div className="text-[20px] font-bold text-[#171717] leading-tight">Support Tickets</div>
         <p className="text-[14px] text-[#525866] mt-1">Review client support requests and respond to resolve issues.</p>
       </div>
-
-      <div className="mx-auto w-[98%] h-px bg-[#EAECF0]" />
 
       {error ? (
         <div className="rounded-[10px] border border-[#FECACA] bg-[#FEF2F2] px-4 py-3 text-[13px] text-[#B91C1C]">{error}</div>

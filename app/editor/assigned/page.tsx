@@ -440,10 +440,10 @@ export default function AssignedPage() {
 
   if (selectedView === "list") {
     return (
-      <div className="w-full font-dm-sans animate-in fade-in duration-300">
-        <div className="mb-8">
-          <div className="text-[24px] font-bold text-[#171717] mb-1">Assigned Documents</div>
-          <p className="text-[14px] text-[#525866]">Manage your active academic editing tasks and deadlines.</p>
+      <div className="w-full font-dm-sans animate-in fade-in duration-300 space-y-6">
+        <div className="-mx-6 lg:-mx-8 px-6 lg:px-8 py-3 border-b border-[#EAECF0] bg-white">
+          <div className="text-[20px] font-bold text-[#171717] leading-tight">Assigned Documents</div>
+          <p className="text-[14px] text-[#525866] mt-1">Manage your active academic editing tasks and deadlines.</p>
         </div>
 
         {error ? <div className="mb-4 rounded-[10px] border border-[#FECACA] bg-[#FEF2F2] px-4 py-3 text-[13px] text-[#B91C1C]">{error}</div> : null}

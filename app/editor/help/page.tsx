@@ -15,12 +15,12 @@ export default function EditorHelp() {
   ];
 
   return (
-    <div className="w-full font-dm-sans animate-in fade-in duration-500">
+    <div className="w-full font-dm-sans animate-in fade-in duration-500 space-y-6">
       
       {/* Header */}
-      <div className="mb-8">
-        <h1 className="text-[24px] font-bold text-[#171717] mb-1">Messages</h1>
-        <p className="text-[14px] text-[#525866]">Chat with your clients, review feedback, and manage document updates in one place.</p>
+      <div className="-mx-6 lg:-mx-8 px-6 lg:px-8 py-3 border-b border-[#EAECF0] bg-white">
+        <div className="text-[20px] font-bold text-[#171717] leading-tight">Help Center</div>
+        <p className="text-[14px] text-[#525866] mt-1">Find workflow guidance, editing standards, and platform policies.</p>
       </div>
 
       <div className="flex flex-col md:flex-row gap-8">

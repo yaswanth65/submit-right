@@ -2,13 +2,14 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Home,
   BarChart2,
   FileText,
   MessageSquare,
   AppWindow,
+  Globe,
   Folder,
   Banknote,
   Bell,
@@ -18,6 +19,7 @@ import {
   ChevronUp,
   LucideIcon
 } from "lucide-react";
+import { apiGet } from "@/lib/client-api";
 
 interface SubItem {
   name: string;
@@ -37,16 +39,62 @@ interface NavSection {
   items: NavItem[];
 }
 
+type CatalogNavItem = {
+  id: string;
+  slug: string;
+  title: string;
+};
+
+type ClientCatalogResponse = {
+  services: CatalogNavItem[];
+  packages: CatalogNavItem[];
+  domains: CatalogNavItem[];
+};
+
 export function Sidebar() {
   const pathname = usePathname();
   const [openMenus, setOpenMenus] = useState<Record<string, boolean>>({
+    Services: true,
     Domains: true,
     Packages: true,
   });
+  const [catalogData, setCatalogData] = useState<ClientCatalogResponse>({
+    services: [],
+    packages: [],
+    domains: []
+  });
+
+  useEffect(() => {
+    const loadCatalog = async () => {
+      try {
+        const data = await apiGet<ClientCatalogResponse>("/api/client/catalog");
+        setCatalogData(data);
+      } catch {
+        setCatalogData({ services: [], packages: [], domains: [] });
+      }
+    };
+
+    void loadCatalog();
+  }, []);
 
   const toggleMenu = (name: string) => {
     setOpenMenus((prev) => ({ ...prev, [name]: !prev[name] }));
   };
+
+  const serviceSubItems: SubItem[] = catalogData.services.map((item) => ({
+    name: item.title,
+    href: `/user/services/${item.slug || item.id}`
+  }));
+
+  const packageSubItems: SubItem[] = catalogData.packages.map((item) => ({
+    name: item.title,
+    href: `/user/packages/${item.slug || item.id}`
+  }));
+
+  const domainSubItems: SubItem[] = catalogData.domains.map((item) => ({
+    name: item.title,
+    href: `/user/services/${item.slug || item.id}`
+  }));
 
   const sections: NavSection[] = [
     {
@@ -67,28 +115,25 @@ export function Sidebar() {
       title: "SERVICES",
       items: [
         {
-          name: "Domains",
+          name: "Services",
           href: "#",
           icon: AppWindow,
           hasSub: true,
-          subItems: [
-            { name: "Lorem ipsum", href: "/user/services/1" },
-            { name: "Lorem ipsum", href: "/user/services/2" },
-            { name: "Lorem ipsum", href: "/user/services/3" },
-          ],
+          subItems: serviceSubItems,
+        },
+        {
+          name: "Domains",
+          href: "#",
+          icon: Globe,
+          hasSub: true,
+          subItems: domainSubItems,
         },
         {
           name: "Packages",
           href: "#",
           icon: Folder,
           hasSub: true,
-          subItems: [
-            { name: "Lorem ipsum", href: "/user/packages/1" },
-            { name: "Lorem ipsum", href: "/user/packages/2" },
-            { name: "Lorem ipsum", href: "/user/packages/3" },
-            { name: "Lorem ipsum", href: "/user/packages/4" },
-            { name: "Lorem ipsum", href: "/user/packages/5" },
-          ],
+          subItems: packageSubItems,
         },
       ],
     },

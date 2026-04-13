@@ -62,10 +62,10 @@ export default function AvailabilityPage() {
   const vacationEnabled = Boolean(data?.vacation_start_date || data?.vacation_end_date);
 
   return (
-    <div className="w-full font-dm-sans text-[#171717] animate-in fade-in duration-500">
-      <div className="mb-8">
-        <h1 className="text-[24px] font-bold text-[#171717]">Availability</h1>
-        <p className="text-[15px] text-[#525866] mt-1">
+    <div className="w-full font-dm-sans text-[#171717] animate-in fade-in duration-500 space-y-6">
+      <div className="-mx-6 lg:-mx-8 px-6 lg:px-8 py-3 border-b border-[#EAECF0] bg-white">
+        <div className="text-[20px] font-bold text-[#171717] leading-tight">Availability</div>
+        <p className="text-[14px] text-[#525866] mt-1">
           Manage your assignment availability and workload preferences to optimize your queue.
         </p>
       </div>

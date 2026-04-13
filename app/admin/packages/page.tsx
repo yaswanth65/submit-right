@@ -1,95 +1,192 @@
 "use client";
 
-import React from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
-import { Search, Filter } from "lucide-react";
+import { Plus, Search } from "lucide-react";
+import { apiGet } from "@/lib/client-api";
+import type { CatalogItemKind } from "@/lib/types";
+import { CatalogItemModal, type CatalogItemCard } from "../catalog/components/CatalogItemModal";
 
-const packagesData = [
-  { id: "1", name: "Essential Support", type: "Editing", price: "₹5,800", date: "Feb 28, 2026", status: "Active" },
-  { id: "2", name: "Advanced Support", type: "Editing", price: "₹5,800", date: "-", status: "Unactive" },
-  { id: "3", name: "Comprehensive Support", type: "Translation", price: "₹5,800", date: "Feb 28, 2026", status: "Active" },
-  { id: "4", name: "Ultimate Support", type: "Proofreading", price: "₹5,800", date: "Feb 28, 2026", status: "Active" },
-  { id: "5", name: "Scientific Writing Package", type: "Proofreading", price: "₹5,800", date: "-", status: "Active" },
-  { id: "6", name: "Systematic Review Package", type: "Proofreading", price: "₹5,800", date: "Feb 28, 2026", status: "Unactive" },
-  { id: "7", name: "Meta-Analysis Package", type: "Publication Support", price: "₹5,800", date: "-", status: "Unactive" },
-  { id: "8", name: "Full Review + Writing", type: "Publication Support", price: "₹5,800", date: "Feb 28, 2026", status: "Active" },
-];
+type CatalogListResponse = {
+  items: CatalogItemCard[];
+  raw: unknown[];
+};
+
+type ModalState =
+  | {
+      kind: CatalogItemKind;
+    }
+  | null;
+
+function formatDate(value: string | null | undefined) {
+  if (!value) return "-";
+  const d = new Date(value);
+  if (Number.isNaN(d.getTime())) return "-";
+  return d.toLocaleDateString("en-US", { month: "short", day: "2-digit", year: "numeric" });
+}
 
 export default function PackagesPage() {
+  const [items, setItems] = useState<CatalogItemCard[]>([]);
+  const [search, setSearch] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [modalState, setModalState] = useState<ModalState>(null);
+
+  const loadItems = useCallback(async () => {
+    setIsLoading(true);
+    setError(null);
+    try {
+      const query = new URLSearchParams();
+      query.set("kind", "package");
+      if (search.trim()) {
+        query.set("search", search.trim());
+      }
+
+      const data = await apiGet<CatalogListResponse>(`/api/admin/catalog/items?${query.toString()}`);
+      setItems(data.items);
+    } catch (loadError) {
+      setError(loadError instanceof Error ? loadError.message : "Unable to load packages");
+    } finally {
+      setIsLoading(false);
+    }
+  }, [search]);
+
+  useEffect(() => {
+    const timer = window.setTimeout(() => {
+      void loadItems();
+    }, 250);
+
+    return () => {
+      window.clearTimeout(timer);
+    };
+  }, [loadItems]);
+
+  const rows = useMemo(() => items, [items]);
+
   return (
-    <div className="w-full font-dm-sans">
-      <div className="flex items-center text-[13px] text-[#A0AAB5] mb-6">
-        <Link href="/admin/dashboard" className="hover:text-[#171717] transition-colors">Home</Link>
-        <span className="mx-2">&gt;</span>
-        <span className="text-[#171717] font-medium">Packages</span>
+    <div className="space-y-6 animate-in fade-in duration-500 w-full font-dm-sans">
+      <div className="-mx-6 lg:-mx-8 px-6 lg:px-8 py-3 border-b border-[#EAECF0] bg-white">
+        <div className="text-[20px] font-bold text-[#171717] leading-tight">Packages</div>
+        <p className="text-[14px] text-[#525866] mt-1">Manage package plans and availability.</p>
       </div>
 
-      <div className="mb-6">
-        <h1 className="text-[24px] font-medium text-[#1C1C1D] mb-1 font-inter">Packages</h1>
-        <p className="text-[14px] text-[#78788D]">Lorem ipsum dolor sit amet consectetur.</p>
-      </div>
-
-      <div className="bg-white rounded-[12px] border border-[#EAECF0] shadow-sm">
-        <div className="p-4 flex items-center justify-between border-b border-[#EAECF0]">
-          <div className="relative w-full max-w-[360px]">
+      <div className="bg-[#FFFFFF] rounded-[12px] border border-[#EAECF0] p-6 shadow-sm">
+        <div className="flex items-center justify-between mb-4 gap-3 flex-wrap">
+          <div className="relative w-[280px] max-w-full">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
               <Search className="h-[18px] w-[18px] text-[#A0AAB5]" />
             </div>
             <input
               type="text"
               placeholder="Search"
-              className="block w-full pl-9 pr-3 py-[9px] border border-[#EAECF0] rounded-[8px] text-[14px] text-[#171717] placeholder-[#A0AAB5] focus:outline-none focus:ring-1 focus:ring-[#00A0E3] focus:border-[#00A0E3] transition-colors"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="h-[42px] w-full pl-10 pr-3 border border-[#EAECF0] rounded-[8px] text-[14px] text-[#171717] placeholder-[#A0AAB5] focus:outline-none focus:ring-1 focus:ring-[#00A0E3]"
             />
           </div>
-          
-          <button className="flex items-center gap-2 px-4 py-[9px] border border-[#EAECF0] rounded-[8px] text-[14px] font-medium text-[#525866] hover:bg-[#F9FAFB] transition-colors shadow-sm bg-white">
-            <Filter className="h-[16px] w-[16px]" />
-            Filter
-          </button>
+
+          <div className="flex items-center gap-2 flex-wrap">
+            <button
+              onClick={() => setModalState({ kind: "service" })}
+              className="h-[40px] rounded-[8px] border border-[#EAECF0] px-3 text-[13px] font-semibold text-[#171717] inline-flex items-center gap-2 hover:bg-[#F9FAFB]"
+            >
+              <Plus className="h-4 w-4" />
+              Add Service
+            </button>
+            <button
+              onClick={() => setModalState({ kind: "package" })}
+              className="h-[40px] rounded-[8px] bg-[#00A0E3] px-3 text-[13px] font-semibold text-white inline-flex items-center gap-2 hover:bg-[#008CC7]"
+            >
+              <Plus className="h-4 w-4" />
+              Add Package
+            </button>
+            <button
+              onClick={() => setModalState({ kind: "domain" })}
+              className="h-[40px] rounded-[8px] border border-[#EAECF0] px-3 text-[13px] font-semibold text-[#171717] inline-flex items-center gap-2 hover:bg-[#F9FAFB]"
+            >
+              <Plus className="h-4 w-4" />
+              Add Domain
+            </button>
+          </div>
         </div>
 
-        <div className="overflow-x-auto">
-          <table className="w-full text-left border-collapse">
+        <div className="overflow-x-auto border border-[#EAECF0] rounded-[10px]">
+          <table className="w-full text-left border-collapse whitespace-nowrap">
             <thead>
               <tr className="bg-[#F9FAFB] border-b border-[#EAECF0]">
-                <th className="px-6 py-4 text-[13px] font-bold text-[#525866] uppercase tracking-wider">Package Name</th>
-                <th className="px-6 py-4 text-[13px] font-bold text-[#525866] uppercase tracking-wider">Domain Type</th>
-                <th className="px-6 py-4 text-[13px] font-bold text-[#525866] uppercase tracking-wider">Price</th>
-                <th className="px-6 py-4 text-[13px] font-bold text-[#525866] uppercase tracking-wider">Last Updated Date</th>
-                <th className="px-6 py-4 text-[13px] font-bold text-[#525866] uppercase tracking-wider">Availability Status</th>
-                <th className="px-6 py-4 text-[13px] font-bold text-[#525866] uppercase tracking-wider text-right">Action</th>
+                <th className="py-3 px-4 text-[13px] font-bold text-[#525866]">Package Name</th>
+                <th className="py-3 px-4 text-[13px] font-bold text-[#525866]">Domain Type</th>
+                <th className="py-3 px-4 text-[13px] font-bold text-[#525866]">Price</th>
+                <th className="py-3 px-4 text-[13px] font-bold text-[#525866]">Last Updated Date</th>
+                <th className="py-3 px-4 text-[13px] font-bold text-[#525866]">Availability Status</th>
+                <th className="py-3 px-4 text-[13px] font-bold text-[#525866] text-right">Action</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-[#EAECF0]">
-              {packagesData.map((item) => (
-                <tr key={item.id} className="hover:bg-[#F9FAFB]/50 transition-colors">
-                  <td className="px-6 py-4 whitespace-nowrap text-[14px] font-medium text-[#1C1C1D]">{item.name}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-[14px] text-[#525866]">{item.type}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-[14px] text-[#525866]">{item.price}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-[14px] text-[#525866]">{item.date}</td>
-                  <td className="px-6 py-4 whitespace-nowrap">
+              {isLoading && (
+                <tr>
+                  <td colSpan={6} className="py-8 px-4 text-center text-[13px] text-[#78788D]">
+                    Loading packages...
+                  </td>
+                </tr>
+              )}
+
+              {!isLoading && error && (
+                <tr>
+                  <td colSpan={6} className="py-8 px-4 text-center text-[13px] text-[#B42318]">
+                    {error}
+                  </td>
+                </tr>
+              )}
+
+              {!isLoading && !error && rows.length === 0 && (
+                <tr>
+                  <td colSpan={6} className="py-8 px-4 text-center text-[13px] text-[#78788D]">
+                    No packages found.
+                  </td>
+                </tr>
+              )}
+
+              {!isLoading &&
+                !error &&
+                rows.map((item) => (
+                  <tr key={item.id} className="hover:bg-[#F9FAFB]/50 transition-colors">
+                    <td className="py-3 px-4 text-[13px] font-medium text-[#525866]">{item.title}</td>
+                    <td className="py-3 px-4 text-[13px] text-[#525866]">{item.domainType || item.category || "-"}</td>
+                    <td className="py-3 px-4 text-[13px] text-[#525866]">INR {Number(item.basePrice ?? item.displayPrice ?? 0).toFixed(2)}</td>
+                    <td className="py-3 px-4 text-[13px] text-[#525866]">{formatDate(item.updatedAt ?? item.createdAt)}</td>
+                  <td className="py-3 px-4">
                     <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[12px] font-medium ${
-                      item.status === "Active" 
+                      item.isActive
                         ? "bg-[#ECFDF3] text-[#027A48]" 
                         : "bg-[#FEF3F2] text-[#B42318]"
                     }`}>
-                      {item.status}
+                      {item.isActive ? "Active" : "Inactive"}
                     </span>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-right">
+                  <td className="py-3 px-4 text-right">
                     <Link
                       href={`/admin/packages/${item.id}`}
-                      className="inline-flex items-center justify-center px-4 py-1.5 border border-transparent rounded-[6px] shadow-sm text-[13px] font-medium text-white bg-[#00A0E3] hover:bg-[#008CC7] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#00A0E3] transition-colors"
+                      className="inline-flex items-center justify-center gap-1.5 rounded-[6px] border border-[#EAECF0] px-3 py-1.5 text-[13px] font-medium text-[#171717] hover:bg-[#F9FAFB]"
                     >
                       View
                     </Link>
                   </td>
-                </tr>
-              ))}
+                  </tr>
+                ))}
             </tbody>
           </table>
         </div>
       </div>
+
+      <CatalogItemModal
+        isOpen={!!modalState}
+        mode="create"
+        defaultKind={modalState?.kind}
+        item={null}
+        onClose={() => setModalState(null)}
+        onSaved={loadItems}
+      />
     </div>
   );
 }

@@ -117,7 +117,7 @@ npm run dev
 - `PATCH /api/editor/availability`
 - `DELETE /api/editor/delete-account`
 
-### Admin 
+### Admin
 
 - `GET /api/admin/dashboard`
 - `GET /api/admin/clients`
@@ -141,6 +141,16 @@ npm run dev
 - `POST /api/admin/documents/cancel`
 - `GET /api/admin/tickets`
 - `POST /api/admin/tickets/resolve`
+- `GET /api/admin/blogs`
+- `GET /api/admin/blogs/:id`
+- `POST /api/admin/blogs`
+- `PATCH /api/admin/blogs/:id`
+- `DELETE /api/admin/blogs/:id`
+
+### Public
+
+- `GET /api/blogs`
+- `GET /api/blogs/:id`
 
 ### System
 

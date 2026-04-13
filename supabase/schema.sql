@@ -30,6 +30,9 @@ begin
       'specific_domain'
     );
   end if;
+  if not exists (select 1 from pg_type where typname = 'blog_status') then
+    create type blog_status as enum ('draft', 'published', 'archived');
+  end if;
 end$$;
 
 create table if not exists profiles (
@@ -63,6 +66,7 @@ create table if not exists services (
   domain_type text,
   rate_per_word numeric(10, 4) not null,
   base_price numeric(12, 2),
+  page_sections jsonb not null default '[]'::jsonb,
   is_best boolean not null default false,
   is_active boolean not null default true,
   sort_order integer not null default 0,
@@ -78,6 +82,9 @@ alter table if exists services
 
 alter table if exists services
   add column if not exists base_price numeric(12, 2);
+
+alter table if exists services
+  add column if not exists page_sections jsonb not null default '[]'::jsonb;
 
 alter table if exists services
   add column if not exists sort_order integer not null default 0;
@@ -223,6 +230,25 @@ create table if not exists discount_redemptions (
   discount_amount numeric(12, 2) not null default 0,
   redeemed_at timestamptz not null default now(),
   unique (discount_campaign_id, document_id)
+);
+
+create table if not exists blog_posts (
+  id uuid primary key default gen_random_uuid(),
+  slug text not null unique,
+  title text not null,
+  author_name text not null,
+  cover_image_url text,
+  introduction text not null,
+  sections jsonb not null default '[]'::jsonb,
+  conclusion text,
+  related_service_slugs text[] not null default '{}',
+  status blog_status not null default 'draft',
+  is_featured boolean not null default false,
+  published_at timestamptz,
+  created_by uuid references profiles(id),
+  updated_by uuid references profiles(id),
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
 );
 
 create table if not exists password_reset_tokens (

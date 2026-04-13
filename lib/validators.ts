@@ -68,6 +68,7 @@ export const catalogItemUpsertSchema = z.object({
   domainType: z.string().min(2).max(120).optional().nullable(),
   basePrice: z.number().nonnegative().optional().nullable(),
   ratePerWord: z.number().nonnegative().optional().nullable(),
+  pageSections: z.array(z.string().min(1).max(120)).optional().nullable(),
   isBest: z.boolean().optional(),
   isActive: z.boolean().optional(),
   sortOrder: z.number().int().min(0).optional()
@@ -231,4 +232,46 @@ export const cancelDocumentSchema = z.object({
 
 export const markReadSchema = z.object({
   notificationIds: z.array(z.string().uuid()).min(1)
+});
+
+export const blogSectionSchema = z.object({
+  heading: z.string().min(2).max(160),
+  content: z.string().min(2).max(5000),
+  imageUrl: z.string().url().optional().nullable()
+});
+
+export const blogStatusSchema = z.enum(["draft", "published", "archived"]);
+
+export const blogPostSchema = z
+  .object({
+    slug: z.string().min(2).max(160).optional().nullable(),
+    title: z.string().min(3).max(255),
+    authorName: z.string().min(2).max(160).optional().nullable(),
+    coverImageUrl: z.string().url().optional().nullable(),
+    introduction: z.string().min(10).max(5000),
+    sections: z.array(blogSectionSchema).min(1).max(3),
+    conclusion: z.string().max(5000).optional().nullable(),
+    relatedServiceSlugs: z.array(z.string().min(2).max(120)).optional().default([]),
+    status: blogStatusSchema.optional(),
+    isFeatured: z.boolean().optional(),
+    publishedAt: z.string().datetime().optional().nullable()
+  })
+  .refine((data) => data.status !== "published" || !!data.publishedAt, {
+    path: ["publishedAt"],
+    message: "Published at is required when the post is published"
+  });
+
+export const blogPostUpdateSchema = blogPostSchema.partial().superRefine((data, ctx) => {
+  if (data.status === "published" && !data.publishedAt) {
+    ctx.addIssue({
+      code: "custom",
+      path: ["publishedAt"],
+      message: "Published at is required when the post is published"
+    });
+  }
+});
+
+export const blogPostsQuerySchema = z.object({
+  search: z.string().optional(),
+  status: blogStatusSchema.optional()
 });

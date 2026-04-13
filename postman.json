@@ -24,6 +24,7 @@
     { "key": "ticketId", "value": "" },
     { "key": "notificationId", "value": "" },
     { "key": "receiverId", "value": "" },
+    { "key": "blogId", "value": "" },
     { "key": "resetToken", "value": "" },
     { "key": "uploadFile", "value": "" },
     { "key": "editorUploadFile", "value": "" },
@@ -399,12 +400,20 @@
           }
         },
         {
+          "name": "Packages List",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }],
+            "url": { "raw": "{{baseUrl}}/api/admin/catalog/items?kind=package&search=", "host": ["{{baseUrl}}"], "path": ["api", "admin", "catalog", "items"], "query": [{ "key": "kind", "value": "package" }, { "key": "search", "value": "" }] }
+          }
+        },
+        {
           "name": "Create Catalog Item",
           "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["const json = pm.response.json();", "if (json.data?.id) pm.collectionVariables.set('catalogItemId', json.data.id);"] } }],
           "request": {
             "method": "POST",
             "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }, { "key": "Content-Type", "value": "application/json" }],
-            "body": { "mode": "raw", "raw": "{\n  \"slug\": \"premium-editing\",\n  \"title\": \"Premium Editing\",\n  \"description\": \"Premium editing support with deeper review.\",\n  \"kind\": \"service\",\n  \"category\": \"best\",\n  \"domainType\": \"Editing\",\n  \"ratePerWord\": 4.25,\n  \"basePrice\": null,\n  \"isBest\": true,\n  \"isActive\": true,\n  \"sortOrder\": 40\n}" },
+            "body": { "mode": "raw", "raw": "{\n  \"slug\": \"premium-editing\",\n  \"title\": \"Premium Editing\",\n  \"description\": \"Premium editing support with deeper review.\",\n  \"kind\": \"service\",\n  \"category\": \"best\",\n  \"domainType\": \"Editing\",\n  \"ratePerWord\": 4.25,\n  \"basePrice\": null,\n  \"pageSections\": [\"Hero Section\", \"What is Included\", \"FAQs\", \"CTA Banner\"],\n  \"isBest\": true,\n  \"isActive\": true,\n  \"sortOrder\": 40\n}" },
             "url": { "raw": "{{baseUrl}}/api/admin/catalog/items", "host": ["{{baseUrl}}"], "path": ["api", "admin", "catalog", "items"] }
           }
         },
@@ -413,7 +422,7 @@
           "request": {
             "method": "PATCH",
             "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }, { "key": "Content-Type", "value": "application/json" }],
-            "body": { "mode": "raw", "raw": "{\n  \"title\": \"Premium Editing Updated\",\n  \"basePrice\": 27500,\n  \"ratePerWord\": 4.5,\n  \"isBest\": true,\n  \"sortOrder\": 41\n}" },
+            "body": { "mode": "raw", "raw": "{\n  \"title\": \"Premium Editing Updated\",\n  \"basePrice\": 27500,\n  \"ratePerWord\": 4.5,\n  \"pageSections\": [\"Hero Section\", \"Package Support\", \"What is Included\", \"FAQs\", \"CTA Banner\"],\n  \"isBest\": true,\n  \"sortOrder\": 41\n}" },
             "url": { "raw": "{{baseUrl}}/api/admin/catalog/items/{{catalogItemId}}", "host": ["{{baseUrl}}"], "path": ["api", "admin", "catalog", "items", "{{catalogItemId}}"] }
           }
         },
@@ -458,6 +467,55 @@
             "method": "DELETE",
             "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }],
             "url": { "raw": "{{baseUrl}}/api/admin/discounts/{{discountId}}", "host": ["{{baseUrl}}"], "path": ["api", "admin", "discounts", "{{discountId}}"] }
+          }
+        },
+        {
+          "name": "Blogs",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }],
+            "url": { "raw": "{{baseUrl}}/api/admin/blogs?search=&status=", "host": ["{{baseUrl}}"], "path": ["api", "admin", "blogs"], "query": [{ "key": "search", "value": "" }, { "key": "status", "value": "" }] }
+          }
+        },
+        {
+          "name": "Create Blog",
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["const json = pm.response.json();", "if (json.data?.id) pm.collectionVariables.set('blogId', json.data.id);"] } }],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }, { "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"title\": \"How to Structure a Strong Research Article\",\n  \"authorName\": \"Admin\",\n  \"coverImageUrl\": \"https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=1200&q=80\",\n  \"introduction\": \"A practical guide to structuring your article for clarity, flow, and editorial readiness.\",\n  \"sections\": [\n    {\n      \"heading\": \"Start with the core argument\",\n      \"content\": \"Open with the thesis or central claim so readers know the point of the article immediately.\",\n      \"imageUrl\": \"\"\n    }\n  ],\n  \"conclusion\": \"Use this framework to keep your drafts focused and easier to revise.\",\n  \"relatedServiceSlugs\": [\"editing-basic\", \"essential-support\"],\n  \"status\": \"draft\",\n  \"isFeatured\": true\n}" },
+            "url": { "raw": "{{baseUrl}}/api/admin/blogs", "host": ["{{baseUrl}}"], "path": ["api", "admin", "blogs"] }
+          }
+        },
+        {
+          "name": "Update Blog",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }, { "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"title\": \"How to Structure a Strong Research Article - Updated\",\n  \"status\": \"published\",\n  \"publishedAt\": \"2026-04-13T00:00:00.000Z\",\n  \"relatedServiceSlugs\": [\"editing-basic\", \"advanced-support\"]\n}" },
+            "url": { "raw": "{{baseUrl}}/api/admin/blogs/{{blogId}}", "host": ["{{baseUrl}}"], "path": ["api", "admin", "blogs", "{{blogId}}"] }
+          }
+        },
+        {
+          "name": "Delete Blog",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }],
+            "url": { "raw": "{{baseUrl}}/api/admin/blogs/{{blogId}}", "host": ["{{baseUrl}}"], "path": ["api", "admin", "blogs", "{{blogId}}"] }
+          }
+        },
+        {
+          "name": "Public Blogs",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/api/blogs?search=", "host": ["{{baseUrl}}"], "path": ["api", "blogs"], "query": [{ "key": "search", "value": "" }] }
+          }
+        },
+        {
+          "name": "Public Blog Detail",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/api/blogs/{{blogId}}", "host": ["{{baseUrl}}"], "path": ["api", "blogs", "{{blogId}}"] }
           }
         },
         {

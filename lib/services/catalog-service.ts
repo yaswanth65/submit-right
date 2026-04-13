@@ -13,6 +13,7 @@ export type CatalogItemRow = {
   domain_type: string | null;
   rate_per_word: number | null;
   base_price: number | null;
+  page_sections: string[] | null;
   is_best: boolean;
   is_active: boolean;
   sort_order: number;
@@ -30,6 +31,7 @@ export type CatalogItemUpsertInput = {
   domainType?: string | null;
   basePrice?: number | null;
   ratePerWord?: number | null;
+  pageSections?: string[] | null;
   isBest?: boolean;
   isActive?: boolean;
   sortOrder?: number;
@@ -65,6 +67,7 @@ function buildCatalogCard(item: CatalogItemRow) {
     domainType: item.domain_type,
     ratePerWord: item.rate_per_word,
     basePrice: item.base_price,
+    pageSections: item.page_sections ?? [],
     isBest: item.is_best,
     isActive: item.is_active,
     sortOrder: item.sort_order,
@@ -150,7 +153,8 @@ export function groupCatalogItems(cards: ReturnType<typeof buildCatalogCard>[]) 
         description: item.description,
         kind: item.kind,
         price: item.priceLabel,
-        imageUrl: item.imageUrl
+        imageUrl: item.imageUrl,
+        pageSections: item.pageSections
       }))
   };
 }
@@ -168,6 +172,7 @@ export async function createCatalogItem(input: CatalogItemUpsertInput) {
     domain_type: input.domainType ?? null,
     base_price: input.basePrice ?? null,
     rate_per_word: input.ratePerWord ?? 0,
+    page_sections: input.pageSections ?? [],
     is_best: input.isBest ?? false,
     is_active: input.isActive ?? true,
     sort_order: input.sortOrder ?? 0
@@ -197,6 +202,7 @@ export async function updateCatalogItem(
   if (input.domainType !== undefined) payload.domain_type = input.domainType ?? null;
   if (input.basePrice !== undefined) payload.base_price = input.basePrice ?? null;
   if (input.ratePerWord !== undefined) payload.rate_per_word = input.ratePerWord ?? null;
+  if (input.pageSections !== undefined) payload.page_sections = input.pageSections ?? [];
   if (input.isBest !== undefined) payload.is_best = input.isBest;
   if (input.isActive !== undefined) payload.is_active = input.isActive;
   if (input.sortOrder !== undefined) payload.sort_order = input.sortOrder;

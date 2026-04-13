@@ -138,10 +138,10 @@ export default function AdminDashboard() {
 
   return (
     <div className="space-y-6 animate-in fade-in duration-500 w-full font-dm-sans">
-      <div className="flex items-center justify-between mt-2 mb-8">
+      <div className="-mx-6 lg:-mx-8 px-6 lg:px-8 py-3 border-b border-[#EAECF0] bg-white flex items-center justify-between">
         <div>
-          <div className="text-[20px] font-bold text-[#171717] mb-[2px]">Dashboard</div>
-          <p className="text-[14px] text-[#525866]">System overview and operational control.</p>
+          <div className="text-[20px] font-bold text-[#171717] leading-tight">Dashboard</div>
+          <p className="text-[14px] text-[#525866] mt-1">System overview and operational control.</p>
         </div>
       </div>
 

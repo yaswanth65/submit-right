@@ -226,32 +226,38 @@ export default function EditorMessages() {
   const activeClient = readProfile(activeDocument?.profiles);
 
   return (
-    <div className="flex flex-col h-[calc(100vh-160px)] w-full font-dm-sans bg-[#FFFFFF] border border-[#EAECF0] rounded-[12px] shadow-sm overflow-hidden">
-      <div className="px-8 py-5 border-b border-[#EAECF0] flex-shrink-0 bg-[#FFFFFF]">
-        <div className="text-[20px] font-bold text-[#171717] mb-1">Messages</div>
-        <p className="text-[13px] text-[#525866]">Chat with your clients and keep communication linked to each document.</p>
+    <div className="space-y-6 w-full font-dm-sans animate-in fade-in duration-300">
+      <div className="-mx-6 lg:-mx-8 px-6 lg:px-8 py-3 border-b border-[#EAECF0] bg-white">
+        <div className="text-[20px] font-bold text-[#171717] leading-tight">Messages</div>
+        <p className="text-[14px] text-[#525866] mt-1">Chat with your clients and keep communication linked to each document.</p>
       </div>
 
       {error ? (
-        <div className="mx-5 mt-4 rounded-[10px] border border-[#FECACA] bg-[#FEF2F2] px-4 py-3 text-[13px] text-[#B91C1C]">{error}</div>
+        <div className="rounded-[10px] border border-[#FECACA] bg-[#FEF2F2] px-4 py-3 text-[13px] text-[#B91C1C]">{error}</div>
       ) : null}
 
-      <div className="flex flex-1 overflow-hidden">
-        <div className="w-[380px] flex-shrink-0 border-r border-[#EAECF0] flex flex-col bg-[#FFFFFF]">
-          <div className="p-5 border-b border-[#EAECF0] flex-shrink-0">
+      <div className="flex flex-col min-h-[calc(100vh-250px)] w-full bg-[#FFFFFF] border border-[#EAECF0] rounded-[12px] shadow-sm overflow-hidden">
+        <div className="flex flex-1 min-h-0 overflow-hidden flex-col lg:flex-row">
+          <div className="w-full lg:w-[360px] lg:min-w-[360px] flex-shrink-0 border-b lg:border-b-0 lg:border-r border-[#EAECF0] flex flex-col bg-[#FFFFFF]">
+            <div className="p-5 border-b border-[#EAECF0] flex-shrink-0 space-y-3">
+              <div className="flex items-center justify-between">
+                <div className="text-[14px] font-semibold text-[#171717]">Conversations</div>
+                <div className="text-[12px] text-[#8A94A6]">{filteredDocs.length}</div>
+              </div>
+
             <div className="relative">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#A0AAB5]" />
               <input
                 type="text"
                 value={searchTerm}
                 onChange={(event) => setSearchTerm(event.target.value)}
-                placeholder="Search..."
-                className="w-full pl-9 pr-4 py-2.5 border border-[#EAECF0] rounded-[8px] text-[13px] text-[#171717] placeholder:text-[#A0AAB5] focus:outline-none focus:border-[#00A0E3] focus:ring-1 focus:ring-[#00A0E3] transition-all"
+                placeholder="Search documents or clients..."
+                className="w-full h-[40px] pl-9 pr-4 border border-[#EAECF0] rounded-[8px] text-[13px] text-[#171717] placeholder:text-[#A0AAB5] focus:outline-none focus:border-[#00A0E3] focus:ring-1 focus:ring-[#00A0E3] transition-all"
               />
             </div>
           </div>
 
-          <div className="flex-1 overflow-y-auto p-3 space-y-2">
+          <div className="flex-1 min-h-0 overflow-y-auto p-3 space-y-2">
             {filteredDocs.map((doc) => {
               const client = readProfile(doc.profiles);
               const last = lastMessageByDoc.get(doc.id);
@@ -287,10 +293,11 @@ export default function EditorMessages() {
               <p className="text-[13px] text-[#8A94A6] px-2 py-2">No conversations found.</p>
             ) : null}
           </div>
+          </div>
         </div>
 
-        <div className="flex-1 flex flex-col bg-[#FFFFFF]">
-          <div className="px-6 py-5 border-b border-[#EAECF0] flex items-center justify-between flex-shrink-0">
+        <div className="flex-1 min-h-0 flex flex-col bg-[#FFFFFF]">
+          <div className="px-6 py-4 border-b border-[#EAECF0] flex items-center justify-between flex-shrink-0">
             <div className="flex items-center space-x-4">
               <div className="w-12 h-12 bg-[#E0F6FF] text-[#00A0E3] rounded-[10px] flex items-center justify-center flex-shrink-0">
                 <FileText className="w-6 h-6" />
@@ -307,7 +314,7 @@ export default function EditorMessages() {
             </div>
           </div>
 
-          <div className="flex-1 overflow-y-auto p-6 space-y-6">
+          <div className="flex-1 min-h-0 overflow-y-auto p-6 space-y-6">
             {activeMessages.map((msg) => {
               const sender = readProfile(msg.sender);
               const mine =

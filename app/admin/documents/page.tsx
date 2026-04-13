@@ -138,12 +138,10 @@ export default function DocumentsPage() {
 
   return (
     <div className="space-y-6 animate-in fade-in duration-500 w-full font-dm-sans">
-      <div className="mt-2">
-        <div className="text-[30px] font-bold text-[#171717] leading-tight">Documents</div>
+      <div className="-mx-6 lg:-mx-8 px-6 lg:px-8 py-3 border-b border-[#EAECF0] bg-white">
+        <div className="text-[20px] font-bold text-[#171717] leading-tight">Documents</div>
         <p className="text-[14px] text-[#525866] mt-1">Manage and monitor all platform documents.</p>
       </div>
-
-  <div className="mx-auto w-[98%] h-px bg-[#EAECF0]" />
 
       {error ? (
         <div className="rounded-[10px] border border-[#FECACA] bg-[#FEF2F2] px-4 py-3 text-[13px] text-[#B91C1C]">{error}</div>

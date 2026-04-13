@@ -23,7 +23,7 @@ export default function AssignmentDetailScreen() {
     <div className="space-y-6 w-full font-dm-sans animate-in fade-in duration-500 pb-10">
       
       {/* Header Region */}
-      <div className="flex items-center justify-between mt-2 mb-8">
+      <div className="-mx-6 lg:-mx-8 px-6 lg:px-8 py-3 border-b border-[#EAECF0] bg-white flex items-center justify-between gap-4 flex-wrap">
         <div className="flex items-center space-x-4">
           <Link href="/admin/assignments" className="p-1.5 flex items-center justify-center bg-transparent border-none outline-none transition-colors hover:bg-[#F9FAFB] rounded-lg group">
             <ArrowLeft className="w-5 h-5 text-[#A0AAB5] group-hover:text-[#171717] transition-colors" />

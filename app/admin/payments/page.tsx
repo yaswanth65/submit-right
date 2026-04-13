@@ -60,14 +60,10 @@ export default function PaymentsScreen() {
 
   return (
     <div className="space-y-6 w-full font-dm-sans animate-in fade-in duration-500 pb-10">
-      <div className="flex items-center justify-between mt-2 mb-8">
-        <div>
-          <div className="text-[20px] font-bold text-[#171717] mb-[2px]">Payments</div>
-          <p className="text-[14px] text-[#525866]">Manage platform revenue and payouts.</p>
-        </div>
+      <div className="-mx-6 lg:-mx-8 px-6 lg:px-8 py-3 border-b border-[#EAECF0] bg-white">
+        <div className="text-[20px] font-bold text-[#171717] leading-tight">Payments</div>
+        <p className="text-[14px] text-[#525866] mt-1">Manage platform revenue and payouts.</p>
       </div>
-
-  <div className="mx-auto w-[98%] h-px bg-[#EAECF0]" />
 
       {/* Top Stats Row */}
       <div className="bg-[#FFFFFF] border border-[#EAECF0] rounded-[12px] flex flex-wrap items-stretch shadow-sm">
@@ -99,62 +95,63 @@ export default function PaymentsScreen() {
       </div>
 
       {/* Student Payments Section */}
-      <div className="bg-[#FFFFFF] border border-[#EAECF0] rounded-[12px] shadow-sm overflow-hidden">
+      <div className="bg-[#FFFFFF] border border-[#EAECF0] rounded-[12px] p-6 shadow-sm">
         <div className="p-6 pb-2">
           <div className="text-[16px] font-bold text-[#171717]">Student Payments</div>
           <div className="mx-auto w-[98%] h-px mt-4 mb-0 bg-[#EAECF0]" />
         </div>
-        <div className="p-4 flex justify-between items-center bg-[#FFFFFF]">
-          <div className="relative w-[300px]">
+        <div className="flex items-center justify-between mb-4 gap-3 flex-wrap">
+          <div className="relative w-[280px] max-w-full">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#A0AAB5]" />
             <input 
               type="text" 
               placeholder="Search" 
-              className="w-full pl-9 pr-4 py-2 border border-[#EAECF0] rounded-[8px] text-[13px] focus:outline-none focus:ring-1 focus:ring-[#00A0E3] focus:border-[#00A0E3] transition-all"
+              className="h-[42px] w-full pl-10 pr-3 border border-[#EAECF0] rounded-[8px] text-[14px] text-[#171717] placeholder-[#A0AAB5] focus:outline-none focus:ring-1 focus:ring-[#00A0E3]"
             />
           </div>
-          <button className="flex items-center px-4 py-2 border border-[#EAECF0] text-[#171717] rounded-[8px] text-[13px] font-medium hover:bg-[#F9FAFB] transition-colors">
+
+          <button className="h-[42px] px-4 border border-[#EAECF0] rounded-[8px] text-[14px] text-[#525866] font-semibold inline-flex items-center gap-2 hover:bg-[#F9FAFB] transition-colors">
             <Filter className="w-4 h-4 mr-2" />
             Filter
           </button>
         </div>
         
-        <div className="overflow-x-auto custom-scrollbar border-t border-[#EAECF0]">
-          <table className="w-full text-left border-collapse min-w-[900px]">
+        <div className="overflow-x-auto custom-scrollbar border border-[#EAECF0] rounded-[10px]">
+          <table className="w-full text-left border-collapse min-w-[900px] whitespace-nowrap">
             <thead>
               <tr className="bg-[#F9FAFB] border-b border-[#EAECF0]">
-                <th className="py-3 px-6 text-[12px] font-medium text-[#525866] whitespace-nowrap">Invoice Number</th>
-                <th className="py-3 px-6 text-[12px] font-medium text-[#525866] whitespace-nowrap">Document Name</th>
-                <th className="py-3 px-6 text-[12px] font-medium text-[#525866] whitespace-nowrap">Student Name</th>
-                <th className="py-3 px-6 text-[12px] font-medium text-[#525866] whitespace-nowrap">Service Type</th>
-                <th className="py-3 px-6 text-[12px] font-medium text-[#525866] whitespace-nowrap">Amount Paid</th>
-                <th className="py-3 px-6 text-[12px] font-medium text-[#525866] whitespace-nowrap">Deadline</th>
-                <th className="py-3 px-6 text-[12px] font-medium text-[#525866] whitespace-nowrap">Payment Status</th>
-                <th className="py-3 px-6 text-[12px] font-medium text-[#525866] text-center whitespace-nowrap">Action</th>
+                <th className="py-3 px-4 text-[13px] font-bold text-[#525866]">Invoice Number</th>
+                <th className="py-3 px-4 text-[13px] font-bold text-[#525866]">Document Name</th>
+                <th className="py-3 px-4 text-[13px] font-bold text-[#525866]">Student Name</th>
+                <th className="py-3 px-4 text-[13px] font-bold text-[#525866]">Service Type</th>
+                <th className="py-3 px-4 text-[13px] font-bold text-[#525866]">Amount Paid</th>
+                <th className="py-3 px-4 text-[13px] font-bold text-[#525866]">Deadline</th>
+                <th className="py-3 px-4 text-[13px] font-bold text-[#525866]">Payment Status</th>
+                <th className="py-3 px-4 text-[13px] font-bold text-[#525866] text-center">Action</th>
               </tr>
             </thead>
             <tbody>
               {studentPayments.map((item, i) => (
                 <tr key={item.id} className="border-b border-[#EAECF0] last:border-0 hover:bg-[#F9FAFB] transition-colors group/row">
-                  <td className="py-4 px-6 text-[13px] font-medium text-[#171717] whitespace-nowrap">
+                  <td className="py-3 px-4 text-[13px] font-medium text-[#171717]">
                     <Link href={`/admin/payments/${item.id}`} className="hover:text-[#00A0E3] hover:underline">
                       {item.id}
                     </Link>
                   </td>
-                  <td className="py-4 px-6">
+                  <td className="py-3 px-4">
                     <div className="flex items-center text-[13px] font-medium text-[#525866] whitespace-nowrap">
                       <FileText className="w-4 h-4 mr-2 text-[#A0AAB5]" />
                       {item.doc}
                     </div>
                   </td>
-                  <td className="py-4 px-6 text-[13px] text-[#525866] whitespace-nowrap">{item.student}</td>
-                  <td className="py-4 px-6 text-[13px] text-[#525866] whitespace-nowrap">{item.service}</td>
-                  <td className="py-4 px-6 text-[13px] text-[#171717] font-medium whitespace-nowrap">{item.amount}</td>
-                  <td className="py-4 px-6 text-[13px] text-[#525866] whitespace-nowrap">{item.deadline}</td>
-                  <td className="py-4 px-6 whitespace-nowrap">
+                  <td className="py-3 px-4 text-[13px] text-[#525866]">{item.student}</td>
+                  <td className="py-3 px-4 text-[13px] text-[#525866]">{item.service}</td>
+                  <td className="py-3 px-4 text-[13px] text-[#171717] font-medium">{item.amount}</td>
+                  <td className="py-3 px-4 text-[13px] text-[#525866]">{item.deadline}</td>
+                  <td className="py-3 px-4">
                     <StatusBadge status={item.status} />
                   </td>
-                  <td className="py-4 px-6 text-center whitespace-nowrap">
+                  <td className="py-3 px-4 text-center">
                     <button className="text-[#A0AAB5] hover:text-[#171717] transition-colors p-1">
                       <MoreVertical className="w-4 h-4 mx-auto" />
                     </button>
@@ -167,42 +164,43 @@ export default function PaymentsScreen() {
       </div>
 
       {/* Editor Payouts Section */}
-      <div className="bg-[#FFFFFF] border border-[#EAECF0] rounded-[12px] shadow-sm overflow-hidden">
+      <div className="bg-[#FFFFFF] border border-[#EAECF0] rounded-[12px] p-6 shadow-sm">
         <div className="p-6 pb-2">
           <div className="text-[16px] font-bold text-[#171717]">Editor Payouts</div>
           <div className="mx-auto w-[98%] h-px mt-4 mb-0 bg-[#EAECF0]" />
         </div>
-        <div className="p-4 flex justify-between items-center bg-[#FFFFFF]">
-          <div className="relative w-[300px]">
+        <div className="flex items-center justify-between mb-4 gap-3 flex-wrap">
+          <div className="relative w-[280px] max-w-full">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#A0AAB5]" />
             <input 
               type="text" 
               placeholder="Search" 
-              className="w-full pl-9 pr-4 py-2 border border-[#EAECF0] rounded-[8px] text-[13px] focus:outline-none focus:ring-1 focus:ring-[#00A0E3] focus:border-[#00A0E3] transition-all"
+              className="h-[42px] w-full pl-10 pr-3 border border-[#EAECF0] rounded-[8px] text-[14px] text-[#171717] placeholder-[#A0AAB5] focus:outline-none focus:ring-1 focus:ring-[#00A0E3]"
             />
           </div>
-          <button className="flex items-center px-4 py-2 border border-[#EAECF0] text-[#171717] rounded-[8px] text-[13px] font-medium hover:bg-[#F9FAFB] transition-colors">
+
+          <button className="h-[42px] px-4 border border-[#EAECF0] rounded-[8px] text-[14px] text-[#525866] font-semibold inline-flex items-center gap-2 hover:bg-[#F9FAFB] transition-colors">
             <Filter className="w-4 h-4 mr-2" />
             Filter
           </button>
         </div>
         
-        <div className="overflow-x-auto custom-scrollbar border-t border-[#EAECF0]">
-          <table className="w-full text-left border-collapse min-w-[900px]">
+        <div className="overflow-x-auto custom-scrollbar border border-[#EAECF0] rounded-[10px]">
+          <table className="w-full text-left border-collapse min-w-[900px] whitespace-nowrap">
             <thead>
               <tr className="bg-[#F9FAFB] border-b border-[#EAECF0]">
-                <th className="py-3 px-6 text-[12px] font-medium text-[#525866] whitespace-nowrap">Editor Name</th>
-                <th className="py-3 px-6 text-[12px] font-medium text-[#525866] whitespace-nowrap">Completed Docs.</th>
-                <th className="py-3 px-6 text-[12px] font-medium text-[#525866] whitespace-nowrap">Pending Amount</th>
-                <th className="py-3 px-6 text-[12px] font-medium text-[#525866] whitespace-nowrap">Payment Method</th>
-                <th className="py-3 px-6 text-[12px] font-medium text-[#525866] whitespace-nowrap">Ass. Status</th>
-                <th className="py-3 px-6 text-[12px] font-medium text-[#525866] text-center whitespace-nowrap">Action</th>
+                <th className="py-3 px-4 text-[13px] font-bold text-[#525866]">Editor Name</th>
+                <th className="py-3 px-4 text-[13px] font-bold text-[#525866]">Completed Docs.</th>
+                <th className="py-3 px-4 text-[13px] font-bold text-[#525866]">Pending Amount</th>
+                <th className="py-3 px-4 text-[13px] font-bold text-[#525866]">Payment Method</th>
+                <th className="py-3 px-4 text-[13px] font-bold text-[#525866]">Ass. Status</th>
+                <th className="py-3 px-4 text-[13px] font-bold text-[#525866] text-center">Action</th>
               </tr>
             </thead>
             <tbody>
               {editorPayouts.map((editor, i) => (
                 <tr key={i} className="border-b border-[#EAECF0] last:border-0 hover:bg-[#F9FAFB] transition-colors group/row">
-                  <td className="py-4 px-6 whitespace-nowrap">
+                  <td className="py-3 px-4">
                     <div className="flex items-center space-x-3">
                       <img src={editor.avatar} alt={editor.name} className="w-8 h-8 rounded-full object-cover border border-[#EAECF0]" />
                       <div>
@@ -211,13 +209,13 @@ export default function PaymentsScreen() {
                       </div>
                     </div>
                   </td>
-                  <td className="py-4 px-6 text-[13px] text-[#525866] whitespace-nowrap">{editor.docs}</td>
-                  <td className="py-4 px-6 text-[13px] text-[#171717] font-medium whitespace-nowrap">{editor.amount}</td>
-                  <td className="py-4 px-6 text-[13px] text-[#525866] whitespace-nowrap">{editor.method}</td>
-                  <td className="py-4 px-6 whitespace-nowrap">
+                  <td className="py-3 px-4 text-[13px] text-[#525866]">{editor.docs}</td>
+                  <td className="py-3 px-4 text-[13px] text-[#171717] font-medium">{editor.amount}</td>
+                  <td className="py-3 px-4 text-[13px] text-[#525866]">{editor.method}</td>
+                  <td className="py-3 px-4">
                     <StatusBadge status={editor.status} />
                   </td>
-                  <td className="py-4 px-6 text-center whitespace-nowrap">
+                  <td className="py-3 px-4 text-center">
                     <button className="text-[#A0AAB5] hover:text-[#171717] transition-colors p-1">
                       <MoreVertical className="w-4 h-4 mx-auto" />
                     </button>

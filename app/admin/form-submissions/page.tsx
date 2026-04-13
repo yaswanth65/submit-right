@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useMemo, useState } from "react";
-import Link from "next/link";
 import { Eye, Mail, RefreshCw, Search, X } from "lucide-react";
 
 type SubmissionStatus = "pending" | "resolved" | "closed";
@@ -364,17 +363,11 @@ export default function AdminFormSubmissionsPage() {
   };
 
   return (
-    <div className="w-full font-dm-sans">
-      <div className="flex items-center text-[13px] text-[#A0AAB5] mb-6">
-        <Link href="/admin/dashboard" className="hover:text-[#171717] transition-colors">Dashboard</Link>
-        <span className="mx-2">/</span>
-        <span className="text-[#171717] font-medium">Form Submissions</span>
-      </div>
-
-      <div className="mb-6 flex items-start justify-between gap-4">
+    <div className="space-y-6 animate-in fade-in duration-500 w-full font-dm-sans">
+      <div className="-mx-6 lg:-mx-8 px-6 lg:px-8 py-3 border-b border-[#EAECF0] bg-white flex items-start justify-between gap-4">
         <div>
-          <div className="text-[24px] font-semibold text-[#171717] mb-1 font-inter">Form Submissions</div>
-          <p className="text-[14px] text-[#525866]">Review and reply to all user-submitted requests from contact and post publication support forms.</p>
+          <div className="text-[20px] font-bold text-[#171717] leading-tight">Form Submissions</div>
+          <p className="text-[14px] text-[#525866] mt-1">Review and reply to all user-submitted requests from contact and post publication support forms.</p>
         </div>
 
         <button
@@ -386,8 +379,8 @@ export default function AdminFormSubmissionsPage() {
         </button>
       </div>
 
-      <div className="bg-white rounded-[12px] border border-[#EAECF0] shadow-sm overflow-hidden">
-        <div className="px-4 pt-4">
+      <div className="bg-white rounded-[12px] border border-[#EAECF0] p-6 shadow-sm">
+        <div className="mb-4">
           <div className="inline-flex rounded-[8px] border border-[#EAECF0] p-1 bg-[#F9FAFB]">
             <button
               onClick={() => {
@@ -414,7 +407,7 @@ export default function AdminFormSubmissionsPage() {
           </div>
         </div>
 
-        <div className="p-4 flex items-center gap-3 flex-wrap border-b border-[#EAECF0]">
+        <div className="flex items-center gap-3 flex-wrap mb-4">
           <div className="relative w-full max-w-[360px]">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-[18px] h-[18px] text-[#A0AAB5]" />
             <input
@@ -458,16 +451,16 @@ export default function AdminFormSubmissionsPage() {
           </select>
         </div>
 
-        <div className="overflow-x-auto">
-          <table className="w-full text-left border-collapse">
+        <div className="overflow-x-auto border border-[#EAECF0] rounded-[10px]">
+          <table className="w-full text-left border-collapse whitespace-nowrap">
             <thead>
               <tr className="bg-[#F9FAFB] border-b border-[#EAECF0]">
-                <th className="px-5 py-3 text-[13px] font-bold text-[#171717]">Submitted</th>
-                <th className="px-5 py-3 text-[13px] font-bold text-[#171717]">User</th>
-                <th className="px-5 py-3 text-[13px] font-bold text-[#171717]">{selectedType === "contact" ? "Inquiry" : "Support Need"}</th>
-                <th className="px-5 py-3 text-[13px] font-bold text-[#171717]">{selectedType === "contact" ? "Message" : "Manuscript"}</th>
-                <th className="px-5 py-3 text-[13px] font-bold text-[#171717]">Status</th>
-                <th className="px-5 py-3 text-[13px] font-bold text-[#171717]">Action</th>
+                <th className="px-5 py-3 text-[13px] font-bold text-[#525866]">Submitted</th>
+                <th className="px-5 py-3 text-[13px] font-bold text-[#525866]">User</th>
+                <th className="px-5 py-3 text-[13px] font-bold text-[#525866]">{selectedType === "contact" ? "Inquiry" : "Support Need"}</th>
+                <th className="px-5 py-3 text-[13px] font-bold text-[#525866]">{selectedType === "contact" ? "Message" : "Manuscript"}</th>
+                <th className="px-5 py-3 text-[13px] font-bold text-[#525866]">Status</th>
+                <th className="px-5 py-3 text-[13px] font-bold text-[#525866]">Action</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-[#EAECF0]">

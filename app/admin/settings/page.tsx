@@ -3,17 +3,15 @@ import React from "react";
 export default function SettingsScreen() {
   return (
     <div className="space-y-6 w-full font-dm-sans animate-in fade-in slide-in-from-bottom-2 duration-700">
-      <div className="flex items-center justify-between mt-2 mb-8">
+      <div className="-mx-6 lg:-mx-8 px-6 lg:px-8 py-3 border-b border-[#EAECF0] bg-white flex items-center justify-between">
         <div>
-          <div className="text-[20px] font-bold text-[#171717] mb-[2px]">System Settings</div>
-          <p className="text-[14px] text-[#525866]">Configure platform rules and operational policies.</p>
+          <div className="text-[20px] font-bold text-[#171717] leading-tight">System Settings</div>
+          <p className="text-[14px] text-[#525866] mt-1">Configure platform rules and operational policies.</p>
         </div>
         <button className="bg-[#00A0E3] hover:bg-[#0090D1] text-[#FFFFFF] px-4 py-2 rounded-[8px] text-[13px] font-semibold transition-transform transform hover:scale-105 active:scale-95 shadow-sm">
           Save Changes
         </button>
       </div>
-
-  <div className="mx-auto w-[98%] h-px bg-[#EAECF0]" />
 
       <div className="bg-[#FFFFFF] border border-[#EAECF0] rounded-[12px] p-6 shadow-sm group hover:shadow-md transition-shadow duration-300">
         <div className="text-[16px] font-bold text-[#171717] ">General Platform Settings</div>

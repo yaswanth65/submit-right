@@ -288,17 +288,11 @@ export default function AdminBlogsPage() {
   };
 
   return (
-    <div className="w-full font-dm-sans">
-      <div className="flex items-center text-[13px] text-[#A0AAB5] mb-6">
-        <Link href="/admin/dashboard" className="hover:text-[#171717] transition-colors">Home</Link>
-        <span className="mx-2">&gt;</span>
-        <span className="text-[#171717] font-medium">Blogs</span>
-      </div>
-
-      <div className="mb-6 flex items-start justify-between gap-4">
+    <div className="space-y-6 animate-in fade-in duration-500 w-full font-dm-sans">
+      <div className="-mx-6 lg:-mx-8 px-6 lg:px-8 py-3 border-b border-[#EAECF0] bg-white flex items-start justify-between gap-4">
         <div>
-          <div className="text-[24px] font-medium text-[#1C1C1D] mb-1 font-inter">Blogs</div>
-          <p className="text-[14px] text-[#78788D]">Create, edit, and manage blog posts for the public site.</p>
+          <div className="text-[20px] font-bold text-[#171717] leading-tight">Blogs</div>
+          <p className="text-[14px] text-[#525866] mt-1">Create, edit, and manage blog posts for the public site.</p>
         </div>
 
         <button
@@ -310,7 +304,7 @@ export default function AdminBlogsPage() {
         </button>
       </div>
 
-      <div className="bg-white rounded-[12px] border border-[#EAECF0] shadow-sm">
+      <div className="bg-white rounded-[12px] border border-[#EAECF0] p-6 shadow-sm">
         <div className="p-4 flex items-center justify-between border-b border-[#EAECF0]">
           <div className="flex items-center gap-2.5 w-full">
             <div className="relative w-full max-w-[320px]">

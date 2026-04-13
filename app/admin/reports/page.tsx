@@ -106,10 +106,10 @@ export default function ReportsScreen() {
 
   return (
     <div className="space-y-6 w-full font-dm-sans animate-in fade-in duration-700 pb-10">
-      <div className="flex items-center justify-between mt-2 mb-8">
+      <div className="-mx-6 lg:-mx-8 px-6 lg:px-8 py-3 border-b border-[#EAECF0] bg-white flex items-center justify-between">
         <div>
-          <div className="text-[20px] font-bold text-[#171717] mb-[2px]">Reports</div>
-          <p className="text-[14px] text-[#525866]">Platform performance and operational insights.</p>
+          <div className="text-[20px] font-bold text-[#171717] leading-tight">Reports</div>
+          <p className="text-[14px] text-[#525866] mt-1">Platform performance and operational insights.</p>
         </div>
         <div className="flex items-center space-x-3">
           <select
@@ -127,8 +127,6 @@ export default function ReportsScreen() {
           </button>
         </div>
       </div>
-
-  <div className="mx-auto w-[98%] h-px bg-[#EAECF0]" />
 
       {error ? (
         <div className="rounded-[10px] border border-[#FECACA] bg-[#FEF2F2] px-4 py-3 text-[13px] text-[#B91C1C]">{error}</div>

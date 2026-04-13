@@ -5,29 +5,32 @@ import { requireRole } from "@/lib/auth";
 import { blogPostUpdateSchema } from "@/lib/validators";
 import { deleteBlogPost, getBlogPostById, updateBlogPost } from "@/lib/services/blog-service";
 
-export async function GET(_req: NextRequest, { params }: { params: { id: string } }) {
+export async function GET(_req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     await requireRole("admin");
-    return ok(await getBlogPostById(params.id));
+    const { id } = await params;
+    return ok(await getBlogPostById(id));
   } catch (error) {
     return asResponse(error);
   }
 }
 
-export async function PATCH(req: NextRequest, { params }: { params: { id: string } }) {
+export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     const admin = await requireRole("admin");
     const body = await parseJson(req, blogPostUpdateSchema);
-    return ok(await updateBlogPost(params.id, body, admin.profileId));
+    const { id } = await params;
+    return ok(await updateBlogPost(id, body, admin.profileId));
   } catch (error) {
     return asResponse(error);
   }
 }
 
-export async function DELETE(_req: NextRequest, { params }: { params: { id: string } }) {
+export async function DELETE(_req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     await requireRole("admin");
-    return ok(await deleteBlogPost(params.id));
+    const { id } = await params;
+    return ok(await deleteBlogPost(id));
   } catch (error) {
     return asResponse(error);
   }

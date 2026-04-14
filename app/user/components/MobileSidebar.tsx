@@ -9,7 +9,6 @@ import {
   BarChart2,
   FileText,
   MessageSquare,
-  AppWindow,
   Folder,
   Banknote,
   Bell,
@@ -67,17 +66,6 @@ export function MobileSidebar({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpe
     {
       title: "SERVICES",
       items: [
-        {
-          name: "Domains",
-          href: "#",
-          icon: AppWindow,
-          hasSub: true,
-          subItems: [
-            { name: "Lorem ipsum", href: "/user/services/1" },
-            { name: "Lorem ipsum", href: "/user/services/2" },
-            { name: "Lorem ipsum", href: "/user/services/3" },
-          ],
-        },
         {
           name: "Packages",
           href: "#",

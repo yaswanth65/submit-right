@@ -5,7 +5,7 @@ import Link from "next/link";
 import { Plus, Search } from "lucide-react";
 import { apiGet } from "@/lib/client-api";
 import type { CatalogItemKind } from "@/lib/types";
-import { CatalogItemModal, type CatalogItemCard } from "../catalog/components/CatalogItemModal";
+import { CatalogItemModal, type CatalogItemCard } from "@/app/admin/catalog/components/CatalogItemModal";
 
 type CatalogListResponse = {
   items: CatalogItemCard[];
@@ -127,7 +127,7 @@ export default function DomainsAndServicesPage() {
               <tr className="bg-[#F9FAFB] border-b border-[#EAECF0]">
                 <th className="py-3 px-4 text-[13px] font-bold text-[#525866]">Domain Type</th>
                 <th className="py-3 px-4 text-[13px] font-bold text-[#525866]">Services Name</th>
-                <th className="py-3 px-4 text-[13px] font-bold text-[#525866]">Word Count Rate</th>
+                <th className="py-3 px-4 text-[13px] font-bold text-[#525866]">Word Count Rate or Base Rate</th>
                 <th className="py-3 px-4 text-[13px] font-bold text-[#525866]">Last Updated Date</th>
                 <th className="py-3 px-4 text-[13px] font-bold text-[#525866]">Availability Status</th>
                 <th className="py-3 px-4 text-[13px] font-bold text-[#525866] text-right">Action</th>

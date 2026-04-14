@@ -15,15 +15,13 @@ export default function EditorHelp() {
   ];
 
   return (
-    <div className="w-full font-dm-sans animate-in fade-in duration-500 space-y-6">
-      
-      {/* Header */}
-      <div className="-mx-6 lg:-mx-8 px-6 lg:px-8 py-3 border-b border-[#EAECF0] bg-white">
-        <div className="text-[20px] font-bold text-[#171717] leading-tight">Help Center</div>
-        <p className="text-[14px] text-[#525866] mt-1">Find workflow guidance, editing standards, and platform policies.</p>
+    <div className="w-full font-dm-sans animate-in fade-in duration-500">
+      <div className="-mx-6 lg:-mx-8 px-6 lg:px-8 pb-3 border-b border-[#E7E7E9] bg-white flex flex-col justify-center">
+        <div className="text-[22px] font-medium text-[#1C1C1D] leading-tight">Help Center</div>
+        <div className="text-[14px] text-[#78788D] mt-1.5">Find workflow guidance, editing standards, and platform policies.</div>
       </div>
 
-      <div className="flex flex-col md:flex-row gap-8">
+      <div className="flex flex-col md:flex-row gap-8 pt-6">
         
         {/* Left Sidebar: Guidelines Index */}
         <div className="w-full md:w-[320px] flex-shrink-0 bg-[#FFFFFF] border border-[#EAECF0] rounded-[12px] p-5 shadow-sm h-fit">

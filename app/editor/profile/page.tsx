@@ -168,18 +168,19 @@ export default function EditorProfilePage() {
   };
 
   return (
-    <div className="w-full font-dm-sans space-y-6">
-      <div className="-mx-6 lg:-mx-8 px-6 lg:px-8 py-3 border-b border-[#EAECF0] bg-white">
-        <div className="text-[20px] font-bold text-[#171717] leading-tight">Profile & Settings</div>
-        <p className="text-[14px] text-[#525866] mt-1">Manage your editor profile and workspace information.</p>
+    <div className="w-full font-dm-sans animate-in fade-in duration-300">
+      <div className="-mx-6 lg:-mx-8 px-6 lg:px-8 pb-3 border-b border-[#E7E7E9] bg-white flex flex-col justify-center">
+        <div className="text-[22px] font-medium text-[#1C1C1D] leading-tight">Profile & Settings</div>
+        <div className="text-[14px] text-[#78788D] mt-1.5">Manage your editor profile and workspace information.</div>
       </div>
 
-      {error ? <div className="mb-4 rounded-[8px] border border-[#FECACA] bg-[#FEF2F2] px-4 py-3 text-[13px] text-[#B42318]">{error}</div> : null}
-      {success ? <div className="mb-4 rounded-[8px] border border-[#ABEFC6] bg-[#ECFDF3] px-4 py-3 text-[13px] text-[#067647]">{success}</div> : null}
+      <div className="space-y-6 pt-6">
+        {error ? <div className="mb-4 rounded-[8px] border border-[#FECACA] bg-[#FEF2F2] px-4 py-3 text-[13px] text-[#B42318]">{error}</div> : null}
+        {success ? <div className="mb-4 rounded-[8px] border border-[#ABEFC6] bg-[#ECFDF3] px-4 py-3 text-[13px] text-[#067647]">{success}</div> : null}
 
-      {isLoading ? (
-        <div className="rounded-[12px] border border-[#EAECF0] bg-white px-5 py-6 text-[14px] text-[#525866]">Loading profile...</div>
-      ) : (
+        {isLoading ? (
+          <div className="rounded-[12px] border border-[#EAECF0] bg-white px-5 py-6 text-[14px] text-[#525866]">Loading profile...</div>
+        ) : (
         <div className="rounded-[12px] border border-[#EAECF0] bg-white overflow-hidden">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-5 border-b border-[#EAECF0]">
             <div>
@@ -250,6 +251,7 @@ export default function EditorProfilePage() {
           </div>
         </div>
       )}
+      </div>
     </div>
   );
 }

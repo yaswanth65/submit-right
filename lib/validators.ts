@@ -56,6 +56,21 @@ export const serviceSelectionSchema = z.object({
   serviceId: z.string().uuid()
 });
 
+export const paymentOrderSchema = z.object({
+  documentId: z.string().uuid()
+});
+
+export const paymentCouponValidationSchema = z.object({
+  documentId: z.string().uuid(),
+  couponCode: z.string().min(2).max(80)
+});
+
+export const mockCheckoutSchema = z.object({
+  documentId: z.string().uuid(),
+  couponCode: z.string().min(2).max(80).optional().nullable(),
+  paymentMethod: z.string().min(2).max(80).optional().nullable()
+});
+
 export const catalogItemKindSchema = z.enum(["service", "package", "domain"]);
 
 export const catalogItemUpsertSchema = z.object({

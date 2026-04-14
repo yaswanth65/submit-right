@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { Search, FileText, Coins, CreditCard, Lock, File } from "lucide-react";
 import { apiGet } from "@/lib/client-api";
+import { MockCheckoutModal } from "@/components/MockCheckoutModal";
 
 type PaymentDocument = {
   id: string;
@@ -103,34 +104,35 @@ export default function PaymentsAndFilesPage() {
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [showCheckoutModal, setShowCheckoutModal] = useState(false);
+  const [selectedDocument, setSelectedDocument] = useState<PaymentDocument | null>(null);
+
+  const loadPayments = useCallback(async () => {
+    try {
+      setLoading(true);
+      const data = await apiGet<PaymentsPayload>("/api/client/payments");
+      setPayload(data);
+      setError(null);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to load payments.");
+    } finally {
+      setLoading(false);
+    }
+  }, []);
 
   useEffect(() => {
-    let active = true;
+    void loadPayments();
+  }, [loadPayments]);
 
-    const load = async () => {
-      try {
-        setLoading(true);
-        const data = await apiGet<PaymentsPayload>("/api/client/payments");
-        if (active) {
-          setPayload(data);
-          setError(null);
-        }
-      } catch (err) {
-        if (active) {
-          setError(err instanceof Error ? err.message : "Failed to load payments.");
-        }
-      } finally {
-        if (active) {
-          setLoading(false);
-        }
-      }
-    };
+  const pendingCheckoutDocument = selectedDocument ?? payload.pendingPaymentDocuments[0] ?? null;
 
-    load();
-    return () => {
-      active = false;
-    };
-  }, []);
+  const openCheckout = (doc: PaymentDocument | null) => {
+    if (!doc) {
+      return;
+    }
+    setSelectedDocument(doc);
+    setShowCheckoutModal(true);
+  };
 
   const totalPendingAmount = useMemo(
     () => payload.pendingPaymentDocuments.reduce((sum, item) => sum + Number(item.estimated_total || 0), 0),
@@ -184,7 +186,11 @@ export default function PaymentsAndFilesPage() {
             </div>
           </div>
 
-          <button className="bg-[#F97316] hover:bg-[#EA580C] text-white px-5 py-2.5 rounded-[8px] flex items-center gap-2 text-[14px] font-bold transition-colors shadow-sm">
+          <button
+            onClick={() => openCheckout(payload.pendingPaymentDocuments[0] ?? null)}
+            disabled={payload.pendingPaymentDocuments.length === 0}
+            className="bg-[#F97316] hover:bg-[#EA580C] disabled:bg-[#FDBA74] text-white px-5 py-2.5 rounded-[8px] flex items-center gap-2 text-[14px] font-bold transition-colors shadow-sm disabled:cursor-not-allowed"
+          >
             <CreditCard className="w-[18px] h-[18px]" strokeWidth={2.5} />
             Checkout Pending
           </button>
@@ -278,7 +284,12 @@ export default function PaymentsAndFilesPage() {
                         <td className="px-6 py-4 text-[13px] font-medium text-[#525866]">{formatCurrency(doc.estimated_total)}</td>
                         <td className="px-6 py-4 text-[13px] font-bold">
                           {paymentPending ? (
-                            <button className="text-[#F97316] hover:underline whitespace-nowrap">Pay to Download</button>
+                            <button
+                              onClick={() => openCheckout(doc)}
+                              className="text-[#F97316] hover:underline whitespace-nowrap"
+                            >
+                              Pay to Download
+                            </button>
                           ) : (
                             <button className="text-[#00A0E3] hover:underline whitespace-nowrap">Download</button>
                           )}
@@ -352,6 +363,27 @@ export default function PaymentsAndFilesPage() {
           </div>
         )}
       </div>
+
+      <MockCheckoutModal
+        isOpen={showCheckoutModal}
+        onClose={() => {
+          setShowCheckoutModal(false);
+          setSelectedDocument(null);
+        }}
+        context={
+          showCheckoutModal && pendingCheckoutDocument
+            ? {
+                documentId: pendingCheckoutDocument.id,
+                documentTitle: pendingCheckoutDocument.document_title || "Selected Document",
+                amount: Number(pendingCheckoutDocument.estimated_total || 0),
+                requireUpfrontPayment: false
+              }
+            : null
+        }
+        onSuccess={async () => {
+          await loadPayments();
+        }}
+      />
     </div>
   );
 }

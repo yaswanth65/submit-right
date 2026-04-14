@@ -1,41 +1,82 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useParams } from "next/navigation";
 import { Navbar } from "@/components/landing/Navbar";
 import { Footer } from "@/components/landing/Footer";
 import { CTABanner } from "@/components/landing/CTABanner";
+import { apiGet } from "@/lib/client-api";
 
-// Mock detailed blog matching the `BlogPost` / `BlogDraft` from admin
-const mockBlogPost = {
-  id: "1",
-  title: "How to Optimize Your Workflow for Maximum Productivity",
-  author: "Sarah Jenkins",
-  date: "Oct 12, 2026",
-  coverImageUrl: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
-  introduction: "Productivity isn't just about doing more, it's about doing the right things efficiently. In this post, we discuss the core philosophies behind a highly effective workflow and how to implement them in your daily routine.",
-  sections: [
-    {
-      heading: "Identify Your Core Priorities",
-      content: "Before you can optimize your workflow, you need to understand what actually matters. Often, we get bogged down by busywork—tasks that feel productive but don't actually move the needle. Start by identifying your top 3 goals for the week. Once aligned, structure your daily to-do list so that these priority items are tackled first, ideally when your energy levels are at their peak.",
-      imageUrl: "https://images.unsplash.com/photo-1554415707-6e8cfc93fe23?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-    },
-    {
-      heading: "Automate the Repetitive Tasks",
-      content: "Technology is your best friend when it comes to workflow optimization. If you find yourself doing the same task more than three times a week, there's a strong chance it can be automated. Use tools like Zapier, Make, or custom scripts to handle data entry, email filtering, and meeting scheduling. The time saved here can be reinvested into deep, creative work.",
-      imageUrl: ""
-    },
-    {
-      heading: "Establish Functional Boundaries",
-      content: "One of the quickest ways to ruin a good workflow is context switching. Every time you pause to check a notification or message, it takes an average of 23 minutes to return to a state of flow. Block out specific times for checking emails and messages, and turn off non-essential notifications while engaging in deep work.",
-      imageUrl: "https://images.unsplash.com/photo-1497215728101-856f4ea42174?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-    }
-  ],
-  conclusion: "Workflow optimization is an ongoing process of refinement. Start with these three strategies: prioritizing deeply, automating ruthlessly, and protecting your focus. You'll quickly find that you're achieving more with significantly less stress."
+type BlogPost = {
+  id: string;
+  title: string;
+  authorName?: string | null;
+  coverImageUrl?: string | null;
+  introduction: string;
+  sections: Array<{
+    heading: string;
+    content: string;
+    imageUrl?: string | null;
+  }>;
+  conclusion?: string | null;
+  publishedAt?: string | null;
+  createdAt?: string;
 };
 
+function formatDate(value?: string | null) {
+  if (!value) return "-";
+  const d = new Date(value);
+  if (Number.isNaN(d.getTime())) return "-";
+  return d.toLocaleDateString("en-US", { month: "short", day: "2-digit", year: "numeric" });
+}
+
 export default function BlogPostPage() {
+  const params = useParams<{ id: string | string[] }>();
+  const blogId = useMemo(() => {
+    if (!params?.id) return "";
+    return Array.isArray(params.id) ? params.id[0] : params.id;
+  }, [params]);
+
+  const [blog, setBlog] = useState<BlogPost | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!blogId) {
+      setError("Invalid blog id");
+      setIsLoading(false);
+      return;
+    }
+
+    let cancelled = false;
+
+    const loadBlog = async () => {
+      setIsLoading(true);
+      setError(null);
+
+      try {
+        const data = await apiGet<BlogPost>(`/api/blogs/${encodeURIComponent(blogId)}`);
+        if (cancelled) return;
+        setBlog(data);
+      } catch (loadError) {
+        if (cancelled) return;
+        setError(loadError instanceof Error ? loadError.message : "Unable to load blog post");
+      } finally {
+        if (!cancelled) {
+          setIsLoading(false);
+        }
+      }
+    };
+
+    void loadBlog();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [blogId]);
+
   return (
     <div className="min-h-screen bg-white">
       <Navbar />
@@ -51,20 +92,25 @@ export default function BlogPostPage() {
             Back to Blogs
           </Link>
 
-          <div className="flex items-center gap-3 text-[14px] text-[#65656D] mb-5">
-            <div className="flex items-center gap-2">
-               <div className="w-6 h-6 rounded-full bg-[#EAF5FB] text-[#00A0E3] flex items-center justify-center font-bold text-[10px]">
-                 {mockBlogPost.author.charAt(0)}
-               </div>
-               <span className="font-semibold text-[#1C1C1D]">{mockBlogPost.author}</span>
-            </div>
-            <span className="w-1 h-1 rounded-full bg-[#DDE7ED]"></span>
-            <span>{mockBlogPost.date}</span>
-          </div>
+          {isLoading ? <div className="text-[15px] text-[#65656D]">Loading post...</div> : null}
+          {!isLoading && error ? <div className="text-[15px] text-[#B42318]">{error}</div> : null}
 
-          <h1 className="text-[32px] sm:text-[40px] md:text-[48px] leading-[1.2] font-semibold text-[#1C1C1D] mb-6">
-            {mockBlogPost.title}
-          </h1>
+          {!isLoading && !error && blog ? (
+            <>
+              <div className="flex items-center gap-3 text-[14px] text-[#65656D] mb-5">
+                <div className="flex items-center gap-2">
+                  <div className="w-6 h-6 rounded-full bg-[#EAF5FB] text-[#00A0E3] flex items-center justify-center font-bold text-[10px]">
+                    {(blog.authorName || "S").charAt(0).toUpperCase()}
+                  </div>
+                  <span className="font-semibold text-[#1C1C1D]">{blog.authorName || "Submit Right"}</span>
+                </div>
+                <span className="w-1 h-1 rounded-full bg-[#DDE7ED]"></span>
+                <span>{formatDate(blog.publishedAt || blog.createdAt)}</span>
+              </div>
+
+              <h1 className="text-[32px] sm:text-[40px] md:text-[48px] leading-[1.2] font-semibold text-[#1C1C1D] mb-6">{blog.title}</h1>
+            </>
+          ) : null}
 
         </div>
       </section>
@@ -72,60 +118,40 @@ export default function BlogPostPage() {
       {/* Main Content Area */}
       <section className="py-12 sm:py-16 lg:py-20 bg-white">
         <div className="landing-shell max-w-[900px]">
-          
-          {/* Cover Image */}
-          {mockBlogPost.coverImageUrl && (
-            <div className="relative w-full aspect-[16/9] sm:aspect-[2/1] rounded-[20px] overflow-hidden mb-12 shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-[#E5E7EB]">
-              <Image 
-                src={mockBlogPost.coverImageUrl}
-                alt={mockBlogPost.title}
-                fill
-                className="object-cover"
-                priority
-              />
-            </div>
-          )}
+          {!isLoading && !error && blog ? (
+            <>
+              {blog.coverImageUrl ? (
+                <div className="relative w-full aspect-[16/9] sm:aspect-[2/1] rounded-[20px] overflow-hidden mb-12 shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-[#E5E7EB]">
+                  <Image src={blog.coverImageUrl} alt={blog.title} fill className="object-cover" priority />
+                </div>
+              ) : null}
 
-          {/* Introduction */}
-          <div className="prose prose-lg max-w-none text-[#4B5563] mb-12">
-            <p className="text-[18px] sm:text-[20px] leading-[1.7] font-medium text-[#1C1C1D]">
-              {mockBlogPost.introduction}
-            </p>
-          </div>
-
-          {/* Sections */}
-          <div className="space-y-12">
-            {mockBlogPost.sections.map((section, idx) => (
-              <div key={idx}>
-                <h2 className="text-[24px] sm:text-[28px] font-semibold text-[#1C1C1D] mb-5">
-                  {section.heading}
-                </h2>
-                <p className="text-[16px] sm:text-[18px] leading-[1.7] text-[#4B5563] mb-6 whitespace-pre-wrap">
-                  {section.content}
-                </p>
-                {section.imageUrl && (
-                  <div className="relative w-full h-[300px] sm:h-[400px] rounded-[16px] overflow-hidden border border-[#E5E7EB] mt-6">
-                    <Image 
-                      src={section.imageUrl} 
-                      alt={section.heading}
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                )}
+              <div className="prose prose-lg max-w-none text-[#4B5563] mb-12">
+                <p className="text-[18px] sm:text-[20px] leading-[1.7] font-medium text-[#1C1C1D]">{blog.introduction}</p>
               </div>
-            ))}
-          </div>
 
-          {/* Conclusion */}
-          {mockBlogPost.conclusion && (
-            <div className="mt-12 pt-10 border-t border-[#F0F0F0]">
-              <h3 className="text-[20px] font-semibold text-[#1C1C1D] mb-4">Conclusion</h3>
-              <p className="text-[16px] sm:text-[18px] leading-[1.7] text-[#4B5563]">
-                {mockBlogPost.conclusion}
-              </p>
-            </div>
-          )}
+              <div className="space-y-12">
+                {(blog.sections || []).map((section, idx) => (
+                  <div key={`${section.heading}-${idx}`}>
+                    <h2 className="text-[24px] sm:text-[28px] font-semibold text-[#1C1C1D] mb-5">{section.heading}</h2>
+                    <p className="text-[16px] sm:text-[18px] leading-[1.7] text-[#4B5563] mb-6 whitespace-pre-wrap">{section.content}</p>
+                    {section.imageUrl ? (
+                      <div className="relative w-full h-[300px] sm:h-[400px] rounded-[16px] overflow-hidden border border-[#E5E7EB] mt-6">
+                        <Image src={section.imageUrl} alt={section.heading} fill className="object-cover" />
+                      </div>
+                    ) : null}
+                  </div>
+                ))}
+              </div>
+
+              {blog.conclusion ? (
+                <div className="mt-12 pt-10 border-t border-[#F0F0F0]">
+                  <h3 className="text-[20px] font-semibold text-[#1C1C1D] mb-4">Conclusion</h3>
+                  <p className="text-[16px] sm:text-[18px] leading-[1.7] text-[#4B5563]">{blog.conclusion}</p>
+                </div>
+              ) : null}
+            </>
+          ) : null}
 
         </div>
       </section>

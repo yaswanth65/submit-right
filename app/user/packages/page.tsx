@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { useRouter } from "next/navigation";
 import { Pencil, Check, ChevronRight } from "lucide-react";
 
 const pageData = {
@@ -81,6 +82,8 @@ const pageData = {
 };
 
 export default function ServicesPackComponent() {
+  const router = useRouter();
+
   return (
     <div className="w-full font-dm-sans pb-16">
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16">
@@ -166,7 +169,10 @@ export default function ServicesPackComponent() {
                 </div>
               </div>
 
-              <button className="w-full bg-[#171717] hover:bg-black text-white rounded-[8px] py-3 text-[15px] font-bold transition-colors">
+              <button
+                onClick={() => router.push("/user/submit-document?kind=package")}
+                className="w-full bg-[#171717] hover:bg-black text-white rounded-[8px] py-3 text-[15px] font-bold transition-colors"
+              >
                 Buy Now
               </button>
             </div>

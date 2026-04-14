@@ -162,10 +162,10 @@ export default function EditorDashboard() {
   );
 
   return (
-    <div className="space-y-6 animate-in fade-in duration-500 w-full font-dm-sans">
-      <div className="-mx-6 lg:-mx-8 px-6 lg:px-8 py-3 border-b border-[#EAECF0] bg-white">
-        <div className="text-[20px] font-bold text-[#171717] leading-tight">Dashboard</div>
-        <div className="text-[14px] text-[#525866] mt-1">
+    <div className=" animate-in fade-in duration-500 w-full font-dm-sans">
+      <div className="-mx-6 lg:-mx-8 px-6 lg:px-8 pb-3 border-b border-[#E7E7E9] bg-white flex flex-col justify-center">
+        <div className="text-[22px] font-medium text-[#1C1C1D] leading-tight">Dashboard</div>
+        <div className="text-[14px] text-[#78788D] mt-1.5">
           Overview of your assigned work{payload?.user?.full_name ? `, ${payload.user.full_name}` : ""}.
         </div>
       </div>
@@ -174,92 +174,92 @@ export default function EditorDashboard() {
         <div className="rounded-[10px] border border-[#FECACA] bg-[#FEF2F2] px-4 py-3 text-[13px] text-[#B91C1C]">{error}</div>
       ) : null}
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {stats.map((stat) => (
-          <div key={stat.title} className="bg-[#FFFFFF] border border-[#EAECF0] rounded-[12px] p-6 shadow-sm flex items-start justify-between">
-            <div>
-              <div className="text-[14px] text-[#525866] font-medium mb-3">{stat.title}</div>
-              <div className="text-[32px] font-bold text-[#171717] leading-none">{loading ? "..." : stat.value}</div>
+      <div className="-mx-6 lg:-mx-8 px-6 lg:px-8 py-6 border-b border-[#E7E7E9] bg-white mb-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {stats.map((stat) => (
+            <div key={stat.title} className="bg-[#FAFAFA] border border-[#E7E7E9] rounded-[14px] p-4 flex flex-col justify-between min-h-[113px]">
+              <div className="flex items-center justify-between">
+                <div className="text-[16px] text-[#78788D] font-normal">{stat.title}</div>
+                <div className="w-[40px] h-[40px] rounded-[10px] bg-white border border-[#E7E7E9] flex items-center justify-center flex-shrink-0">
+                  <stat.icon className={`w-5 h-5 ${stat.iconColor.replace('text-', 'fill-').replace('text-', '')}`} fill="currentColor" strokeWidth={0} />
+                </div>
+              </div>
+              <div className="text-[24px] font-semibold text-[#1C1C1D] leading-none mt-3">{loading ? "..." : stat.value}</div>
             </div>
-            <div className={`w-10 h-10 rounded-[8px] flex items-center justify-center flex-shrink-0 ${stat.iconBg} ${stat.iconColor}`}>
-              <stat.icon className="w-5 h-5" strokeWidth={2.5} />
-            </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
         <div className="lg:col-span-2 space-y-4">
-          <div className="flex items-center justify-between">
-            <h2 className="text-[18px] font-bold text-[#171717]">Assigned Documents</h2>
-            <Link href="/editor/assigned" className="text-[14px] font-semibold text-[#00A0E3] hover:underline">
+          <div className="flex items-center justify-between mb-4">
+            <div className="text-[18px] font-medium text-[#171717]">Assigned Documents</div>
+            <Link href="/editor/assigned" className="text-[14px] font-medium text-[#00A0E3] hover:underline">
               View All
             </Link>
           </div>
 
-          <div className="bg-[#FFFFFF] border border-[#EAECF0] rounded-[12px] overflow-hidden shadow-sm">
-            <div className="overflow-x-auto">
-              <table className="w-full text-left border-collapse table-fixed min-w-[640px] lg:min-w-0">
-                <thead>
-                  <tr className="bg-[#F9FAFB] border-b border-[#EAECF0]">
-                    <th className="py-3.5 px-6 text-[13px] font-semibold text-[#525866]">Document Name</th>
-                    <th className="py-3.5 px-6 text-[13px] font-semibold text-[#525866]">Client</th>
-                    <th className="py-3.5 px-6 text-[13px] font-semibold text-[#525866]">Word Count</th>
-                    <th className="py-3.5 px-6 text-[13px] font-semibold text-[#525866]">Deadline</th>
-                    <th className="py-3.5 px-6 text-[13px] font-semibold text-[#525866]">Status</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-[#EAECF0]">
-                  {(payload?.activeDocuments ?? []).map((doc) => {
-                    const dueSoon = doc.deadline_at ? new Date(doc.deadline_at).getTime() - Date.now() < 24 * 60 * 60 * 1000 : false;
-                    return (
-                      <tr key={doc.id} className="hover:bg-[#F9FAFB] transition-colors">
-                        <td className="py-4 px-6 max-w-[260px]">
-                          <div className="flex items-center space-x-3 cursor-pointer group">
-                            <FileText className="w-4 h-4 text-[#A0AAB5] group-hover:text-[#525866] transition-colors" />
-                            <span className="text-[13px] font-medium text-[#171717] group-hover:underline truncate">
+          <div className="overflow-x-auto">
+            <table className="w-full text-left border-none table-fixed min-w-[640px] lg:min-w-0 border-separate" style={{ borderSpacing: '0 6px' }}>
+              <thead>
+                <tr className="bg-[#F5F7FA]">
+                  <th className="py-2.5 px-3.5 text-[14px] font-medium text-[#171717] rounded-l-[6px]">Document Name</th>
+                  <th className="py-2.5 px-3.5 text-[14px] font-medium text-[#171717]">Client</th>
+                  <th className="py-2.5 px-3.5 text-[14px] font-medium text-[#171717]">Word Count</th>
+                  <th className="py-2.5 px-3.5 text-[14px] font-medium text-[#171717]">Deadline</th>
+                  <th className="py-2.5 px-3.5 text-[14px] font-medium text-[#171717] rounded-r-[6px]">Status</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-[#EAECF0] bg-white">
+                {(payload?.activeDocuments ?? []).map((doc) => {
+                  const dueSoon = doc.deadline_at ? new Date(doc.deadline_at).getTime() - Date.now() < 24 * 60 * 60 * 1000 : false;
+                  return (
+                    <tr key={doc.id} className="hover:bg-[#F9FAFB] transition-colors h-[42px]">
+                      <td className="py-2 px-3 border-b border-[#EAECF0] max-w-[260px]">
+                        <div className="flex items-center space-x-2 cursor-pointer group">
+                          <FileText className="w-[18px] h-[18px] text-[#525866]" />
+                          <span className="text-[14px] font-normal text-[#525866] group-hover:underline truncate">
                               {doc.document_title || "Untitled Document"}
                             </span>
                           </div>
-                        </td>
-                        <td className="py-4 px-6 text-[13px] text-[#525866]">Client</td>
-                        <td className="py-4 px-6 text-[13px] text-[#525866]">{doc.word_count || 0}</td>
-                        <td className="py-4 px-6 text-[13px]">
-                          {dueSoon ? (
-                            <div className="inline-flex items-center px-2 py-1 rounded-[6px] border border-[#FA7319] bg-[#FFF4ED] text-[#FA7319] whitespace-nowrap">
-                              <AlertTriangle className="w-3.5 h-3.5 mr-1.5" strokeWidth={2} />
-                              {formatDateTime(doc.deadline_at)}
-                            </div>
-                          ) : (
-                            <span className="text-[#525866]">{formatDateTime(doc.deadline_at)}</span>
-                          )}
-                        </td>
-                        <td className="py-4 px-6">
-                          <span className={`px-2.5 py-1 rounded-full text-[11px] font-bold border inline-block whitespace-nowrap ${mapStatusStyle(doc.status)}`}>
-                            {mapStatusLabel(doc.status)}
-                          </span>
-                        </td>
-                      </tr>
-                    );
-                  })}
-
-                  {!loading && (payload?.activeDocuments ?? []).length === 0 ? (
-                    <tr>
-                      <td colSpan={5} className="py-10 px-6 text-center text-[13px] text-[#78788D]">
-                        No assigned documents found.
+                      </td>
+                      <td className="py-2 px-3 border-b border-[#EAECF0] text-[14px] font-normal text-[#525866]">Client</td>
+                      <td className="py-2 px-3 border-b border-[#EAECF0] text-[14px] font-normal text-[#525866]">{doc.word_count || 0}</td>
+                      <td className="py-2 px-3 border-b border-[#EAECF0] text-[14px] font-normal">
+                        {dueSoon ? (
+                          <div className="inline-flex items-center px-2 py-0.5 rounded-full border border-[#E5A64C] bg-[#FEF9E7] text-[#E5A64C] text-[12px] font-medium whitespace-nowrap">
+                            <Clock className="w-3.5 h-3.5 mr-1" strokeWidth={2} />
+                            {formatDateTime(doc.deadline_at)}
+                          </div>
+                        ) : (
+                          <span className="text-[#525866]">{formatDateTime(doc.deadline_at)}</span>
+                        )}
+                      </td>
+                      <td className="py-2 px-3 border-b border-[#EAECF0]">
+                        <span className={`px-2.5 py-1 rounded-full text-[12px] font-medium border inline-block whitespace-nowrap ${mapStatusStyle(doc.status)}`}>
+                          {mapStatusLabel(doc.status)}
+                        </span>
                       </td>
                     </tr>
-                  ) : null}
-                </tbody>
-              </table>
-            </div>
+                  );
+                })}
+
+                {!loading && (payload?.activeDocuments ?? []).length === 0 ? (
+                  <tr>
+                    <td colSpan={5} className="py-10 px-3 text-center text-[14px] text-[#78788D]">
+                      No assigned documents found.
+                    </td>
+                  </tr>
+                ) : null}
+              </tbody>
+            </table>
           </div>
         </div>
 
-        <div className="lg:col-span-1 space-y-8">
+        <div className="lg:col-span-1 space-y-8 pl-0 lg:pl-6 border-l-0 lg:border-l border-[#E7E7E9]">
           <div>
-            <h2 className="text-[18px] font-bold text-[#171717] mb-4">Due Soon</h2>
-            <div className="space-y-4">
+            <div className="text-[16px] font-semibold text-[#1C1C1D] mb-4">Due Soon</div>
+            <div className="space-y-3">
               {(payload?.dueSoon ?? []).slice(0, 3).map((item) => {
                 const isUrgent = item.deadline_at
                   ? new Date(item.deadline_at).getTime() - Date.now() < 24 * 60 * 60 * 1000
@@ -268,25 +268,25 @@ export default function EditorDashboard() {
                 return (
                   <div
                     key={item.id}
-                    className={`p-4 rounded-[12px] flex items-center justify-between cursor-pointer border shadow-sm transition-transform hover:translate-x-1 ${
-                      isUrgent ? "bg-[#FEF2F2] border-[#FECACA]" : "bg-[#FFFFFF] border-[#EAECF0]"
+                    className={`p-3 rounded-[8px] flex items-center justify-between cursor-pointer transition-transform hover:translate-x-1 ${
+                      isUrgent ? "bg-[#FFEFF0]" : "bg-[#F5F7FA]"
                     }`}
                   >
                     <div className="flex items-start space-x-3">
-                      <div className={`mt-0.5 ${isUrgent ? "text-[#EF4444]" : "text-[#A0AAB5]"}`}>
-                        <FileText className="w-5 h-5" fill="currentColor" strokeWidth={0} />
+                      <div className={`w-[36px] h-[36px] rounded-[6px] flex items-center justify-center flex-shrink-0 ${isUrgent ? "bg-[#FFB6BC]" : "bg-[#525866]/15"}`}>
+                        <FileText className={`w-5 h-5 ${isUrgent ? "text-[#FB3748]" : "text-[#525866]"}`} strokeWidth={0} fill="currentColor" />
                       </div>
-                      <div>
-                        <div className="text-[13px] font-bold text-[#171717] mb-1">{item.document_title || "Untitled Document"}</div>
-                        <div className="flex items-center text-[11px] text-[#525866]">
+                      <div className="flex flex-col justify-center min-h-[36px]">
+                        <div className="text-[14px] font-medium text-[#1C1C1D] mb-1">{item.document_title || "Untitled Document"}</div>
+                        <div className="flex items-center text-[12px] text-[#78788D]">
                           <span>{mapStatusLabel(item.status)}</span>
-                          <span className="mx-1.5 text-[#D1D5DB]">|</span>
-                          <Clock className={`w-3.5 h-3.5 mr-1 ${isUrgent ? "text-[#EF4444]" : "text-[#A0AAB5]"}`} />
-                          <span className={isUrgent ? "text-[#EF4444] font-medium" : ""}>{formatDateTime(item.deadline_at)}</span>
+                          <span className="mx-1.5 w-px h-[14px] bg-[#78788D]"></span>
+                          <Clock className={`w-3.5 h-[14px] mr-1 flex-shrink-0 ${isUrgent ? "text-[#FB3748]" : "text-[#525866]"}`} strokeWidth={2} />
+                          <span className={isUrgent ? "text-[#FB3748]" : ""}>{formatDateTime(item.deadline_at)}</span>
                         </div>
                       </div>
                     </div>
-                    <ChevronRight className="w-5 h-5 text-[#A0AAB5] flex-shrink-0" />
+                    <ChevronRight className="w-[18px] h-[18px] text-[#1C1C1D] flex-shrink-0" />
                   </div>
                 );
               })}
@@ -297,22 +297,24 @@ export default function EditorDashboard() {
             </div>
           </div>
 
-          <div>
-            <h2 className="text-[18px] font-bold text-[#171717] mb-4">Recent Activity</h2>
-            <div className="relative pl-3 space-y-6 before:absolute before:inset-0 before:ml-[19px] before:w-px md:before:mx-auto md:before:translate-x-0 before:h-full before:bg-[#EAECF0]">
-              <div className="absolute top-2 bottom-2 left-[3.5px] w-px bg-[#EAECF0]" />
+          <div className="pt-4 border-t border-[#E7E7E9]">
+            <div className="text-[16px] font-semibold text-[#1C1C1D] mb-4">Recent Activity</div>
+            <div className="relative pl-[5px] space-y-6 before:absolute before:left-3 before:top-4 before:bottom-0 before:w-px md:before:translate-x-0 before:bg-[#EAECF0]">
+              <div className="hidden" />
               {(payload?.recentActivity ?? []).slice(0, 5).map((activity) => (
-                <div key={activity.id} className="relative z-10 flex items-start">
-                  <div
-                    className={`w-2.5 h-2.5 rounded-full mt-1 flex-shrink-0 outline outline-[4px] outline-white ${
-                      activity.status === "completed" ? "bg-[#1CB061]" : "bg-[#00A0E3]"
-                    }`}
-                  />
-                  <div className="ml-4">
-                    <div className="text-[13px] font-semibold text-[#171717] leading-relaxed">
+                <div key={activity.id} className="relative z-10 flex items-start gap-2.5">
+                  <div className="w-4 h-4 mt-[1px] bg-white border border-[#EAECF0] rounded-full flex items-center justify-center flex-shrink-0">
+                    <div
+                      className={`w-2 h-2 rounded-full ${
+                        activity.status === "completed" ? "bg-[#22C55E]" : "bg-[#00A1E6]"
+                      }`}
+                    />
+                  </div>
+                  <div className="flex flex-col gap-1.5 flex-1 pt-0">
+                    <div className="text-[14px] font-medium text-[#171717] leading-tight">
                       {activity.document_title || "Document activity"}
                     </div>
-                    <div className="text-[11px] text-[#A0AAB5] mt-0.5">{relativeTime(activity.updated_at)}</div>
+                    <div className="text-[12px] font-medium text-[#525866]">{relativeTime(activity.updated_at)}</div>
                   </div>
                 </div>
               ))}

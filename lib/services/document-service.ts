@@ -199,15 +199,30 @@ export async function submitEditorFile(input: {
   const path = `${input.editorId}/${input.documentId}/editor/${Date.now()}-${input.file.name}`;
   const uploaded = await uploadDocumentFile(path, input.file);
 
+  const { data: existingDocument, error: existingDocumentError } = await supabaseAdmin
+    .from("documents")
+    .select("payment_status")
+    .eq("id", input.documentId)
+    .eq("assigned_editor_id", input.editorId)
+    .single();
+
+  if (existingDocumentError || !existingDocument) {
+    throw fail("Unable to load document payment state", 500, existingDocumentError);
+  }
+
+  const alreadyPaid = existingDocument.payment_status === "paid";
+  const now = new Date().toISOString();
+
   const { data: document, error } = await supabaseAdmin
     .from("documents")
     .update({
       latest_editor_file_name: input.file.name,
       latest_editor_file_url: uploaded.publicUrl,
       latest_editor_file_path: uploaded.path,
-      status: "payment_needed",
+      status: alreadyPaid ? "completed" : "payment_needed",
+      completed_at: alreadyPaid ? now : null,
       revision_requested: false,
-      last_activity_at: new Date().toISOString()
+      last_activity_at: now
     })
     .eq("id", input.documentId)
     .eq("assigned_editor_id", input.editorId)
@@ -233,7 +248,9 @@ export async function submitEditorFile(input: {
     documentId: document.id,
     type: "document_update",
     title: "Edited file uploaded",
-    body: `${document.document_title} is ready for payment and download.`
+    body: alreadyPaid
+      ? `${document.document_title} is ready for download.`
+      : `${document.document_title} is ready for payment and download.`
   });
 
   return document;

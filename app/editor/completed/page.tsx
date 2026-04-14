@@ -103,15 +103,14 @@ export default function CompletedDocuments() {
   };
 
   return (
-    <div className="space-y-6 animate-in fade-in duration-500 w-full font-dm-sans">
-      
-      {/* Header */}
-      <div className="-mx-6 lg:-mx-8 px-6 lg:px-8 py-3 border-b border-[#EAECF0] bg-white">
-        <div className="text-[20px] font-bold text-[#171717] leading-tight">Completed Documents</div>
-        <div className="text-[14px] text-[#525866] mt-1">View and manage all your completed work.</div>
+    <div className="animate-in fade-in duration-500 w-full font-dm-sans">
+      <div className="-mx-6 lg:-mx-8 px-6 lg:px-8 pb-3 border-b border-[#E7E7E9] bg-white flex flex-col justify-center">
+        <div className="text-[22px] font-medium text-[#1C1C1D] leading-tight">Completed Documents</div>
+        <div className="text-[14px] text-[#78788D] mt-1.5">View and manage all your completed work.</div>
       </div>
 
-      {error ? (
+      <div className="space-y-6 pt-6">
+        {error ? (
         <div className="rounded-[10px] border border-[#FECACA] bg-[#FEF2F2] px-4 py-3 text-[13px] text-[#B91C1C]">{error}</div>
       ) : null}
 
@@ -218,6 +217,7 @@ export default function CompletedDocuments() {
         </div>
 
       </div>
+    </div>
     </div>
   );
 }

@@ -111,17 +111,18 @@ export default function EditorNotificationsPage() {
   };
 
   return (
-    <div className="w-full font-dm-sans animate-in fade-in duration-300 space-y-6">
-      <div className="-mx-6 lg:-mx-8 px-6 lg:px-8 py-3 border-b border-[#EAECF0] bg-white">
-        <div className="text-[20px] font-bold text-[#171717] leading-tight">Notifications</div>
-        <div className="text-[14px] text-[#525866] mt-1">Manage your document activity and platform updates.</div>
+    <div className="w-full font-dm-sans animate-in fade-in duration-300">
+      <div className="-mx-6 lg:-mx-8 px-6 lg:px-8 pb-3 border-b border-[#E7E7E9] bg-white flex flex-col justify-center">
+        <div className="text-[22px] font-medium text-[#1C1C1D] leading-tight">Notifications</div>
+        <div className="text-[14px] text-[#78788D] mt-1.5">Manage your document activity and platform updates.</div>
       </div>
 
-      {error ? (
-        <div className="mb-4 rounded-[10px] border border-[#FECACA] bg-[#FEF2F2] px-4 py-3 text-[13px] text-[#B91C1C]">{error}</div>
-      ) : null}
+      <div className="space-y-6 pt-6">
+        {error ? (
+          <div className="mb-4 rounded-[10px] border border-[#FECACA] bg-[#FEF2F2] px-4 py-3 text-[13px] text-[#B91C1C]">{error}</div>
+        ) : null}
 
-      <div className="flex items-center justify-between mb-5">
+        <div className="flex items-center justify-between mb-5">
         <div className="flex flex-wrap gap-3">
           {tabs.map((tab) => (
             <button
@@ -183,6 +184,7 @@ export default function EditorNotificationsPage() {
           <p className="text-[14px] text-[#78788D]">No notifications found for this tab.</p>
         ) : null}
       </div>
+     </div>
     </div>
   );
 }

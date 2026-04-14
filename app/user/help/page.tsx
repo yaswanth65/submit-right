@@ -211,33 +211,7 @@ export default function HelpSupportPage() {
         </div>
       ) : null}
 
-      {/* --- HELP CARDS --- */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 px-4 my-6">
-        {helpCards.map((card) => (
-          <div 
-            key={card.id} 
-            className="border border-[#EAECF0] rounded-[16px] bg-white overflow-hidden flex flex-col shadow-sm transition-shadow hover:shadow-md"
-          >
-            {/* Dark Placeholder Image Area */}
-            <div className="h-[180px] w-full bg-[#1C1C1E] shrink-0"></div>
-            
-            {/* Card Content */}
-            <div className="p-4 flex flex-col flex-1">
-              <h3 className="text-[16px] font-bold text-[#171717] mb-2">
-                {card.title}
-              </h3>
-              <p className="text-[#78788D] text-[14px] leading-relaxed mb-6 flex-1">
-                {card.desc}
-              </p>
-              
-              <button className="w-full py-2.5 border border-[#EAECF0] rounded-[8px] text-[14px] font-bold text-[#171717] hover:bg-[#F9FAFB] transition-colors">
-                Explore
-              </button>
-            </div>
-          </div>
-        ))}
-      </div>
-
+   
       {/* --- RECENT SUPPORT TICKETS --- */}
       <div className=" px-6 " >
         <div className="mb-6 flex items-end justify-between gap-3 flex-wrap">

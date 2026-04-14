@@ -9,7 +9,6 @@ import {
   FileText,
   MessageSquare,
   AppWindow,
-  Globe,
   Folder,
   Banknote,
   Bell,
@@ -55,7 +54,6 @@ export function Sidebar() {
   const pathname = usePathname();
   const [openMenus, setOpenMenus] = useState<Record<string, boolean>>({
     Services: true,
-    Domains: true,
     Packages: true,
   });
   const [catalogData, setCatalogData] = useState<ClientCatalogResponse>({
@@ -91,11 +89,6 @@ export function Sidebar() {
     href: `/user/packages/${item.slug || item.id}`
   }));
 
-  const domainSubItems: SubItem[] = catalogData.domains.map((item) => ({
-    name: item.title,
-    href: `/user/services/${item.slug || item.id}`
-  }));
-
   const sections: NavSection[] = [
     {
       title: "MAIN",
@@ -120,13 +113,6 @@ export function Sidebar() {
           icon: AppWindow,
           hasSub: true,
           subItems: serviceSubItems,
-        },
-        {
-          name: "Domains",
-          href: "#",
-          icon: Globe,
-          hasSub: true,
-          subItems: domainSubItems,
         },
         {
           name: "Packages",

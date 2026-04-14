@@ -226,17 +226,18 @@ export default function EditorMessages() {
   const activeClient = readProfile(activeDocument?.profiles);
 
   return (
-    <div className="space-y-6 w-full font-dm-sans animate-in fade-in duration-300">
-      <div className="-mx-6 lg:-mx-8 px-6 lg:px-8 py-3 border-b border-[#EAECF0] bg-white">
-        <div className="text-[20px] font-bold text-[#171717] leading-tight">Messages</div>
-        <p className="text-[14px] text-[#525866] mt-1">Chat with your clients and keep communication linked to each document.</p>
+    <div className="w-full font-dm-sans animate-in fade-in duration-300">
+      <div className="-mx-6 lg:-mx-8 px-6 lg:px-8 pb-3 border-b border-[#E7E7E9] bg-white flex flex-col justify-center">
+        <div className="text-[22px] font-medium text-[#1C1C1D] leading-tight">Messages</div>
+        <div className="text-[14px] text-[#78788D] mt-1.5">Chat with your clients and keep communication linked to each document.</div>
       </div>
 
-      {error ? (
-        <div className="rounded-[10px] border border-[#FECACA] bg-[#FEF2F2] px-4 py-3 text-[13px] text-[#B91C1C]">{error}</div>
-      ) : null}
+      <div className="space-y-6 pt-6">
+        {error ? (
+          <div className="rounded-[10px] border border-[#FECACA] bg-[#FEF2F2] px-4 py-3 text-[13px] text-[#B91C1C]">{error}</div>
+        ) : null}
 
-      <div className="flex flex-col min-h-[calc(100vh-250px)] w-full bg-[#FFFFFF] border border-[#EAECF0] rounded-[12px] shadow-sm overflow-hidden">
+        <div className="flex flex-col min-h-[calc(100vh-250px)] w-full bg-[#FFFFFF] border border-[#EAECF0] rounded-[12px] shadow-sm overflow-hidden">
         <div className="flex flex-1 min-h-0 overflow-hidden flex-col lg:flex-row">
           <div className="w-full lg:w-[360px] lg:min-w-[360px] flex-shrink-0 border-b lg:border-b-0 lg:border-r border-[#EAECF0] flex flex-col bg-[#FFFFFF]">
             <div className="p-5 border-b border-[#EAECF0] flex-shrink-0 space-y-3">
@@ -373,6 +374,7 @@ export default function EditorMessages() {
             </div>
           </div>
         </div>
+      </div>
       </div>
     </div>
   );

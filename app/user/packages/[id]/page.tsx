@@ -533,6 +533,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { useParams, useRouter } from "next/navigation";
 import { 
   Pencil, Check, ChevronRight, ChevronLeft, Image as ImageIcon,
   GraduationCap, Briefcase, MessageSquare, ShieldCheck, 
@@ -693,6 +694,15 @@ const faqData = [
 ];
 
 export default function ServicesPackComponent() {
+  const router = useRouter();
+  const params = useParams<{ id: string }>();
+  const activePackageId = typeof params?.id === "string" ? params.id : "";
+
+  const openPackageSubmitFlow = () => {
+    const query = activePackageId ? `?itemId=${encodeURIComponent(activePackageId)}&kind=package` : "?kind=package";
+    router.push(`/user/submit-document${query}`);
+  };
+
   const [openId, setOpenId] = useState<string | null>(null);
 
   const toggleFaq = (id: string) => {
@@ -800,7 +810,10 @@ export default function ServicesPackComponent() {
             </div>
           </div>
 
-          <button className="w-full bg-[#171717] hover:bg-black text-white rounded-[8px] py-3 text-[15px] font-bold transition-colors">
+          <button
+            onClick={openPackageSubmitFlow}
+            className="w-full bg-[#171717] hover:bg-black text-white rounded-[8px] py-3 text-[15px] font-bold transition-colors"
+          >
             Buy Now
           </button>
         </div>

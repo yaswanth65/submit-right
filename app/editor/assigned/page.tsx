@@ -440,15 +440,16 @@ export default function AssignedPage() {
 
   if (selectedView === "list") {
     return (
-      <div className="w-full font-dm-sans animate-in fade-in duration-300 space-y-6">
-        <div className="-mx-6 lg:-mx-8 px-6 lg:px-8 py-3 border-b border-[#EAECF0] bg-white">
-          <div className="text-[20px] font-bold text-[#171717] leading-tight">Assigned Documents</div>
-          <p className="text-[14px] text-[#525866] mt-1">Manage your active academic editing tasks and deadlines.</p>
+      <div className="w-full font-dm-sans animate-in fade-in duration-300 w-full font-dm-sans">
+        <div className="-mx-6 lg:-mx-8 px-6 lg:px-8 pb-3 border-b border-[#E7E7E9] bg-white flex flex-col justify-center">
+          <div className="text-[22px] font-medium text-[#1C1C1D] leading-tight">Assigned Documents</div>
+          <div className="text-[14px] text-[#78788D] mt-1.5">Manage your active academic editing tasks and deadlines.</div>
         </div>
 
-        {error ? <div className="mb-4 rounded-[10px] border border-[#FECACA] bg-[#FEF2F2] px-4 py-3 text-[13px] text-[#B91C1C]">{error}</div> : null}
+        <div className="space-y-6 pt-6">
+          {error ? <div className="mb-4 rounded-[10px] border border-[#FECACA] bg-[#FEF2F2] px-4 py-3 text-[13px] text-[#B91C1C]">{error}</div> : null}
 
-        <div className="bg-white border border-[#EAECF0] rounded-[12px] shadow-sm overflow-hidden">
+          <div className="bg-white border border-[#EAECF0] rounded-[12px] shadow-sm overflow-hidden">
           <div className="p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#EAECF0]">
             <div className="relative max-w-md w-full">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#A0AAB5]" />
@@ -561,6 +562,7 @@ export default function AssignedPage() {
           </div>
         </div>
       </div>
+      </div>
     );
   }
 
@@ -573,39 +575,52 @@ export default function AssignedPage() {
   }
 
   return (
-    <div className="w-full font-dm-sans bg-white min-h-[calc(100vh-76px)] flex flex-col animate-in fade-in duration-300">
-      <div className="shrink-0 border-b border-gray-100 px-4 py-4">
-        <div className="mb-2 flex items-center gap-2 text-[12px] text-[#8A94A6]">
-        <button onClick={() => setSelectedView("list")} className="hover:text-[#525866] transition-colors">Assigned</button>
-        <ChevronRight className="w-3.5 h-3.5" />
-        <span className="truncate text-[#525866]">{selected.document_title || "Document"}</span>
+    <div className="w-full font-dm-sans animate-in fade-in duration-300">
+      <div className="-mx-6 lg:-mx-8 px-6 lg:px-8 pb-3 mt-[-24px] pt-4 lg:mt-[-32px] lg:pt-5 border-b border-[#E7E7E9] bg-white flex flex-col justify-center">
+        <div className="mb-3 flex items-center gap-2 text-[12px] text-[#78788D] font-medium">
+          <button onClick={() => setSelectedView("list")} className="hover:text-[#1C1C1D] transition-colors">Assigned</button>
+          <ChevronRight className="w-3.5 h-3.5" />
+          <span className="truncate text-[#1C1C1D]">{selected.document_title || "Document"}</span>
         </div>
         <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
           <div>
-            <div className="text-[22px] font-medium text-[#1C1C1D] mb-1.5 tracking-tight">{selected.document_title || "Document"}</div>
-            <p className="text-[#78788D] text-[14px]">{selectedClientName} - {readServiceName(selected.services)}</p>
+            <div className="flex items-center gap-3">
+              <div className="text-[22px] font-medium text-[#1C1C1D] leading-tight">
+                {selected.document_title || "Untitled Document"}
+              </div>
+              <span className={`inline-flex items-center px-2.5 py-0.5 rounded-[6px] text-[12px] font-medium ${selectedMeta.statusColor}`}>
+                {selectedMeta.statusText}
+              </span>
+            </div>
+            <div className="text-[14px] text-[#78788D] mt-1.5 flex items-center gap-2">
+              <span>Client: {selectedClientName}</span>
+              <span>•</span>
+              <span>{readServiceName(selected.services)}</span>
+              <span>•</span>
+              <span>Updated {formatDateTime(selected.updated_at)}</span>
+            </div>
           </div>
-          <div className="flex items-center flex-wrap gap-2">
-            <span className={`px-3 py-1.5 rounded-full text-[12px] font-medium ${selectedMeta.statusColor}`}>{selectedMeta.statusText}</span>
+          <div className="flex items-center gap-3">
             <button
               onClick={() => setShowVersionModal(true)}
-              className="flex items-center gap-1.5 h-[36px] px-3 border border-[#EAECF0] rounded-[8px] text-[13px] font-medium text-[#00A0E3] hover:bg-[#F9FAFB] transition-colors"
+              className="px-4 py-2 border border-[#E7E7E9] rounded-[8px] text-[14px] font-medium text-[#1C1C1D] hover:bg-[#F9FAFB] transition-colors inline-flex items-center justify-center gap-2 h-10"
             >
-              <History className="w-3.5 h-3.5" />
+              <History className="w-4 h-4" />
               Version History
             </button>
             <button
               onClick={() => setShowExtensionModal(true)}
-              className="flex items-center gap-1.5 h-[36px] px-3 border border-[#EAECF0] rounded-[8px] text-[13px] font-medium text-[#171717] hover:bg-[#F9FAFB] transition-colors"
+              disabled={selected.status === "completed"}
+              className="px-4 py-2 border border-[#E7E7E9] rounded-[8px] text-[14px] font-medium text-[#1C1C1D] hover:bg-[#F9FAFB] transition-colors disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center justify-center gap-2 h-10"
             >
-              <Calendar className="w-3.5 h-3.5" />
+              <Calendar className="w-4 h-4" />
               Extend Deadline
             </button>
           </div>
         </div>
       </div>
 
-      <div className="px-4 mx-2 mt-4">
+      <div className="space-y-6 pt-6">
         {actionError ? <div className="mb-4 rounded-[10px] border border-[#FECACA] bg-[#FEF2F2] px-4 py-3 text-[13px] text-[#B91C1C]">{actionError}</div> : null}
 
         {(selected.status === "in_revision" || selected.revision_requested) ? (

@@ -1,18 +1,31 @@
 "use client";
 
-import React, { useEffect, useMemo, useRef, useState } from "react";
-import { useRouter } from "next/navigation";
+import React, { Suspense, useEffect, useMemo, useRef, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Info, ArrowRight, ArrowLeft, Check, Upload, File as FileIcon, FileText, Users } from "lucide-react";
 import { apiGet, apiRequest } from "@/lib/client-api";
+import { MockCheckoutModal } from "@/components/MockCheckoutModal";
+
+type ServiceApiRow = {
+  id: string;
+  title: string;
+  kind?: "service" | "package" | "domain" | null;
+  basePrice?: number | null;
+  base_price?: number | null;
+  ratePerWord?: number | null;
+  rate_per_word?: number | null;
+};
 
 type ServiceRow = {
   id: string;
   title: string;
-  rate_per_word: number | null;
+  kind: "service" | "package";
+  basePrice: number;
+  ratePerWord: number;
 };
 
 type ClientHomePayload = {
-  services: ServiceRow[];
+  services: ServiceApiRow[];
 };
 
 type DocumentRow = {
@@ -39,7 +52,7 @@ type FormState = {
 const steps = [
   { num: 1, name: "Document Details" },
   { num: 2, name: "Upload Document" },
-  { num: 3, name: "Choose Service" },
+  { num: 3, name: "Choose Offer" },
   { num: 4, name: "Review" },
   { num: 5, name: "Submit Document" }
 ];
@@ -61,8 +74,9 @@ function formatCurrency(value: number) {
   }).format(value);
 }
 
-export default function SubmitDocumentPage() {
+function SubmitDocumentContent() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [currentStep, setCurrentStep] = useState(1);
@@ -92,11 +106,19 @@ export default function SubmitDocumentPage() {
 
   const [actionError, setActionError] = useState<string | null>(null);
   const [isBusy, setIsBusy] = useState(false);
+  const [showCheckoutModal, setShowCheckoutModal] = useState(false);
+  const [isPackagePaymentDone, setIsPackagePaymentDone] = useState(false);
+
+  const preSelectedItemId =
+    searchParams.get("serviceId") || searchParams.get("itemId") || searchParams.get("selectedItemId") || "";
+  const preSelectedItemKind = searchParams.get("kind");
 
   const selectedService = useMemo(
     () => services.find((service) => service.id === selectedServiceId) ?? null,
     [services, selectedServiceId]
   );
+
+  const isPackageSelected = selectedService?.kind === "package";
 
   useEffect(() => {
     let active = true;
@@ -107,16 +129,26 @@ export default function SubmitDocumentPage() {
         if (!active) return;
 
         const activeServices = (payload.services ?? [])
-          .filter((service) => service && typeof service.id === "string")
+          .filter((service) => service && typeof service.id === "string" && typeof service.title === "string")
+          .filter((service) => service.kind === "service" || service.kind === "package")
           .map((service) => ({
             id: service.id,
             title: service.title,
-            rate_per_word: Number(service.rate_per_word ?? 0)
+            kind: service.kind as "service" | "package",
+            basePrice: Number(service.basePrice ?? service.base_price ?? 0),
+            ratePerWord: Number(service.ratePerWord ?? service.rate_per_word ?? 0)
           }));
 
         setServices(activeServices);
         if (activeServices.length > 0) {
-          setSelectedServiceId(activeServices[0].id);
+          const preSelected = activeServices.find((service) => {
+            const matchesId = preSelectedItemId ? service.id === preSelectedItemId : false;
+            const matchesKind =
+              !preSelectedItemKind || preSelectedItemKind === service.kind || preSelectedItemKind === "offer";
+            return matchesId && matchesKind;
+          });
+
+          setSelectedServiceId(preSelected?.id ?? activeServices[0].id);
         }
       } catch (error) {
         if (!active) return;
@@ -133,10 +165,27 @@ export default function SubmitDocumentPage() {
     return () => {
       active = false;
     };
-  }, []);
+  }, [preSelectedItemId, preSelectedItemKind]);
 
   useEffect(() => {
-    const liveRate = Number(selectedService?.rate_per_word ?? 0);
+    setIsPackagePaymentDone(false);
+  }, [selectedServiceId]);
+
+  useEffect(() => {
+    if (!selectedService) {
+      return;
+    }
+
+    if (selectedService.kind === "package") {
+      const packagePrice = Number(selectedService.basePrice ?? selectedService.ratePerWord ?? 0);
+      if (packagePrice > 0) {
+        setRatePerWord(0);
+        setEstimatedTotal(packagePrice);
+      }
+      return;
+    }
+
+    const liveRate = Number(selectedService.ratePerWord ?? 0);
     if (liveRate > 0) {
       setRatePerWord(liveRate);
       setEstimatedTotal(wordCount * liveRate);
@@ -148,6 +197,29 @@ export default function SubmitDocumentPage() {
     form.academicField.trim().length >= 2 &&
     form.documentType.trim().length >= 2 &&
     form.shortDescription.trim().length >= 2;
+
+  const applySelectedOffer = async (activeDocumentId: string) => {
+    if (!selectedServiceId) {
+      throw new Error("Please select a service or package before continuing.");
+    }
+
+    const service = await apiRequest<ServiceSelectionResult>("/api/client/documents/service", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        documentId: activeDocumentId,
+        serviceId: selectedServiceId
+      })
+    });
+
+    const nextWordCount = Number(service.wordCount ?? wordCount);
+    const nextRate = Number(service.ratePerWord ?? selectedService?.ratePerWord ?? ratePerWord);
+    const nextEstimate = Number(service.estimatedTotal ?? nextWordCount * nextRate);
+
+    setWordCount(nextWordCount);
+    setRatePerWord(nextRate);
+    setEstimatedTotal(nextEstimate);
+  };
 
   const syncUploadWithServer = async (file: File) => {
     if (!documentId) {
@@ -168,7 +240,7 @@ export default function SubmitDocumentPage() {
 
       const nextWordCount = Number(uploaded.word_count ?? 0);
       const apiRate = Number(uploaded.rate_per_word ?? 0);
-      const fallbackRate = Number(selectedService?.rate_per_word ?? ratePerWord ?? 0);
+      const fallbackRate = Number(selectedService?.ratePerWord ?? ratePerWord ?? 0);
       const nextRate = apiRate > 0 ? apiRate : fallbackRate;
       const apiEstimate = Number(uploaded.estimated_total ?? 0);
       const nextEstimate = apiEstimate > 0 ? apiEstimate : nextWordCount * nextRate;
@@ -282,6 +354,16 @@ export default function SubmitDocumentPage() {
           }
         }
 
+        const hasValidPreselection = !!preSelectedItemId && selectedServiceId === preSelectedItemId;
+        if (hasValidPreselection) {
+          if (!documentId) {
+            throw new Error("Draft document is missing. Please go back to step 1.");
+          }
+          await applySelectedOffer(documentId);
+          setCurrentStep(4);
+          return;
+        }
+
         setCurrentStep(3);
         return;
       }
@@ -291,28 +373,13 @@ export default function SubmitDocumentPage() {
           throw new Error("Draft document is missing. Please go back to step 1.");
         }
         if (!selectedServiceId) {
-          throw new Error("Please select a service before continuing.");
+          throw new Error("Please select a service or package before continuing.");
         }
         if (!isTermsAgreed) {
           throw new Error("Please agree to the terms before continuing.");
         }
 
-        const service = await apiRequest<ServiceSelectionResult>("/api/client/documents/service", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            documentId,
-            serviceId: selectedServiceId
-          })
-        });
-
-        const nextWordCount = Number(service.wordCount ?? wordCount);
-        const nextRate = Number(service.ratePerWord ?? selectedService?.rate_per_word ?? ratePerWord);
-        const nextEstimate = Number(service.estimatedTotal ?? nextWordCount * nextRate);
-
-        setWordCount(nextWordCount);
-        setRatePerWord(nextRate);
-        setEstimatedTotal(nextEstimate);
+        await applySelectedOffer(documentId);
         setCurrentStep(4);
         return;
       }
@@ -323,6 +390,11 @@ export default function SubmitDocumentPage() {
         }
         if (!isReviewConfirmed) {
           throw new Error("Please confirm your review details before submitting.");
+        }
+
+        if (isPackageSelected && !isPackagePaymentDone) {
+          setShowCheckoutModal(true);
+          return;
         }
 
         await apiRequest<DocumentRow>("/api/client/documents/submit", {
@@ -341,8 +413,14 @@ export default function SubmitDocumentPage() {
   };
 
   const wordCountLabel = wordCount > 0 ? `${wordCount.toLocaleString()} words` : "Not calculated yet";
-  const activeRate = Number(selectedService?.rate_per_word ?? ratePerWord ?? 0);
-  const liveEstimate = Number(estimatedTotal || wordCount * activeRate || 0);
+  const selectedRate = Number(selectedService?.ratePerWord ?? 0);
+  const packagePrice = Number(selectedService?.basePrice ?? 0);
+  const activeRate = Number(ratePerWord > 0 ? ratePerWord : selectedRate);
+  const liveEstimate = Number(
+    selectedService?.kind === "package" ? estimatedTotal || packagePrice || 0 : estimatedTotal || wordCount * activeRate || 0
+  );
+  const serviceOptions = services.filter((item) => item.kind === "service");
+  const packageOptions = services.filter((item) => item.kind === "package");
 
   return (
     <div className="w-full font-dm-sans bg-white min-h-[calc(100vh-76px)] flex flex-col">
@@ -526,18 +604,10 @@ export default function SubmitDocumentPage() {
                   {uploadingFile ? (
                     <p className="text-[13px] text-[#8A94A6]">Analyzing word count and pricing...</p>
                   ) : (
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-[13px]">
+                    <div className="grid grid-cols-1 gap-3 text-[13px]">
                       <div className="bg-[#F8FAFC] border border-[#EAECF0] rounded-[8px] px-3 py-2">
                         <div className="text-[#8A94A6] text-[12px]">Word Count</div>
                         <div className="text-[#171717] font-semibold mt-0.5">{wordCount > 0 ? wordCount.toLocaleString() : "Pending"}</div>
-                      </div>
-                      <div className="bg-[#F8FAFC] border border-[#EAECF0] rounded-[8px] px-3 py-2">
-                        <div className="text-[#8A94A6] text-[12px]">Rate Per Word</div>
-                        <div className="text-[#171717] font-semibold mt-0.5">{formatCurrency(activeRate)}</div>
-                      </div>
-                      <div className="bg-[#EFF7FB] border border-[#BFE7F8] rounded-[8px] px-3 py-2">
-                        <div className="text-[#8A94A6] text-[12px]">Approx. Price</div>
-                        <div className="text-[#00A0E3] font-semibold mt-0.5">{formatCurrency(liveEstimate)}</div>
                       </div>
                     </div>
                   )}
@@ -549,47 +619,103 @@ export default function SubmitDocumentPage() {
 
         {currentStep === 3 ? (
           <div className="flex flex-col flex-1 w-full gap-6">
-            {servicesLoading ? <p className="text-[14px] text-[#78788D]">Loading available services...</p> : null}
+            {servicesLoading ? <p className="text-[14px] text-[#78788D]">Loading available services and packages...</p> : null}
 
             {!servicesLoading && services.length === 0 ? (
               <div className="border border-[#FEE2E2] bg-[#FFF7F7] text-[#B42318] rounded-[8px] p-4 text-[13px]">
-                No active services are available right now. Please contact support.
+                No active services or packages are available right now. Please contact support.
               </div>
             ) : null}
 
             {!servicesLoading && services.length > 0 ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                {services.map((service) => {
-                  const isSelected = selectedServiceId === service.id;
-                  return (
-                    <button
-                      key={service.id}
-                      type="button"
-                      onClick={() => setSelectedServiceId(service.id)}
-                      className={`text-left border rounded-[12px] p-6 transition-all duration-200 ${
-                        isSelected ? "border-[#00A0E3] bg-[#F4FAFD]" : "border-[#EAECF0] bg-white hover:border-[#D1D5DB]"
-                      }`}
-                    >
-                      <div className="flex justify-between items-start mb-4 gap-4">
-                        <div>
-                          <p className="text-[16px] font-medium text-[#171717]">{service.title}</p>
-                          <p className="text-[13px] text-[#8A94A6] mt-1">Rate per word: {formatCurrency(Number(service.rate_per_word ?? 0))}</p>
-                        </div>
-                        <div
-                          className={`w-5 h-5 rounded-full border-[2px] flex items-center justify-center shrink-0 mt-0.5 ${
-                            isSelected ? "border-[#00A0E3]" : "border-[#EAECF0]"
-                          }`}
-                        >
-                          {isSelected ? <div className="w-2.5 h-2.5 bg-[#00A0E3] rounded-full" /> : null}
-                        </div>
-                      </div>
+              <div className="space-y-6">
+                {serviceOptions.length > 0 ? (
+                  <div className="space-y-3">
+                    <div className="text-[14px] font-semibold text-[#171717]">Services (pay later)</div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                      {serviceOptions.map((service) => {
+                        const isSelected = selectedServiceId === service.id;
+                        return (
+                          <button
+                            key={service.id}
+                            type="button"
+                            onClick={() => setSelectedServiceId(service.id)}
+                            className={`text-left border rounded-[12px] p-6 transition-all duration-200 ${
+                              isSelected ? "border-[#00A0E3] bg-[#F4FAFD]" : "border-[#EAECF0] bg-white hover:border-[#D1D5DB]"
+                            }`}
+                          >
+                            <div className="flex justify-between items-start mb-4 gap-4">
+                              <div>
+                                <span className="inline-flex mb-2 rounded-full bg-[#EFF8FF] px-2 py-1 text-[11px] font-semibold text-[#0369A1]">
+                                  Service
+                                </span>
+                                <p className="text-[16px] font-medium text-[#171717]">{service.title}</p>
+                                <p className="text-[13px] text-[#8A94A6] mt-1">
+                                  Rate per word: {formatCurrency(Number(service.ratePerWord ?? 0))}
+                                </p>
+                              </div>
+                              <div
+                                className={`w-5 h-5 rounded-full border-[2px] flex items-center justify-center shrink-0 mt-0.5 ${
+                                  isSelected ? "border-[#00A0E3]" : "border-[#EAECF0]"
+                                }`}
+                              >
+                                {isSelected ? <div className="w-2.5 h-2.5 bg-[#00A0E3] rounded-full" /> : null}
+                              </div>
+                            </div>
 
-                      <p className="text-[13px] text-[#525866] leading-relaxed">
-                        Current estimate: {wordCount > 0 ? formatCurrency(wordCount * Number(service.rate_per_word ?? 0)) : "Upload a file to see estimate"}
-                      </p>
-                    </button>
-                  );
-                })}
+                            <p className="text-[13px] text-[#525866] leading-relaxed">
+                              Current estimate: {wordCount > 0 ? formatCurrency(wordCount * Number(service.ratePerWord ?? 0)) : "Upload a file to see estimate"}
+                            </p>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                ) : null}
+
+                {packageOptions.length > 0 ? (
+                  <div className="space-y-3">
+                    <div className="text-[14px] font-semibold text-[#171717]">Packages (upfront payment required)</div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                      {packageOptions.map((service) => {
+                        const isSelected = selectedServiceId === service.id;
+                        return (
+                          <button
+                            key={service.id}
+                            type="button"
+                            onClick={() => setSelectedServiceId(service.id)}
+                            className={`text-left border rounded-[12px] p-6 transition-all duration-200 ${
+                              isSelected ? "border-[#00A0E3] bg-[#F4FAFD]" : "border-[#EAECF0] bg-white hover:border-[#D1D5DB]"
+                            }`}
+                          >
+                            <div className="flex justify-between items-start mb-4 gap-4">
+                              <div>
+                                <span className="inline-flex mb-2 rounded-full bg-[#FFF7ED] px-2 py-1 text-[11px] font-semibold text-[#C2410C]">
+                                  Package
+                                </span>
+                                <p className="text-[16px] font-medium text-[#171717]">{service.title}</p>
+                                <p className="text-[13px] text-[#8A94A6] mt-1">
+                                  Flat price: {formatCurrency(Number(service.basePrice || service.ratePerWord || 0))}
+                                </p>
+                              </div>
+                              <div
+                                className={`w-5 h-5 rounded-full border-[2px] flex items-center justify-center shrink-0 mt-0.5 ${
+                                  isSelected ? "border-[#00A0E3]" : "border-[#EAECF0]"
+                                }`}
+                              >
+                                {isSelected ? <div className="w-2.5 h-2.5 bg-[#00A0E3] rounded-full" /> : null}
+                              </div>
+                            </div>
+
+                            <p className="text-[13px] text-[#525866] leading-relaxed">
+                              Pay now to start processing this package.
+                            </p>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                ) : null}
               </div>
             ) : null}
 
@@ -603,7 +729,7 @@ export default function SubmitDocumentPage() {
                 />
               </div>
               <label className="text-[#171717] text-[14px] cursor-pointer" onClick={() => setIsTermsAgreed((prev) => !prev)}>
-                I understand what is included in this service and agree to the terms of engagement.
+                I understand what is included in this selected offer and agree to the terms of engagement.
               </label>
             </div>
           </div>
@@ -641,8 +767,14 @@ export default function SubmitDocumentPage() {
                     <span className="text-[14px] font-medium text-[#171717]">{form.academicField || "-"}</span>
                   </div>
                   <div className="flex flex-col gap-1">
-                    <span className="text-[13px] text-[#8A94A6]">Service Selected</span>
+                    <span className="text-[13px] text-[#8A94A6]">Offer Selected</span>
                     <span className="text-[14px] font-medium text-[#171717]">{selectedService?.title || "-"}</span>
+                  </div>
+                  <div className="flex flex-col gap-1">
+                    <span className="text-[13px] text-[#8A94A6]">Offer Type</span>
+                    <span className="text-[14px] font-medium text-[#171717]">
+                      {selectedService?.kind === "package" ? "Package (upfront payment)" : "Service (deferred payment)"}
+                    </span>
                   </div>
                   <div className="flex flex-col gap-1">
                     <span className="text-[13px] text-[#8A94A6]">Uploaded Document</span>
@@ -671,11 +803,17 @@ export default function SubmitDocumentPage() {
               <div className="border bg-[#EFF7FB] border-[#0396d6] rounded-[12px] p-4 flex flex-col gap-4">
                 <div className="flex justify-between items-center">
                   <span className="text-[#8A94A6] text-[14px]">Our academic experts verify your submission and select the best editor.</span>
-                  <span className="text-[#171717] text-[14px] font-medium">{wordCount.toLocaleString()} Words</span>
+                  <span className="text-[#171717] text-[14px] font-medium">
+                    {selectedService?.kind === "package" ? "Package" : `${wordCount.toLocaleString()} Words`}
+                  </span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-[#8A94A6] text-[14px]">Rate per word</span>
-                  <span className="text-[#171717] text-[14px] font-medium">{formatCurrency(activeRate)}</span>
+                  <span className="text-[#8A94A6] text-[14px]">
+                    {selectedService?.kind === "package" ? "Package price" : "Rate per word"}
+                  </span>
+                  <span className="text-[#171717] text-[14px] font-medium">
+                    {selectedService?.kind === "package" ? formatCurrency(liveEstimate) : formatCurrency(activeRate)}
+                  </span>
                 </div>
 
                 <div className="w-full h-[1px] bg-[#00A0E3]/30 my-2" />
@@ -687,6 +825,14 @@ export default function SubmitDocumentPage() {
                 <span className="text-[#8A94A6] text-[12px] italic mt-[-8px]">
                   * Final price will be confirmed after review, if necessary. Changes in word count or specialized requirements may affect the final quote.
                 </span>
+                {isPackageSelected ? (
+                  <span className="text-[12px] text-[#0C4A6E]">
+                    Upfront package payment is required before your document can be submitted for processing.
+                  </span>
+                ) : null}
+                {isPackageSelected && isPackagePaymentDone ? (
+                  <span className="text-[12px] text-[#15803D]">Payment completed. You can now submit your document.</span>
+                ) : null}
               </div>
             </div>
 
@@ -791,11 +937,54 @@ export default function SubmitDocumentPage() {
             disabled={isBusy || uploadingFile || (currentStep === 1 && !canMoveFromStep1) || (currentStep === 3 && services.length === 0)}
             className="px-6 py-2.5 bg-[#00A0E3] hover:bg-[#008bc5] text-white rounded-[8px] text-[14px] font-bold flex items-center gap-2 transition-colors shadow-sm disabled:opacity-60 disabled:cursor-not-allowed"
           >
-            {currentStep === 4 ? (isBusy ? "Submitting..." : "Submit") : isBusy ? "Please wait..." : "Continue"}
+            {currentStep === 4
+              ? isBusy
+                ? "Submitting..."
+                : isPackageSelected
+                  ? isPackagePaymentDone
+                    ? "Submit"
+                    : "Proceed to Payment"
+                  : "Submit"
+              : isBusy
+                ? "Please wait..."
+                : "Continue"}
             {currentStep < 4 && !isBusy ? <ArrowRight className="w-4 h-4" strokeWidth={2.5} /> : null}
           </button>
         </div>
       ) : null}
+
+      <MockCheckoutModal
+        isOpen={showCheckoutModal}
+        onClose={() => setShowCheckoutModal(false)}
+        context={
+          showCheckoutModal && documentId
+            ? {
+                documentId,
+                documentTitle: form.documentTitle || uploadedFileName || "Selected Document",
+                amount: liveEstimate,
+                requireUpfrontPayment: true
+              }
+            : null
+        }
+        onSuccess={async () => {
+          setIsPackagePaymentDone(true);
+          setShowCheckoutModal(false);
+        }}
+      />
     </div>
+  );
+}
+
+export default function SubmitDocumentPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="w-full font-dm-sans bg-white min-h-[calc(100vh-76px)] flex items-center justify-center">
+          <p className="text-[14px] text-[#78788D]">Loading submit flow...</p>
+        </div>
+      }
+    >
+      <SubmitDocumentContent />
+    </Suspense>
   );
 }

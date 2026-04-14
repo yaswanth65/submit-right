@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { useParams, useRouter } from "next/navigation";
 import { 
   CheckCircle2, 
   Star, 
@@ -17,6 +18,15 @@ import {
 } from "lucide-react";
 
 export default function ServiceDetailPage() {
+  const router = useRouter();
+  const params = useParams<{ id: string }>();
+  const activeServiceId = typeof params?.id === "string" ? params.id : "";
+
+  const openPrefilledSubmitFlow = () => {
+    const query = activeServiceId ? `?serviceId=${encodeURIComponent(activeServiceId)}&kind=service` : "";
+    router.push(`/user/submit-document${query}`);
+  };
+
   // State for accordion items
   const [openSections, setOpenSections] = useState({
     mathematics: true,
@@ -173,10 +183,16 @@ export default function ServiceDetailPage() {
 
                   {/* Action Buttons */}
                   <div className="flex flex-col gap-3 mb-6">
-                    <button className="w-full bg-[#00A0E3] hover:bg-[#008bc5] text-white py-3 rounded-[8px] text-[14px] font-medium transition-colors">
+                    <button
+                      onClick={openPrefilledSubmitFlow}
+                      className="w-full bg-[#00A0E3] hover:bg-[#008bc5] text-white py-3 rounded-[8px] text-[14px] font-medium transition-colors"
+                    >
                       Submit Now
                     </button>
-                    <button className="w-full bg-white border border-[#00A0E3] text-[#00A0E3] hover:bg-[#F0F8FC] py-3 rounded-[8px] text-[14px] font-medium transition-colors">
+                    <button
+                      onClick={openPrefilledSubmitFlow}
+                      className="w-full bg-white border border-[#00A0E3] text-[#00A0E3] hover:bg-[#F0F8FC] py-3 rounded-[8px] text-[14px] font-medium transition-colors"
+                    >
                       Place Order Now
                     </button>
                   </div>
@@ -728,10 +744,16 @@ export default function ServiceDetailPage() {
 
               {/* Action Buttons */}
               <div className="flex flex-col gap-3 mb-6">
-                <button className="w-full bg-[#00A0E3] hover:bg-[#008bc5] text-white py-3 rounded-[8px] text-[15px] font-medium transition-colors">
+                <button
+                  onClick={openPrefilledSubmitFlow}
+                  className="w-full bg-[#00A0E3] hover:bg-[#008bc5] text-white py-3 rounded-[8px] text-[15px] font-medium transition-colors"
+                >
                   Submit Now
                 </button>
-                <button className="w-full bg-white border border-[#00A0E3] text-[#00A0E3] hover:bg-[#F0F8FC] py-3 rounded-[8px] text-[15px] font-medium transition-colors">
+                <button
+                  onClick={openPrefilledSubmitFlow}
+                  className="w-full bg-white border border-[#00A0E3] text-[#00A0E3] hover:bg-[#F0F8FC] py-3 rounded-[8px] text-[15px] font-medium transition-colors"
+                >
                   Place Order Now
                 </button>
               </div>

@@ -261,15 +261,29 @@ export const blogPostSchema = z
     message: "Published at is required when the post is published"
   });
 
-export const blogPostUpdateSchema = blogPostSchema.partial().superRefine((data, ctx) => {
-  if (data.status === "published" && !data.publishedAt) {
-    ctx.addIssue({
-      code: "custom",
-      path: ["publishedAt"],
-      message: "Published at is required when the post is published"
-    });
-  }
-});
+export const blogPostUpdateSchema = z
+  .object({
+    slug: z.string().min(2).max(160).optional().nullable(),
+    title: z.string().min(3).max(255).optional(),
+    authorName: z.string().min(2).max(160).optional().nullable(),
+    coverImageUrl: z.string().url().optional().nullable(),
+    introduction: z.string().min(10).max(5000).optional(),
+    sections: z.array(blogSectionSchema).min(1).max(3).optional(),
+    conclusion: z.string().max(5000).optional().nullable(),
+    relatedServiceSlugs: z.array(z.string().min(2).max(120)).optional(),
+    status: blogStatusSchema.optional(),
+    isFeatured: z.boolean().optional(),
+    publishedAt: z.string().datetime().optional().nullable()
+  })
+  .superRefine((data, ctx) => {
+    if (data.status === "published" && !data.publishedAt) {
+      ctx.addIssue({
+        code: "custom",
+        path: ["publishedAt"],
+        message: "Published at is required when the post is published"
+      });
+    }
+  });
 
 export const blogPostsQuerySchema = z.object({
   search: z.string().optional(),

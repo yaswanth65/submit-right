@@ -3,9 +3,10 @@ import { ok } from "@/lib/http";
 import { asResponse } from "@/lib/route";
 import { getBlogPostById } from "@/lib/services/blog-service";
 
-export async function GET(_req: NextRequest, { params }: { params: { id: string } }) {
+export async function GET(_req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
-    return ok(await getBlogPostById(params.id, true));
+    const { id } = await params;
+    return ok(await getBlogPostById(id, true));
   } catch (error) {
     return asResponse(error);
   }

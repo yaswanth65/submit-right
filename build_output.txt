@@ -14,146 +14,24 @@
 - Environments: .env.local
 
   Creating an optimized production build ...
-Γ£ô Compiled successfully in 10.5s
+Γ£ô Compiled successfully in 11.6s
   Running TypeScript ...
-  Collecting page data using 11 workers ...
-  Generating static pages using 11 workers (0/98) ...
-  Generating static pages using 11 workers (24/98) 
-  Generating static pages using 11 workers (48/98) 
-The width(-1) and height(-1) of chart should be greater than 0,
-       please check the style of container, or the props width(100%) and height(100%),
-       or add a minWidth(0) or minHeight(250) or use aspect(undefined) to control the
-       height and width.
-  Generating static pages using 11 workers (73/98) 
-The width(-1) and height(-1) of chart should be greater than 0,
-       please check the style of container, or the props width(100%) and height(100%),
-       or add a minWidth(0) or minHeight(250) or use aspect(undefined) to control the
-       height and width.
-The width(-1) and height(-1) of chart should be greater than 0,
-       please check the style of container, or the props width(100%) and height(100%),
-       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
-       height and width.
-Γ£ô Generating static pages using 11 workers (98/98) in 1468.2ms
-  Finalizing page optimization ...
+Failed to compile.
 
-Route (app)
-Γöî Γùï /
-Γö£ Γùï /_not-found
-Γö£ Γùï /about
-Γö£ Γùï /admin/assignments
-Γö£ ╞Æ /admin/assignments/[id]
-Γö£ Γùï /admin/blogs
-Γö£ Γùï /admin/cms
-Γö£ Γùï /admin/coupon-management
-Γö£ Γùï /admin/dashboard
-Γö£ Γùï /admin/documents
-Γö£ ╞Æ /admin/documents/[id]
-Γö£ Γùï /admin/domains-services
-Γö£ ╞Æ /admin/domains-services/[id]
-Γö£ Γùï /admin/editors
-Γö£ ╞Æ /admin/editors/[id]
-Γö£ Γùï /admin/form-submissions
-Γö£ Γùï /admin/packages
-Γö£ ╞Æ /admin/packages/[id]
-Γö£ Γùï /admin/payments
-Γö£ ╞Æ /admin/payments/[id]
-Γö£ Γùï /admin/profile
-Γö£ Γùï /admin/reports
-Γö£ Γùï /admin/settings
-Γö£ Γùï /admin/students
-Γö£ ╞Æ /admin/students/[id]
-Γö£ Γùï /admin/tickets
-Γö£ ╞Æ /admin/tickets/[id]
-Γö£ ╞Æ /api/admin/catalog/items
-Γö£ ╞Æ /api/admin/catalog/items/[id]
-Γö£ ╞Æ /api/admin/catalog/options
-Γö£ ╞Æ /api/admin/clients
-Γö£ ╞Æ /api/admin/clients/[id]
-Γö£ ╞Æ /api/admin/clients/restrict
-Γö£ ╞Æ /api/admin/clients/suspend
-Γö£ ╞Æ /api/admin/dashboard
-Γö£ ╞Æ /api/admin/discounts
-Γö£ ╞Æ /api/admin/discounts/[id]
-Γö£ ╞Æ /api/admin/documents
-Γö£ ╞Æ /api/admin/documents/[id]
-Γö£ ╞Æ /api/admin/documents/assign
-Γö£ ╞Æ /api/admin/documents/cancel
-Γö£ ╞Æ /api/admin/documents/deadline
-Γö£ ╞Æ /api/admin/editors
-Γö£ ╞Æ /api/admin/editors/[id]
-Γö£ ╞Æ /api/admin/editors/availability
-Γö£ ╞Æ /api/admin/editors/restrict
-Γö£ ╞Æ /api/admin/editors/suspend
-Γö£ ╞Æ /api/admin/payments
-Γö£ ╞Æ /api/admin/payments/[id]
-Γö£ ╞Æ /api/admin/reports
-Γö£ ╞Æ /api/admin/settings
-Γö£ ╞Æ /api/admin/tickets
-Γö£ ╞Æ /api/admin/tickets/resolve
-Γö£ ╞Æ /api/auth/deactivate
-Γö£ ╞Æ /api/auth/forgot-password
-Γö£ ╞Æ /api/auth/reset-password
-Γö£ ╞Æ /api/auth/signin
-Γö£ ╞Æ /api/auth/signout
-Γö£ ╞Æ /api/auth/signup
-Γö£ ╞Æ /api/client/documents
-Γö£ ╞Æ /api/client/documents/service
-Γö£ ╞Æ /api/client/documents/submit
-Γö£ ╞Æ /api/client/documents/upload
-Γö£ ╞Æ /api/client/home
-Γö£ ╞Æ /api/client/messages
-Γö£ ╞Æ /api/client/notifications
-Γö£ ╞Æ /api/client/notifications/read
-Γö£ ╞Æ /api/client/overview
-Γö£ ╞Æ /api/client/payments
-Γö£ ╞Æ /api/client/payments/create-order
-Γö£ ╞Æ /api/client/tickets
-Γö£ ╞Æ /api/editor/availability
-Γö£ ╞Æ /api/editor/completed
-Γö£ ╞Æ /api/editor/dashboard
-Γö£ ╞Æ /api/editor/delete-account
-Γö£ ╞Æ /api/editor/documents
-Γö£ ╞Æ /api/editor/documents/[id]
-Γö£ ╞Æ /api/editor/documents/request-extension
-Γö£ ╞Æ /api/editor/documents/submit
-Γö£ ╞Æ /api/editor/messages
-Γö£ ╞Æ /api/editor/notifications
-Γö£ ╞Æ /api/payments/webhook
-Γö£ ╞Æ /api/profile
-Γö£ ╞Æ /api/system/cleanup-drafts
-Γö£ Γùï /blogs
-Γö£ ╞Æ /blogs/[id]
-Γö£ Γùï /contact
-Γö£ Γùï /editor/assigned
-Γö£ Γùï /editor/availability
-Γö£ Γùï /editor/completed
-Γö£ Γùï /editor/dashboard
-Γö£ Γùï /editor/help
-Γö£ Γùï /editor/messages
-Γö£ Γùï /editor/notifications
-Γö£ Γùï /editor/profile
-Γö£ Γùï /forgot-password
-Γö£ Γùï /packages
-Γö£ Γùï /privacy-policy
-Γö£ Γùï /reset-password
-Γö£ Γùï /signin
-Γö£ Γùï /signup
-Γö£ Γùï /user/chat
-Γö£ Γùï /user/dashboard
-Γö£ Γùï /user/documents
-Γö£ ╞Æ /user/documents/[id]
-Γö£ Γùï /user/help
-Γö£ Γùï /user/notifications
-Γö£ Γùï /user/overview
-Γö£ Γùï /user/packages
-Γö£ ╞Æ /user/packages/[id]
-Γö£ Γùï /user/payments
-Γö£ Γùï /user/profile
-Γö£ Γùï /user/services
-Γö£ ╞Æ /user/services/[id]
-Γöö Γùï /user/submit-document
+.next/types/validator.ts:900:31
+Type error: Type 'typeof import("C:/temporary projects/submit right/project/app/api/blogs/[id]/route")' does not satisfy the constraint 'RouteHandlerConfig<"/api/blogs/[id]">'.
+  Types of property 'GET' are incompatible.
+    Type '(_req: NextRequest, { params }: { params: { id: string; }; }) => Promise<NextResponse<any>>' is not assignable to type '(request: NextRequest, context: { params: Promise<{ id: string; }>; }) => void | Response | Promise<void | Response>'.
+      Types of parameters '__1' and 'context' are incompatible.
+        Type '{ params: Promise<{ id: string; }>; }' is not assignable to type '{ params: { id: string; }; }'.
+          Types of property 'params' are incompatible.
+            Property 'id' is missing in type 'Promise<{ id: string; }>' but required in type '{ id: string; }'.
 
-
-Γùï  (Static)   prerendered as static content
-╞Æ  (Dynamic)  server-rendered on demand
-
+  898 |   type __IsExpected<Specific extends RouteHandlerConfig<"/api/blogs/[id]">> = Specific
+  899 |   const handler = {} as typeof import("../../app/api/blogs/[id]/route.js")
+> 900 |   type __Check = __IsExpected<typeof handler>
+      |                               ^
+  901 |   // @ts-ignore
+  902 |   type __Unused = __Check
+  903 | }
+Next.js build worker exited with code: 1 and signal: null

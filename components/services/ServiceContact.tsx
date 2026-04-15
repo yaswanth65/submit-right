@@ -9,8 +9,7 @@ export function ServiceContact() {
       <div className="landing-shell flex flex-col items-center justify-center gap-8 sm:gap-10 lg:gap-[62px] text-center">
         <div className="flex w-full max-w-[676px] flex-col items-center gap-6">
           <div className="landing-section-badge mb-0 h-[30px] w-fit px-3 sm:h-8 sm:px-3.5">
-            <img src="/q.svg" alt="icon" className="h-4 w-4" />
-            <span className="landing-section-badge-text whitespace-nowrap">
+<img src="/vector2.svg" alt="icon" className="w-4 h-4" />            <span className="landing-section-badge-text whitespace-nowrap">
               LOREM IPSUM
             </span>
           </div>

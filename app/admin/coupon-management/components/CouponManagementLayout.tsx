@@ -13,9 +13,13 @@ type CouponManagementLayoutProps = {
   onEditCoupon: (coupon: CouponCampaign) => void;
 };
 
-function typeLabel(type: CouponCampaign["couponType"]) {
-  if (type === "discount") return "Discount";
-  if (type === "sale_price") return "Sale Price";
+function typeLabel(coupon: CouponCampaign) {
+  if (coupon.couponType === "discount") {
+    const isPercentageMode = String(coupon.description ?? "").toLowerCase().includes("discount_mode:percentage");
+    return isPercentageMode ? "% Discount" : "₹ Discount";
+  }
+
+  if (coupon.couponType === "sale_price") return "Sale Price";
   return "Buy X Get Y";
 }
 
@@ -26,7 +30,12 @@ function formatCurrency(value: number | null) {
 
 function discountText(coupon: CouponCampaign) {
   if (coupon.couponType === "discount") {
-    return `${coupon.discountValue ?? 0} OFF`;
+    const isPercentageMode = String(coupon.description ?? "").toLowerCase().includes("discount_mode:percentage");
+    if (isPercentageMode) {
+      return `${coupon.discountValue ?? 0}% OFF`;
+    }
+
+    return `${formatCurrency(coupon.discountValue)} OFF`;
   }
 
   if (coupon.couponType === "sale_price") {
@@ -131,7 +140,7 @@ export function CouponManagementLayout({
                         <div>{discountText(row)}</div>
                         <div>{discountSubtext(row)}</div>
                       </td>
-                      <td className="px-4 py-3 text-[13px] font-medium text-[#525866]">{typeLabel(row.couponType)}</td>
+                      <td className="px-4 py-3 text-[13px] font-medium text-[#525866]">{typeLabel(row)}</td>
                       <td className="px-4 py-3 text-[13px] font-medium text-[#525866]">{row.couponCode}</td>
                       <td className="px-4 py-3 text-[13px] font-medium text-[#525866]">{row.currentUsageCount}</td>
                       <td className="px-4 py-3">

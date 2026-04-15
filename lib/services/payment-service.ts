@@ -53,6 +53,7 @@ type DiscountCampaign = {
   limit_per_customer: number | null;
   current_usage_count: number;
   is_active: boolean;
+  description?: string | null;
 };
 
 type CouponResolution = {
@@ -126,6 +127,12 @@ function isCouponApplicable(coupon: DiscountCampaign, serviceKind: ServiceKind, 
 
 function calculateDiscount(subtotal: number, coupon: DiscountCampaign) {
   if (coupon.coupon_type === "discount") {
+    const isPercentageMode = String(coupon.description ?? "").toLowerCase().includes("discount_mode:percentage");
+    if (isPercentageMode) {
+      const percentage = Math.max(0, Math.min(100, Number(coupon.discount_value ?? 0)));
+      return subtotal * (percentage / 100);
+    }
+
     return Math.min(subtotal, Math.max(0, Number(coupon.discount_value ?? 0)));
   }
 

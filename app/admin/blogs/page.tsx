@@ -193,7 +193,8 @@ function NewBlogModal({
     }));
   };
 
-  const canPublish = !buildCreatePayload(draft).error;
+  const validationResult = buildCreatePayload(draft);
+  const inlineValidationError = !submitError ? validationResult.error : null;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 font-dm-sans">
@@ -311,6 +312,10 @@ function NewBlogModal({
             />
           </div>
 
+          {inlineValidationError ? (
+            <div className="rounded-[8px] border border-[#FEE4B5] bg-[#FFF8E6] px-3 py-2 text-[13px] text-[#8A5A00]">{inlineValidationError}</div>
+          ) : null}
+
           {submitError ? (
             <div className="rounded-[8px] border border-[#FECACA] bg-[#FEF2F2] px-3 py-2 text-[13px] text-[#B42318]">{submitError}</div>
           ) : null}
@@ -318,17 +323,20 @@ function NewBlogModal({
 
         <div className="h-[64px] px-5 border-t border-[#EAECF0] bg-white flex items-center justify-end gap-2.5">
           <button
+            type="button"
             onClick={onClose}
             className="h-[38px] px-5 rounded-[8px] border border-[#EAECF0] bg-white text-[#525866] text-[14px] font-medium hover:bg-[#F9FAFB]"
           >
             Cancel
           </button>
           <button
+            type="button"
             onClick={() => {
+              if (isSubmitting) return;
               void onPublish();
             }}
-            disabled={!canPublish || isSubmitting}
-            className="h-[38px] px-5 rounded-[8px] bg-[#00A0E3] hover:bg-[#008CC7] text-white text-[14px] font-semibold inline-flex items-center gap-2 shadow-sm disabled:opacity-55 disabled:cursor-not-allowed"
+            aria-disabled={isSubmitting}
+            className={`h-[38px] px-5 rounded-[8px] bg-[#00A0E3] hover:bg-[#008CC7] text-white text-[14px] font-semibold inline-flex items-center gap-2 shadow-sm ${isSubmitting ? "opacity-55 cursor-not-allowed" : "cursor-pointer"}`}
           >
             {isSubmitting ? <Loader2 className="w-4 h-4 animate-spin" /> : null}
             Publish

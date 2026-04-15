@@ -1,14 +1,39 @@
 import path from "node:path";
 import { pathToFileURL } from "node:url";
 import mammoth from "mammoth";
-import { PDFParse } from "pdf-parse";
 import WordExtractor from "word-extractor";
 import { env } from "@/lib/env";
 import { supabaseAdmin } from "@/lib/supabase";
 
 let isPdfWorkerConfigured = false;
 
-function ensurePdfWorkerConfigured() {
+type PdfParserInstance = {
+  getText: () => Promise<{ text: string }>;
+  destroy: () => Promise<void> | void;
+};
+
+type PdfParseCtor = {
+  new (input: { data: Buffer }): PdfParserInstance;
+  setWorker: (workerSrc: string) => void;
+};
+
+let pdfParseCtor: PdfParseCtor | null = null;
+
+async function loadPdfParseCtor() {
+  if (pdfParseCtor) {
+    return pdfParseCtor;
+  }
+
+  const mod = (await import("pdf-parse")) as { PDFParse?: PdfParseCtor };
+  if (!mod.PDFParse) {
+    throw new Error("PDF parser is unavailable in this runtime");
+  }
+
+  pdfParseCtor = mod.PDFParse;
+  return pdfParseCtor;
+}
+
+function ensurePdfWorkerConfigured(pdfParse: PdfParseCtor) {
   if (isPdfWorkerConfigured) {
     return;
   }
@@ -22,7 +47,7 @@ function ensurePdfWorkerConfigured() {
     "pdf.worker.mjs"
   );
 
-  PDFParse.setWorker(pathToFileURL(workerPath).toString());
+  pdfParse.setWorker(pathToFileURL(workerPath).toString());
   isPdfWorkerConfigured = true;
 }
 
@@ -31,6 +56,20 @@ export function countWords(text: string) {
     .trim()
     .split(/\s+/)
     .filter(Boolean).length;
+}
+
+function fallbackPdfWordCount(buffer: Buffer) {
+  const source = buffer.toString("latin1");
+  const chunks = source.match(/\(([^()]*)\)/g) ?? [];
+  const extracted = chunks
+    .map((chunk) => chunk.slice(1, -1))
+    .join(" ")
+    .replace(/\\[nrtbf()\\]/g, " ")
+    .replace(/[^\p{L}\p{N}\s]/gu, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+
+  return extracted ? countWords(extracted) : 0;
 }
 
 export async function extractWordCount(file: File) {
@@ -43,11 +82,21 @@ export async function extractWordCount(file: File) {
   }
 
   if (fileName.endsWith(".pdf")) {
-    ensurePdfWorkerConfigured();
-    const parser = new PDFParse({ data: buffer });
-    const result = await parser.getText();
-    await parser.destroy();
-    return countWords(result.text);
+    try {
+      const PdfParse = await loadPdfParseCtor();
+      ensurePdfWorkerConfigured(PdfParse);
+      const parser = new PdfParse({ data: buffer });
+      const result = await parser.getText();
+      await parser.destroy();
+      return countWords(result.text);
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "";
+      if (/DOMMatrix|ImageData|Path2D|OffscreenCanvas|Worker/i.test(message)) {
+        // Production runtimes can miss some pdf.js globals; fallback keeps upload flow alive.
+        return fallbackPdfWordCount(buffer);
+      }
+      throw error;
+    }
   }
 
   if (fileName.endsWith(".doc")) {

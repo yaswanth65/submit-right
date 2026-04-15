@@ -1,3 +1,4 @@
+export type EditableCouponType = "flat_discount" | "percentage_discount" | "sale_price" | "buy_x_get_y";
 export type CouponType = "discount" | "sale_price" | "buy_x_get_y";
 
 export type CouponApplyScope =
@@ -50,7 +51,7 @@ export type CouponCatalogOptionsResponse = {
 };
 
 export type CouponFormState = {
-  couponType: CouponType;
+  couponType: EditableCouponType;
   code: string;
   name: string;
   applyScope: CouponApplyScope;

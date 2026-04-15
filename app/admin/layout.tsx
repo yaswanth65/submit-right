@@ -1,6 +1,7 @@
 // Admin layout.tsx app/admin/layout.tsx
 import { Sidebar } from "@/components/Sidebar";
 import { Topbar } from "@/components/Topbar";
+import { AdminAuthGuard } from "@/app/admin/components/AdminAuthGuard";
 
 export default function AdminLayout({
   children,
@@ -8,7 +9,7 @@ export default function AdminLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <>
+    <AdminAuthGuard>
       <Sidebar />
       <div className="flex-1 ml-[260px] flex flex-col min-h-screen ">
         <Topbar />
@@ -16,6 +17,6 @@ export default function AdminLayout({
           {children}
         </main>
       </div>
-    </>
+    </AdminAuthGuard>
   );
 }

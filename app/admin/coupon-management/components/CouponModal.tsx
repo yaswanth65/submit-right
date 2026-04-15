@@ -6,17 +6,22 @@ import {
   CouponCampaign,
   CouponCatalogOption,
   CouponCatalogOptionsResponse,
+  EditableCouponType,
   CouponFormState,
   CouponType
 } from "./types";
 
 const typeCards: Array<{
-  value: CouponType;
+  value: EditableCouponType;
   label: string;
 }> = [
   {
-    value: "discount",
-    label: "Discount"
+    value: "flat_discount",
+    label: "Rupee Discount"
+  },
+  {
+    value: "percentage_discount",
+    label: "Percentage Discount"
   },
   {
     value: "sale_price",
@@ -66,14 +71,25 @@ function toIsoDate(value: string) {
   return `${value}T00:00:00.000Z`;
 }
 
-function defaultApplyScope(type: CouponType): CouponApplyScope {
+function defaultApplyScope(type: CouponType | EditableCouponType): CouponApplyScope {
   if (type === "buy_x_get_y") return "specific_service";
   return "all_services";
 }
 
+function toEditableCouponType(type: CouponType | null | undefined, description?: string | null): EditableCouponType {
+  if (type === "discount") {
+    const isPercentageMode = String(description ?? "").toLowerCase().includes("discount_mode:percentage");
+    return isPercentageMode ? "percentage_discount" : "flat_discount";
+  }
+
+  if (type === "sale_price") return "sale_price";
+  if (type === "buy_x_get_y") return "buy_x_get_y";
+  return "flat_discount";
+}
+
 function buildInitialForm(mode: "create" | "edit", initialCoupon: CouponCampaign | null): CouponFormState {
   const today = new Date().toISOString().slice(0, 10);
-  const type = initialCoupon?.couponType ?? "discount";
+  const type = toEditableCouponType(initialCoupon?.couponType, initialCoupon?.description);
 
   return {
     couponType: type,
@@ -176,9 +192,17 @@ export function CouponModal({ mode, isOpen, onClose, onSaved, initialCoupon }: C
       return;
     }
 
-    if (form.couponType === "discount" && toNullableNumber(form.discountValue) == null) {
+    if (["flat_discount", "percentage_discount"].includes(form.couponType) && toNullableNumber(form.discountValue) == null) {
       setError("Discount value is required for discount coupons.");
       return;
+    }
+
+    if (form.couponType === "percentage_discount") {
+      const value = toNullableNumber(form.discountValue);
+      if (value == null || value <= 0 || value > 100) {
+        setError("Percentage discount must be greater than 0 and up to 100.");
+        return;
+      }
     }
 
     if (form.couponType === "sale_price" && toNullableNumber(form.salePrice) == null) {
@@ -197,10 +221,14 @@ export function CouponModal({ mode, isOpen, onClose, onSaved, initialCoupon }: C
     const payload = {
       couponCode: form.code.trim().toUpperCase(),
       couponName: form.name.trim(),
-      couponType: form.couponType,
+      couponType: ["flat_discount", "percentage_discount"].includes(form.couponType)
+        ? "discount"
+        : form.couponType,
       applyTo: form.applyScope,
       targetItemId: needsTarget ? form.targetItemId : null,
-      discountValue: form.couponType === "discount" ? toNullableNumber(form.discountValue) : null,
+      discountValue: ["flat_discount", "percentage_discount"].includes(form.couponType)
+        ? toNullableNumber(form.discountValue)
+        : null,
       salePrice: form.couponType === "sale_price" ? toNullableNumber(form.salePrice) : null,
       buyQuantity: form.couponType === "buy_x_get_y" ? toNullableInteger(form.buyQty) : null,
       getQuantity: form.couponType === "buy_x_get_y" ? toNullableInteger(form.getQty) : null,
@@ -209,7 +237,12 @@ export function CouponModal({ mode, isOpen, onClose, onSaved, initialCoupon }: C
       limitTotalUses: form.limitTotalUses ? toNullableInteger(form.totalUsesLimit) : null,
       limitPerCustomer: form.limitPerCustomer ? toNullableInteger(form.usesPerCustomerLimit) : null,
       isActive: form.isActive,
-      description: null
+      description:
+        form.couponType === "percentage_discount"
+          ? "discount_mode:percentage"
+          : form.couponType === "flat_discount"
+            ? "discount_mode:flat"
+            : null
     };
 
     setIsSaving(true);
@@ -269,7 +302,7 @@ export function CouponModal({ mode, isOpen, onClose, onSaved, initialCoupon }: C
         <form onSubmit={handleSubmit} className="max-h-[calc(100vh-160px)] space-y-4 overflow-y-auto p-4 sm:p-6">
           <div>
             <div className="mb-1.5 text-[14px] font-medium text-[#0E121B]">Select coupon type:</div>
-            <div className="grid grid-cols-1 gap-1.5 sm:grid-cols-3">
+            <div className="grid grid-cols-1 gap-1.5 sm:grid-cols-2">
               {typeCards.map((card) => {
                 const isSelected = form.couponType === card.value;
                 return (
@@ -320,14 +353,26 @@ export function CouponModal({ mode, isOpen, onClose, onSaved, initialCoupon }: C
 
             <div className="h-px bg-[#EAECF0]"></div>
 
-            {form.couponType === "discount" ? (
+            {form.couponType === "flat_discount" ? (
               <div>
-                <label className="mb-1.5 block text-[14px] font-medium text-[#0E121B]">Discount Value</label>
+                <label className="mb-1.5 block text-[14px] font-medium text-[#0E121B]">Discount Amount (INR)</label>
                 <input
                   className={inputClassName}
                   value={form.discountValue}
                   onChange={(event) => setForm((prev) => ({ ...prev, discountValue: event.target.value }))}
-                  placeholder="10"
+                  placeholder="500"
+                />
+              </div>
+            ) : null}
+
+            {form.couponType === "percentage_discount" ? (
+              <div>
+                <label className="mb-1.5 block text-[14px] font-medium text-[#0E121B]">Discount Percentage</label>
+                <input
+                  className={inputClassName}
+                  value={form.discountValue}
+                  onChange={(event) => setForm((prev) => ({ ...prev, discountValue: event.target.value }))}
+                  placeholder="15"
                 />
               </div>
             ) : null}

@@ -8,6 +8,7 @@ import { MockCheckoutModal } from "@/components/MockCheckoutModal";
 
 type ServiceApiRow = {
   id: string;
+  slug?: string | null;
   title: string;
   kind?: "service" | "package" | "domain" | null;
   basePrice?: number | null;
@@ -18,6 +19,7 @@ type ServiceApiRow = {
 
 type ServiceRow = {
   id: string;
+  slug: string;
   title: string;
   kind: "service" | "package";
   basePrice: number;
@@ -133,6 +135,7 @@ function SubmitDocumentContent() {
           .filter((service) => service.kind === "service" || service.kind === "package")
           .map((service) => ({
             id: service.id,
+            slug: String(service.slug ?? ""),
             title: service.title,
             kind: service.kind as "service" | "package",
             basePrice: Number(service.basePrice ?? service.base_price ?? 0),
@@ -141,14 +144,25 @@ function SubmitDocumentContent() {
 
         setServices(activeServices);
         if (activeServices.length > 0) {
+          const normalizedPreSelectedItem = preSelectedItemId.trim().toLowerCase();
           const preSelected = activeServices.find((service) => {
             const matchesId = preSelectedItemId ? service.id === preSelectedItemId : false;
+            const matchesSlug = normalizedPreSelectedItem
+              ? service.slug.trim().toLowerCase() === normalizedPreSelectedItem
+              : false;
             const matchesKind =
               !preSelectedItemKind || preSelectedItemKind === service.kind || preSelectedItemKind === "offer";
-            return matchesId && matchesKind;
+            return (matchesId || matchesSlug) && matchesKind;
           });
 
-          setSelectedServiceId(preSelected?.id ?? activeServices[0].id);
+          const defaultByKind =
+            preSelectedItemKind === "package"
+              ? activeServices.find((service) => service.kind === "package")
+              : preSelectedItemKind === "service"
+                ? activeServices.find((service) => service.kind === "service")
+                : null;
+
+          setSelectedServiceId(preSelected?.id ?? defaultByKind?.id ?? activeServices[0].id);
         }
       } catch (error) {
         if (!active) return;
@@ -352,16 +366,6 @@ function SubmitDocumentContent() {
           if (!success) {
             return;
           }
-        }
-
-        const hasValidPreselection = !!preSelectedItemId && selectedServiceId === preSelectedItemId;
-        if (hasValidPreselection) {
-          if (!documentId) {
-            throw new Error("Draft document is missing. Please go back to step 1.");
-          }
-          await applySelectedOffer(documentId);
-          setCurrentStep(4);
-          return;
         }
 
         setCurrentStep(3);

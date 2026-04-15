@@ -39,6 +39,12 @@ function safeJsonParse(input) {
   }
 }
 
+function extractHtmlTitle(html) {
+  if (!html || typeof html !== "string") return null;
+  const match = html.match(/<title>(.*?)<\/title>/i);
+  return match?.[1]?.trim() ?? null;
+}
+
 function toUrl(path) {
   const normalizedBase = BASE_URL.endsWith("/") ? BASE_URL.slice(0, -1) : BASE_URL;
   const normalizedPath = path.startsWith("/") ? path : `/${path}`;
@@ -93,6 +99,7 @@ async function runCase({
     const rawText = await response.text();
     const payload = safeJsonParse(rawText);
     const successFlag = payload && typeof payload.success === "boolean" ? payload.success : null;
+    const isHtmlError = !payload && /^\s*<!doctype html/i.test(rawText);
 
     result.status = response.status;
     result.success = successFlag;
@@ -109,6 +116,92 @@ async function runCase({
       result.error = {
         message: `Unexpected response for ${method} ${path}`,
         responseBody: payload ?? rawText,
+        htmlTitle: isHtmlError ? extractHtmlTitle(rawText) : null,
+        responseSnippet: rawText.slice(0, 280),
+      };
+    }
+
+    result.payload = payload ?? rawText;
+  } catch (error) {
+    result.error = {
+      message: error instanceof Error ? error.message : "Unknown request failure",
+    };
+  } finally {
+    clearTimeout(timeout);
+    result.durationMs = Date.now() - startedAt;
+    results.push(result);
+  }
+
+  const statusLabel = result.status === null ? "ERR" : String(result.status);
+  const mark = result.passed ? "PASS" : "FAIL";
+  console.log(`[${mark}] ${name} -> ${statusLabel} (${result.durationMs}ms)`);
+
+  return result;
+}
+
+async function runMultipartCase({
+  name,
+  path,
+  token,
+  formData,
+  expectedStatus,
+  expectSuccess,
+  timeoutMs = 20000,
+}) {
+  const url = toUrl(path);
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), timeoutMs);
+
+  const headers = { Accept: "application/json" };
+  if (token) {
+    headers.Authorization = `Bearer ${token}`;
+  }
+
+  const result = {
+    name,
+    method: "POST",
+    path,
+    expectedStatus,
+    expectSuccess,
+    passed: false,
+    status: null,
+    success: null,
+    durationMs: 0,
+    error: null,
+  };
+
+  const startedAt = Date.now();
+
+  try {
+    const response = await fetch(url, {
+      method: "POST",
+      headers,
+      body: formData,
+      signal: controller.signal,
+    });
+
+    const rawText = await response.text();
+    const payload = safeJsonParse(rawText);
+    const successFlag = payload && typeof payload.success === "boolean" ? payload.success : null;
+    const isHtmlError = !payload && /^\s*<!doctype html/i.test(rawText);
+
+    result.status = response.status;
+    result.success = successFlag;
+
+    const statusOk = expectedStatus ? response.status === expectedStatus : response.ok;
+    const successOk =
+      typeof expectSuccess === "boolean"
+        ? successFlag === expectSuccess
+        : response.ok;
+
+    result.passed = statusOk && successOk;
+
+    if (!result.passed) {
+      result.error = {
+        message: `Unexpected response for POST ${path}`,
+        responseBody: payload ?? rawText,
+        htmlTitle: isHtmlError ? extractHtmlTitle(rawText) : null,
+        responseSnippet: rawText.slice(0, 280),
       };
     }
 
@@ -223,7 +316,7 @@ async function run() {
       });
     }
 
-    await runCase({
+    const draftResult = await runCase({
       name: "Client create draft document",
       method: "POST",
       path: "/api/client/documents",
@@ -237,6 +330,26 @@ async function run() {
         shortDescription: "Automated smoke test for draft creation endpoint."
       }
     });
+
+    const draftDocumentId = draftResult.payload?.data?.id;
+    if (typeof draftDocumentId === "string" && draftDocumentId.length > 0) {
+      const pdfSample = `%PDF-1.1\n1 0 obj<</Type/Catalog/Pages 2 0 R>>endobj\n2 0 obj<</Type/Pages/Count 1/Kids[3 0 R]>>endobj\n3 0 obj<</Type/Page/Parent 2 0 R/MediaBox[0 0 300 144]/Contents 4 0 R/Resources<</Font<</F1 5 0 R>>>>>>endobj\n4 0 obj<</Length 43>>stream\nBT /F1 12 Tf 30 100 Td (Smoke Upload) Tj ET\nendstream\nendobj\n5 0 obj<</Type/Font/Subtype/Type1/BaseFont/Helvetica>>endobj\nxref\n0 6\n0000000000 65535 f \n0000000010 00000 n \n0000000060 00000 n \n0000000117 00000 n \n0000000249 00000 n \n0000000342 00000 n \ntrailer<</Root 1 0 R/Size 6>>\nstartxref\n412\n%%EOF`;
+      const pdfFile = new File([pdfSample], "smoke-upload.pdf", { type: "application/pdf" });
+      const formData = new FormData();
+      formData.set("documentId", draftDocumentId);
+      formData.set("file", pdfFile);
+
+      await runMultipartCase({
+        name: "Client upload document",
+        path: "/api/client/documents/upload",
+        token: tokensByRole.client,
+        expectedStatus: 200,
+        expectSuccess: true,
+        formData,
+      });
+    } else {
+      console.log("[SKIP] Client upload document -> missing draft document id");
+    }
   }
 
   if (tokensByRole.editor) {
@@ -341,6 +454,9 @@ async function run() {
       if (item.error?.responseBody) {
         const text = JSON.stringify(item.error.responseBody);
         console.log(`  Body: ${text.slice(0, 450)}${text.length > 450 ? "..." : ""}`);
+      }
+      if (item.error?.htmlTitle) {
+        console.log(`  HTML title: ${item.error.htmlTitle}`);
       }
     }
     process.exitCode = 1;

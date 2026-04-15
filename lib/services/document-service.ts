@@ -1,5 +1,4 @@
 import { fail } from "@/lib/http";
-import { extractWordCount, uploadDocumentFile, validateUpload } from "@/lib/files";
 import { supabaseAdmin } from "@/lib/supabase";
 
 export async function createDraftDocument(input: {
@@ -35,6 +34,7 @@ export async function uploadClientDocument(input: {
   clientId: string;
   file: File;
 }) {
+  const { validateUpload, extractWordCount, uploadDocumentFile } = await import("@/lib/files");
   validateUpload(input.file);
   const wordCount = await extractWordCount(input.file);
   const path = `${input.clientId}/${input.documentId}/client/${Date.now()}-${input.file.name}`;
@@ -195,6 +195,7 @@ export async function submitEditorFile(input: {
   editorId: string;
   file: File;
 }) {
+  const { validateUpload, uploadDocumentFile } = await import("@/lib/files");
   validateUpload(input.file);
   const path = `${input.editorId}/${input.documentId}/editor/${Date.now()}-${input.file.name}`;
   const uploaded = await uploadDocumentFile(path, input.file);

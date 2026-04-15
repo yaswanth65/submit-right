@@ -4,20 +4,20 @@ const DEFAULT_USERS = [
   {
     role: "admin",
     fullName: "Submit Right Admin",
-    email: "admin@submitright.com",
-    password: "MeAdmin/SubRight@321"
+    email: process.env.SMOKE_ADMIN_EMAIL || "admin@submitright.com",
+    password: process.env.SMOKE_ADMIN_PASSWORD || "MeAdmin/SubRight@321"
   },
   {
     role: "editor",
     fullName: "Aarav Kulkarni",
-    email: "editor1@submitright.com",
-    password: "Editor@12345"
+    email: process.env.SMOKE_EDITOR_EMAIL || "editor1@submitright.com",
+    password: process.env.SMOKE_EDITOR_PASSWORD || "Editor@12345"
   },
   {
     role: "client",
     fullName: "Priya Patel",
-    email: "student1@submitright.com",
-    password: "Student@12345"
+    email: process.env.SMOKE_CLIENT_EMAIL || "student1@submitright.com",
+    password: process.env.SMOKE_CLIENT_PASSWORD || "Student@12345"
   }
 ];
 
@@ -208,6 +208,7 @@ async function run() {
       ["Client home", "/api/client/home"],
       ["Client overview", "/api/client/overview"],
       ["Client documents", "/api/client/documents"],
+      ["Client messages", "/api/client/messages"],
       ["Client notifications", "/api/client/notifications"],
       ["Client payments", "/api/client/payments"],
       ["Client tickets", "/api/client/tickets"],
@@ -221,6 +222,21 @@ async function run() {
         expectSuccess: true,
       });
     }
+
+    await runCase({
+      name: "Client create draft document",
+      method: "POST",
+      path: "/api/client/documents",
+      token: tokensByRole.client,
+      expectedStatus: 201,
+      expectSuccess: true,
+      body: {
+        documentTitle: `Smoke Test Draft ${new Date().toISOString()}`,
+        academicField: "Computer Science",
+        documentType: "Research Paper",
+        shortDescription: "Automated smoke test for draft creation endpoint."
+      }
+    });
   }
 
   if (tokensByRole.editor) {

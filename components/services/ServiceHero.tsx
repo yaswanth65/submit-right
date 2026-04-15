@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export function ServiceHero() {
   return (
-    <section className="relative overflow-hidden bg-white pt-16 sm:pt-24 pb-14 sm:pb-16 lg:pb-0 min-h-[933px] lg:min-h-[600px]">
+    <section className="relative overflow-hidden bg-white pt-16 sm:pt-30 pb-14 sm:pb-16 lg:pb-0 min-h-[933px] lg:min-h-[600px]">
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <div className="hidden lg:block absolute -left-[243px] top-[-281px] h-[1378px] w-[2726px]">
           <div className="absolute left-[-2.97%] right-[59.55%] top-[-3.41%] bottom-[55.33%] rotate-[8.12deg] rounded-full bg-[rgba(208,208,246,0.6)] blur-[139px]" />

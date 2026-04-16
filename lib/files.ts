@@ -1,6 +1,13 @@
 type SupabaseAdminClient = (typeof import("@/lib/supabase"))["supabaseAdmin"];
 
 let isPdfWorkerConfigured = false;
+let isPdfServerPolyfillsConfigured = false;
+
+type PdfGlobalScope = typeof globalThis & {
+  DOMMatrix?: typeof DOMMatrix;
+  ImageData?: typeof ImageData;
+  Path2D?: typeof Path2D;
+};
 
 type PdfJsModule = Awaited<typeof import("pdfjs-dist/legacy/build/pdf.mjs")>;
 type MammothModule = {
@@ -10,6 +17,144 @@ type MammothModule = {
 };
 
 let pdfJsModule: PdfJsModule | null = null;
+
+class DOMMatrixStub {
+  static fromMatrix() {
+    return new DOMMatrixStub();
+  }
+
+  constructor(_value?: unknown) {}
+
+  multiplySelf() {
+    return this;
+  }
+
+  preMultiplySelf() {
+    return this;
+  }
+
+  translateSelf() {
+    return this;
+  }
+
+  scaleSelf() {
+    return this;
+  }
+
+  rotateSelf() {
+    return this;
+  }
+
+  rotateAxisAngleSelf() {
+    return this;
+  }
+
+  skewXSelf() {
+    return this;
+  }
+
+  skewYSelf() {
+    return this;
+  }
+
+  invertSelf() {
+    return this;
+  }
+
+  setMatrixValue() {
+    return this;
+  }
+
+  toFloat32Array() {
+    return new Float32Array(16);
+  }
+
+  toFloat64Array() {
+    return new Float64Array(16);
+  }
+
+  transformPoint(point: DOMPointInit = {}) {
+    const x = typeof point.x === "number" ? point.x : 0;
+    const y = typeof point.y === "number" ? point.y : 0;
+    const z = typeof point.z === "number" ? point.z : 0;
+    const w = typeof point.w === "number" ? point.w : 1;
+    return { x, y, z, w };
+  }
+}
+
+class ImageDataStub {
+  data: Uint8ClampedArray;
+  width: number;
+  height: number;
+
+  constructor(arrayOrWidth: Uint8ClampedArray | number, width?: number, height?: number) {
+    if (typeof arrayOrWidth === "number") {
+      this.width = arrayOrWidth;
+      this.height = typeof width === "number" ? width : arrayOrWidth;
+      this.data = new Uint8ClampedArray(this.width * this.height * 4);
+      return;
+    }
+
+    this.data = arrayOrWidth;
+    this.width = typeof width === "number" ? width : 0;
+    this.height = typeof height === "number" ? height : 0;
+  }
+}
+
+class Path2DStub {
+  constructor(_path?: string | Path2D) {}
+
+  addPath(_path: Path2D, _transform?: DOMMatrix2DInit) {}
+
+  closePath() {}
+
+  moveTo(_x: number, _y: number) {}
+
+  lineTo(_x: number, _y: number) {}
+
+  rect(_x: number, _y: number, _width: number, _height: number) {}
+
+  roundRect(
+    _x: number,
+    _y: number,
+    _width: number,
+    _height: number,
+    _radii?: number | DOMPointInit | Array<number | DOMPointInit>
+  ) {}
+
+  arc(
+    _x: number,
+    _y: number,
+    _radius: number,
+    _startAngle: number,
+    _endAngle: number,
+    _counterclockwise?: boolean
+  ) {}
+
+  arcTo(_x1: number, _y1: number, _x2: number, _y2: number, _radius: number) {}
+
+  bezierCurveTo(
+    _cp1x: number,
+    _cp1y: number,
+    _cp2x: number,
+    _cp2y: number,
+    _x: number,
+    _y: number
+  ) {}
+
+  quadraticCurveTo(_cpx: number, _cpy: number, _x: number, _y: number) {}
+
+  ellipse(
+    _x: number,
+    _y: number,
+    _radiusX: number,
+    _radiusY: number,
+    _rotation: number,
+    _startAngle: number,
+    _endAngle: number,
+    _counterclockwise?: boolean
+  ) {}
+}
 
 function isServerRuntime() {
   return typeof window === "undefined";
@@ -35,10 +180,32 @@ function normalizeMammothModule(mod: unknown): MammothModule {
   return resolved as MammothModule;
 }
 
+async function ensurePdfServerPolyfills() {
+  if (!isServerRuntime() || isPdfServerPolyfillsConfigured) {
+    return;
+  }
+
+  const pdfGlobal = globalThis as PdfGlobalScope;
+
+  if (!pdfGlobal.DOMMatrix) {
+    pdfGlobal.DOMMatrix = DOMMatrixStub as unknown as typeof DOMMatrix;
+  }
+  if (!pdfGlobal.ImageData) {
+    pdfGlobal.ImageData = ImageDataStub as unknown as typeof ImageData;
+  }
+  if (!pdfGlobal.Path2D) {
+    pdfGlobal.Path2D = Path2DStub as unknown as typeof Path2D;
+  }
+
+  isPdfServerPolyfillsConfigured = true;
+}
+
 async function loadPdfJsModule() {
   if (pdfJsModule) {
     return pdfJsModule;
   }
+
+  await ensurePdfServerPolyfills();
 
   const mod = await import("pdfjs-dist/legacy/build/pdf.mjs");
   pdfJsModule = mod;

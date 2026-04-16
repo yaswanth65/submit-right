@@ -4,6 +4,8 @@ import { asResponse } from "@/lib/route";
 import { requireRole } from "@/lib/auth";
 import { uploadClientDocument } from "@/lib/services/document-service";
 
+export const runtime = "nodejs";
+
 export async function POST(req: NextRequest) {
   try {
     const user = await requireRole("client");

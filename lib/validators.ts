@@ -94,7 +94,7 @@ export const catalogItemsQuerySchema = z.object({
   search: z.string().optional()
 });
 
-export const discountCampaignTypeSchema = z.enum(["discount", "sale_price", "buy_x_get_y"]);
+export const discountCampaignTypeSchema = z.enum(["discount", "rupee_discount", "sale_price", "buy_x_get_y"]);
 
 export const discountCampaignApplyToSchema = z.enum([
   "all_services",
@@ -123,12 +123,14 @@ const discountCampaignBaseSchema = z.object({
   description: z.string().max(1000).optional().nullable()
 });
 
+const discountValueCouponTypes = new Set(["discount", "rupee_discount"]);
+
 export const discountCampaignSchema = discountCampaignBaseSchema
   .refine((data) => data.applyTo.startsWith("specific_") ? !!data.targetItemId : true, {
     path: ["targetItemId"],
     message: "Target item is required for specific discounts"
   })
-  .refine((data) => data.couponType === "discount" ? data.discountValue != null : true, {
+  .refine((data) => discountValueCouponTypes.has(data.couponType) ? data.discountValue != null : true, {
     path: ["discountValue"],
     message: "Discount value is required for discount coupons"
   })
@@ -152,7 +154,7 @@ export const discountCampaignUpdateSchema = discountCampaignBaseSchema
       });
     }
 
-    if (data.couponType === "discount" && data.discountValue == null) {
+    if ((data.couponType === "discount" || data.couponType === "rupee_discount") && data.discountValue == null) {
       ctx.addIssue({
         code: "custom",
         path: ["discountValue"],

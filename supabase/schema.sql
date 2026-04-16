@@ -18,7 +18,10 @@ begin
     create type catalog_item_kind as enum ('service', 'package', 'domain');
   end if;
   if not exists (select 1 from pg_type where typname = 'discount_campaign_type') then
-    create type discount_campaign_type as enum ('discount', 'sale_price', 'buy_x_get_y');
+    create type discount_campaign_type as enum ('discount', 'rupee_discount', 'sale_price', 'buy_x_get_y');
+  end if;
+  if exists (select 1 from pg_type where typname = 'discount_campaign_type') then
+    alter type discount_campaign_type add value if not exists 'rupee_discount';
   end if;
   if not exists (select 1 from pg_type where typname = 'discount_apply_to') then
     create type discount_apply_to as enum (

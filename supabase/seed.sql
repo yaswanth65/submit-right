@@ -623,6 +623,29 @@ values
     now() - interval '1 day'
   ),
   (
+    'dc444444-4444-4444-4444-444444444444',
+    'RUPEE500',
+    'Flat Rs 500 Off',
+    'rupee_discount',
+    'all_services',
+    null,
+    500.00,
+    null,
+    null,
+    null,
+    now() - interval '1 day',
+    now() + interval '15 days',
+    75,
+    1,
+    0,
+    true,
+    'Flat rupee discount for all service items',
+    'aaaaaaaa-1111-1111-1111-111111111111',
+    'aaaaaaaa-1111-1111-1111-111111111111',
+    now() - interval '1 day',
+    now() - interval '1 day'
+  ),
+  (
     'dc222222-2222-2222-2222-222222222222',
     'PACKSAVE25',
     'Package Saver',
@@ -704,6 +727,14 @@ values
     'd1111111-1111-1111-1111-111111111111',
     'cccccccc-3333-3333-3333-333333333333',
     900.00,
+    now() - interval '1 day'
+  ),
+  (
+    'd6222222-2222-2222-2222-222222222222',
+    'dc444444-4444-4444-4444-444444444444',
+    'd3333333-3333-3333-3333-333333333333',
+    'cccccccc-3333-3333-3333-333333333333',
+    500.00,
     now() - interval '1 day'
   )
 on conflict (id) do update

@@ -16,6 +16,7 @@
     { "key": "adminPassword", "value": "Password@123" },
     { "key": "documentId", "value": "" },
     { "key": "serviceId", "value": "" },
+    { "key": "packageId", "value": "" },
     { "key": "catalogItemId", "value": "" },
     { "key": "discountId", "value": "" },
     { "key": "clientId", "value": "" },
@@ -443,12 +444,42 @@
           }
         },
         {
-          "name": "Create Discount",
+          "name": "Create Percentage Discount",
           "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["const json = pm.response.json();", "if (json.data?.id) pm.collectionVariables.set('discountId', json.data.id);"] } }],
           "request": {
             "method": "POST",
             "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }, { "key": "Content-Type", "value": "application/json" }],
-            "body": { "mode": "raw", "raw": "{\n  \"couponCode\": \"SUMMER15\",\n  \"couponName\": \"Summer Promotion\",\n  \"couponType\": \"discount\",\n  \"applyTo\": \"all_services\",\n  \"discountValue\": 15,\n  \"startDate\": \"2026-04-11T00:00:00.000Z\",\n  \"endDate\": \"2026-05-11T00:00:00.000Z\",\n  \"limitTotalUses\": 100,\n  \"limitPerCustomer\": 1,\n  \"isActive\": true,\n  \"description\": \"Seasonal discount for all service items\"\n}" },
+            "body": { "mode": "raw", "raw": "{\n  \"couponCode\": \"SUMMER15\",\n  \"couponName\": \"Summer Promotion\",\n  \"couponType\": \"discount\",\n  \"applyTo\": \"all_services\",\n  \"discountValue\": 15,\n  \"startDate\": \"2026-04-11T00:00:00.000Z\",\n  \"endDate\": \"2026-05-11T00:00:00.000Z\",\n  \"limitTotalUses\": 100,\n  \"limitPerCustomer\": 1,\n  \"isActive\": true,\n  \"description\": \"15% discount for all service items\"\n}" },
+            "url": { "raw": "{{baseUrl}}/api/admin/discounts", "host": ["{{baseUrl}}"], "path": ["api", "admin", "discounts"] }
+          }
+        },
+        {
+          "name": "Create Rupee Discount",
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["const json = pm.response.json();", "if (json.data?.id) pm.collectionVariables.set('discountId', json.data.id);"] } }],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }, { "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"couponCode\": \"RUPEE500\",\n  \"couponName\": \"Flat Rs 500 Off\",\n  \"couponType\": \"rupee_discount\",\n  \"applyTo\": \"all_services\",\n  \"discountValue\": 500,\n  \"startDate\": \"2026-04-11T00:00:00.000Z\",\n  \"endDate\": \"2026-05-11T00:00:00.000Z\",\n  \"limitTotalUses\": 75,\n  \"limitPerCustomer\": 1,\n  \"isActive\": true,\n  \"description\": \"Flat rupee discount for all service items\"\n}" },
+            "url": { "raw": "{{baseUrl}}/api/admin/discounts", "host": ["{{baseUrl}}"], "path": ["api", "admin", "discounts"] }
+          }
+        },
+        {
+          "name": "Create Sale Price",
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["const json = pm.response.json();", "if (json.data?.id) pm.collectionVariables.set('discountId', json.data.id);"] } }],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }, { "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"couponCode\": \"PACKSAVE25\",\n  \"couponName\": \"Package Saver\",\n  \"couponType\": \"sale_price\",\n  \"applyTo\": \"specific_package\",\n  \"targetItemId\": \"{{packageId}}\",\n  \"salePrice\": 21999,\n  \"startDate\": \"2026-04-11T00:00:00.000Z\",\n  \"endDate\": \"2026-05-11T00:00:00.000Z\",\n  \"limitTotalUses\": 50,\n  \"limitPerCustomer\": 1,\n  \"isActive\": true,\n  \"description\": \"Reduced price for the Essential Support package\"\n}" },
+            "url": { "raw": "{{baseUrl}}/api/admin/discounts", "host": ["{{baseUrl}}"], "path": ["api", "admin", "discounts"] }
+          }
+        },
+        {
+          "name": "Create Buy X Get Y",
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["const json = pm.response.json();", "if (json.data?.id) pm.collectionVariables.set('discountId', json.data.id);"] } }],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }, { "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"couponCode\": \"B3G1EDIT\",\n  \"couponName\": \"Editing BOGO\",\n  \"couponType\": \"buy_x_get_y\",\n  \"applyTo\": \"specific_service\",\n  \"targetItemId\": \"{{serviceId}}\",\n  \"buyQuantity\": 3,\n  \"getQuantity\": 1,\n  \"startDate\": \"2026-04-11T00:00:00.000Z\",\n  \"endDate\": \"2026-05-26T00:00:00.000Z\",\n  \"limitTotalUses\": 20,\n  \"limitPerCustomer\": 1,\n  \"isActive\": true,\n  \"description\": \"Buy 3 editing services and get 1 extra at no charge\"\n}" },
             "url": { "raw": "{{baseUrl}}/api/admin/discounts", "host": ["{{baseUrl}}"], "path": ["api", "admin", "discounts"] }
           }
         },

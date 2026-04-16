@@ -19,7 +19,7 @@ export type AvailabilityStatus = "available" | "busy" | "at_capacity" | "vacatio
 
 export type CatalogItemKind = "service" | "package" | "domain";
 
-export type DiscountCampaignType = "discount" | "sale_price" | "buy_x_get_y";
+export type DiscountCampaignType = "discount" | "rupee_discount" | "sale_price" | "buy_x_get_y";
 
 export type DiscountApplyTo =
   | "all_services"

@@ -186,7 +186,7 @@ export function MockCheckoutModal({ isOpen, onClose, onSuccess, context }: MockC
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#171717]/70 p-4 backdrop-blur-[2px]">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#171717]/70 p-3 sm:p-4 backdrop-blur-[2px]">
       <div className="w-full max-w-[520px] overflow-hidden rounded-[14px] border border-[#EAECF0] bg-white shadow-[0_12px_40px_rgba(0,0,0,0.24)]">
         <div className="flex items-center justify-between border-b border-[#EAECF0] px-5 py-4">
           <div className="text-[18px] font-semibold text-[#171717]">Secure Checkout</div>
@@ -201,7 +201,7 @@ export function MockCheckoutModal({ isOpen, onClose, onSuccess, context }: MockC
           </button>
         </div>
 
-        <div className="space-y-4 p-5">
+        <div className="space-y-4 p-4 sm:p-5">
           {orderError ? (
             <div className="rounded-[10px] border border-[#FECACA] bg-[#FEF2F2] px-3 py-2 text-[13px] text-[#B42318]">{orderError}</div>
           ) : null}
@@ -251,7 +251,7 @@ export function MockCheckoutModal({ isOpen, onClose, onSuccess, context }: MockC
 
           <div>
             <label className="mb-1.5 block text-[13px] font-medium text-[#171717]">Coupon Code</label>
-            <div className="flex gap-2">
+            <div className="flex flex-col sm:flex-row gap-2">
               <input
                 type="text"
                 value={couponCode}
@@ -263,7 +263,7 @@ export function MockCheckoutModal({ isOpen, onClose, onSuccess, context }: MockC
                 type="button"
                 onClick={handleApplyCoupon}
                 disabled={isApplyingCoupon || isPaying}
-                className="h-[40px] rounded-[8px] border border-[#00A0E3] px-4 text-[13px] font-semibold text-[#00A0E3] transition-colors hover:bg-[#F0F9FF] disabled:opacity-60"
+                className="h-[40px] rounded-[8px] border border-[#00A0E3] px-4 text-[13px] font-semibold text-[#00A0E3] transition-colors hover:bg-[#F0F9FF] disabled:opacity-60 w-full sm:w-auto"
               >
                 {isApplyingCoupon ? "Applying..." : "Apply"}
               </button>
@@ -291,12 +291,12 @@ export function MockCheckoutModal({ isOpen, onClose, onSuccess, context }: MockC
           ) : null}
         </div>
 
-        <div className="flex items-center justify-end gap-2 border-t border-[#EAECF0] px-5 py-4">
+        <div className="flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-end gap-2 border-t border-[#EAECF0] px-4 sm:px-5 py-4">
           <button
             type="button"
             onClick={onClose}
             disabled={isPaying}
-            className="h-[40px] rounded-[8px] border border-[#EAECF0] px-4 text-[14px] font-medium text-[#525866] hover:bg-[#F9FAFB] disabled:opacity-60"
+            className="h-[40px] rounded-[8px] border border-[#EAECF0] px-4 text-[14px] font-medium text-[#525866] hover:bg-[#F9FAFB] disabled:opacity-60 w-full sm:w-auto"
           >
             {isSuccess ? "Done" : "Cancel"}
           </button>
@@ -305,7 +305,7 @@ export function MockCheckoutModal({ isOpen, onClose, onSuccess, context }: MockC
               type="button"
               onClick={handlePayNow}
               disabled={isPaying || isLoadingOrder || !!orderError}
-              className="inline-flex h-[40px] items-center gap-2 rounded-[8px] bg-[#00A0E3] px-5 text-[14px] font-semibold text-white transition-colors hover:bg-[#008CC7] disabled:opacity-60"
+              className="inline-flex h-[40px] items-center justify-center gap-2 rounded-[8px] bg-[#00A0E3] px-5 text-[14px] font-semibold text-white transition-colors hover:bg-[#008CC7] disabled:opacity-60 w-full sm:w-auto"
             >
               {isPaying ? <Loader2 className="h-4 w-4 animate-spin" /> : <CreditCard className="h-4 w-4" />}
               {isPaying ? "Processing" : "Pay Now"}

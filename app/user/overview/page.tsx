@@ -8,8 +8,7 @@ import {
   FileText,
   Edit3,
   CheckSquare,
-  Info,
-  File
+  Info
 } from "lucide-react";
 import { apiGet } from "@/lib/client-api";
 
@@ -49,17 +48,34 @@ function toStatusLabel(status?: string) {
 
 function getStatusBadge(status?: string) {
   const label = toStatusLabel(status);
+
   if (status === "payment_needed") {
     return (
-      <span className="bg-[#FFF7ED] text-[#EA580C] text-[12px] font-medium px-3 py-1 rounded-full">
+      <span className="inline-flex items-center justify-center h-[24px] px-2 bg-[#FFF3EB] border border-[#FFE0CC] text-[#FA7319] text-[12px] font-medium rounded-full">
         {label}
       </span>
     );
   }
 
-  if (status === "being_edited" || status === "in_revision" || status === "submitted") {
+  if (status === "being_edited") {
     return (
-      <span className="bg-[#EFF6FF] text-[#00A0E3] text-[12px] font-medium px-3 py-1 rounded-full">
+      <span className="inline-flex items-center justify-center h-[24px] px-2 bg-[#EFF6FF] border border-[#C7DFFF] text-[#2563EB] text-[12px] font-medium rounded-full">
+        {label}
+      </span>
+    );
+  }
+
+  if (status === "in_revision") {
+    return (
+      <span className="inline-flex items-center justify-center h-[24px] px-2 bg-[#EEF2FF] border border-[#D7DCFF] text-[#4F46E5] text-[12px] font-medium rounded-full">
+        {label}
+      </span>
+    );
+  }
+
+  if (status === "submitted") {
+    return (
+      <span className="inline-flex items-center justify-center h-[24px] px-2 bg-[#E0F2FE] border border-[#BAE6FD] text-[#0284C7] text-[12px] font-medium rounded-full">
         {label}
       </span>
     );
@@ -67,19 +83,23 @@ function getStatusBadge(status?: string) {
 
   if (status === "completed") {
     return (
-      <span className="bg-[#ECFDF5] text-[#059669] text-[12px] font-medium px-3 py-1 rounded-full">
+      <span className="inline-flex items-center justify-center h-[24px] px-2 bg-[#E3F7EC] border border-[#B8EBCF] text-[#1CB061] text-[12px] font-medium rounded-full">
         {label}
       </span>
     );
   }
 
-  return <span className="bg-[#F5F7FA] text-[#525866] text-[12px] font-medium px-3 py-1 rounded-full">{label}</span>;
+  return (
+    <span className="inline-flex items-center justify-center h-[24px] px-2 bg-[#F4F5F7] border border-[#E5E7EB] text-[#6B7280] text-[12px] font-medium rounded-full">
+      {label}
+    </span>
+  );
 }
 
 function getAction(status?: string, id?: string) {
   if (status === "payment_needed") {
     return (
-      <Link href="/user/payments" className="text-[#EA580C] font-semibold text-[13px] hover:underline">
+      <Link href="/user/payments" className="text-[#FA7319] font-semibold text-[14px] underline hover:text-[#D97706] transition-colors">
         Pay Now
       </Link>
     );
@@ -87,13 +107,21 @@ function getAction(status?: string, id?: string) {
 
   if (status === "completed" && id) {
     return (
-      <Link href={`/user/documents/${id}`} className="text-[#00A0E3] font-semibold text-[13px] hover:underline">
+      <Link href={`/user/documents/${id}`} className="text-[#1CB061] font-semibold text-[14px] underline hover:text-[#059669] transition-colors">
+        Download
+      </Link>
+    );
+  }
+
+  if (id) {
+    return (
+      <Link href={`/user/documents/${id}`} className="text-[#00A0E3] font-semibold text-[14px] underline hover:text-[#0284C7] transition-colors">
         View
       </Link>
     );
   }
 
-  return <span className="text-[#A0AAB5]">-</span>;
+  return <span className="text-[#525866] text-[14px]">-</span>;
 }
 
 function formatDate(value?: string) {
@@ -172,16 +200,24 @@ export default function OverviewPage() {
         </div>
       ) : null}
 
-      <div className="w-full min-w-0 flex flex-col lg:flex-row gap-6 items-start">
-        <div className="w-full min-w-0 lg:flex-1 p-4 flex flex-col gap-6">
-          <div className="bg-[rgb(249,244,230)] border border-[#CEA02D] rounded-[16px] overflow-hidden">
-            <div className="p-4 pb-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-              <div className="flex items-start gap-4">
-                <div className="w-[42px] h-[42px] rounded-lg bg-[#FEF3C7] flex items-center justify-center shrink-0">
-                  <AlertTriangle className="w-[20px] h-[20px] text-[#CEA02D]" strokeWidth={2.5} />
+      <div className="w-full min-w-0 flex flex-col lg:flex-row lg:items-stretch gap-4 lg:gap-0">
+        <div className="w-full min-w-0 lg:flex-1 px-4 py-4 lg:pr-5 flex flex-col gap-4 lg:gap-5">
+          <div className="bg-[rgb(249,244,230)] border border-[#CEA02D] rounded-[14px] overflow-hidden">
+            <div className="px-4 py-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div className="flex flex-col sm:flex-row items-start gap-3 w-full">
+                <div className="flex justify-between items-center w-full sm:w-auto">
+                  <div className="w-[42px] h-[42px] rounded-lg bg-[#FEF3C7] flex items-center justify-center shrink-0">
+                    <AlertTriangle className="w-[20px] h-[20px] text-[#CEA02D]" strokeWidth={2.5} />
+                  </div>
+                  <Link
+                    href="/user/payments"
+                    className="sm:hidden flex items-center underline gap-2 text-[#D97706] font-bold text-[14px] hover:underline"
+                  >
+                    Pay Now <ArrowRight className="w-4 h-4" />
+                  </Link>
                 </div>
-                <div className="mt-0.5">
-                  <h3 className="text-[18px] font-bold text-[#CEA02D] mb-1">Payment required to continue</h3>
+                <div className="mt-1 sm:mt-0.5">
+                  <h3 className="text-[18px] font-bold text-[#CEA02D] mb-1 leading-tight sm:leading-normal">Payment required to continue</h3>
                   <p className="text-[#78788D] text-[14px]">
                     {pendingPaymentDocument
                       ? "One or more documents need payment before final delivery."
@@ -191,12 +227,12 @@ export default function OverviewPage() {
               </div>
               <Link
                 href="/user/payments"
-                className="flex items-center underline gap-2 text-[#D97706] font-bold text-[14px] hover:underline shrink-0 sm:mt-0 mt-2"
+                className="hidden sm:flex items-center underline gap-2 text-[#D97706] font-bold text-[14px] hover:underline shrink-0"
               >
-                View Payments <ArrowRight className="w-4 h-4" />
+                Pay Now <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
-            <div className="border-t border-[#FDE68A]/50 px-6 py-4 bg-[#FFFCF0]/50 flex gap-2">
+            <div className="border-t border-[#FDE68A]/50 px-4 py-2.5 bg-[#FFFCF0]/50 flex gap-2">
               <span className="text-[#78788D] text-[14px]">Document:</span>
               <span className="text-[#171717] font-medium text-[14px]">
                 {pendingPaymentDocument?.document_title || "No pending document"}
@@ -204,8 +240,8 @@ export default function OverviewPage() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-[#FAFAFA] border border-[#EAECF0] rounded-[16px] p-6 shadow-sm flex flex-col justify-between h-[120px]">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="bg-[#FAFAFA] border border-[#EAECF0] rounded-[14px] p-5 shadow-sm flex flex-col justify-between h-[112px]">
               <div className="flex justify-between items-start">
                 <span className="text-[#8A94A6] text-[14px] font-medium">Total Documents</span>
                 <div className="w-8 h-8 rounded-lg bg-[#F0F6FF] flex items-center justify-center">
@@ -217,7 +253,7 @@ export default function OverviewPage() {
               </span>
             </div>
 
-            <div className="bg-[#FAFAFA] border border-[#EAECF0] rounded-[16px] p-6 shadow-sm flex flex-col justify-between h-[120px]">
+            <div className="bg-[#FAFAFA] border border-[#EAECF0] rounded-[14px] p-5 shadow-sm flex flex-col justify-between h-[112px]">
               <div className="flex justify-between items-start">
                 <span className="text-[#8A94A6] text-[14px] font-medium">In Progress</span>
                 <div className="w-8 h-8 rounded-lg bg-[#FFF7ED] flex items-center justify-center">
@@ -229,7 +265,7 @@ export default function OverviewPage() {
               </span>
             </div>
 
-            <div className="bg-[#FAFAFA] border border-[#EAECF0] rounded-[16px] p-6 shadow-sm flex flex-col justify-between h-[120px]">
+            <div className="bg-[#FAFAFA] border border-[#EAECF0] rounded-[14px] p-5 shadow-sm flex flex-col justify-between h-[112px]">
               <div className="flex justify-between items-start">
                 <span className="text-[#8A94A6] text-[14px] font-medium">Completed</span>
                 <div className="w-8 h-8 rounded-lg bg-[#ECFDF5] flex items-center justify-center">
@@ -242,51 +278,57 @@ export default function OverviewPage() {
             </div>
           </div>
 
-          <div className="mt-2 min-w-0">
-            <div className="flex items-center justify-between mb-4 px-1">
-              <h2 className="text-[18px] font-bold text-[#171717]">Active Documents</h2>
-              <Link href="/user/documents" className="text-[#00A0E3] text-[13px] font-bold hover:underline">
+          <div className="mt-1 min-w-0">
+            <div className="flex items-center justify-between mb-3 px-1">
+              <h2 className="text-[18px] font-medium text-[#171717]">Active Documents</h2>
+              <Link href="/user/documents" className="text-[#00A0E3] text-[14px] font-medium hover:underline">
                 View All
               </Link>
             </div>
 
-            <div className="bg-white rounded-[16px] overflow-hidden">
-              <div className="overflow-x-auto">
-                <table className="w-full text-left border-collapse min-w-[700px]">
+            <div className="bg-white overflow-hidden max-h-[280px]">
+              <div className="overflow-x-auto overflow-y-auto scrollbar-thin">
+                <table className="w-full text-left min-w-[700px] border-separate" style={{ borderSpacing: "0" }}>
                   <thead>
-                    <tr className="bg-[#EFF7FB] border-b border-[#EAECF0]">
-                      <th className="px-5 py-4 text-[13px] font-medium text-[#525866] w-[28%]">Document Name</th>
-                      <th className="px-5 py-4 text-[13px] font-medium text-[#525866]">Service Type</th>
-                      <th className="px-5 py-4 text-[13px] font-medium text-[#525866]">Last Updated</th>
-                      <th className="px-5 py-4 text-[13px] font-medium text-[#525866]">Status</th>
-                      <th className="px-5 py-4 text-[13px] font-medium text-[#525866]">Action</th>
+                    <tr>
+                      <th className="px-3.5 h-[34px] text-[14px] font-medium text-[#171717] bg-[#EFF7FB] rounded-tl-[6px] rounded-bl-[6px] whitespace-nowrap">Document Name</th>
+                      <th className="px-3.5 h-[34px] text-[14px] font-medium text-[#171717] bg-[#EFF7FB] whitespace-nowrap">Service Type</th>
+                      <th className="px-3.5 h-[34px] text-[14px] font-medium text-[#171717] bg-[#EFF7FB] whitespace-nowrap">Last Updated</th>
+                      <th className="px-3.5 h-[34px] text-[14px] font-medium text-[#171717] bg-[#EFF7FB] whitespace-nowrap">Status</th>
+                      <th className="px-3.5 h-[34px] text-[14px] font-medium text-[#171717] bg-[#EFF7FB] rounded-tr-[6px] rounded-br-[6px] whitespace-nowrap">Action</th>
                     </tr>
                   </thead>
                   <tbody>
                     {activeDocuments.map((doc, idx) => (
                       <tr
                         key={doc.id}
-                        className={`hover:bg-[#F8FAFC] transition-colors ${
-                          idx !== activeDocuments.length - 1 ? "border-b border-[#EAECF0]" : ""
-                        }`}
+                        className={`h-[42px] hover:bg-[#F8FAFC] transition-colors`}
                       >
-                        <td className="px-5 py-4">
-                          <div className="flex items-center gap-3">
-                            <File className="w-4 h-4 text-[#A0AAB5]" strokeWidth={2} />
-                            <span className="text-[14px] font-medium text-[#171717] truncate">
+                        <td className={`px-3 whitespace-nowrap ${idx !== activeDocuments.length - 1 ? "border-b border-[#E7E7E9]" : ""}`}>
+                          <div className="flex items-center gap-2">
+                            <FileText className="w-[18px] h-[18px] text-[#525866]" strokeWidth={2} />
+                            <span className="text-[14px] text-[#525866] truncate max-w-[200px] font-normal">
                               {doc.document_title || "Untitled Document"}
                             </span>
                           </div>
                         </td>
-                        <td className="px-5 py-4 text-[13px] text-[#525866]">General Service</td>
-                        <td className="px-5 py-4 text-[13px] text-[#525866]">{formatDate(doc.updated_at || doc.created_at)}</td>
-                        <td className="px-5 py-4">{getStatusBadge(doc.status)}</td>
-                        <td className="px-5 py-4">{getAction(doc.status, doc.id)}</td>
+                        <td className={`px-3 text-[14px] font-normal text-[#525866] whitespace-nowrap ${idx !== activeDocuments.length - 1 ? "border-b border-[#E7E7E9]" : ""}`}>
+                          Journal Editing
+                        </td>
+                        <td className={`px-3 text-[14px] font-normal text-[#525866] whitespace-nowrap ${idx !== activeDocuments.length - 1 ? "border-b border-[#E7E7E9]" : ""}`}>
+                          {formatDate(doc.updated_at || doc.created_at)}
+                        </td>
+                        <td className={`px-3 ${idx !== activeDocuments.length - 1 ? "border-b border-[#E7E7E9]" : ""}`}>
+                          {getStatusBadge(doc.status)}
+                        </td>
+                        <td className={`px-3 ${idx !== activeDocuments.length - 1 ? "border-b border-[#E7E7E9]" : ""}`}>
+                          {getAction(doc.status, doc.id)}
+                        </td>
                       </tr>
                     ))}
                     {!loading && activeDocuments.length === 0 ? (
                       <tr>
-                        <td colSpan={5} className="px-5 py-10 text-center text-[13px] text-[#78788D]">
+                        <td colSpan={5} className="px-3 py-10 text-center text-[13px] text-[#78788D] border-b border-[#E7E7E9]">
                           No documents found.
                         </td>
                       </tr>
@@ -298,9 +340,9 @@ export default function OverviewPage() {
           </div>
         </div>
 
-        <div className="w-full lg:w-[320px] xl:w-[380px] shrink-0 flex flex-col gap-8 lg:border-l p-4 lg:border-[#EAECF0]">
-          <div className="pt-2">
-            <div className="flex items-center gap-2 mb-6">
+        <div className="w-full lg:w-[360px] xl:w-[380px] shrink-0 flex flex-col gap-6 lg:border-l px-4 py-4 lg:border-[#EAECF0]">
+          <div className="pt-1">
+            <div className="flex items-center gap-2 mb-4">
               <div className="w-5 h-5 rounded-full bg-[#00A0E3] text-white flex items-center justify-center">
                 <Info className="w-3.5 h-3.5" strokeWidth={3} />
               </div>
@@ -310,7 +352,7 @@ export default function OverviewPage() {
             <div className="relative">
               <div className="absolute left-[11px] top-2 bottom-4 w-[2px] bg-[#EAECF0] z-0"></div>
 
-              <div className="relative z-10 flex items-start gap-4 mb-8">
+              <div className="relative z-10 flex items-start gap-4 mb-6">
                 <div className="w-6 h-6 rounded-full bg-white border-[2px] border-[#EAECF0] flex items-center justify-center text-[12px] font-bold text-[#171717] shrink-0 mt-0.5">
                   1
                 </div>
@@ -322,7 +364,7 @@ export default function OverviewPage() {
                 </div>
               </div>
 
-              <div className="relative z-10 flex items-start gap-4 mb-8">
+              <div className="relative z-10 flex items-start gap-4 mb-6">
                 <div className="w-6 h-6 rounded-full bg-white border-[2px] border-[#EAECF0] flex items-center justify-center text-[12px] font-bold text-[#171717] shrink-0 mt-0.5">
                   2
                 </div>
@@ -351,13 +393,13 @@ export default function OverviewPage() {
           <div className="w-full h-[1px] bg-[#EAECF0] hidden lg:block"></div>
 
           <div>
-            <h2 className="text-[16px] font-bold text-[#171717] mb-6">Recent Activity</h2>
+            <h2 className="text-[16px] font-bold text-[#171717] mb-4">Recent Activity</h2>
 
-            <div className="relative">
+            <div className="relative max-h-[300px] overflow-y-auto scrollbar-thin pr-2">
               <div className="absolute left-[5px] top-2 bottom-4 w-[2px] bg-[#EAECF0] z-0"></div>
 
               {recentActivity.map((activity) => (
-                <div key={activity.id} className="relative z-10 flex items-start gap-4 mb-6">
+                <div key={activity.id} className="relative z-10 flex items-start gap-4 mb-5 last:mb-0">
                   <div className="relative mt-1 shrink-0">
                     <div
                       className={`w-3 h-3 rounded-full ring-[4px] ring-white ${

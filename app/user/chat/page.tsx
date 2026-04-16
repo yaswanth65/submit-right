@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useMemo, useState } from "react";
-import { Search, FileText, Send } from "lucide-react";
+import { Search, FileText, Send, ArrowLeft } from "lucide-react";
 import { apiGet, apiRequest } from "@/lib/client-api";
 import { getStoredAuthSession } from "@/lib/client-auth";
 import { formatDateTime } from "@/lib/utils";
@@ -280,7 +280,7 @@ export default function MessagesPage() {
       <div className="flex flex-col lg:flex-row flex-1 min-h-0">
         
         {/* LEFT SIDEBAR: Threads */}
-        <div className="w-full lg:w-[380px] border-r border-[#EAECF0] flex flex-col shrink-0">
+        <div className={`w-full lg:w-[380px] border-r border-[#EAECF0] shrink-0 flex-col ${activeId ? 'hidden lg:flex' : 'flex'}`}>
           <div className="p-4 px-5 lg:pb-5 border-b lg:border-none border-[#EAECF0]">
             <h2 className="text-[20px] font-semibold text-[#171717] mb-5">Messages</h2>
             <div className="relative">
@@ -333,20 +333,26 @@ export default function MessagesPage() {
         </div>
 
         {/* RIGHT AREA: Active Chat */}
-        <div className="flex-1 flex flex-col min-w-0">
+        <div className={`flex-1 flex-col min-w-0 ${!activeId ? 'hidden lg:flex' : 'flex'}`}>
           
           {/* Chat Header */}
-          <div className="h-[96px] px-6 border-b border-[#EAECF0] flex items-center justify-between shrink-0">
-            <div className="flex items-center gap-4">
-              <div className="w-[48px] h-[48px] bg-[#EAF6FB] rounded-[12px] flex items-center justify-center shrink-0">
-                <FileText className="w-[24px] h-[24px] text-[#00A0E3]" strokeWidth={2.5} />
+          <div className="h-[96px] px-4 lg:px-6 border-b border-[#EAECF0] flex items-center justify-between shrink-0">
+            <div className="flex items-center gap-3 lg:gap-4">
+              <button 
+                onClick={() => setActiveId(null)} 
+                className="lg:hidden p-2 -ml-2 text-[#8A94A6] hover:text-[#171717]"
+              >
+                <ArrowLeft className="w-5 h-5" />
+              </button>
+              <div className="w-[40px] h-[40px] lg:w-[48px] lg:h-[48px] bg-[#EAF6FB] rounded-[12px] flex items-center justify-center shrink-0">
+                <FileText className="w-[20px] h-[20px] lg:w-[24px] lg:h-[24px] text-[#00A0E3]" strokeWidth={2.5} />
               </div>
               <div>
-                <h3 className="text-[18px] font-semibold  text-[#171717] mb-1">{activeThread?.document_title || "No thread selected"}</h3>
-                <p className="text-[14px] text-[#8A94A6] font-medium">Editor: {activeEditor.name}</p>
+                <h3 className="text-[16px] lg:text-[18px] font-semibold text-[#171717] mb-0.5 lg:mb-1">{activeThread?.document_title || "No thread selected"}</h3>
+                <p className="text-[13px] lg:text-[14px] text-[#8A94A6] font-medium">Editor: {activeEditor.name}</p>
               </div>
             </div>
-            <span className="bg-[#EFF6FF] text-[#00A0E3] text-[14px] font-bold px-4 py-2 rounded-full border border-[#DBEAFE]">
+            <span className="bg-[#EFF6FF] text-[#00A0E3] text-[12px] lg:text-[14px] font-bold px-3 py-1.5 lg:px-4 lg:py-2 rounded-full border border-[#DBEAFE]">
               {activeStatus}
             </span>
           </div>

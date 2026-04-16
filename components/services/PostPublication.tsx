@@ -68,7 +68,7 @@ export function PostPublication() {
                 </div>
               </div>
 
-              <button className="inline-flex h-12 w-[152px] items-center justify-center rounded-full bg-[#00A0E3] px-3 text-[14px] sm:text-[16px] font-medium leading-[1.2] text-white transition-colors hover:bg-[#008cc2]">
+              <button className="inline-flex h-12 w-full sm:w-[152px] items-center justify-center rounded-full bg-[#00A0E3] px-3 text-[14px] sm:text-[16px] font-medium leading-[1.2] text-white transition-colors hover:bg-[#008cc2]">
                 Order Now
               </button>
             </div>

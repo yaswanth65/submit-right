@@ -425,6 +425,7 @@ function SubmitDocumentContent() {
   );
   const serviceOptions = services.filter((item) => item.kind === "service");
   const packageOptions = services.filter((item) => item.kind === "package");
+  const activeStepMeta = steps[currentStep - 1] ?? steps[0];
 
   return (
     <div className="w-full font-dm-sans bg-white min-h-[calc(100vh-76px)] flex flex-col">
@@ -433,56 +434,60 @@ function SubmitDocumentContent() {
         <p className="text-[#78788D] text-[14px]">Easily upload your document in just a few steps.</p>
       </div>
 
-      <div className="mx-auto w-full px-6 lg:px-8 py-10 flex-1 flex flex-col">
-        <div className="relative flex justify-between w-full mb-16">
-          <div className="absolute top-[41px] left-[10%] right-[10%] h-[1px] bg-[#EAECF0] z-0">
-            <div
-              className="h-full bg-[#00A0E3] transition-all duration-300 ease-in-out"
-              style={{ width: `${((currentStep - 1) / (steps.length - 1)) * 100}%` }}
-            />
+      <div className="mx-auto w-full px-4 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-10 flex-1 flex flex-col">
+        <div className="mb-8 sm:mb-12">
+          <div className="relative flex justify-between w-full">
+            <div className="absolute top-[33px] sm:top-[41px] left-[8%] sm:left-[10%] right-[8%] sm:right-[10%] h-[1px] bg-[#EAECF0] z-0">
+              <div
+                className="h-full bg-[#00A0E3] transition-all duration-300 ease-in-out"
+                style={{ width: `${((currentStep - 1) / (steps.length - 1)) * 100}%` }}
+              />
+            </div>
+
+            {steps.map((step) => {
+              const isActive = currentStep === step.num;
+              const isCompleted = currentStep > step.num;
+
+              return (
+                <div key={step.num} className="flex flex-col items-center relative z-10 w-[60px] min-[420px]:w-[72px] sm:w-[140px]">
+                  <span
+                    className={`text-[12px] tracking-[0.06em] mb-3 font-medium uppercase ${
+                      isActive ? "text-[#00A0E3]" : "text-[#7E8095]"
+                    }`}
+                  >
+                    Step {step.num}
+                  </span>
+
+                  <div
+                    className={`w-[28px] h-[28px] sm:w-[26px] sm:h-[26px] rounded-full bg-white flex items-center justify-center mb-3 transition-all duration-200 ${
+                      isActive
+                        ? "border-[2px] border-[#00A0E3]"
+                        : isCompleted
+                          ? "border-[2px] border-[#00A0E3] bg-[#00A0E3]"
+                          : "border border-[#EAECF0]"
+                    }`}
+                  >
+                    {isActive ? <div className="w-[12px] h-[12px] bg-[#00A0E3] rounded-full" /> : null}
+                    {isCompleted ? <Check className="w-3.5 h-3.5 text-white" strokeWidth={3} /> : null}
+                  </div>
+
+                  <span
+                    className={`hidden sm:block text-[14px] text-center transition-colors duration-200 ${
+                      isActive
+                        ? "text-[#00A0E3] font-medium"
+                        : isCompleted
+                          ? "text-[#00A0E3]"
+                          : "text-[#8A94A6]"
+                    }`}
+                  >
+                    {step.name}
+                  </span>
+                </div>
+              );
+            })}
           </div>
 
-          {steps.map((step) => {
-            const isActive = currentStep === step.num;
-            const isCompleted = currentStep > step.num;
-
-            return (
-              <div key={step.num} className="flex flex-col items-center relative z-10 w-[140px]">
-                <span
-                  className={`text-[12px] tracking-wider mb-3 font-medium uppercase ${
-                    isActive ? "text-[#00A0E3]" : "text-[#A0AAB5]"
-                  }`}
-                >
-                  Step {step.num}
-                </span>
-
-                <div
-                  className={`w-[26px] h-[26px] rounded-full bg-white flex items-center justify-center mb-3 transition-all duration-200 ${
-                    isActive
-                      ? "border-[2px] border-[#00A0E3]"
-                      : isCompleted
-                        ? "border-[2px] border-[#00A0E3] bg-[#00A0E3]"
-                        : "border border-[#EAECF0]"
-                  }`}
-                >
-                  {isActive ? <div className="w-[12px] h-[12px] bg-[#00A0E3] rounded-full" /> : null}
-                  {isCompleted ? <Check className="w-3.5 h-3.5 text-white" strokeWidth={3} /> : null}
-                </div>
-
-                <span
-                  className={`text-[14px] text-center transition-colors duration-200 ${
-                    isActive
-                      ? "text-[#00A0E3] font-medium"
-                      : isCompleted
-                        ? "text-[#00A0E3]"
-                        : "text-[#8A94A6]"
-                  }`}
-                >
-                  {step.name}
-                </span>
-              </div>
-            );
-          })}
+          <div className="sm:hidden mt-4 text-[18px] font-medium text-[#00A0E3]">{activeStepMeta.name}</div>
         </div>
 
         {actionError ? (
@@ -558,7 +563,7 @@ function SubmitDocumentContent() {
         ) : null}
 
         {currentStep === 2 ? (
-          <div className="flex flex-col flex-1 w-full min-h-[400px]">
+          <div className="flex flex-col flex-1 w-full min-h-[340px] sm:min-h-[400px]">
             <input
               type="file"
               ref={fileInputRef}
@@ -569,7 +574,7 @@ function SubmitDocumentContent() {
 
             {!uploadedFile ? (
               <div
-                className="flex-1 w-full border-[2px] border-dashed border-[#EAECF0] rounded-[16px] bg-[#FAFAFB] flex flex-col items-center justify-center p-12 transition-colors hover:bg-[#F4F5F7] hover:border-[#D1D5DB] cursor-pointer group"
+                className="flex-1 w-full border-[2px] border-dashed border-[#EAECF0] rounded-[16px] bg-[#FAFAFB] flex flex-col items-center justify-center p-6 sm:p-10 md:p-12 transition-colors hover:bg-[#F4F5F7] hover:border-[#D1D5DB] cursor-pointer group text-center"
                 onClick={handleBrowseClick}
                 onDragOver={(e) => e.preventDefault()}
                 onDrop={handleDrop}
@@ -578,19 +583,19 @@ function SubmitDocumentContent() {
                   <Upload className="w-5 h-5 text-[#525866]" strokeWidth={2.5} />
                 </div>
 
-                <p className="text-[#171717] text-[15px] font-medium mb-2">Drag and drop your document here or click to browse files</p>
+                <p className="text-[#171717] text-[15px] font-medium mb-2 max-w-[440px]">Drag and drop your document here or click to browse files</p>
 
-                <p className="text-[#8A94A6] text-[13px]">Supported formats: DOC, DOCX, PDF. Maximum file size: 25MB.</p>
+                <p className="text-[#8A94A6] text-[13px] max-w-[440px]">Supported formats: DOC, DOCX, PDF. Maximum file size: 25MB.</p>
               </div>
             ) : (
               <div className="w-full space-y-4">
-                <div className="w-full border border-[#EAECF0] bg-[#F4FAFD] rounded-[8px] p-4 flex items-center justify-between">
-                  <div className="flex items-center gap-4">
+                <div className="w-full border border-[#EAECF0] bg-[#F4FAFD] rounded-[8px] p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                  <div className="flex items-center gap-4 min-w-0">
                     <div className="w-[40px] h-[40px] bg-[#E1F4FD] rounded-[8px] flex items-center justify-center shrink-0">
                       <FileIcon className="w-5 h-5 text-[#00A0E3]" strokeWidth={2} />
                     </div>
-                    <div className="flex flex-col">
-                      <span className="text-[14px] font-medium text-[#171717] truncate max-w-[400px]">{uploadedFile.name}</span>
+                    <div className="flex flex-col min-w-0">
+                      <span className="text-[14px] font-medium text-[#171717] truncate max-w-[180px] min-[420px]:max-w-[260px] sm:max-w-[400px]">{uploadedFile.name}</span>
                       <span className="text-[12px] text-[#8A94A6]">{formatFileSize(uploadedFile.size)}</span>
                     </div>
                   </div>
@@ -805,24 +810,24 @@ function SubmitDocumentContent() {
               </div>
 
               <div className="border bg-[#EFF7FB] border-[#0396d6] rounded-[12px] p-4 flex flex-col gap-4">
-                <div className="flex justify-between items-center">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
                   <span className="text-[#8A94A6] text-[14px]">Our academic experts verify your submission and select the best editor.</span>
-                  <span className="text-[#171717] text-[14px] font-medium">
+                  <span className="text-[#171717] text-[14px] font-medium sm:text-right">
                     {selectedService?.kind === "package" ? "Package" : `${wordCount.toLocaleString()} Words`}
                   </span>
                 </div>
-                <div className="flex justify-between items-center">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
                   <span className="text-[#8A94A6] text-[14px]">
                     {selectedService?.kind === "package" ? "Package price" : "Rate per word"}
                   </span>
-                  <span className="text-[#171717] text-[14px] font-medium">
+                  <span className="text-[#171717] text-[14px] font-medium sm:text-right">
                     {selectedService?.kind === "package" ? formatCurrency(liveEstimate) : formatCurrency(activeRate)}
                   </span>
                 </div>
 
                 <div className="w-full h-[1px] bg-[#00A0E3]/30 my-2" />
 
-                <div className="flex justify-between items-center">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1.5">
                   <span className="text-[#171717] text-[18px] font-medium">Estimated Total</span>
                   <span className="text-[#00A0E3] text-[20px] font-medium">{formatCurrency(liveEstimate)}</span>
                 </div>
@@ -861,12 +866,12 @@ function SubmitDocumentContent() {
             <img
               src="/images/party-left.svg"
               alt="Success Confetti Left"
-              className="absolute -left-60 top-[10%] w-[300px] lg:w-[700px] h-auto pointer-events-none z-0 opacity-100 scale-x-[-1]"
+              className="absolute -left-28 sm:-left-40 lg:-left-60 top-[8%] w-[220px] sm:w-[300px] lg:w-[700px] h-auto pointer-events-none z-0 opacity-100 scale-x-[-1]"
             />
             <img
               src="/images/party-right.svg"
               alt="Success Confetti Right"
-              className="absolute right-32 top-[10%] w-[300px] lg:w-[700px] h-auto pointer-events-none z-0 opacity-100"
+              className="absolute -right-28 sm:-right-16 lg:right-32 top-[8%] w-[220px] sm:w-[300px] lg:w-[700px] h-auto pointer-events-none z-0 opacity-100"
             />
 
             <div className="relative z-10 flex flex-col items-center text-center w-full max-w-[520px]">
@@ -883,28 +888,46 @@ function SubmitDocumentContent() {
                 We are reviewing your document and will notify you once the next step is ready.
               </p>
 
-              <div className="w-full border border-[#EAECF0] bg-[#FAFAFB] rounded-[16px] p-6 lg:p-8 text-left shadow-sm">
+              <div className="w-full border border-[#EAECF0] bg-[#FAFAFB] rounded-[16px] p-5 sm:p-6 lg:p-8 text-left shadow-sm">
                 <h3 className="text-[16px] font-semibold text-[#171717] mb-5">What Happens Next</h3>
                 <ul className="space-y-4">
                   <li className="flex items-start gap-3 text-[14px] text-[#8A94A6]">
-                    <span className="text-[#A0AAB5] text-[18px] leading-[14px] mt-[-1px]">-</span>
+                    <span className="text-[#A0AAB5] text-[18px] leading-[14px] mt-[-1px]">•</span>
                     <span className="leading-relaxed">We review your document for quality and compliance.</span>
                   </li>
                   <li className="flex items-start gap-3 text-[14px] text-[#8A94A6]">
-                    <span className="text-[#A0AAB5] text-[18px] leading-[14px] mt-[-1px]">-</span>
+                    <span className="text-[#A0AAB5] text-[18px] leading-[14px] mt-[-1px]">•</span>
                     <span className="leading-relaxed">An expert editor matching your field is assigned.</span>
                   </li>
                   <li className="flex items-start gap-3 text-[14px] text-[#8A94A6]">
-                    <span className="text-[#A0AAB5] text-[18px] leading-[14px] mt-[-1px]">-</span>
+                    <span className="text-[#A0AAB5] text-[18px] leading-[14px] mt-[-1px]">•</span>
                     <span className="leading-relaxed">You will receive a notification when updates are ready.</span>
                   </li>
                 </ul>
               </div>
 
+              <div className="mt-8 w-full grid grid-cols-1 sm:grid-cols-2 gap-3 lg:hidden">
+                <button
+                  type="button"
+                  onClick={() => router.push("/user/dashboard")}
+                  className="w-full px-6 py-2.5 border border-[#D0D5DD] bg-white hover:bg-[#F9FAFB] text-[#171717] rounded-[10px] text-[14px] font-semibold transition-colors"
+                >
+                  Go to Dashboard
+                </button>
+                <button
+                  type="button"
+                  onClick={() => router.push(documentId ? `/user/documents/${documentId}` : "/user/documents")}
+                  className="w-full px-6 py-2.5 bg-[#00A0E3] hover:bg-[#008bc5] text-white rounded-[10px] text-[14px] font-semibold transition-colors inline-flex items-center justify-center gap-2"
+                >
+                  View Document
+                  <ArrowRight className="w-4 h-4" strokeWidth={2.5} />
+                </button>
+              </div>
+
               <button
                 type="button"
                 onClick={() => router.push("/user/documents")}
-                className="mt-8 px-6 py-2.5 bg-[#00A0E3] hover:bg-[#008bc5] text-white rounded-[8px] text-[14px] font-bold transition-colors shadow-sm"
+                className="mt-8 hidden lg:inline-flex px-6 py-2.5 bg-[#00A0E3] hover:bg-[#008bc5] text-white rounded-[8px] text-[14px] font-bold transition-colors shadow-sm"
               >
                 Go to My Documents
               </button>
@@ -914,13 +937,13 @@ function SubmitDocumentContent() {
       </div>
 
       {currentStep < 5 ? (
-        <div className="border-t border-[#EAECF0] bg-white px-6 lg:px-12 py-5 flex items-center justify-between shrink-0 mt-auto">
+        <div className="sticky bottom-0 z-20 md:static border-t border-[#EAECF0] bg-white px-4 sm:px-6 lg:px-12 py-4 sm:py-5 pb-[calc(16px+env(safe-area-inset-bottom))] sm:pb-5 flex items-center justify-between gap-3 shrink-0 mt-auto">
           {currentStep === 1 ? (
             <button
               type="button"
               onClick={() => router.push("/user/dashboard")}
               disabled={isBusy}
-              className="px-6 py-2.5 border border-[#EAECF0] rounded-[8px] text-[14px] font-bold text-[#171717] hover:bg-[#F9FAFB] transition-colors shadow-[0_1px_2px_rgba(0,0,0,0.02)] disabled:opacity-60"
+              className="px-5 sm:px-6 py-2.5 border border-[#EAECF0] rounded-[10px] text-[15px] sm:text-[14px] font-bold text-[#171717] hover:bg-[#F9FAFB] transition-colors shadow-[0_1px_2px_rgba(0,0,0,0.02)] disabled:opacity-60"
             >
               Cancel
             </button>
@@ -929,7 +952,7 @@ function SubmitDocumentContent() {
               type="button"
               onClick={handleBack}
               disabled={isBusy}
-              className="px-6 py-2.5 border border-[#EAECF0] rounded-[8px] text-[14px] font-bold text-[#171717] hover:bg-[#F9FAFB] transition-colors shadow-[0_1px_2px_rgba(0,0,0,0.02)] flex items-center gap-2 disabled:opacity-60"
+              className="px-5 sm:px-6 py-2.5 border border-[#EAECF0] rounded-[10px] text-[15px] sm:text-[14px] font-bold text-[#171717] hover:bg-[#F9FAFB] transition-colors shadow-[0_1px_2px_rgba(0,0,0,0.02)] flex items-center gap-2 disabled:opacity-60"
             >
               <ArrowLeft className="w-4 h-4" strokeWidth={2.5} /> Back
             </button>
@@ -939,7 +962,7 @@ function SubmitDocumentContent() {
             type="button"
             onClick={moveToNextStep}
             disabled={isBusy || uploadingFile || (currentStep === 1 && !canMoveFromStep1) || (currentStep === 3 && services.length === 0)}
-            className="px-6 py-2.5 bg-[#00A0E3] hover:bg-[#008bc5] text-white rounded-[8px] text-[14px] font-bold flex items-center gap-2 transition-colors shadow-sm disabled:opacity-60 disabled:cursor-not-allowed"
+            className="min-w-[142px] px-5 sm:px-6 py-2.5 bg-[#00A0E3] hover:bg-[#008bc5] text-white rounded-[10px] text-[15px] sm:text-[14px] font-bold flex items-center justify-center gap-2 transition-colors shadow-sm disabled:opacity-60 disabled:cursor-not-allowed"
           >
             {currentStep === 4
               ? isBusy

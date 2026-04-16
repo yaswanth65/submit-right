@@ -6,6 +6,7 @@ import { FAQ } from "@/components/landing/FAQ";
 import { CTABanner } from "@/components/landing/CTABanner";
 import { ServiceHero } from "@/components/services/ServiceHero";
 import { ServiceContact } from "@/components/services/ServiceContact";
+import { Newsletter } from "@/components/landing/Newsletter";
 
 import { serviceFaqs } from "@/components/services2/service2Data";
 import { PricingPlansSection } from "@/components/services2/PricingPlansSection";
@@ -33,7 +34,7 @@ export default function ServiceTwoPage() {
         title="Got Questions We've Got Answers"
         description="Lorem ipsum dolor sit amet consectetur. Sagittis eu vel habitant cursus. Elementum suscipit donec viverra posuere at lorem nullam."
       />
-      <CTABanner variant="secondary" />
+      <Newsletter />
       <Footer />
     </main>
   );

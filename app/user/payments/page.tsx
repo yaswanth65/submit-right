@@ -189,7 +189,7 @@ export default function PaymentsAndFilesPage() {
           <button
             onClick={() => openCheckout(payload.pendingPaymentDocuments[0] ?? null)}
             disabled={payload.pendingPaymentDocuments.length === 0}
-            className="bg-[#F97316] hover:bg-[#EA580C] disabled:bg-[#FDBA74] text-white px-5 py-2.5 rounded-[8px] flex items-center gap-2 text-[14px] font-bold transition-colors shadow-sm disabled:cursor-not-allowed"
+            className="bg-[#F97316] hover:bg-[#EA580C] disabled:bg-[#FDBA74] text-white px-5 py-2.5 rounded-[8px] flex items-center justify-center gap-2 text-[14px] font-bold transition-colors shadow-sm disabled:cursor-not-allowed w-full md:w-auto"
           >
             <CreditCard className="w-[18px] h-[18px]" strokeWidth={2.5} />
             Checkout Pending

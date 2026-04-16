@@ -227,23 +227,23 @@ export default function UserProfilePage() {
             </button>
           </div>
 
-          <div className="p-5 border-b border-[#EAECF0] flex items-center justify-between gap-4">
+          <div className="p-5 border-b border-[#EAECF0] flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 items-start">
             <div>
               <div className="text-[14px] font-medium text-[#171717]">Sign Out</div>
               <p className="text-[13px] text-[#78788D] mt-1">Sign out of this device and session.</p>
             </div>
-            <button onClick={handleSignOut} disabled={isSigningOut} className="inline-flex items-center gap-2 px-4 py-2 rounded-[8px] border border-[#EAECF0] text-[13px] text-[#171717] hover:bg-[#F9FAFB] disabled:opacity-60">
+            <button onClick={handleSignOut} disabled={isSigningOut} className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-[8px] border border-[#EAECF0] text-[13px] text-[#171717] hover:bg-[#F9FAFB] disabled:opacity-60 w-full sm:w-auto">
               <LogOut className="w-4 h-4" />
               {isSigningOut ? "Signing out..." : "Sign Out"}
             </button>
           </div>
 
-          <div className="p-5 flex items-center justify-between gap-4 bg-[#FFF7F7]">
+          <div className="p-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 items-start bg-[#FFF7F7]">
             <div>
               <div className="text-[14px] font-medium text-[#B42318]">Deactivate Account</div>
               <p className="text-[13px] text-[#7A271A] mt-1">This will permanently delete your account and cannot be undone.</p>
             </div>
-            <button onClick={handleDeactivate} disabled={isDeactivating} className="inline-flex items-center gap-2 px-4 py-2 rounded-[8px] border border-[#FECACA] text-[13px] text-[#B42318] hover:bg-[#FEF2F2] disabled:opacity-60">
+            <button onClick={handleDeactivate} disabled={isDeactivating} className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-[8px] border border-[#FECACA] text-[13px] text-[#B42318] hover:bg-[#FEF2F2] disabled:opacity-60 w-full sm:w-auto">
               {isDeactivating ? <AlertTriangle className="w-4 h-4" /> : <Trash2 className="w-4 h-4" />}
               {isDeactivating ? "Deactivating..." : "Deactivate"}
             </button>

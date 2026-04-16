@@ -3,16 +3,8 @@ import { recommendationCards } from "./service3Data";
 
 function JournalIllustrationCard() {
   return (
-    <div className="rounded-[18px] border border-[#EEF2F5] bg-white p-5 sm:p-6 shadow-[0_10px_24px_rgba(18,74,102,0.04)]">
-      <div className="mx-auto flex h-[92px] w-[120px] items-center justify-center rounded-[18px] bg-[#EAF6FB] sm:h-[112px] sm:w-[148px]">
-        <div className="relative h-[68px] w-[88px] rounded-[12px] bg-white shadow-[0_10px_20px_rgba(0,160,227,0.12)] sm:h-[82px] sm:w-[108px]">
-          <div className="absolute left-3 top-3 h-2.5 w-10 rounded-full bg-[#D9EEF8]" />
-          <div className="absolute left-3 top-8 h-1.5 w-14 rounded-full bg-[#EAF0F4]" />
-          <div className="absolute left-3 top-11 h-1.5 w-16 rounded-full bg-[#EAF0F4]" />
-          <div className="absolute left-3 top-14 h-10 w-12 rounded-[10px] bg-[linear-gradient(180deg,#EAF6FB_0%,#DCEFF9_100%)]" />
-          <div className="absolute right-[-10px] bottom-[-8px] h-8 w-8 rounded-full border border-[#BFE2F6] bg-white" />
-        </div>
-      </div>
+    <div className="rounded-[18px] border flex justify-center border-[#EEF2F5] bg-white p-5 sm:p-6 shadow-[0_10px_24px_rgba(18,74,102,0.04)]">
+      <img src="/serv3/details.png" alt="Journal illustration" className="w-[200px] h-auto rounded-lg" />
     </div>
   );
 }

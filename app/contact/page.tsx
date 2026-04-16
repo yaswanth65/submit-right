@@ -4,6 +4,7 @@ import { Footer } from "@/components/landing/Footer";
 import { Navbar } from "@/components/landing/Navbar";
 import { CTABanner } from "@/components/landing/CTABanner";
 import { useState } from "react";
+import { Newsletter } from "@/components/landing/Newsletter";
 
 export default function ContactPage() {
   const [expandedFAQ, setExpandedFAQ] = useState<number | null>(null);
@@ -28,10 +29,10 @@ export default function ContactPage() {
               </div>
 
               <h1 className="text-[30px] sm:text-[36px] lg:text-[34px] font-semibold text-[#1C1C1D] leading-[1.15] mb-4">
-                Have a Question? We're Here Before You Submit, While You Wait, and After You Publish.
+                Have a Question? We are Here Before You Submit, While You Wait, and After You Publish.
               </h1>
               <p className="text-[14px] sm:text-[15px] text-[#65656D] leading-relaxed mb-8 sm:mb-12">
-                Whether you're unsure which service fits your manuscript, have a question about an active order, or need help with payment  our support team responds fast.
+                Whether you are unsure which service fits your manuscript, have a question about an active order, or need help with payment  our support team responds fast.
               </p>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8 mb-8 sm:mb-12">
@@ -194,7 +195,7 @@ export default function ContactPage() {
               Everything You Need to Know Before You Reach Out
             </h2>
             <p className="landing-section-description max-w-[650px]">
-              Most questions our team receives fall into a handful of clear categories document submission, order tracking, payments, security, and certifications. We've answered all of them here so you can get answers instantly, without waiting on a reply.
+              Most questions our team receives fall into a handful of clear categories document submission, order tracking, payments, security, and certifications. We haave answered all of them here so you can get answers instantly, without waiting on a reply.
             </p>
           </div>
           
@@ -283,9 +284,8 @@ export default function ContactPage() {
         </div>
       </section>
 
-      <div className="relative z-20">
-        <CTABanner variant="secondary" />
-      </div>
+           <Newsletter />
+     
 
       <Footer />
     </div>

@@ -54,7 +54,7 @@ function getStatusBadge(status?: string) {
 
   if (status === "payment_needed") {
     return (
-      <span className="bg-[#FEF0E6] text-[#F97316] border border-[#F97316]/20 text-[12px] font-medium px-3 py-1 rounded-full whitespace-nowrap">
+      <span className="inline-flex items-center justify-center h-[24px] px-2 bg-[#FFF3EB] border border-[#FFE0CC] text-[#FA7319] text-[12px] font-medium rounded-full whitespace-nowrap">
         {label}
       </span>
     );
@@ -62,14 +62,22 @@ function getStatusBadge(status?: string) {
 
   if (status === "completed") {
     return (
-      <span className="bg-[#E6F8EC] text-[#00A859] border border-[#00A859]/20 text-[12px] font-medium px-3 py-1 rounded-full whitespace-nowrap">
+      <span className="inline-flex items-center justify-center h-[24px] px-2 bg-[#E3F7EC] border border-[#B8EBCF] text-[#1CB061] text-[12px] font-medium rounded-full whitespace-nowrap">
+        {label}
+      </span>
+    );
+  }
+
+  if (status === "being_edited" || status === "in_revision" || status === "submitted") {
+    return (
+      <span className="inline-flex items-center justify-center h-[24px] px-2 bg-[#EFF6FF] border border-[#C7DFFF] text-[#2563EB] text-[12px] font-medium rounded-full whitespace-nowrap">
         {label}
       </span>
     );
   }
 
   return (
-    <span className="bg-[#EFF6FF] text-[#3B82F6] border border-[#3B82F6]/20 text-[12px] font-medium px-3 py-1 rounded-full whitespace-nowrap">
+    <span className="inline-flex items-center justify-center h-[24px] px-2 bg-[#F5F7FA] border border-[#E5E7EB] text-[#525866] text-[12px] font-medium rounded-full whitespace-nowrap">
       {label}
     </span>
   );
@@ -159,7 +167,7 @@ export default function MyDocumentsPage() {
           />
         </div>
 
-        <div className="flex items-center gap-3 w-full sm:w-auto">
+        <div className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto">
           <div className="relative w-full sm:w-[180px]">
             <select
               value={statusFilter}
@@ -193,41 +201,49 @@ export default function MyDocumentsPage() {
       </div>
 
       <div className="flex-1 flex px-4 mx-2 flex-col">
-        <div className="rounded-[12px] bg-white overflow-hidden">
+        <div className="rounded-[12px] bg-white overflow-hidden pb-4">
           <div className="overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
-            <table className="w-full text-left min-w-[900px]">
+            <table className="w-full text-left min-w-[900px] border-separate" style={{ borderSpacing: "0" }}>
               <thead>
-                <tr className="bg-[#F4F8FA] border-b border-[#EAECF0]">
-                  <th className="px-6 py-4 text-[14px] font-medium text-[#171717] w-[30%]">Document Name</th>
-                  <th className="px-6 py-4 text-[14px] font-medium text-[#171717]">Service Type</th>
-                  <th className="px-6 py-4 text-[14px] font-medium text-[#171717]">Last Updated</th>
-                  <th className="px-6 py-4 text-[14px] font-medium text-[#171717]">Status</th>
-                  <th className="px-6 py-4 text-[14px] font-medium text-[#171717]">Action</th>
+                <tr>
+                  <th className="px-6 h-[34px] text-[14px] font-medium text-[#171717] bg-[#EFF7FB] rounded-tl-[6px] rounded-bl-[6px] whitespace-nowrap w-[30%]">Document Name</th>
+                  <th className="px-6 h-[34px] text-[14px] font-medium text-[#171717] bg-[#EFF7FB] whitespace-nowrap">Service Type</th>
+                  <th className="px-6 h-[34px] text-[14px] font-medium text-[#171717] bg-[#EFF7FB] whitespace-nowrap">Last Updated</th>
+                  <th className="px-6 h-[34px] text-[14px] font-medium text-[#171717] bg-[#EFF7FB] whitespace-nowrap">Status</th>
+                  <th className="px-6 h-[34px] text-[14px] font-medium text-[#171717] bg-[#EFF7FB] rounded-tr-[6px] rounded-br-[6px] whitespace-nowrap">Action</th>
                 </tr>
               </thead>
               <tbody>
-                {documents.map((doc) => (
-                  <tr key={doc.id} className="hover:bg-[#F9FAFB] transition-colors border-b border-[#EAECF0]">
-                    <td className="px-6 py-5">
+                {documents.map((doc, idx) => (
+                  <tr key={doc.id} className="h-[42px] hover:bg-[#F9FAFB] transition-colors">
+                    <td className={`px-6 py-2 ${idx !== documents.length - 1 ? "border-b border-[#E7E7E9]" : ""}`}>
                       <Link href={`/user/documents/${doc.id}`} className="flex items-center gap-3 group">
-                        <FileText className="w-[18px] h-[18px] text-[#A0AAB5] group-hover:text-[#00A0E3] transition-colors" strokeWidth={2} />
-                        <span className="text-[14px] font-medium text-[#525866] group-hover:text-[#171717] group-hover:underline truncate transition-colors">
+                        <FileText className="w-[18px] h-[18px] text-[#525866] group-hover:text-[#00A0E3] transition-colors" strokeWidth={2} />
+                        <span className="text-[14px] font-normal text-[#525866] group-hover:text-[#171717] group-hover:underline truncate transition-colors">
                           {doc.document_title || "Untitled Document"}
                         </span>
                       </Link>
                     </td>
-                    <td className="px-6 py-5 text-[14px] text-[#525866]">{getServiceTitle(doc.services)}</td>
-                    <td className="px-6 py-5 text-[14px] text-[#525866] whitespace-nowrap">{formatDate(doc.updated_at)}</td>
-                    <td className="px-6 py-5">{getStatusBadge(doc.status)}</td>
-                    <td className="px-6 py-5">
+                    <td className={`px-6 py-2 text-[14px] font-normal text-[#525866] ${idx !== documents.length - 1 ? "border-b border-[#E7E7E9]" : ""}`}>
+                      {getServiceTitle(doc.services)}
+                    </td>
+                    <td className={`px-6 py-2 text-[14px] font-normal text-[#525866] whitespace-nowrap ${idx !== documents.length - 1 ? "border-b border-[#E7E7E9]" : ""}`}>
+                      {formatDate(doc.updated_at)}
+                    </td>
+                    <td className={`px-6 py-2 ${idx !== documents.length - 1 ? "border-b border-[#E7E7E9]" : ""}`}>
+                      {getStatusBadge(doc.status)}
+                    </td>
+                    <td className={`px-6 py-2 ${idx !== documents.length - 1 ? "border-b border-[#E7E7E9]" : ""}`}>
                       {doc.status === "payment_needed" ? (
-                        <Link href="/user/payments" className="text-[#F97316] font-bold text-[14px] hover:underline whitespace-nowrap">
+                        <Link href="/user/payments" className="text-[#FA7319] font-semibold text-[14px] hover:underline whitespace-nowrap underline">
                           Pay Now
                         </Link>
-                      ) : (
-                        <Link href={`/user/documents/${doc.id}`} className="text-[#00A0E3] font-bold text-[14px] hover:underline whitespace-nowrap">
-                          View
+                      ) : doc.status === "completed" ? (
+                        <Link href={`/user/documents/${doc.id}`} className="text-[#00A0E3] font-semibold text-[14px] hover:underline whitespace-nowrap underline">
+                          Download
                         </Link>
+                      ) : (
+                        <span className="text-[#525866] text-[14px] whitespace-nowrap">-</span>
                       )}
                     </td>
                   </tr>
@@ -235,7 +251,7 @@ export default function MyDocumentsPage() {
 
                 {loading ? (
                   <tr>
-                    <td colSpan={5} className="px-6 py-10 text-center text-[14px] text-[#78788D]">
+                    <td colSpan={5} className="px-6 py-10 text-center text-[14px] text-[#78788D] border-b border-[#E7E7E9]">
                       Loading documents...
                     </td>
                   </tr>
@@ -243,7 +259,7 @@ export default function MyDocumentsPage() {
 
                 {!loading && documents.length === 0 ? (
                   <tr>
-                    <td colSpan={5} className="px-6 py-10 text-center text-[14px] text-[#78788D]">
+                    <td colSpan={5} className="px-6 py-10 text-center text-[14px] text-[#78788D] border-b border-[#E7E7E9]">
                       No documents found for the current filters.
                     </td>
                   </tr>

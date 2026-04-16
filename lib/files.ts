@@ -1,108 +1,155 @@
-import path from "node:path";
-import { pathToFileURL } from "node:url";
-import mammoth from "mammoth";
-import WordExtractor from "word-extractor";
-import { env } from "@/lib/env";
-import { supabaseAdmin } from "@/lib/supabase";
+type SupabaseAdminClient = (typeof import("@/lib/supabase"))["supabaseAdmin"];
 
 let isPdfWorkerConfigured = false;
 
-type PdfParserInstance = {
-  getText: () => Promise<{ text: string }>;
-  destroy: () => Promise<void> | void;
+type PdfJsModule = Awaited<typeof import("pdfjs-dist/legacy/build/pdf.mjs")>;
+type MammothModule = {
+  extractRawText: (
+    input: { arrayBuffer: ArrayBuffer } | { buffer: Uint8Array }
+  ) => Promise<{ value: string }>;
 };
 
-type PdfParseCtor = {
-  new (input: { data: Buffer }): PdfParserInstance;
-  setWorker: (workerSrc: string) => void;
-};
+let pdfJsModule: PdfJsModule | null = null;
 
-let pdfParseCtor: PdfParseCtor | null = null;
-
-async function loadPdfParseCtor() {
-  if (pdfParseCtor) {
-    return pdfParseCtor;
-  }
-
-  const mod = (await import("pdf-parse")) as { PDFParse?: PdfParseCtor };
-  if (!mod.PDFParse) {
-    throw new Error("PDF parser is unavailable in this runtime");
-  }
-
-  pdfParseCtor = mod.PDFParse;
-  return pdfParseCtor;
+function isServerRuntime() {
+  return typeof window === "undefined";
 }
 
-function ensurePdfWorkerConfigured(pdfParse: PdfParseCtor) {
-  if (isPdfWorkerConfigured) {
+function assertServerRuntime(feature: string) {
+  if (!isServerRuntime()) {
+    throw new Error(`${feature} is only supported in server runtime`);
+  }
+}
+
+function getFileExtension(fileName: string) {
+  const lastDotIndex = fileName.lastIndexOf(".");
+  if (lastDotIndex < 0) {
+    return "";
+  }
+
+  return fileName.slice(lastDotIndex).toLowerCase();
+}
+
+function normalizeMammothModule(mod: unknown): MammothModule {
+  const resolved = (mod as { default?: unknown }).default ?? mod;
+  return resolved as MammothModule;
+}
+
+async function loadPdfJsModule() {
+  if (pdfJsModule) {
+    return pdfJsModule;
+  }
+
+  const mod = await import("pdfjs-dist/legacy/build/pdf.mjs");
+  pdfJsModule = mod;
+  return mod;
+}
+
+function ensurePdfWorkerConfigured(pdfjs: PdfJsModule) {
+  if (isPdfWorkerConfigured || isServerRuntime()) {
     return;
   }
 
-  const workerPath = path.join(
-    process.cwd(),
-    "node_modules",
-    "pdfjs-dist",
-    "legacy",
-    "build",
-    "pdf.worker.mjs"
-  );
-
-  pdfParse.setWorker(pathToFileURL(workerPath).toString());
+  const version = typeof pdfjs.version === "string" ? pdfjs.version : "4.8.69";
+  pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${version}/pdf.worker.min.mjs`;
   isPdfWorkerConfigured = true;
 }
 
-export function countWords(text: string) {
-  return text
-    .trim()
-    .split(/\s+/)
-    .filter(Boolean).length;
+async function extractPdfText(arrayBuffer: ArrayBuffer) {
+  const pdfjs = await loadPdfJsModule();
+  ensurePdfWorkerConfigured(pdfjs);
+
+  const loadingTask = pdfjs.getDocument({
+    data: new Uint8Array(arrayBuffer),
+    useSystemFonts: true
+  });
+
+  const pdf = await loadingTask.promise;
+  const pageTexts: string[] = [];
+
+  try {
+    for (let pageNumber = 1; pageNumber <= pdf.numPages; pageNumber += 1) {
+      const page = await pdf.getPage(pageNumber);
+      const textContent = await page.getTextContent();
+      const pageText = textContent.items
+        .map((item) => {
+          if ("str" in item && typeof item.str === "string") {
+            return item.str;
+          }
+          return "";
+        })
+        .join(" ");
+
+      if (pageText) {
+        pageTexts.push(pageText);
+      }
+
+      page.cleanup();
+    }
+  } finally {
+    await pdf.destroy();
+  }
+
+  return pageTexts.join(" ");
 }
 
-function fallbackPdfWordCount(buffer: Buffer) {
-  const source = buffer.toString("latin1");
-  const chunks = source.match(/\(([^()]*)\)/g) ?? [];
-  const extracted = chunks
-    .map((chunk) => chunk.slice(1, -1))
-    .join(" ")
-    .replace(/\\[nrtbf()\\]/g, " ")
-    .replace(/[^\p{L}\p{N}\s]/gu, " ")
-    .replace(/\s+/g, " ")
-    .trim();
+async function extractDocxText(arrayBuffer: ArrayBuffer) {
+  const mammothImport = await import("mammoth");
+  const mammoth = normalizeMammothModule(mammothImport);
 
-  return extracted ? countWords(extracted) : 0;
+  if (isServerRuntime()) {
+    const { Buffer } = await import("node:buffer");
+    const result = await mammoth.extractRawText({ buffer: Buffer.from(arrayBuffer) });
+    return result.value;
+  }
+
+  const result = await mammoth.extractRawText({ arrayBuffer });
+  return result.value;
+}
+
+async function extractDocTextServerOnly(arrayBuffer: ArrayBuffer) {
+  assertServerRuntime("DOC parsing");
+
+  const [{ Buffer }, wordExtractorImport] = await Promise.all([
+    import("node:buffer"),
+    import("word-extractor")
+  ]);
+  const WordExtractor = (wordExtractorImport as { default?: new () => { extract: (input: Uint8Array) => Promise<{ getBody: () => string }> } }).default ??
+    (wordExtractorImport as new () => { extract: (input: Uint8Array) => Promise<{ getBody: () => string }> });
+  const extractor = new WordExtractor();
+  const extracted = await extractor.extract(Buffer.from(arrayBuffer));
+  return extracted.getBody();
+}
+
+export function countWords(text: string) {
+  const words = text
+    .normalize("NFKC")
+    .match(/[\p{L}\p{N}]+(?:[\u2019'-.][\p{L}\p{N}]+)*/gu);
+
+  if (!words) {
+    return 0;
+  }
+
+  return words.length;
 }
 
 export async function extractWordCount(file: File) {
-  const buffer = Buffer.from(await file.arrayBuffer());
-  const fileName = file.name.toLowerCase();
+  const arrayBuffer = await file.arrayBuffer();
+  const extension = getFileExtension(file.name || "");
 
-  if (fileName.endsWith(".docx")) {
-    const result = await mammoth.extractRawText({ buffer });
-    return countWords(result.value);
+  if (extension === ".docx") {
+    const text = await extractDocxText(arrayBuffer);
+    return countWords(text);
   }
 
-  if (fileName.endsWith(".pdf")) {
-    try {
-      const PdfParse = await loadPdfParseCtor();
-      ensurePdfWorkerConfigured(PdfParse);
-      const parser = new PdfParse({ data: buffer });
-      const result = await parser.getText();
-      await parser.destroy();
-      return countWords(result.text);
-    } catch (error) {
-      const message = error instanceof Error ? error.message : "";
-      if (/DOMMatrix|ImageData|Path2D|OffscreenCanvas|Worker/i.test(message)) {
-        // Production runtimes can miss some pdf.js globals; fallback keeps upload flow alive.
-        return fallbackPdfWordCount(buffer);
-      }
-      throw error;
-    }
+  if (extension === ".pdf") {
+    const text = await extractPdfText(arrayBuffer);
+    return countWords(text);
   }
 
-  if (fileName.endsWith(".doc")) {
-    const extractor = new WordExtractor();
-    const extracted = await extractor.extract(buffer);
-    return countWords(extracted.getBody());
+  if (extension === ".doc") {
+    const text = await extractDocTextServerOnly(arrayBuffer);
+    return countWords(text);
   }
 
   throw new Error("Unsupported file type");
@@ -113,10 +160,11 @@ export function validateUpload(file: File) {
   const allowedMimeTypes = [
     "application/msword",
     "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-    "application/pdf"
+    "application/pdf",
+    "application/x-pdf"
   ];
   const allowedExtensions = [".doc", ".docx", ".pdf"];
-  const extension = path.extname(file.name || "").toLowerCase();
+  const extension = getFileExtension(file.name || "");
 
   if (!allowedExtensions.includes(extension)) {
     throw new Error("Only DOC, DOCX, and PDF files are allowed");
@@ -134,8 +182,20 @@ export function validateUpload(file: File) {
   }
 }
 
-async function ensureStorageBucketExists() {
-  const bucket = env.SUPABASE_STORAGE_BUCKET;
+async function loadStorageContext(): Promise<{ bucket: string; supabaseAdmin: SupabaseAdminClient }> {
+  assertServerRuntime("Document upload");
+  const [{ env }, { supabaseAdmin }] = await Promise.all([
+    import("@/lib/env"),
+    import("@/lib/supabase")
+  ]);
+
+  return { bucket: env.SUPABASE_STORAGE_BUCKET, supabaseAdmin };
+}
+
+async function ensureStorageBucketExists(
+  supabaseAdmin: SupabaseAdminClient,
+  bucket: string
+) {
   const { data, error } = await supabaseAdmin.storage.getBucket(bucket);
 
   if (data && !error) {
@@ -169,9 +229,14 @@ async function ensureStorageBucketExists() {
 }
 
 export async function uploadDocumentFile(path: string, file: File) {
-  await ensureStorageBucketExists();
+  assertServerRuntime("Document upload");
+  const [{ Buffer }, storage] = await Promise.all([
+    import("node:buffer"),
+    loadStorageContext()
+  ]);
+  const { bucket, supabaseAdmin } = storage;
+  await ensureStorageBucketExists(supabaseAdmin, bucket);
   const bytes = Buffer.from(await file.arrayBuffer());
-  const bucket = env.SUPABASE_STORAGE_BUCKET;
 
   const { data, error } = await supabaseAdmin.storage
     .from(bucket)

@@ -292,21 +292,21 @@ export default function DocumentDetailsPage() {
 
   return (
     <div className="w-full font-dm-sans bg-white min-h-[calc(100vh-76px)] flex flex-col">
-      <div className="shrink-0 border-b py-4 border-gray-100 px-4">
-        <div className="text-[22px] font-medium text-[#1C1C1D] mb-1.5 tracking-tight">Document Details</div>
-        <p className="text-[#78788D] text-[14px]">
-          {detail.document_title || "Untitled Document"} - {readService(detail.service)}
-        </p>
+      <div className="shrink-0 py-4 border-gray-100 px-4">
+        <div className="text-[22px] font-medium text-[#1C1C1D] mb-1 tracking-tight">Document Details</div>
       </div>
 
       {error ? (
-        <div className="mx-4 mt-4 rounded-[10px] border border-[#FECACA] bg-[#FEF2F2] px-4 py-3 text-[13px] text-[#B91C1C]">
+        <div className="mx-4 mt-2 rounded-[10px] border border-[#FECACA] bg-[#FEF2F2] px-4 py-3 text-[13px] text-[#B91C1C]">
           {error}
         </div>
       ) : null}
 
-      <div className="px-4 mx-2 mt-4 bg-white border border-gray-100 shadow-[0_1px_3px_rgba(0,0,0,0.04)] rounded-[12px] overflow-hidden">
-        <div className="px-6 py-5 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-gray-100">
+      <div className="px-4 mt-1 bg-white border border-gray-100 shadow-[0_1px_3px_rgba(0,0,0,0.04)] rounded-[12px] overflow-hidden">
+        <div className="px-4 lg:px-6 pt-4 pb-2 text-[#78788D] text-[14px]">
+          {detail.document_title || "Untitled Document"} - {readService(detail.service)}
+        </div>
+        <div className="px-4 lg:px-6 py-5 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-gray-100">
           <div className="flex items-center gap-4">
             <div className="w-[48px] h-[48px] rounded-[12px] bg-[#EAF6FB] flex items-center justify-center shrink-0">
               <FileText className="w-6 h-6 text-[#00A0E3]" strokeWidth={2} />
@@ -332,7 +332,7 @@ export default function DocumentDetailsPage() {
         </div>
 
         {detail.status === "payment_needed" ? (
-          <div className="px-6 py-4 border-b border-gray-100 bg-[#FFFBF8] flex flex-wrap items-center gap-5">
+          <div className="px-4 lg:px-6 py-4 border-b border-gray-100 bg-[#FFFBF8] flex flex-wrap items-center gap-5">
             <div className="text-[14px] text-[#171717]">
               Amount Due: <span className="font-bold">{formatCurrency(paymentSummary?.totalAmountDue)}</span>
             </div>
@@ -344,7 +344,7 @@ export default function DocumentDetailsPage() {
             </div>
             <Link
               href="/user/payments"
-              className="ml-auto bg-[#F97316] hover:bg-[#EA580C] text-white px-4 py-2 rounded-[8px] text-[13px] font-semibold inline-flex items-center gap-2"
+              className="sm:ml-auto w-full sm:w-auto justify-center bg-[#F97316] hover:bg-[#EA580C] text-white px-4 py-2 rounded-[8px] text-[13px] font-semibold inline-flex items-center gap-2"
             >
               <CreditCard className="w-4 h-4" /> Make Payment
             </Link>
@@ -352,7 +352,7 @@ export default function DocumentDetailsPage() {
         ) : null}
 
         <div className="flex flex-col lg:flex-row min-h-[640px]">
-          <div className="w-full lg:w-[390px] border-r border-gray-100 lg:border-b-0 border-b p-6 flex flex-col gap-8">
+          <div className="w-full lg:w-[390px] border-r border-gray-100 lg:border-b-0 border-b px-4 lg:px-6 py-5 lg:py-6 flex flex-col gap-6 lg:gap-8">
             <div>
               <div className="text-[15px] font-bold text-[#171717] mb-5">Document Timeline</div>
               <div className="relative">
@@ -460,7 +460,7 @@ export default function DocumentDetailsPage() {
           </div>
 
           <div className="flex-1 min-w-0 flex flex-col bg-white">
-            <div className="h-[64px] px-6 border-b border-gray-100 flex items-center justify-between">
+            <div className="h-[64px] px-4 lg:px-6 border-b border-gray-100 flex items-center justify-between">
               <div>
                 <div className="text-[15px] font-bold text-[#171717]">Document Chat</div>
                 <div className="text-[12px] text-[#8A94A6]">{editor.name !== "Unknown" ? `Editor: ${editor.name}` : "Editor not assigned yet"}</div>
@@ -468,7 +468,7 @@ export default function DocumentDetailsPage() {
               <div className="text-[12px] text-[#8A94A6]">Client: {client.name}</div>
             </div>
 
-            <div className="flex-1 overflow-y-auto p-6 space-y-5 bg-white">
+            <div className="flex-1 overflow-y-auto px-4 lg:px-6 py-5 lg:py-6 space-y-5 bg-white">
               {(payload?.messageList || []).map((msg) => {
                 const from = readProfile(msg.sender);
                 const mine =
@@ -503,7 +503,7 @@ export default function DocumentDetailsPage() {
               ) : null}
             </div>
 
-            <div className="px-6 py-5 border-t border-gray-100 shrink-0 bg-white">
+            <div className="px-4 lg:px-6 py-5 border-t border-gray-100 shrink-0 bg-white">
               <div className="flex gap-3">
                 <input
                   type="text"

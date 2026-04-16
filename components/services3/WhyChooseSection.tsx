@@ -9,7 +9,9 @@ export function WhyChooseSection() {
       <div className="landing-shell">
         <div className="grid grid-cols-1 gap-5 lg:grid-cols-[1.08fr_0.58fr_0.9fr] lg:gap-6 items-start">
           <div className="max-w-[470px]">
-            <SectionBadge label="LOREM IPSUM DOLOR" />
+            <div className="flex justify-center md:justify-start">
+              <SectionBadge label="LOREM IPSUM DOLOR" />
+            </div>
             <div className="mt-5 text-[28px] sm:text-[32px] lg:text-[40px] font-medium leading-[1.12] text-[#1C1C1D] max-w-[420px]">
               Why Choose Us for Your Journal Selection Needs?
             </div>
@@ -18,7 +20,7 @@ export function WhyChooseSection() {
             </p>
             <Link
               href="#"
-              className="mt-6 inline-flex h-12 items-center justify-center rounded-full bg-[#00A0E3] px-6 text-[14px] sm:text-[16px] font-medium text-white shadow-[0_8px_20px_rgba(0,160,227,0.22)] transition-colors hover:bg-[#0189C2]"
+              className="mt-6 flex h-12 w-full sm:w-auto items-center justify-center rounded-full bg-[#00A0E3] px-6 text-[14px] sm:text-[16px] font-medium text-white shadow-[0_8px_20px_rgba(0,160,227,0.22)] transition-colors hover:bg-[#0189C2]"
             >
               Submit an Enquiry
             </Link>

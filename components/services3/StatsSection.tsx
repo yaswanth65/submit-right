@@ -16,7 +16,7 @@ export function StatsSection() {
           </p>
           <Link
             href="#"
-            className="mt-6 inline-flex h-12 items-center justify-center rounded-full bg-[#00A0E3] px-6 text-[14px] sm:text-[16px] font-medium text-white shadow-[0_8px_20px_rgba(0,160,227,0.22)] transition-colors hover:bg-[#0189C2]"
+            className="mt-6 flex h-12 w-full sm:w-auto items-center justify-center rounded-full bg-[#00A0E3] px-6 text-[14px] sm:text-[16px] font-medium text-white shadow-[0_8px_20px_rgba(0,160,227,0.22)] transition-colors hover:bg-[#0189C2]"
           >
             Order Now
           </Link>

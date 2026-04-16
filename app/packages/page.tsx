@@ -6,6 +6,7 @@ import { Navbar } from "@/components/landing/Navbar";
 import { TrustedLogos } from "@/components/landing/TrustedLogos";
 import { CTABanner } from "@/components/landing/CTABanner";
 import { FAQ } from "@/components/landing/FAQ";
+import { Newsletter } from "@/components/landing/Newsletter";
 
 export default function PackagesPage() {
   return (
@@ -18,11 +19,13 @@ export default function PackagesPage() {
             
             <div className="max-w-[580px]">
               {/* Badge */}
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#00A0E34D] bg-[#00A0E314] mb-6">
-                <img src="/v1.svg" alt="icon" className="w-4 h-4" />
-                <span className="text-[12px] md:text-[13px] font-medium uppercase tracking-wider text-[#00A0E3]">
-                  LOREM IPSUM DOLOR
-                </span>
+              <div className="flex justify-center md:justify-start mb-6">
+                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#00A0E34D] bg-[#00A0E314]">
+                  <img src="/v1.svg" alt="icon" className="w-4 h-4" />
+                  <span className="text-[12px] md:text-[13px] font-medium uppercase tracking-wider text-[#00A0E3]">
+                    LOREM IPSUM DOLOR
+                  </span>
+                </div>
               </div>
 
               <h1 className="text-[30px] sm:text-[40px] lg:text-[48px] font-medium leading-[1.1] text-[#1C1C1D] mb-4">
@@ -49,7 +52,7 @@ export default function PackagesPage() {
                 ))}
               </ul>
 
-              <button className="h-[46px] px-8 bg-[#00A0E3] text-white text-[15px] font-medium rounded-full shadow-[0_8px_20px_rgba(0,160,227,0.25)] hover:bg-[#0189C2] transition-colors">
+              <button className="w-full md:w-auto h-[46px] px-8 bg-[#00A0E3] text-white text-[15px] font-medium rounded-full shadow-[0_8px_20px_rgba(0,160,227,0.25)] hover:bg-[#0189C2] transition-colors">
                 Order Now
               </button>
             </div>
@@ -323,7 +326,7 @@ export default function PackagesPage() {
             </svg>
           </div>
 
-          <button className="h-[46px] px-8 bg-[#00A0E3] text-white text-[15px] font-medium rounded-full shadow-[0_8px_20px_rgba(0,160,227,0.25)] hover:bg-[#0189C2] transition-colors">
+          <button className="w-full md:w-auto h-[46px] px-8 bg-[#00A0E3] text-white text-[15px] font-medium rounded-full shadow-[0_8px_20px_rgba(0,160,227,0.25)] hover:bg-[#0189C2] transition-colors">
             Order Now
           </button>
         </div>
@@ -599,9 +602,7 @@ export default function PackagesPage() {
 
       {/* 8. FAQ Section */}
       <FAQ />
-
-      {/* 9. Bottom Banner CTA */}
-      <CTABanner variant="secondary" />
+      <Newsletter />
 
       <Footer />
     </main>

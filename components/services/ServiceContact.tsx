@@ -38,7 +38,7 @@ export function ServiceContact() {
 
               <Link
                 href="/packages"
-                className="inline-flex h-12 w-full max-w-[152px] items-center justify-center rounded-full bg-white px-3 text-[14px] sm:text-[16px] font-medium leading-[1.2] text-[#00A0E3] transition-colors hover:bg-[#F6FBFE]"
+                className="inline-flex h-12 w-full items-center justify-center rounded-full bg-white px-3 text-[14px] sm:text-[16px] font-medium leading-[1.2] text-[#00A0E3] transition-colors hover:bg-[#F6FBFE]"
               >
                 Order Now
               </Link>

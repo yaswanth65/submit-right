@@ -46,7 +46,7 @@ export function ServiceWhyChoose() {
           <div className="flex w-full flex-col gap-3 sm:gap-4 lg:w-[716px]">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
               <div className="box-border flex h-auto min-h-[138px] flex-col gap-5 rounded-[16px] border border-[#ECECEC] bg-white p-4 lg:h-[188px] lg:w-[346px] lg:p-6 lg:px-8 lg:py-6">
-                <Image src="/why/Frame 2147237022 (8).svg" alt="24x7 support icon" width={36} height={36} className="h-9 w-9" />
+                <Image src="/serv2/24.png" alt="24x7 support icon" width={36} height={36} className="h-6 w-6" />
                 <div className="flex flex-col gap-2">
                   <h3 className="font-inter text-[18px] lg:text-[20px] font-medium leading-[1.1] text-[#1C1C1D]">
                     24x7 Support Available
@@ -58,7 +58,7 @@ export function ServiceWhyChoose() {
               </div>
 
               <div className="box-border flex h-auto min-h-[138px] flex-col gap-5 rounded-[16px] border border-[#ECECEC] bg-white p-4 lg:h-[188px] lg:w-[346px] lg:p-6 lg:px-8 lg:py-6">
-                <Image src="/why/Frame 2147237022 (9).svg" alt="money back icon" width={36} height={36} className="h-9 w-9" />
+                <Image src="/serv2/mon.png" alt="money back icon" width={16} height={16} className="h-6 w-6" />
                 <div className="flex flex-col gap-2">
                   <h3 className="font-inter text-[18px] lg:text-[20px] font-medium leading-[1.1] text-[#1C1C1D]">
                     100% Money Back Guarantee
@@ -71,7 +71,7 @@ export function ServiceWhyChoose() {
             </div>
 
             <div className="box-border flex h-auto min-h-[138px] flex-col gap-5 rounded-[16px] border border-[#ECECEC] bg-white p-4 lg:h-[171px] lg:w-full lg:px-8 lg:py-6">
-              <Image src="/why/Frame 2147237022 (2).svg" alt="security icon" width={36} height={36} className="h-9 w-9" />
+              <Image src="/serv2/ima.png" alt="security icon" width={36} height={36} className="h-6 w-6" />
               <div className="flex flex-col gap-2">
                 <h3 className="font-inter text-[18px] lg:text-[20px] font-medium leading-[1.1] text-[#1C1C1D]">
                   Certified Data Security Standards

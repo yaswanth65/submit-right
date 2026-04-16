@@ -8,6 +8,7 @@ import { RecommendationSection } from "@/components/services3/RecommendationSect
 import { WhyChooseSection } from "@/components/services3/WhyChooseSection";
 import { StatsSection } from "@/components/services3/StatsSection";
 import { FAQSection } from "@/components/services3/FaqSection";
+import { Newsletter } from "@/components/landing/Newsletter";
 
 export default function ServiceThreePage() {
   return (
@@ -19,7 +20,7 @@ export default function ServiceThreePage() {
       <WhyChooseSection />
       <StatsSection />
       <FAQSection />
-      <CTABanner variant="secondary" />
+      <Newsletter />
       <Footer />
     </main>
   );

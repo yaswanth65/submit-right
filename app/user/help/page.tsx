@@ -228,9 +228,9 @@ export default function HelpSupportPage() {
         </div>
 
         <div className="bg-[#FFFFFF] border border-[#EAECF0] rounded-[12px] shadow-sm px-4 py-4 mb-6">
-          <div className="grid grid-cols-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-y-4 md:gap-y-0">
             <div className="px-3 border-r border-[#EAECF0]"><div className="text-[13px] text-[#525866]">Total</div><div className="text-[24px] font-bold text-[#171717] mt-1">{loading ? "..." : stats.total}</div></div>
-            <div className="px-3 border-r border-[#EAECF0]"><div className="text-[13px] text-[#525866]">Open</div><div className="text-[24px] font-bold text-[#3B82F6] mt-1">{loading ? "..." : stats.open}</div></div>
+            <div className="px-3 md:border-r md:border-[#EAECF0]"><div className="text-[13px] text-[#525866]">Open</div><div className="text-[24px] font-bold text-[#3B82F6] mt-1">{loading ? "..." : stats.open}</div></div>
             <div className="px-3 border-r border-[#EAECF0]"><div className="text-[13px] text-[#525866]">In Progress</div><div className="text-[24px] font-bold text-[#FA7319] mt-1">{loading ? "..." : stats.inProgress}</div></div>
             <div className="px-3"><div className="text-[13px] text-[#525866]">Resolved</div><div className="text-[24px] font-bold text-[#1CB061] mt-1">{loading ? "..." : stats.resolved}</div></div>
           </div>
@@ -334,7 +334,7 @@ export default function HelpSupportPage() {
               </button>
             </div>
 
-            <div className="px-6 py-5 space-y-4">
+            <div className="px-4 lg:px-6 py-5 space-y-4 max-h-[60vh] overflow-y-auto">
               <div>
                 <div className="text-[13px] font-semibold text-[#171717] mb-2">Subject</div>
                 <input
@@ -416,8 +416,8 @@ export default function HelpSupportPage() {
               </button>
             </div>
 
-            <div className="px-6 py-5 space-y-4">
-              <div className="grid grid-cols-2 gap-4">
+            <div className="px-4 lg:px-6 py-5 space-y-4 max-h-[60vh] overflow-y-auto w-full">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="rounded-[10px] border border-[#EAECF0] p-3 bg-[#F9FAFB]">
                   <div className="text-[11px] text-[#8A94A6] mb-1">Ticket ID</div>
                   <div className="text-[13px] font-semibold text-[#171717] break-all">{selectedTicket.id}</div>

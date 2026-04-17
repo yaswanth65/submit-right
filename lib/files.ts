@@ -2,11 +2,15 @@ type SupabaseAdminClient = (typeof import("@/lib/supabase"))["supabaseAdmin"];
 
 let isPdfWorkerConfigured = false;
 let isPdfServerPolyfillsConfigured = false;
+let isPdfServerWorkerConfigured = false;
 
 type PdfGlobalScope = typeof globalThis & {
   DOMMatrix?: typeof DOMMatrix;
   ImageData?: typeof ImageData;
   Path2D?: typeof Path2D;
+  pdfjsWorker?: {
+    WorkerMessageHandler?: unknown;
+  };
 };
 
 type PdfJsModule = Awaited<typeof import("pdfjs-dist/legacy/build/pdf.mjs")>;
@@ -200,12 +204,30 @@ async function ensurePdfServerPolyfills() {
   isPdfServerPolyfillsConfigured = true;
 }
 
+async function ensurePdfServerWorker() {
+  if (!isServerRuntime() || isPdfServerWorkerConfigured) {
+    return;
+  }
+
+  const pdfGlobal = globalThis as PdfGlobalScope;
+
+  if (!pdfGlobal.pdfjsWorker?.WorkerMessageHandler) {
+    const workerModule = await import("pdfjs-dist/legacy/build/pdf.worker.mjs");
+    pdfGlobal.pdfjsWorker = {
+      ...pdfGlobal.pdfjsWorker,
+      WorkerMessageHandler: workerModule.WorkerMessageHandler
+    };
+  }
+
+  isPdfServerWorkerConfigured = true;
+}
+
 async function loadPdfJsModule() {
   if (pdfJsModule) {
     return pdfJsModule;
   }
 
-  await ensurePdfServerPolyfills();
+  await Promise.all([ensurePdfServerPolyfills(), ensurePdfServerWorker()]);
 
   const mod = await import("pdfjs-dist/legacy/build/pdf.mjs");
   pdfJsModule = mod;

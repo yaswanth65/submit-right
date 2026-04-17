@@ -53,7 +53,7 @@ export function ServiceContact() {
                   Call us on during business hours on
                 </p>
                 <p className="font-inter text-[14px] sm:text-[16px] font-semibold leading-[1.2] text-[#1C1C1D]">
-                  +1 (669) 272-1214
+                  + (669) 272-1214
                 </p>
               </div>
             </div>

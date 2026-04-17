@@ -50,10 +50,7 @@ export function IncludedFeaturesSection() {
         <div className="text-center mb-10 sm:mb-16">
           {/* Badge */}
           <div className="landing-section-badge">
-            <svg className="w-4 h-4" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <circle cx="8" cy="8" r="8" fill="#00A0E3" />
-              <path d="M4 8L7 11L12 5" stroke="white" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
+             <Image src="/q.svg" alt="icon" width={16} height={16} className="w-4 h-4" />
             <span className="landing-section-badge-text">
               WHY SUBMIT RIGHT
             </span>

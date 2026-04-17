@@ -9,7 +9,11 @@ export function ServiceWhyChoose() {
         <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between lg:gap-[62px]">
           <div className="flex w-full max-w-[651px] flex-col gap-6 sm:gap-6">
             <div className="landing-section-badge mb-0 h-8 w-fit px-3">
-<img src="/vector2.svg" alt="icon" className="w-4 h-4" />              <span className="landing-section-badge-text whitespace-nowrap">
+              <svg className="w-4 h-4" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <circle cx="8" cy="8" r="8" fill="#00A0E3" />
+                <path d="M4 8L7 11L12 5" stroke="white" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+              <span className="landing-section-badge-text whitespace-nowrap">
                 LOREM IPSUM
               </span>
             </div>

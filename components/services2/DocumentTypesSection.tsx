@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
-import { SectionBadge } from "./SectionBadge";
 import { documentTypes } from "./service2Data";
 
 export function DocumentTypesSection() {
@@ -25,7 +24,10 @@ export function DocumentTypesSection() {
         <div className="text-center max-w-[760px] mx-auto mb-10 sm:mb-12 lg:mb-14">
           {/* Badge */}
           <div className="landing-section-badge">
-           <img src="/grid.svg" alt="icon" className="w-4 h-4" />   
+            <svg className="w-4 h-4" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <circle cx="8" cy="8" r="8" fill="#00A0E3" />
+              <path d="M4 8L7 11L12 5" stroke="white" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
             <span className="landing-section-badge-text">
               DOCUMENT TYPES
             </span>
@@ -66,7 +68,7 @@ export function DocumentTypesSection() {
                   style={{ animationDuration: `${duration}s` }}
                 >
                   {repeatedRow.map((type, idx) => (
-                    <DocumentTypeChip key={`${rowIndex}-${idx}-${type}`} label={type} mobile />
+                    <DocumentTypeChip key={`${rowIndex}-${idx}-${type}`} label={type} />
                   ))}
                 </div>
               </div>
@@ -110,7 +112,7 @@ export function DocumentTypesSection() {
   );
 }
 
-function DocumentTypeChip({ label, mobile = false, variant = "mobile" }: { label: string; mobile?: boolean; variant?: "mobile" | "desktop" }) {
+function DocumentTypeChip({ label, variant = "mobile" }: { label: string; variant?: "mobile" | "desktop" }) {
   const isDesktop = variant === "desktop";
 
   return (

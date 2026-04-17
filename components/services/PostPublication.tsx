@@ -9,7 +9,10 @@ export function PostPublication() {
       <div className="landing-shell flex flex-col items-center text-center gap-10 sm:gap-[62px]">
         <div className="flex flex-col items-center gap-6 w-full max-w-[676px]">
           <div className="landing-section-badge mb-0 h-[30px] sm:h-[32px] px-3 sm:px-3.5">
-            <Image src="/q.svg" alt="icon" width={16} height={16} className="w-4 h-4" />
+            <svg className="w-4 h-4" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <circle cx="8" cy="8" r="8" fill="#00A0E3" />
+              <path d="M4 8L7 11L12 5" stroke="white" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
             <span className="landing-section-badge-text whitespace-nowrap">
               LOREM IPSUM
             </span>

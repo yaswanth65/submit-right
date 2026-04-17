@@ -7,11 +7,8 @@ export function ProcessSection() {
       <div className="landing-shell">
         {/* Header Section */}
         <div className="text-center max-w-[780px] mx-auto mb-14 sm:mb-16 lg:mb-[62px]">
-<SectionBadge
-  label="LOREM IPSUM"
-  imgSrc="/vector2.svg"
-  imgAlt="Document Icon"
-/>          <div className="mt-6 text-[28px] sm:text-[32px] lg:text-[32px] font-medium leading-[1.1] text-[#1C1C1D]">
+          <SectionBadge label="LOREM IPSUM" />
+          <div className="mt-6 text-[28px] sm:text-[32px] lg:text-[32px] font-medium leading-[1.1] text-[#1C1C1D]">
             Our 4-step Journal Selection Filter Process
           </div>
           <p className="mt-4 max-w-[676px] mx-auto text-[16px] sm:text-[18px] text-[#78788D] leading-[1.4]">

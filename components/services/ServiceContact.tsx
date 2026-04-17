@@ -9,7 +9,11 @@ export function ServiceContact() {
       <div className="landing-shell flex flex-col items-center justify-center gap-8 sm:gap-10 lg:gap-[62px] text-center">
         <div className="flex w-full max-w-[676px] flex-col items-center gap-6">
           <div className="landing-section-badge mb-0 h-[30px] w-fit px-3 sm:h-8 sm:px-3.5">
-<img src="/vector2.svg" alt="icon" className="w-4 h-4" />            <span className="landing-section-badge-text whitespace-nowrap">
+            <svg className="w-4 h-4" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <circle cx="8" cy="8" r="8" fill="#00A0E3" />
+              <path d="M4 8L7 11L12 5" stroke="white" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+            <span className="landing-section-badge-text whitespace-nowrap">
               LOREM IPSUM
             </span>
           </div>
@@ -53,7 +57,7 @@ export function ServiceContact() {
                   Call us on during business hours on
                 </p>
                 <p className="font-inter text-[14px] sm:text-[16px] font-semibold leading-[1.2] text-[#1C1C1D]">
-                  +1 (669) 272-1214
+                  + (669) 272-1214
                 </p>
               </div>
             </div>

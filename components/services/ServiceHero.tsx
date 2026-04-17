@@ -62,7 +62,7 @@ export function ServiceHero() {
           <div className="w-full lg:w-[730px] flex justify-center lg:justify-end pt-2 lg:pt-[4px]">
             <div className="relative w-full max-w-[361px] sm:max-w-[690px] lg:max-w-[730px] h-[395px] sm:h-[435px] rounded-[22px_22px_0_0] bg-[linear-gradient(180deg,rgba(255,255,255,1)_0%,rgba(255,255,255,0.15)_77.14%,rgba(255,255,255,0)_100%)] p-3 sm:p-5">
                 <Image
-                  src="/services1/image.png"
+                  src="/services1/hero.png"
                   alt="Language Clarity Editing preview"
                   fill
                   priority

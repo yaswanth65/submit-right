@@ -1,7 +1,10 @@
 export function SectionBadge({ label }: { label: string }) {
   return (
     <div className="landing-section-badge">
-     <img src="/vector2.svg" alt="icon" className="w-4 h-4" />
+      <svg className="w-4 h-4" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle cx="8" cy="8" r="8" fill="#00A0E3" />
+        <path d="M4 8L7 11L12 5" stroke="white" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
       <span className="landing-section-badge-text">{label}</span>
     </div>
   );

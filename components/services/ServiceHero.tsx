@@ -20,7 +20,10 @@ export function ServiceHero() {
         <div className="flex flex-col lg:flex-row lg:items-start items-center justify-between gap-10 lg:gap-12">
           <div className="w-full lg:w-[706px] flex flex-col items-center lg:items-start text-center lg:text-left gap-8 lg:gap-8 pt-2 sm:pt-4 lg:pt-[4px]">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-3 sm:py-1.5 rounded-full border border-[rgba(0,160,227,0.3)] bg-[rgba(0,160,227,0.08)] w-fit">
-              <img src="/v1.svg" alt="icon" className="w-5 h-5 shrink-0" />
+              <svg className="w-5 h-5 shrink-0" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <circle cx="8" cy="8" r="8" fill="#00A0E3" />
+                <path d="M4 8L7 11L12 5" stroke="white" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
               <span className="font-inter text-[12px] sm:text-[14px] font-medium leading-[1.4] text-[#00A0E3] whitespace-nowrap uppercase tracking-[0.02em]">
                 LOREM IPSUM DOLOR
               </span>

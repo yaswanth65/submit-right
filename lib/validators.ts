@@ -199,7 +199,7 @@ export const messageSchema = z.object({
 
 export const assignEditorSchema = z.object({
   documentId: z.string().uuid(),
-  editorId: z.string().uuid(),
+  editorId: z.string().trim().min(1).max(255),
   reason: z.string().max(500).optional(),
   adminNotes: z.string().max(2000).optional()
 });
